@@ -25,6 +25,7 @@ public class MockDataGenerator {
             createTables();
             createData();
         } catch (final Exception e) {
+            logError("Unable to finish the mock data generation!");
             logError(e.toString());
         }
     }

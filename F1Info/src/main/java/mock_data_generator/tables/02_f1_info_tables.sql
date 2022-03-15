@@ -23,3 +23,17 @@ create table constructors(
     constraint constructors_pk primary key (id, constructor_identifier),
     constraint constructors_country_code foreign key (country_code) references countries(country_code)
 );
+
+create table circuits(
+    id int not null auto_increment,
+    circuit_identifier varchar(255) not null unique,
+    name varchar(255) not null unique,
+    location_name varchar(255),
+    country_code varchar(255),
+    latitude float,
+    longitude float,
+    wikipedia_page varchar(255) not null unique,
+
+    constraint circuits_pk primary key (id, circuit_identifier),
+    constraint circuits_country_code foreign key (country_code) references countries(country_code)
+);
