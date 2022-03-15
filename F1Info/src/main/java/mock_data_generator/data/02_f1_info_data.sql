@@ -1,3 +1,6 @@
+insert into seasons (year, wikipedia_page) values (2021, 'https://en.wikipedia.org/wiki/2021_Formula_One_World_Championship');
+insert into seasons (year, wikipedia_page) values (2022, 'https://en.wikipedia.org/wiki/2022_Formula_One_World_Championship');
+
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('alonso', 14, 'ALO', 'Fernando', 'Alonso', str_to_date('1981-07-29', '%Y-%m-%d'), 'es', 'http:\/\/en.wikipedia.org\/wiki\/Fernando_Alonso');
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('bottas', 77, 'BOT', 'Valtteri', 'Bottas', str_to_date('1989-08-28', '%Y-%m-%d'), 'fi', 'http:\/\/en.wikipedia.org\/wiki\/Valtteri_Bottas');
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('gasly', 10, 'GAS', 'Pierre', 'Gasly', str_to_date('1996-02-07', '%Y-%m-%d'), 'fr', 'http:\/\/en.wikipedia.org\/wiki\/Pierre_Gasly');
