@@ -19,3 +19,14 @@ insert into drivers (driver_identifier, number, code, first_name, last_name, dat
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('tsunoda', 22, 'TSU', 'Yuki', 'Tsunoda', str_to_date('2000-05-11', '%Y-%m-%d'), 'jp', 'http:\/\/en.wikipedia.org\/wiki\/Yuki_Tsunoda');
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('max_verstappen', 33, 'VER', 'Max', 'Verstappen', str_to_date('1997-09-30', '%Y-%m-%d'), 'nl', 'http:\/\/en.wikipedia.org\/wiki\/Max_Verstappen');
 insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values ('vettel', 5, 'VET', 'Sebastian', 'Vettel', str_to_date('1987-07-03', '%Y-%m-%d'), 'de', 'http:\/\/en.wikipedia.org\/wiki\/Sebastian_Vettel');
+
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('alfa', 'Alfa Romeo', 'ch', 'http:\/\/en.wikipedia.org\/wiki\/Alfa_Romeo_in_Formula_One');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('alphatauri', 'AlphaTauri', 'it', 'http:\/\/en.wikipedia.org\/wiki\/Scuderia_AlphaTauri');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('alpine', 'Alpine F1 Team', 'fr', 'http:\/\/en.wikipedia.org\/wiki\/Alpine_F1_Team');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('aston_martin', 'Aston Martin', 'gb', 'http:\/\/en.wikipedia.org\/wiki\/Aston_Martin_in_Formula_One');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('ferrari', 'Ferrari', 'it', 'http:\/\/en.wikipedia.org\/wiki\/Scuderia_Ferrari');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('haas', 'Haas F1 Team', 'us', 'http:\/\/en.wikipedia.org\/wiki\/Haas_F1_Team');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('mclaren', 'McLaren', 'gb', 'http:\/\/en.wikipedia.org\/wiki\/McLaren');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('mercedes', 'Mercedes', 'de', 'http:\/\/en.wikipedia.org\/wiki\/Mercedes-Benz_in_Formula_One');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('red_bull', 'Red Bull', 'at', 'http:\/\/en.wikipedia.org\/wiki\/Red_Bull_Racing');
+insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('williams', 'Williams', 'gb', 'http:\/\/en.wikipedia.org\/wiki\/Williams_Grand_Prix_Engineering');
