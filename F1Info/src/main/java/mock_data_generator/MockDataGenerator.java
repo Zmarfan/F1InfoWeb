@@ -16,12 +16,14 @@ import static mock_data_generator.MockDataLogger.*;
 public class MockDataGenerator {
     private static final String RESET_DATABASE_FILE_PATH = "src/main/java/mock_data_generator/setup/reset_database.sql";
     private static final String TABLES_DIRECTORY = "src/main/java/mock_data_generator/tables";
+    private static final String DATA_DIRECTORY = "src/main/java/mock_data_generator/data";
 
     public static void run() {
         try {
             logInfo("Starting Mock Data Generator");
             resetDatabase();
             createTables();
+            createData();
         } catch (final Exception e) {
             logError(e.toString());
         }
@@ -34,8 +36,16 @@ public class MockDataGenerator {
 
     private static void createTables() throws SQLException, IOException {
         logInfo("Creating Tables...");
+        executeSqlFilesInDirectory(TABLES_DIRECTORY);
+    }
 
-        final File tablesFolder = new File(TABLES_DIRECTORY);
+    private static void createData() throws SQLException, IOException {
+        logInfo("Setting up Data...");
+        executeSqlFilesInDirectory(DATA_DIRECTORY);
+    }
+
+    private static void executeSqlFilesInDirectory(final String directoryPath) throws SQLException, IOException {
+        final File tablesFolder = new File(directoryPath);
         final List<Path> paths = stream(requireNonNull(tablesFolder.listFiles())).map(file -> Path.of(file.getPath())).toList();
 
         for (final Path path : paths) {
