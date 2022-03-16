@@ -87,10 +87,27 @@ create table lap_times(
   constraint lap_times_driver_id foreign key (driver_id) references drivers(id)
 );
 
-create table status(
-  status varchar(255) not null,
+create table result_types(
+  type varchar(255) not null unique,
 
-  constraint status_pk primary key (status)
+  constraint result_types_pk primary key (type)
+);
+
+create table finish_position_types(
+  type varchar(255) not null unique,
+
+  constraint finish_position_types_pk primary key (type)
+);
+
+create table fastest_laps(
+  id int not null auto_increment,
+  lap_fastest_lap_achieved int,
+  fastest_lap_rank int,
+  fastest_lap_time_in_milliseconds int,
+  fastest_lap_time varchar(255),
+  fastest_lap_speed varchar(255),
+
+  constraint fastest_laps_pk primary key (id)
 );
 
 create table results(
@@ -98,24 +115,44 @@ create table results(
   race_id int not null,
   driver_id int not null,
   constructor_id int not null,
+  result_type varchar(255) not null,
   driver_number int,
   starting_position int not null,
   finish_position int,
-  finish_position_text varchar(255) not null,
+  finish_position_type varchar(255) not null,
   finish_position_order int not null,
   points float not null,
   completed_laps int not null,
   finish_time_or_gap varchar(255),
   length_in_milliseconds int,
-  lap_fastest_lap_achieved int,
-  fastest_lap_rank int,
-  fastest_lap_time varchar(255),
-  fastest_lap_speed varchar(255),
+  fastest_lap_id int,
   status varchar(255) not null,
 
   constraint results_pk primary key (id, race_id, driver_id, constructor_id),
   constraint results_race_id foreign key (race_id) references races(id),
   constraint results_driver_id foreign key (driver_id) references drivers(id),
   constraint results_constructor_id foreign key (constructor_id) references constructors(id),
-  constraint results_status foreign key (status) references status(status)
+  constraint results_result_type foreign key (result_type) references result_types(type),
+  constraint results_finish_position_type foreign key (finish_position_type) references finish_position_types(type),
+  constraint results_fastest_lap_id foreign key (fastest_lap_id) references fastest_laps(id)
+);
+
+create table qualifying(
+  id int not null auto_increment,
+  race_id int not null,
+  driver_id int not null,
+  constructor_id int not null,
+  driver_number int not null,
+  position int,
+  q1_time_in_milliseconds int,
+  q1_time varchar(255),
+  q2_time_in_milliseconds int,
+  q2_time varchar(255),
+  q3_time_in_milliseconds int,
+  q3_time varchar(255),
+
+  constraint qualifying_pk primary key (id, race_id, driver_id),
+  constraint qualifying_race_id foreign key (race_id) references races(id),
+  constraint qualifying_driver_id foreign key (driver_id) references drivers(id),
+  constraint qualifying_constructor_id foreign key (constructor_id) references constructors(id)
 );
