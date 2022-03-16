@@ -24,6 +24,7 @@ public class MockDataGenerator {
             resetDatabase();
             createTables();
             createData();
+            logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
             logError("Unable to finish the mock data generation!");
             logError(e.toString());

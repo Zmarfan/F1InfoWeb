@@ -13,6 +13,10 @@ public class MockDataLogger {
         log(text, ConsoleColor.ERROR);
     }
 
+    public static void logSuccess(final String text) {
+        log(text, ConsoleColor.SUCCESS);
+    }
+
     private static void log(final String text, final ConsoleColor color) {
         System.out.println(color.getCode() + text + ConsoleColor.RESET.getCode());
     }
