@@ -14,6 +14,10 @@ import static java.util.Objects.requireNonNull;
 import static mock_data_generator.MockDataLogger.*;
 
 public class MockDataGenerator {
+    public static final String DATABASE_URL = "jdbc:mysql://localhost:3306/f1database";
+    public static final String DATABASE_NAME = "f1User";
+    public static final String LOCAL_DATABASE_PASSWORD = "0Vw7LIMZ7K17";
+
     private static final String RESET_DATABASE_FILE_PATH = "src/main/java/mock_data_generator/setup/reset_database.sql";
     private static final String TABLES_DIRECTORY = "src/main/java/mock_data_generator/tables";
     private static final String DATA_DIRECTORY = "src/main/java/mock_data_generator/data";
@@ -66,7 +70,6 @@ public class MockDataGenerator {
     }
 
     private static Connection getConnection() throws SQLException {
-        final String url = "jdbc:mysql://localhost:3306/f1database";
-        return DriverManager.getConnection(url, "f1User", "0Vw7LIMZ7K17");
+        return DriverManager.getConnection(DATABASE_URL, DATABASE_NAME, LOCAL_DATABASE_PASSWORD);
     }
 }
