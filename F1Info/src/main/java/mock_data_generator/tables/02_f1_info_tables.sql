@@ -59,3 +59,63 @@ create table races(
   constraint races_year foreign key (year) references seasons(year),
   constraint races_circuit_id foreign key (circuit_id) references circuits(id)
 );
+
+create table pit_stops(
+  race_id int not null,
+  driver_id int not null,
+  stop int not null,
+  lap int not null,
+  time time not null,
+  duration varchar(255),
+  length_in_milliseconds float,
+
+  constraint pit_stops_pk primary key (race_id, driver_id, stop),
+  constraint pit_stops_race_id foreign key (race_id) references races(id),
+  constraint pit_stops_driver_id foreign key (driver_id) references drivers(id)
+);
+
+create table lap_times(
+  race_id int not null,
+  driver_id int not null,
+  lap int not null,
+  position int,
+  time varchar(255),
+  length_in_milliseconds int,
+
+  constraint lap_times_pk primary key (race_id, driver_id, lap),
+  constraint lap_times_race_id foreign key (race_id) references races(id),
+  constraint lap_times_driver_id foreign key (driver_id) references drivers(id)
+);
+
+create table status(
+  status varchar(255) not null,
+
+  constraint status_pk primary key (status)
+);
+
+create table results(
+  id int not null auto_increment,
+  race_id int not null,
+  driver_id int not null,
+  constructor_id int not null,
+  driver_number int,
+  starting_position int not null,
+  finish_position int,
+  finish_position_text varchar(255) not null,
+  finish_position_order int not null,
+  points float not null,
+  completed_laps int not null,
+  finish_time_or_gap varchar(255),
+  length_in_milliseconds int,
+  lap_fastest_lap_achieved int,
+  fastest_lap_rank int,
+  fastest_lap_time varchar(255),
+  fastest_lap_speed varchar(255),
+  status varchar(255) not null,
+
+  constraint results_pk primary key (id, race_id, driver_id, constructor_id),
+  constraint results_race_id foreign key (race_id) references races(id),
+  constraint results_driver_id foreign key (driver_id) references drivers(id),
+  constraint results_constructor_id foreign key (constructor_id) references constructors(id),
+  constraint results_status foreign key (status) references status(status)
+);
