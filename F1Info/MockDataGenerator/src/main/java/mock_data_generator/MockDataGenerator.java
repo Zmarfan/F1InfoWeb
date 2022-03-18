@@ -18,9 +18,9 @@ public class MockDataGenerator {
     public static final String DATABASE_NAME = "f1User";
     public static final String LOCAL_DATABASE_PASSWORD = "0Vw7LIMZ7K17";
 
-    private static final String RESET_DATABASE_FILE_PATH = "src/main/java/mock_data_generator/setup/reset_database.sql";
-    private static final String TABLES_DIRECTORY = "src/main/java/mock_data_generator/tables";
-    private static final String DATA_DIRECTORY = "src/main/java/mock_data_generator/data";
+    private static final String RESET_DATABASE_FILE_PATH = "MockDataGenerator/src/main/java/mock_data_generator/setup/reset_database.sql";
+    private static final String TABLES_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/tables";
+    private static final String DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/data";
 
     public static void run() {
         try {
