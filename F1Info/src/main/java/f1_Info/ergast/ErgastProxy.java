@@ -15,8 +15,8 @@ public class ErgastProxy {
     private static final String GET_REQUEST = "GET";
     private static final int CONNECT_TIME_OUT = 10000;
     private static final int READ_TIME_OUT = 25000;
-    private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors?limit=250";
-    private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply";
+    private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=5";
+    private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
 
     private final Logger mLogger;
 
@@ -29,23 +29,17 @@ public class ErgastProxy {
         try {
             final HttpURLConnection connection = createGetConnection(uri);
             final String data = readConnectionData(connection);
+            final int responseCode = connection.getResponseCode();
             connection.disconnect();
+
+            if (responseHoldsErrorCode(connection)) {
+                throw new IOException(String.format(ERROR_RESPONSE_MESSAGE, responseCode, data));
+            }
             return Optional.of(data);
         } catch (final IOException e) {
             mLogger.logError("Unable to read data from the uri: " + uri, e);
             return Optional.empty();
         }
-    }
-
-    private String readConnectionData(final HttpURLConnection connection) throws IOException {
-        final BufferedReader streamReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        final StringBuilder content = new StringBuilder();
-        while ((inputLine = streamReader.readLine()) != null) {
-            content.append(inputLine);
-        }
-        streamReader.close();
-        return content.toString();
     }
 
     private HttpURLConnection createGetConnection(final String uri) throws IOException {
@@ -56,10 +50,23 @@ public class ErgastProxy {
         connection.setConnectTimeout(CONNECT_TIME_OUT);
         connection.setReadTimeout(READ_TIME_OUT);
 
-        if (connection.getResponseCode() > 299) {
-            throw new IOException(String.format(ERROR_RESPONSE_MESSAGE, connection.getResponseCode()));
-        }
-
         return connection;
+    }
+
+    private String readConnectionData(final HttpURLConnection connection) throws IOException {
+        final BufferedReader streamReader = new BufferedReader(new InputStreamReader(
+            !responseHoldsErrorCode(connection) ? connection.getInputStream() : connection.getErrorStream()
+        ));
+        String inputLine;
+        final StringBuilder content = new StringBuilder();
+        while ((inputLine = streamReader.readLine()) != null) {
+            content.append(inputLine);
+        }
+        streamReader.close();
+        return content.toString();
+    }
+
+    private boolean responseHoldsErrorCode(final HttpURLConnection connection) throws IOException {
+        return connection.getResponseCode() > 299;
     }
 }
