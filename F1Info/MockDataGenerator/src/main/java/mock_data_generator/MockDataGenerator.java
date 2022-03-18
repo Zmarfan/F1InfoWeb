@@ -1,18 +1,18 @@
 package mock_data_generator;
 
+import lombok.AllArgsConstructor;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
-import static mock_data_generator.MockDataLogger.*;
+import static mock_data_generator.ConsoleLogger.*;
 
+@AllArgsConstructor
 public class MockDataGenerator {
     public static final String DATABASE_URL = "jdbc:mysql://localhost:3306/f1database";
     public static final String DATABASE_NAME = "f1User";
@@ -62,10 +62,17 @@ public class MockDataGenerator {
     private static void runSqlStatementsFromFilePath(final Path filePath) throws SQLException, IOException {
         logFile("Executing: " + filePath.getFileName().toString());
 
-        final Statement statement = getConnection().createStatement();
         final List<String> sqlStatements = MockDataFileReader.getSqlFileStatements(filePath);
-        for (final String sqlStatement : sqlStatements) {
-            statement.execute(sqlStatement);
+        String executingStatement = sqlStatements.get(0);
+        try (final Statement statement = getConnection().createStatement()) {
+            for (final String sqlStatement : sqlStatements) {
+                executingStatement = sqlStatement;
+                statement.execute(sqlStatement);
+            }
+        }
+        catch (final Exception e) {
+            logError("statement: " + executingStatement);
+            throw e;
         }
     }
 

@@ -1,6 +1,6 @@
 package mock_data_generator;
 
-public class MockDataLogger {
+public class ConsoleLogger {
     public static void logInfo(final String text) {
         log(text, ConsoleColor.INFO);
     }
