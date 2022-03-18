@@ -1,5 +1,6 @@
 package f1_Info.ergast;
 
+import f1_Info.ergast.responses.ErgastConstructorData;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
 
@@ -8,7 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Optional;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 @AllArgsConstructor
 public class ErgastProxy {
@@ -18,14 +21,20 @@ public class ErgastProxy {
     private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=5";
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
 
+    private final ErgastParser mParser;
     private final Logger mLogger;
 
-    public void fetchAllConstructors() {
-        final Optional<String> test = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI);
-        mLogger.logInfo(test.orElse("oh no error"));
+    public List<ErgastConstructorData> fetchAllConstructors() {
+        try {
+            final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI);
+            return mParser.parseConstructorsResponseToObjects(responseJson);
+        } catch (final Exception e) {
+            mLogger.logError("Unable to fetch constructor data from ergast", e);
+            return emptyList();
+        }
     }
 
-    private Optional<String> readDataAsJsonStringFromUri(final String uri) {
+    private String readDataAsJsonStringFromUri(final String uri) throws IOException {
         try {
             final HttpURLConnection connection = createGetConnection(uri);
             final String data = readConnectionData(connection);
@@ -35,10 +44,9 @@ public class ErgastProxy {
             if (responseHoldsErrorCode(connection)) {
                 throw new IOException(String.format(ERROR_RESPONSE_MESSAGE, responseCode, data));
             }
-            return Optional.of(data);
+            return data;
         } catch (final IOException e) {
-            mLogger.logError("Unable to read data from the uri: " + uri, e);
-            return Optional.empty();
+            throw new IOException("Unable to read data from the uri: " + uri, e);
         }
     }
 
