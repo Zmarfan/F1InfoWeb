@@ -19,7 +19,8 @@ public class ErgastProxy {
     private static final String GET_REQUEST = "GET";
     private static final int CONNECT_TIME_OUT = 10000;
     private static final int READ_TIME_OUT = 25000;
-    private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=5";
+    private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=%d";
+    private static final int CONSTRUCTOR_LIMIT = 10;
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
     private static final String TEST_DATA = "{\n" +
             "    \"MRData\": {\n" +
@@ -77,7 +78,7 @@ public class ErgastProxy {
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
-            //final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI);
+            // final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
             return mParser.parseConstructorsResponseToObjects(TEST_DATA);
         } catch (final Exception e) {
             mLogger.logError("Unable to fetch constructor data from ergast", e);
@@ -85,9 +86,9 @@ public class ErgastProxy {
         }
     }
 
-    private String readDataAsJsonStringFromUri(final String uri) throws IOException {
+    private String readDataAsJsonStringFromUri(final String uri, final int limit) throws IOException {
         try {
-            final HttpURLConnection connection = createGetConnection(uri);
+            final HttpURLConnection connection = createGetConnection(String.format(uri, limit));
             final String data = readConnectionData(connection);
             final int responseCode = connection.getResponseCode();
             connection.disconnect();

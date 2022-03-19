@@ -3,6 +3,9 @@ package f1_Info.constants;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @AllArgsConstructor
 @Getter
 public enum Country{
@@ -18,15 +21,15 @@ public enum Country{
     ARGENTINA("ar", null),
     ARMENIA("am", null),
     ARUBA("aw", null),
-    AUSTRALIA("au", null),
-    AUSTRIA("at", null),
+    AUSTRALIA("au", "australian"),
+    AUSTRIA("at", "austrian"),
     AZERBAIJAN("az", null),
     BAHAMAS("bs", null),
     BAHRAIN("bh", null),
     BANGLADESH("bd", null),
     BARBADOS("bb", null),
     BELARUS("by", null),
-    BELGIUM("be", null),
+    BELGIUM("be", "belgium"),
     BELIZE("bz", null),
     BENIN("bj", null),
     BERMUDA("bm", null),
@@ -34,7 +37,7 @@ public enum Country{
     BOLIVIA("bo", null),
     BOSNIA_AND_HERZEGOVINA("ba", null),
     BOTSWANA("bw", null),
-    BRAZIL("br", null),
+    BRAZIL("br", "brazilian"),
     BRITISH_INDIAN_OCEAN_TERRITORY("io", null),
     BRITISH_VIRGIN_ISLANDS("vg", null),
     BRUNEI("bn", null),
@@ -43,7 +46,7 @@ public enum Country{
     BURUNDI("bi", null),
     CAMBODIA("kh", null),
     CAMEROON("cm", null),
-    CANADA("ca", null),
+    CANADA("ca", "canadian"),
     CAPE_VERDE("cv", null),
     CAYMAN_ISLANDS("ky", null),
     CENTRAL_AFRICAN_REPUBLIC("cf", null),
@@ -66,6 +69,7 @@ public enum Country{
     DJIBOUTI("dj", null),
     DOMINICA("dm", null),
     DOMINICAN_REPUBLIC("do", null),
+    EAST_GERMANY("dd", "east german"),
     EAST_TIMOR("tl", null),
     ECUADOR("ec", null),
     EGYPT("eg", null),
@@ -78,12 +82,12 @@ public enum Country{
     FAROE_ISLANDS("fo", null),
     FIJI("fj", null),
     FINLAND("fi", null),
-    FRANCE("fr", null),
+    FRANCE("fr",  "french"),
     FRENCH_POLYNESIA("pf", null),
     GABON("ga", null),
     GAMBIA("gm", null),
     GEORGIA("ge", null),
-    GERMANY("de", null),
+    GERMANY("de",  "german"),
     GHANA("gh", null),
     GIBRALTAR("gi", null),
     GREECE("gr", null),
@@ -97,20 +101,20 @@ public enum Country{
     GUYANA("gy", null),
     HAITI("ht", null),
     HONDURAS("hn", null),
-    HONG_KONG("hk", null),
+    HONG_KONG("hk", "hong kong"),
     HUNGARY("hu", null),
     ICELAND("is", null),
-    INDIA("in", null),
+    INDIA("in", "indian"),
     INDONESIA("id", null),
     IRAN("ir", null),
     IRAQ("iq", null),
-    IRELAND("ie", null),
+    IRELAND("ie", "irish"),
     ISLE_OF_MAN("im", null),
     ISRAEL("il", null),
-    ITALY("it", null),
+    ITALY("it",  "italian"),
     IVORY_COAST("ci", null),
     JAMAICA("jm", null),
-    JAPAN("jp", null),
+    JAPAN("jp", "japanese"),
     JERSEY("je", null),
     JORDAN("jo", null),
     KAZAKHSTAN("kz", null),
@@ -132,7 +136,7 @@ public enum Country{
     MACEDONIA("mk", null),
     MADAGASCAR("mg", null),
     MALAWI("mw", null),
-    MALAYSIA("my", null),
+    MALAYSIA("my",  "malaysian"),
     MALDIVES("mv", null),
     MALI("ml", null),
     MALTA("mt", null),
@@ -140,7 +144,7 @@ public enum Country{
     MAURITANIA("mr", null),
     MAURITIUS("mu", null),
     MAYOTTE("yt", null),
-    MEXICO("mx", null),
+    MEXICO("mx", "mexican"),
     MICRONESIA("fm", null),
     MOLDOVA("md", null),
     MONACO("mc", null),
@@ -153,10 +157,10 @@ public enum Country{
     NAMIBIA("na", null),
     NAURU("nr", null),
     NEPAL("np", null),
-    NETHERLANDS("nl", null),
+    NETHERLANDS("nl",  "dutch"),
     NETHERLANDS_ANTILLES("an", null),
     NEW_CALEDONIA("nc", null),
-    NEW_ZEALAND("nz", null),
+    NEW_ZEALAND("nz",  "new zealand"),
     NICARAGUA("ni", null),
     NIGER("ne", null),
     NIGERIA("ng", null),
@@ -180,8 +184,9 @@ public enum Country{
     QATAR("qa", null),
     REPUBLIC_OF_THE_CONGO("cg", null),
     REUNION("re", null),
+    RHODESIA("rh", "rhodesian"),
     ROMANIA("ro", null),
-    RUSSIA("ru", null),
+    RUSSIA("ru", "russian"),
     RWANDA("rw", null),
     SAINT_BARTHELEMY("bl", null),
     SAINT_HELENA("sh", null),
@@ -204,17 +209,17 @@ public enum Country{
     SLOVENIA("si", null),
     SOLOMON_ISLANDS("sb", null),
     SOMALIA("so", null),
-    SOUTH_AFRICA("za", null),
+    SOUTH_AFRICA("za", "south african"),
     SOUTH_KOREA("kr", null),
     SOUTH_SUDAN("ss", null),
-    SPAIN("es", null),
+    SPAIN("es", "spanish"),
     SRI_LANKA("lk", null),
     SUDAN("sd", null),
     SURINAME("sr", null),
     SVALBARD_AND_JAN_MAYEN("sj", null),
     SWAZILAND("sz", null),
     SWEDEN("se", null),
-    SWITZERLAND("ch", null),
+    SWITZERLAND("ch",  "swiss"),
     SYRIA("sy", null),
     TAIWAN("tw", null),
     TAJIKISTAN("tj", null),
@@ -233,8 +238,8 @@ public enum Country{
     UGANDA("ug", null),
     UKRAINE("ua", null),
     UNITED_ARAB_EMIRATES("ae", null),
-    UNITED_KINGDOM("gb", null),
-    UNITED_STATES("us", null),
+    UNITED_KINGDOM("gb", "british"),
+    UNITED_STATES("us",  "american"),
     URUGUAY("uy", null),
     UZBEKISTAN("uz", null),
     VANUATU("vu", null),
@@ -251,11 +256,9 @@ public enum Country{
     private final String nationality;
 
     public static Country fromNationality(final String nationality) {
-        return Country.UNITED_KINGDOM;
-
-        // return Arrays.stream(values())
-        //     .filter(country -> Objects.equals(country.nationality, nationality))
-        //     .findFirst()
-        //     .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the nationality: %s to a valid country", nationality)));
+         return Arrays.stream(values())
+             .filter(country -> Objects.equals(country.nationality, nationality.toLowerCase()))
+             .findFirst()
+             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the nationality: %s to a valid country", nationality)));
     }
 }
