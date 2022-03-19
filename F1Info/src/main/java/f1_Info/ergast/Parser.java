@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import static f1_Info.utils.ListUtils.stringListToString;
+
 @Component
 public class Parser {
     private static final String MAIN_DATA_LABEL = "MRData";
@@ -38,7 +40,7 @@ public class Parser {
 
             return mObjectMapper.writeValueAsString(currentParent);
         } catch (final JsonProcessingException e) {
-            throw new UncheckedIOException(e);
+            throw new UncheckedIOException(String.format("Unable to traverse parent json node with the parameters: %s", stringListToString(parents)), e);
         }
     }
 
