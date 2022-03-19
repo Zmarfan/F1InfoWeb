@@ -1,5 +1,8 @@
 package f1_Info.logger;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Logger {
     private static final String ERROR_TEMPLATE = "%s: With exception: %s";
 

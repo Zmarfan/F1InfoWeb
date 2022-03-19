@@ -2,7 +2,8 @@ package f1_Info.ergast;
 
 import f1_Info.ergast.responses.ErgastConstructorData;
 import f1_Info.logger.Logger;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-@AllArgsConstructor
+@Service
 public class ErgastProxy {
     private static final String GET_REQUEST = "GET";
     private static final int CONNECT_TIME_OUT = 10000;
@@ -23,6 +24,12 @@ public class ErgastProxy {
 
     private final ErgastParser mParser;
     private final Logger mLogger;
+
+    @Autowired
+    public ErgastProxy(ErgastParser mParser, Logger mLogger) {
+        this.mParser = mParser;
+        this.mLogger = mLogger;
+    }
 
     public List<ErgastConstructorData> fetchAllConstructors() {
         try {

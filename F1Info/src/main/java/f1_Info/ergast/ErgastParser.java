@@ -5,17 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import f1_Info.ergast.responses.ErgastConstructorData;
 import f1_Info.ergast.responses.ErgastResponseData;
 import f1_Info.ergast.responses.ErgastResponseHeader;
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-@AllArgsConstructor
+@Component
 public class ErgastParser {
     private static final String MAIN_DATA_LABEL = "MRData";
     private final ObjectMapper mObjectMapper;
+
+    public ErgastParser() {
+        this.mObjectMapper = new ObjectMapper();
+    }
 
     public List<ErgastConstructorData> parseConstructorsResponseToObjects(final String json) throws IOException {
         final ErgastResponseData data = parseToErgastResponse(json, "ConstructorTable");
