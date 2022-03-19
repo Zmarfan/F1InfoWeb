@@ -1,6 +1,6 @@
 create table seasons(
   year int not null unique,
-  wikipedia_page varchar(255) not null unique,
+  wikipedia_page varchar(255) not null,
 
   constraint seasons_pk primary key (year)
 );
@@ -14,7 +14,7 @@ create table drivers(
   last_name varchar(255) not null,
   date_of_birth date,
   country_code varchar(255),
-  wikipedia_page varchar(255) not null unique,
+  wikipedia_page varchar(255) not null,
 
   constraint drivers_pk primary key (id, driver_identifier),
   constraint drivers_country_code foreign key (country_code) references countries(country_code)
@@ -25,7 +25,7 @@ create table constructors(
   constructor_identifier varchar(255) not null unique,
   name varchar(255) not null unique ,
   country_code varchar(255),
-  wikipedia_page varchar(255) not null unique,
+  wikipedia_page varchar(255) not null,
 
   constraint constructors_pk primary key (id, constructor_identifier),
   constraint constructors_country_code foreign key (country_code) references countries(country_code)
@@ -39,7 +39,7 @@ create table circuits(
   country_code varchar(255),
   latitude float,
   longitude float,
-  wikipedia_page varchar(255) not null unique,
+  wikipedia_page varchar(255) not null,
 
   constraint circuits_pk primary key (id, circuit_identifier),
   constraint circuits_country_code foreign key (country_code) references countries(country_code)
@@ -53,7 +53,7 @@ create table races(
   name varchar(255) not null,
   date date not null unique,
   time time unique,
-  wikipedia_page varchar(255) unique,
+  wikipedia_page varchar(255),
 
   constraint races_pk primary key (id, year, round),
   constraint races_year foreign key (year) references seasons(year),

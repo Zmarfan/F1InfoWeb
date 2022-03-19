@@ -13,6 +13,9 @@ import java.util.List;
 
 @SpringBootApplication
 public class F1InfoApplication extends SpringBootServletInitializer {
+	public static void main(String[] args) {
+		SpringApplication.run(F1InfoApplication.class, args);
+	}
 
 	@Autowired
 	private ErgastProxy mErgastProxy;
@@ -25,10 +28,17 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@PostConstruct
 	public void listen() {
 		final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
-		System.out.println("asd");
+		final List<String> insertStatements = constructors.stream().map(this::constructorToInsertStatement).toList();
+		System.out.println(String.join("\n", insertStatements));
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(F1InfoApplication.class, args);
+	private String constructorToInsertStatement(final ConstructorData constructorData) {
+		return String.format(
+			"insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values ('%s', '%s', '%s', '%s');",
+			constructorData.getConstructorIdentifier(),
+			constructorData.getName(),
+			constructorData.getCountry().getCode(),
+			constructorData.getWikipediaUrl()
+		);
 	}
 }

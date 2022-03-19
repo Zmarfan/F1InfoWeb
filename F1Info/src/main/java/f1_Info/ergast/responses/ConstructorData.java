@@ -9,7 +9,7 @@ public class ConstructorData {
     String constructorIdentifier;
     String wikipediaUrl;
     String name;
-    Country nationality;
+    Country country;
 
     public ConstructorData(
         @JsonProperty("constructorId") String constructorIdentifier,
@@ -20,6 +20,6 @@ public class ConstructorData {
         this.constructorIdentifier = constructorIdentifier;
         this.wikipediaUrl = wikipediaUrl;
         this.name = name;
-        this.nationality = Country.fromNationality(nationality);
+        this.country = Country.fromNationality(nationality);
     }
 }
