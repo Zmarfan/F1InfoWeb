@@ -1,5 +1,6 @@
 package f1_Info.ergast;
 
+import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,17 +69,23 @@ public class ErgastProxy {
             "}";
 
     private final Parser mParser;
+    private final Configuration mConfiguration;
     private final Logger mLogger;
 
     @Autowired
-    public ErgastProxy(Parser mParser, Logger mLogger) {
-        this.mParser = mParser;
-        this.mLogger = mLogger;
+    public ErgastProxy(Parser parser, Configuration configuration, Logger logger) {
+        mParser = parser;
+        mConfiguration = configuration;
+        mLogger = logger;
     }
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
-            // final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
+            if (mConfiguration.getRules().isMock()) {
+                return emptyList();
+            }
+
+            final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
             return mParser.parseConstructorsResponseToObjects(TEST_DATA);
         } catch (final Exception e) {
             mLogger.logError("Unable to fetch constructor data from ergast", e);
