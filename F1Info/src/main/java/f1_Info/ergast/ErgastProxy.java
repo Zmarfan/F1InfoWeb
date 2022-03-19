@@ -81,16 +81,14 @@ public class ErgastProxy {
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
-            if (mConfiguration.getRules().isMock()) {
-                return emptyList();
+            if (!mConfiguration.getRules().isMock()) {
+                final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
+                return mParser.parseConstructorsResponseToObjects(TEST_DATA);
             }
-
-            final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
-            return mParser.parseConstructorsResponseToObjects(TEST_DATA);
         } catch (final Exception e) {
-            mLogger.logError("Unable to fetch constructor data from ergast", e);
-            return emptyList();
+            mLogger.logError("fetchAllConstructors", ErgastProxy.class, "Unable to fetch constructor data from ergast", e);
         }
+        return emptyList();
     }
 
     private String readDataAsJsonStringFromUri(final String uri, final int limit) throws IOException {

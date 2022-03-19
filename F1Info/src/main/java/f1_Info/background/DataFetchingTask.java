@@ -25,7 +25,7 @@ public class DataFetchingTask {
             final List<String> insertStatements = constructors.stream().map(this::constructorToInsertStatement).toList();
             System.out.println(String.join("\n", insertStatements));
         } catch (final Exception e) {
-            mLogger.logError("Failed to complete Data Fetching Task", e);
+            mLogger.logError("run", DataFetchingTask.class, "Failed to complete Data Fetching Task", e);
         }
     }
 

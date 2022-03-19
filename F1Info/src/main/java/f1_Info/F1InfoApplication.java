@@ -28,8 +28,8 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 
 	@Scheduled(cron = "*/5 * * * * *")
 	public void runDataFetchingTask() {
-		mLogger.logInfo("Started Data fetching task");
+		mLogger.logInfo("runDataFetchingTask", F1InfoApplication.class, "Started Data fetching task");
 		mDataFetchingTask.run();
-		mLogger.logInfo("Finished Data fetching task");
+		mLogger.logInfo("runDataFetchingTask", F1InfoApplication.class, "Finished Data fetching task");
 	}
 }
