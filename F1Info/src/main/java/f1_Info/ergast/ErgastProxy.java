@@ -1,6 +1,6 @@
 package f1_Info.ergast;
 
-import f1_Info.ergast.responses.ErgastConstructorData;
+import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,20 +21,64 @@ public class ErgastProxy {
     private static final int READ_TIME_OUT = 25000;
     private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=5";
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
+    private static final String TEST_DATA = "{\n" +
+            "    \"MRData\": {\n" +
+            "        \"xmlns\": \"http://ergast.com/mrd/1.5\",\n" +
+            "        \"series\": \"f1\",\n" +
+            "        \"url\": \"http://ergast.com/api/f1/constructors.json\",\n" +
+            "        \"limit\": \"5\",\n" +
+            "        \"offset\": \"0\",\n" +
+            "        \"total\": \"211\",\n" +
+            "        \"ConstructorTable\": {\n" +
+            "            \"Constructors\": [\n" +
+            "                {\n" +
+            "                    \"constructorId\": \"adams\",\n" +
+            "                    \"url\": \"http://en.wikipedia.org/wiki/Adams_(constructor)\",\n" +
+            "                    \"name\": \"Adams\",\n" +
+            "                    \"nationality\": \"American\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"constructorId\": \"afm\",\n" +
+            "                    \"url\": \"http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau\",\n" +
+            "                    \"name\": \"AFM\",\n" +
+            "                    \"nationality\": \"German\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"constructorId\": \"ags\",\n" +
+            "                    \"url\": \"http://en.wikipedia.org/wiki/Automobiles_Gonfaronnaises_Sportives\",\n" +
+            "                    \"name\": \"AGS\",\n" +
+            "                    \"nationality\": \"French\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"constructorId\": \"alfa\",\n" +
+            "                    \"url\": \"http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One\",\n" +
+            "                    \"name\": \"Alfa Romeo\",\n" +
+            "                    \"nationality\": \"Swiss\"\n" +
+            "                },\n" +
+            "                {\n" +
+            "                    \"constructorId\": \"alphatauri\",\n" +
+            "                    \"url\": \"http://en.wikipedia.org/wiki/Scuderia_AlphaTauri\",\n" +
+            "                    \"name\": \"AlphaTauri\",\n" +
+            "                    \"nationality\": \"Italian\"\n" +
+            "                }\n" +
+            "            ]\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
 
-    private final ErgastParser mParser;
+    private final Parser mParser;
     private final Logger mLogger;
 
     @Autowired
-    public ErgastProxy(ErgastParser mParser, Logger mLogger) {
+    public ErgastProxy(Parser mParser, Logger mLogger) {
         this.mParser = mParser;
         this.mLogger = mLogger;
     }
 
-    public List<ErgastConstructorData> fetchAllConstructors() {
+    public List<ConstructorData> fetchAllConstructors() {
         try {
-            final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI);
-            return mParser.parseConstructorsResponseToObjects(responseJson);
+            //final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI);
+            return mParser.parseConstructorsResponseToObjects(TEST_DATA);
         } catch (final Exception e) {
             mLogger.logError("Unable to fetch constructor data from ergast", e);
             return emptyList();

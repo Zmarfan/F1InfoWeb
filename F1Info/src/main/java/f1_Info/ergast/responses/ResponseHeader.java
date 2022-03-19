@@ -6,12 +6,12 @@ import lombok.Value;
 
 @Value
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ErgastResponseHeader {
+public class ResponseHeader {
     long limit;
     long offset;
     long total;
 
-    public ErgastResponseHeader(
+    public ResponseHeader(
         @JsonProperty("limit") long limit,
         @JsonProperty("offset") long offset,
         @JsonProperty("total") long total

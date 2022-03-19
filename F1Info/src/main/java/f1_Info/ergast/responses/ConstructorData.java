@@ -5,13 +5,13 @@ import f1_Info.constants.Country;
 import lombok.Value;
 
 @Value
-public class ErgastConstructorData {
+public class ConstructorData {
     String constructorIdentifier;
     String wikipediaUrl;
     String name;
     Country nationality;
 
-    public ErgastConstructorData(
+    public ConstructorData(
         @JsonProperty("constructorId") String constructorIdentifier,
         @JsonProperty("url") String wikipediaUrl,
         @JsonProperty("name") String name,
