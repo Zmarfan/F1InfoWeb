@@ -1,3 +1,6 @@
 {
+  "databaseUrl": "jdbc:mysql://localhost:3306/f1database",
+  "databaseName": "f1User",
+  "localDatabasePassword": "0Vw7LIMZ7K17",
   "isMock": true
 }
