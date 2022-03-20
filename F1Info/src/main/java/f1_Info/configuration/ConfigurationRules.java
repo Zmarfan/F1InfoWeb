@@ -7,18 +7,18 @@ import lombok.Value;
 public class ConfigurationRules {
     String databaseUrl;
     String databaseName;
-    String localDatabasePassword;
+    String databasePassword;
     boolean isMock;
 
     public ConfigurationRules(
         @JsonProperty("databaseUrl") final String databaseUrl,
         @JsonProperty("databaseName") final String databaseName,
-        @JsonProperty("localDatabasePassword") final String localDatabasePassword,
+        @JsonProperty("databasePassword") final String databasePassword,
         @JsonProperty("isMock") final boolean isMock
     ) {
         this.databaseUrl = databaseUrl;
         this.databaseName = databaseName;
-        this.localDatabasePassword = localDatabasePassword;
+        this.databasePassword = databasePassword;
         this.isMock = isMock;
     }
 }
