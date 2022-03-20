@@ -1,7 +1,6 @@
 package f1_Info;
 
-import f1_Info.background.DataFetchingTask;
-import f1_Info.logger.Logger;
+import f1_Info.background.ConstructorDataFetchingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,20 +15,15 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	}
 
 	@Autowired
-	private DataFetchingTask mDataFetchingTask;
-
-	@Autowired
-	private Logger mLogger;
+	private ConstructorDataFetchingTask mConstructorDataFetchingTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "*/5 * * * * *")
-	public void runDataFetchingTask() {
-		mLogger.logInfo("runDataFetchingTask", F1InfoApplication.class, "Started Data fetching task");
-		mDataFetchingTask.run();
-		mLogger.logInfo("runDataFetchingTask", F1InfoApplication.class, "Finished Data fetching task");
+	@Scheduled(cron = "*/45 * * * * *")
+	public void runConstructorDataFetchingTask() {
+		mConstructorDataFetchingTask.run();
 	}
 }
