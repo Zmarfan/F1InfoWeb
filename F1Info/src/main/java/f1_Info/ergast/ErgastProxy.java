@@ -21,52 +21,8 @@ public class ErgastProxy {
     private static final int CONNECT_TIME_OUT = 10000;
     private static final int READ_TIME_OUT = 25000;
     private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=%d";
-    private static final int CONSTRUCTOR_LIMIT = 10;
+    private static final int CONSTRUCTOR_LIMIT = 250;
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
-    private static final String TEST_DATA = "{\n" +
-            "    \"MRData\": {\n" +
-            "        \"xmlns\": \"http://ergast.com/mrd/1.5\",\n" +
-            "        \"series\": \"f1\",\n" +
-            "        \"url\": \"http://ergast.com/api/f1/constructors.json\",\n" +
-            "        \"limit\": \"5\",\n" +
-            "        \"offset\": \"0\",\n" +
-            "        \"total\": \"211\",\n" +
-            "        \"ConstructorTable\": {\n" +
-            "            \"Constructors\": [\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"adams\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Adams_(constructor)\",\n" +
-            "                    \"name\": \"Adams\",\n" +
-            "                    \"nationality\": \"American\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"afm\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau\",\n" +
-            "                    \"name\": \"AFM\",\n" +
-            "                    \"nationality\": \"German\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"ags\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Automobiles_Gonfaronnaises_Sportives\",\n" +
-            "                    \"name\": \"AGS\",\n" +
-            "                    \"nationality\": \"French\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"alfa\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One\",\n" +
-            "                    \"name\": \"Alfa Romeo\",\n" +
-            "                    \"nationality\": \"Swiss\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"alphatauri\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Scuderia_AlphaTauri\",\n" +
-            "                    \"name\": \"AlphaTauri\",\n" +
-            "                    \"nationality\": \"Italian\"\n" +
-            "                }\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    }\n" +
-            "}";
 
     private final Parser mParser;
     private final Configuration mConfiguration;
@@ -83,7 +39,7 @@ public class ErgastProxy {
         try {
             if (!mConfiguration.getRules().isMock()) {
                 final String responseJson = readDataAsJsonStringFromUri(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT);
-                return mParser.parseConstructorsResponseToObjects(TEST_DATA);
+                return mParser.parseConstructorsResponseToObjects(responseJson);
             }
         } catch (final Exception e) {
             mLogger.logError("fetchAllConstructors", ErgastProxy.class, "Unable to fetch constructor data from ergast", e);

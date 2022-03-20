@@ -22,7 +22,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "*/45 * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runConstructorDataFetchingTask() {
 		mConstructorDataFetchingTask.run();
 	}
