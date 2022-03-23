@@ -44,7 +44,7 @@ public class Fetcher {
 
     private String readConnectionData(final HttpURLConnection connection) throws IOException {
         final BufferedReader streamReader = new BufferedReader(new InputStreamReader(
-                !responseHoldsErrorCode(connection) ? connection.getInputStream() : connection.getErrorStream()
+            !responseHoldsErrorCode(connection) ? connection.getInputStream() : connection.getErrorStream()
         ));
         String inputLine;
         final StringBuilder content = new StringBuilder();
