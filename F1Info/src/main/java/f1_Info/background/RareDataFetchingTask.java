@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ConstructorDataFetchingTask {
+public class RareDataFetchingTask {
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
     private final Logger mLogger;
 
     @Autowired
-    public ConstructorDataFetchingTask(
+    public RareDataFetchingTask(
         ErgastProxy ergastProxy,
         Database database,
         Logger logger
@@ -27,7 +27,7 @@ public class ConstructorDataFetchingTask {
 
     public void run() {
         try {
-            mLogger.logInfo("run", ConstructorDataFetchingTask.class, "Started fetching constructor data");
+            mLogger.logInfo("run", RareDataFetchingTask.class, "Started fetching constructor data");
             final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
             if (!constructors.isEmpty()) {
                 mDatabase.mergeIntoConstructorsData(constructors);
@@ -35,11 +35,11 @@ public class ConstructorDataFetchingTask {
 
             mLogger.logInfo(
                 "run",
-                ConstructorDataFetchingTask.class,
+                RareDataFetchingTask.class,
                 String.format("Finished fetching constructor data, fetched and merged in a total of %d constructors", constructors.size())
             );
         } catch (final Exception e) {
-            mLogger.logError("run", ConstructorDataFetchingTask.class, "Failed to complete Data Fetching Task", e);
+            mLogger.logError("run", RareDataFetchingTask.class, "Failed to complete Data Fetching Task", e);
         }
     }
 }

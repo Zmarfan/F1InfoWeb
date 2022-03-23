@@ -1,6 +1,6 @@
 package f1_Info;
 
-import f1_Info.background.ConstructorDataFetchingTask;
+import f1_Info.background.RareDataFetchingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	}
 
 	@Autowired
-	private ConstructorDataFetchingTask mConstructorDataFetchingTask;
+	private RareDataFetchingTask mRareDataFetchingTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -24,6 +24,6 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 
 	@Scheduled(cron = "0 0 1 */1 * *")
 	public void runMonthlyTasks() {
-		mConstructorDataFetchingTask.run();
+		mRareDataFetchingTask.run();
 	}
 }
