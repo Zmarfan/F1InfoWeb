@@ -27,19 +27,19 @@ public class RareDataFetchingTask {
 
     public void run() {
         try {
-            mLogger.logInfo("run", RareDataFetchingTask.class, "Started fetching constructor data");
+            mLogger.info("run", RareDataFetchingTask.class, "Started fetching constructor data");
             final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
             if (!constructors.isEmpty()) {
                 mDatabase.mergeIntoConstructorsData(constructors);
             }
 
-            mLogger.logInfo(
+            mLogger.info(
                 "run",
                 RareDataFetchingTask.class,
                 String.format("Finished fetching constructor data, fetched and merged in a total of %d constructors", constructors.size())
             );
         } catch (final Exception e) {
-            mLogger.logError("run", RareDataFetchingTask.class, "Failed to complete Data Fetching Task", e);
+            mLogger.severe("run", RareDataFetchingTask.class, "Failed to complete Data Fetching Task", e);
         }
     }
 }

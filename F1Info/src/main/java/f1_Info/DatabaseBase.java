@@ -22,7 +22,7 @@ public abstract class DatabaseBase {
                 mConfiguration.getRules().getDatabasePassword()
             );
         } catch (final SQLException e) {
-            mLogger.logError("getConnection", Database.class, "Unable to establish connection with database", e);
+            mLogger.severe("getConnection", Database.class, "Unable to establish connection with database", e);
             throw e;
         }
     }

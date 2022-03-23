@@ -42,7 +42,7 @@ public class ErgastProxy {
                 return mParser.parseConstructorsResponseToObjects(responseJson);
             }
         } catch (final Exception e) {
-            mLogger.logError("fetchAllConstructors", ErgastProxy.class, "Unable to fetch constructor data from ergast", e);
+            mLogger.severe("fetchAllConstructors", ErgastProxy.class, "Unable to fetch constructor data from ergast", e);
         }
         return emptyList();
     }

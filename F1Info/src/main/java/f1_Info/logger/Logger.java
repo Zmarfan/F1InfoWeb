@@ -11,12 +11,12 @@ public class Logger {
     private static final String ERROR_TEMPLATE = "%s: %s in method: %s in class: %s with exception: %s with the stacktrace: ";
 
     // TODO: Make proper logging
-    public <T> void logInfo(final String methodName, final Class<T> classType, final String message) {
+    public <T> void info(final String methodName, final Class<T> classType, final String message) {
         System.out.println(String.format(INFO_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName()));
     }
 
     // TODO: Make proper logging
-    public <T> void logError(final String methodName, final Class<T> classType, final String message, final Exception exception) {
+    public <T> void severe(final String methodName, final Class<T> classType, final String message, final Exception exception) {
         System.out.println(String.format(ERROR_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName(), exception));
         exception.printStackTrace();
     }

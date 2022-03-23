@@ -32,7 +32,7 @@ public class Configuration {
         try {
             mRules = mObjectMapper.readValue(new File(RULES_LOCATION), ConfigurationRules.class);
         } catch (final Exception e) {
-            mLogger.logError("readConfigurationJson", Configuration.class, "Unable to fetch configuration json", e);
+            mLogger.severe("readConfigurationJson", Configuration.class, "Unable to fetch configuration json", e);
             throw e;
         }
     }
