@@ -1,0 +1,85 @@
+package f1_Info.ergast;
+
+import f1_Info.configuration.Configuration;
+import f1_Info.configuration.ConfigurationRules;
+import f1_Info.constants.Country;
+import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.logger.Logger;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.IOException;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ErgastProxyTest {
+    private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
+    private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
+
+    @Mock
+    Parser mParser;
+
+    @Mock
+    Fetcher mFetcher;
+
+    @Mock
+    Configuration mConfiguration;
+
+    @Mock
+    Logger mLogger;
+
+    @InjectMocks
+    ErgastProxy mErgastProxy;
+
+    @Test
+    void should_not_fetch_constructor_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchAllConstructors();
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+    }
+
+    @Test
+    void should_return_empty_list_of_constructors_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchAllConstructors());
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchAllConstructors());
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        mErgastProxy.fetchAllConstructors();
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_constructors() throws IOException {
+        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", "", "", Country.GERMANY.getNationality()));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchAllConstructors());
+    }
+}
