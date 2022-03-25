@@ -4,6 +4,7 @@ import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.DriverData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -81,5 +83,57 @@ public class ErgastProxyTest {
         when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllConstructors());
+    }
+
+    @Test
+    void should_not_fetch_driver_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchAllDrivers();
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+    }
+
+    @Test
+    void should_return_empty_list_of_drivers_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchAllDrivers());
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchAllDrivers());
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        mErgastProxy.fetchAllDrivers();
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_drivers() throws IOException, ParseException {
+        final List<DriverData> expectedReturnData = List.of(new DriverData(
+            "",
+            "",
+            "",
+            "",
+            "1999-01-01",
+            Country.GERMANY.getNationalityKeywords().get(0),
+            0,
+            ""
+        ));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseDriversResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchAllDrivers());
     }
 }

@@ -2,15 +2,18 @@ package f1_Info.ergast;
 
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.DriverData;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
+    private static final String BAD_JSON_FORMAT = "{field: \"bara skit\"}";
     // region test jsons
     private static final String TEST_CONSTRUCTOR_JSON = "{\n" +
             "    \"MRData\": {\n" +
@@ -35,6 +38,34 @@ public class ParserTest {
             "        }\n" +
             "    }\n" +
             "}";
+
+    private static final String TEST_DRIVER_JSON = "{\n" +
+        "    \"MRData\": {\n" +
+        "        \"limit\": \"2\",\n" +
+        "        \"offset\": \"0\",\n" +
+        "        \"total\": \"854\",\n" +
+        "        \"DriverTable\": {\n" +
+        "            \"Drivers\": [\n" +
+        "                {\n" +
+        "                    \"driverId\": \"abate\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/Carlo_Mario_Abate\",\n" +
+        "                    \"givenName\": \"Carlo\",\n" +
+        "                    \"familyName\": \"Abate\",\n" +
+        "                    \"dateOfBirth\": \"1932-07-10\",\n" +
+        "                    \"nationality\": \"Italian\"\n" +
+        "                },\n" +
+        "                {\n" +
+        "                    \"driverId\": \"abecassis\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/George_Abecassis\",\n" +
+        "                    \"givenName\": \"George\",\n" +
+        "                    \"familyName\": \"Abecassis\",\n" +
+        "                    \"dateOfBirth\": \"1913-03-21\",\n" +
+        "                    \"nationality\": \"British\"\n" +
+        "                }\n" +
+        "            ]\n" +
+        "        }\n" +
+        "    }\n" +
+        "}";
     // endregion
 
     @Test
@@ -60,6 +91,40 @@ public class ParserTest {
 
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_constructors() {
-        assertThrows(IOException.class, () -> new Parser().parseConstructorsResponseToObjects("{field: \"bara skit\"}"));
+        assertThrows(IOException.class, () -> new Parser().parseConstructorsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_drivers_json_to_correct_driver_object_list() throws IOException, ParseException {
+        final List<DriverData> expectedData = List.of(
+            new DriverData(
+                "abate",
+                "http://en.wikipedia.org/wiki/Carlo_Mario_Abate",
+                "Carlo",
+                "Abate",
+                "1932-07-10",
+                Country.ITALY.getNationalityKeywords().get(0),
+                null,
+                null
+            ),
+            new DriverData(
+                "abecassis",
+                "http://en.wikipedia.org/wiki/George_Abecassis",
+                "George",
+                "Abecassis",
+                "1913-03-21",
+                Country.UNITED_KINGDOM.getNationalityKeywords().get(0),
+                null,
+                null
+            )
+        );
+        final List<DriverData> parsedData = new Parser().parseDriversResponseToObjects(TEST_DRIVER_JSON);
+
+        assertEquals(expectedData, parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_drivers() {
+        assertThrows(IOException.class, () -> new Parser().parseDriversResponseToObjects(BAD_JSON_FORMAT));
     }
 }
