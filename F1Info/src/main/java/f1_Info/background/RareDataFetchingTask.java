@@ -2,6 +2,7 @@ package f1_Info.background;
 
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.DriverData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,9 +46,9 @@ public class RareDataFetchingTask {
     }
 
     private void fetchDrivers() throws SQLException {
-        // final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
-        // if (!drivers.isEmpty()) {
-        //     mDatabase.mergeIntoDriversData(drivers);
-        // }
+        final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
+        if (!drivers.isEmpty()) {
+            mDatabase.mergeIntoDriversData(drivers);
+        }
     }
 }
