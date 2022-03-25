@@ -40,8 +40,18 @@ public class ParserTest {
     @Test
     void should_parse_valid_constructors_json_to_correct_constructor_object_list() throws IOException {
         final List<ConstructorData> expectedData = List.of(
-            new ConstructorData("adams", "http://en.wikipedia.org/wiki/Adams_(constructor)", "Adams", Country.UNITED_STATES.getNationalityKeywords().stream().toList().get(0)),
-            new ConstructorData("afm", "http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau", "AFM", Country.GERMANY.getNationalityKeywords().stream().toList().get(0))
+            new ConstructorData(
+                "adams",
+                "http://en.wikipedia.org/wiki/Adams_(constructor)",
+                "Adams",
+                Country.UNITED_STATES.getNationalityKeywords().get(0)
+            ),
+            new ConstructorData(
+                "afm",
+                "http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau",
+                "AFM",
+                Country.GERMANY.getNationalityKeywords().get(0)
+            )
         );
         final List<ConstructorData> parsedData = new Parser().parseConstructorsResponseToObjects(TEST_CONSTRUCTOR_JSON);
 

@@ -75,7 +75,7 @@ public class ErgastProxyTest {
 
     @Test
     void should_return_formatted_data_from_parser_when_fetching_constructors() throws IOException {
-        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", "", "", Country.GERMANY.getNationalityKeywords().stream().toList().get(0)));
+        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", "", "", Country.GERMANY.getNationalityKeywords().get(0)));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(expectedReturnData);

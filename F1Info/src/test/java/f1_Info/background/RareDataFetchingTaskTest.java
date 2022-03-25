@@ -42,8 +42,8 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_merge_in_data_sent_from_ergast_to_database() throws SQLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().stream().toList().get(0)));
+    void should_merge_in_constructors_data_sent_from_ergast_to_database() throws SQLException {
+        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().get(0)));
         when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
 
         mRareDataFetchingTask.run();
@@ -53,7 +53,7 @@ public class RareDataFetchingTaskTest {
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().stream().toList().get(0)));
+        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().get(0)));
         when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoConstructorsData(anyList());
 

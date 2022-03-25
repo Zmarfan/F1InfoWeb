@@ -6,6 +6,7 @@ import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Component
@@ -27,19 +28,26 @@ public class RareDataFetchingTask {
 
     public void run() {
         try {
-            mLogger.info("run", RareDataFetchingTask.class, "Started fetching constructor data");
-            final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
-            if (!constructors.isEmpty()) {
-                mDatabase.mergeIntoConstructorsData(constructors);
-            }
+            mLogger.info("run", RareDataFetchingTask.class, "Started fetching rare data");
 
-            mLogger.info(
-                "run",
-                RareDataFetchingTask.class,
-                String.format("Finished fetching constructor data, fetched and merged in a total of %d constructors", constructors.size())
-            );
+            fetchConstructors();
+            fetchDrivers();
         } catch (final Exception e) {
-            mLogger.severe("run", RareDataFetchingTask.class, "Failed to complete Data Fetching Task", e);
+            mLogger.severe("run", RareDataFetchingTask.class, "Failed to complete rare Data Fetching Task", e);
         }
+    }
+
+    private void fetchConstructors() throws SQLException {
+        final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
+        if (!constructors.isEmpty()) {
+            mDatabase.mergeIntoConstructorsData(constructors);
+        }
+    }
+
+    private void fetchDrivers() throws SQLException {
+        // final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
+        // if (!drivers.isEmpty()) {
+        //     mDatabase.mergeIntoDriversData(drivers);
+        // }
     }
 }
