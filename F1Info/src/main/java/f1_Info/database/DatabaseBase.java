@@ -1,4 +1,4 @@
-package f1_Info;
+package f1_Info.database;
 
 import f1_Info.background.rare_data_fetching_task.Database;
 import f1_Info.configuration.Configuration;

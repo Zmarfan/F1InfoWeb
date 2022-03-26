@@ -1,10 +1,12 @@
 package f1_Info.background;
 
-import f1_Info.DatabaseBase;
+import f1_Info.database.DatabaseBase;
 import f1_Info.configuration.Configuration;
 import f1_Info.logger.Logger;
 
 import java.sql.*;
+
+import static f1_Info.database.DatabaseUtils.setNullableException;
 
 public abstract class TaskDatabase extends DatabaseBase {
     private static final String START_BACKGROUND_JOB_SQL = "insert into background_jobs (name, start_timestamp) values (?,current_timestamp)";
@@ -34,11 +36,7 @@ public abstract class TaskDatabase extends DatabaseBase {
     public void stopBackgroundJob(final long backgroundId, final Exception exception) throws SQLException {
         try (final Connection connection = getConnection()) {
             try (final PreparedStatement preparedStatement = connection.prepareStatement(STOP_BACKGROUND_JOB_SQL)) {
-                if (exception != null) {
-                    preparedStatement.setString(1, exception.toString());
-                } else {
-                    preparedStatement.setNull(1, Types.VARCHAR);
-                }
+                setNullableException(preparedStatement, 1, exception);
                 preparedStatement.setLong(2, backgroundId);
                 preparedStatement.executeUpdate();
             }

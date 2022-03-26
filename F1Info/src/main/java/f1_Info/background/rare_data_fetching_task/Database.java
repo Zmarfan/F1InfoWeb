@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.sql.*;
 import java.util.List;
 
+import static f1_Info.database.DatabaseUtils.*;
+
 @Component
 public class Database extends TaskDatabase {
 
@@ -31,7 +33,7 @@ public class Database extends TaskDatabase {
                 )) {
                     preparedStatement.setString(1, constructorData.getConstructorIdentifier());
                     preparedStatement.setString(2, constructorData.getName());
-                    preparedStatement.setString(3, constructorData.getCountry().getCode());
+                    setCountry(preparedStatement, 3, constructorData.getCountry());
                     preparedStatement.setString(4, constructorData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
@@ -47,20 +49,12 @@ public class Database extends TaskDatabase {
                         "values (?,?,?,?,?,?,?,?) on duplicate key update id = id;"
                 )) {
                     preparedStatement.setString(1, driverData.getDriverIdentifier());
-                    if (driverData.getPermanentNumber().isPresent()) {
-                        preparedStatement.setInt(2, driverData.getPermanentNumber().get());
-                    } else {
-                        preparedStatement.setNull(2, Types.INTEGER);
-                    }
-                    if (driverData.getCode().isPresent()) {
-                        preparedStatement.setString(3, driverData.getCode().get());
-                    } else {
-                        preparedStatement.setNull(3, Types.VARCHAR);
-                    }
+                    setNullableInt(preparedStatement, 2, driverData.getPermanentNumber().orElse(null));
+                    setNullableString(preparedStatement, 3, driverData.getCode().orElse(null));
                     preparedStatement.setString(4, driverData.getFirstName());
                     preparedStatement.setString(5, driverData.getLastName());
-                    preparedStatement.setDate(6, new Date(driverData.getDateOfBirth().getTime()));
-                    preparedStatement.setString(7, driverData.getCountry().getCode());
+                    setDate(preparedStatement, 6, driverData.getDateOfBirth());
+                    setCountry(preparedStatement, 7, driverData.getCountry());
                     preparedStatement.setString(8, driverData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
