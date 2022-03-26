@@ -3,7 +3,9 @@ package f1_Info.ergast;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.logger.Logger;
@@ -20,7 +22,6 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +52,7 @@ public class ErgastProxyTest {
 
         mErgastProxy.fetchAllConstructors();
 
-        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
 
     @Test
@@ -63,7 +64,7 @@ public class ErgastProxyTest {
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllConstructors());
     }
@@ -71,7 +72,7 @@ public class ErgastProxyTest {
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllConstructors();
 
@@ -94,7 +95,7 @@ public class ErgastProxyTest {
 
         mErgastProxy.fetchAllDrivers();
 
-        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
 
     @Test
@@ -106,7 +107,7 @@ public class ErgastProxyTest {
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllDrivers());
     }
@@ -114,7 +115,7 @@ public class ErgastProxyTest {
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllDrivers();
 
@@ -146,7 +147,7 @@ public class ErgastProxyTest {
 
         mErgastProxy.fetchAllSeasons();
 
-        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
 
     @Test
@@ -158,7 +159,7 @@ public class ErgastProxyTest {
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllSeasons());
     }
@@ -166,7 +167,7 @@ public class ErgastProxyTest {
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllSeasons();
 
@@ -189,7 +190,7 @@ public class ErgastProxyTest {
 
         mErgastProxy.fetchAllCircuits();
 
-        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
 
     @Test
@@ -201,7 +202,7 @@ public class ErgastProxyTest {
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllCircuits());
     }
@@ -209,7 +210,7 @@ public class ErgastProxyTest {
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllCircuits();
 

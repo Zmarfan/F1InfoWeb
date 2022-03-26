@@ -15,9 +15,9 @@ public class Fetcher {
     private static final int READ_TIME_OUT = 25000;
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
 
-    public String readDataAsJsonStringFromUri(final String uri, final int limit) throws IOException {
+    public String readDataAsJsonStringFromUri(final String uri) throws IOException {
         try {
-            final HttpURLConnection connection = createGetConnection(String.format(uri, limit));
+            final HttpURLConnection connection = createGetConnection(uri);
             final String data = readConnectionData(connection);
             final int responseCode = connection.getResponseCode();
             connection.disconnect();

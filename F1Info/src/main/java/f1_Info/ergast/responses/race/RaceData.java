@@ -44,13 +44,13 @@ public class RaceData {
         this.round = round;
         this.wikipediaUrl = new Url(wikipediaUrl);
         this.raceName = raceName;
-        this.raceTime = Instant.parse(raceTimeStart);
+        this.raceTime = raceTimeStart != null ? Instant.parse(raceTimeStart) : null;
         this.raceDate = DateUtils.parse(raceDate);
-        this.qualifyingDate = qualifyingDate.getDate();
-        this.sprintDate = sprintDate.getDate();
-        this.firstPracticeDate = firstPracticeDate.getDate();
-        this.secondPracticeDate = secondPracticeDate.getDate();
-        this.thirdPracticeDate = thirdPracticeDate.getDate();
+        this.qualifyingDate = qualifyingDate != null ? qualifyingDate.getDate() : null;
+        this.sprintDate = sprintDate != null ? sprintDate.getDate() : null;
+        this.firstPracticeDate = firstPracticeDate != null ? firstPracticeDate.getDate() : null;
+        this.secondPracticeDate = secondPracticeDate != null ? secondPracticeDate.getDate() : null;
+        this.thirdPracticeDate = thirdPracticeDate != null ? thirdPracticeDate.getDate() : null;
         this.circuitData = circuitData;
     }
 }

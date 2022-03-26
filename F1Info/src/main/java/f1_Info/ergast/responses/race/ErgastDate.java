@@ -12,6 +12,6 @@ class ErgastDate {
     Date date;
 
     public ErgastDate(@JsonProperty("date") String date) throws ParseException {
-        this.date = DateUtils.parse(date);
+        this.date = date != null ? DateUtils.parse(date) : null;
     }
 }

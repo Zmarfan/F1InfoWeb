@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.ergast.responses.race.RaceData;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class Parser {
     private static final List<String> DRIVERS_PARENTS = List.of("DriverTable", "Drivers");
     private static final List<String> SEASON_PARENTS = List.of("SeasonTable", "Seasons");
     private static final List<String> CIRCUIT_PARENTS = List.of("CircuitTable", "Circuits");
+    private static final List<String> RACES_PARENTS = List.of("RaceTable", "Races");
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
@@ -46,6 +48,11 @@ public class Parser {
     public List<CircuitData> parseCircuitsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, CIRCUIT_PARENTS));
         return Arrays.asList(mObjectMapper.readValue(data.getDataString(), CircuitData[].class));
+    }
+
+    public List<RaceData> parseRacesResponseToObjects(final String json) throws IOException {
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACES_PARENTS));
+        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), RaceData[].class));
     }
 
     private String dataExtractor(final JsonNode mainNode, final List<String> parents) {

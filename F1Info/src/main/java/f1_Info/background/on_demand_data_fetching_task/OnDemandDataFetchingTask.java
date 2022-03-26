@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +35,14 @@ public class OnDemandDataFetchingTask extends TaskWrapper {
 
 
     private void fetchRaces() throws SQLException {
-        final Optional<Integer> latestFetchedRaceDataYearInDb = mDatabase.getLatestFetchedSeasonInDb();
-        final List<RaceData> raceData = new LinkedList<>();
+        final Optional<Integer> nextSeasonToFetch = mDatabase.getNextSeasonToFetchForRaces();
+        if (nextSeasonToFetch.isEmpty()) {
+            return;
+        }
 
+        final List<RaceData> races = mErgastProxy.fetchRacesFromYear(nextSeasonToFetch.get());
+        if (!races.isEmpty()) {
+            mDatabase.mergeIntoRacesData(races);
+        }
     }
 }
