@@ -2,9 +2,7 @@ package f1_Info.background.rare_data_fetching_task;
 
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
@@ -99,6 +98,27 @@ public class RareDataFetchingTaskTest {
         mRareDataFetchingTask.run();
 
         verify(mDatabase).mergeIntoSeasonsData(data);
+    }
+
+    @Test
+    void should_not_attempt_to_merge_in_circuits_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
+        when(mErgastProxy.fetchAllCircuits()).thenReturn(emptyList());
+
+        mRareDataFetchingTask.run();
+
+        verify(mDatabase, never()).mergeIntoCircuitsData(anyList());
+    }
+
+    @Test
+    void should_merge_in_circuits_data_sent_from_ergast_to_database() throws SQLException {
+        final List<CircuitData> data = List.of(
+            new CircuitData("", "", "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
+        );
+        when(mErgastProxy.fetchAllCircuits()).thenReturn(data);
+
+        mRareDataFetchingTask.run();
+
+        verify(mDatabase).mergeIntoCircuitsData(data);
     }
 
     @Test

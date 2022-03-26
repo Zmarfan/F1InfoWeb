@@ -3,9 +3,7 @@ package f1_Info.ergast;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -179,5 +178,50 @@ public class ErgastProxyTest {
         when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllSeasons());
+    }
+
+    @Test
+    void should_not_fetch_circuit_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchAllCircuits();
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+    }
+
+    @Test
+    void should_return_empty_list_of_circuits_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchAllCircuits());
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchAllCircuits());
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        mErgastProxy.fetchAllCircuits();
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_circuits() throws IOException {
+        final List<CircuitData> expectedReturnData = List.of(
+            new CircuitData("", "", "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
+        );
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseCircuitsResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchAllCircuits());
     }
 }

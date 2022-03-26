@@ -1,12 +1,11 @@
 package f1_Info.ergast;
 
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -87,6 +86,40 @@ public class ParserTest {
         "    }\n" +
         "  }\n" +
         "}";
+
+    private static final String TEST_CIRCUITS_JSON = "{\n" +
+        "    \"MRData\": {\n" +
+        "        \"limit\": \"2\",\n" +
+        "        \"offset\": \"0\",\n" +
+        "        \"total\": \"79\",\n" +
+        "        \"CircuitTable\": {\n" +
+        "            \"Circuits\": [\n" +
+        "                {\n" +
+        "                    \"circuitId\": \"adelaide\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/Adelaide_Street_Circuit\",\n" +
+        "                    \"circuitName\": \"Adelaide Street Circuit\",\n" +
+        "                    \"Location\": {\n" +
+        "                        \"lat\": \"-34.9272\",\n" +
+        "                        \"long\": \"138.617\",\n" +
+        "                        \"locality\": \"Adelaide\",\n" +
+        "                        \"country\": \"Australia\"\n" +
+        "                    }\n" +
+        "                },\n" +
+        "                {\n" +
+        "                    \"circuitId\": \"ain-diab\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/Ain-Diab_Circuit\",\n" +
+        "                    \"circuitName\": \"Ain Diab\",\n" +
+        "                    \"Location\": {\n" +
+        "                        \"lat\": \"33.5786\",\n" +
+        "                        \"long\": \"-7.6875\",\n" +
+        "                        \"locality\": \"Casablanca\",\n" +
+        "                        \"country\": \"Morocco\"\n" +
+        "                    }\n" +
+        "                }\n" +
+        "            ]\n" +
+        "        }\n" +
+        "    }\n" +
+        "}";
     // endregion
 
     @Test
@@ -163,5 +196,31 @@ public class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_seasons() {
         assertThrows(IOException.class, () -> new Parser().parseSeasonsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_circuits_json_to_correct_season_object_list() throws IOException {
+        final List<CircuitData> expectedData = List.of(
+            new CircuitData("adelaide", "http://en.wikipedia.org/wiki/Adelaide_Street_Circuit", "Adelaide Street Circuit", new LocationData(
+                BigDecimal.valueOf(-34.9272),
+                BigDecimal.valueOf(138.617),
+                "Adelaide",
+                Country.AUSTRALIA.getNames().get(0)
+            )),
+            new CircuitData("ain-diab", "http://en.wikipedia.org/wiki/Ain-Diab_Circuit", "Ain Diab", new LocationData(
+                BigDecimal.valueOf(33.5786),
+                BigDecimal.valueOf(-7.6875),
+                "Casablanca",
+                Country.MOROCCO.getNames().get(0)
+            ))
+        );
+        final List<CircuitData> parsedData = new Parser().parseCircuitsResponseToObjects(TEST_CIRCUITS_JSON);
+
+        assertEquals(expectedData, parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_circuits() {
+        assertThrows(IOException.class, () -> new Parser().parseCircuitsResponseToObjects(BAD_JSON_FORMAT));
     }
 }
