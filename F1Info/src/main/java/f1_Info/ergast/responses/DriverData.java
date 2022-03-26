@@ -34,7 +34,7 @@ public class DriverData {
         this.wikipediaUrl = wikipediaUrl;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = DateUtils.parseStringToDate(dateOfBirthString);
+        this.dateOfBirth = DateUtils.parse(dateOfBirthString);
         this.country = Country.fromNationality(nationality);
         this.permanentNumber = permanentNumber;
         this.code = code;
