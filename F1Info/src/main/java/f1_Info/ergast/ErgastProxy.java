@@ -21,7 +21,7 @@ public class ErgastProxy {
     private static final int CONSTRUCTOR_LIMIT = 250;
     private static final int DRIVER_LIMIT = 1000;
     private static final int SEASON_LIMIT = 200;
-    private static final int CIRCUIT_LIMIT = 5;
+    private static final int CIRCUIT_LIMIT = 200;
 
     private final Parser mParser;
     private final Fetcher mFetcher;
