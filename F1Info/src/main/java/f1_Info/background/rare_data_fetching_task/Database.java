@@ -89,7 +89,7 @@ public class Database extends TaskDatabase {
                     preparedStatement.setString(1, circuitData.getCircuitIdentifier());
                     preparedStatement.setString(2, circuitData.getCircuitName());
                     preparedStatement.setString(3, circuitData.getLocationData().getLocationName());
-                    preparedStatement.setString(4, circuitData.getLocationData().getCountry());
+                    setCountry(preparedStatement, 4, circuitData.getLocationData().getCountry());
                     preparedStatement.setBigDecimal(5, circuitData.getLocationData().getLatitude());
                     preparedStatement.setBigDecimal(6, circuitData.getLocationData().getLongitude());
                     preparedStatement.setString(7, circuitData.getWikipediaUrl());

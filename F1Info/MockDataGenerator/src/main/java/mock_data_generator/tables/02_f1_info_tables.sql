@@ -37,8 +37,8 @@ create table circuits(
   name varchar(255) not null unique,
   location_name varchar(255),
   country_code varchar(255),
-  latitude numeric,
-  longitude numeric,
+  latitude float,
+  longitude float,
   wikipedia_page varchar(255) not null,
 
   constraint circuits_pk primary key (id, circuit_identifier),

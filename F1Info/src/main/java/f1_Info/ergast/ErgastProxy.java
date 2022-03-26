@@ -74,7 +74,7 @@ public class ErgastProxy {
 
     public List<CircuitData> fetchAllCircuits() {
         try {
-            if (mConfiguration.getRules().isMock()) {
+            if (!mConfiguration.getRules().isMock()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(FETCH_ALL_CIRCUITS_URI, CIRCUIT_LIMIT);
                 return mParser.parseCircuitsResponseToObjects(responseJson);
             }

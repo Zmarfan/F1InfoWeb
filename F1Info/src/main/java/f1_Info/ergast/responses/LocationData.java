@@ -1,6 +1,7 @@
 package f1_Info.ergast.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import f1_Info.constants.Country;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ public class LocationData {
     BigDecimal latitude;
     BigDecimal longitude;
     String locationName;
-    String country;
+    Country country;
 
     public LocationData(
         @JsonProperty("lat") BigDecimal latitude,
@@ -21,6 +22,6 @@ public class LocationData {
         this.latitude = latitude;
         this.longitude = longitude;
         this.locationName = locationName;
-        this.country = countryName;
+        this.country = Country.fromName(countryName);
     }
 }
