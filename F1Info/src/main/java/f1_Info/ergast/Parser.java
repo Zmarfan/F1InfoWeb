@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.circuit.CircuitData;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

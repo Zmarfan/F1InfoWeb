@@ -3,6 +3,8 @@ package f1_Info.background.rare_data_fetching_task;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
 package f1_Info.ergast;
 
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.CircuitData;
+import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
 import f1_Info.ergast.responses.SeasonData;

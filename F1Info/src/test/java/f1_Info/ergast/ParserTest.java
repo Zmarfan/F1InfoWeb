@@ -2,6 +2,8 @@ package f1_Info.ergast;
 
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.ergast.responses.circuit.LocationData;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

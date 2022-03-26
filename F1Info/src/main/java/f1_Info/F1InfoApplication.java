@@ -1,5 +1,6 @@
 package f1_Info;
 
+import f1_Info.background.on_demand_data_fetching_task.OnDemandDataFetchingTask;
 import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +18,9 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Autowired
 	private RareDataFetchingTask mRareDataFetchingTask;
 
+	@Autowired
+	private OnDemandDataFetchingTask mOnDemandDataFetchingTask;
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(F1InfoApplication.class);
@@ -25,5 +29,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "*/20 * * * * *")
 	public void runMonthlyTasks() {
 		mRareDataFetchingTask.run();
+	}
+
+	@Scheduled(cron = "*/19 * * * * *")
+	public void runDailyTasks() {
+		mOnDemandDataFetchingTask.run();
 	}
 }

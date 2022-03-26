@@ -1,6 +1,5 @@
 package f1_Info.background;
 
-import f1_Info.background.rare_data_fetching_task.Database;
 import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import f1_Info.logger.Logger;
 
@@ -10,10 +9,10 @@ public abstract class TaskWrapper {
     private final String mTaskName;
 
     protected final Logger mLogger;
-    private final Database mDatabase;
+    private final TaskDatabase mDatabase;
 
     public TaskWrapper(
-        final Database database,
+        final TaskDatabase database,
         final Logger logger,
         final String taskName
     ) {

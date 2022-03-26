@@ -2,10 +2,10 @@ package f1_Info.background.rare_data_fetching_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.CircuitData;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
 import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static f1_Info.database.DatabaseUtils.*;
 
-@Component
+@Component(value = "RareDataFetchingTaskDatabase")
 public class Database extends TaskDatabase {
 
     @Autowired

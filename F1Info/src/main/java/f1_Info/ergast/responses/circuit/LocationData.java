@@ -1,4 +1,4 @@
-package f1_Info.ergast.responses;
+package f1_Info.ergast.responses.circuit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.constants.Country;
