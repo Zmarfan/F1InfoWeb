@@ -13,8 +13,6 @@ import java.util.List;
 
 @Component
 public class Database extends TaskDatabase {
-    private static final String CONSTRUCTOR_MERGE_SQL_STATEMENT = "insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values (?,?,?,?) on duplicate key update id = id;";
-    private static final String DRIVER_MERGE_SQL_STATEMENT = "insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page) values (?,?,?,?,?,?,?,?) on duplicate key update id = id;";
 
     @Autowired
     public Database(
@@ -27,7 +25,9 @@ public class Database extends TaskDatabase {
     public void mergeIntoConstructorsData(final List<ConstructorData> constructorDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final ConstructorData constructorData : constructorDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(CONSTRUCTOR_MERGE_SQL_STATEMENT)) {
+                try (final PreparedStatement preparedStatement = connection.prepareStatement(
+                    "insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values (?,?,?,?) on duplicate key update id = id;"
+                )) {
                     preparedStatement.setString(1, constructorData.getConstructorIdentifier());
                     preparedStatement.setString(2, constructorData.getName());
                     preparedStatement.setString(3, constructorData.getCountry().getCode());
@@ -41,7 +41,10 @@ public class Database extends TaskDatabase {
     public void mergeIntoDriversData(final List<DriverData> driverDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final DriverData driverData : driverDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(DRIVER_MERGE_SQL_STATEMENT)) {
+                try (final PreparedStatement preparedStatement = connection.prepareStatement(
+                    "insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page)" +
+                        "values (?,?,?,?,?,?,?,?) on duplicate key update id = id;"
+                )) {
                     preparedStatement.setString(1, driverData.getDriverIdentifier());
                     if (driverData.getPermanentNumber().isPresent()) {
                         preparedStatement.setInt(2, driverData.getPermanentNumber().get());
