@@ -1,6 +1,7 @@
 package f1_Info.background.rare_data_fetching_task;
 
 import f1_Info.background.TaskWrapper;
+import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
@@ -13,8 +14,6 @@ import java.util.List;
 
 @Component
 public class RareDataFetchingTask extends TaskWrapper {
-    private static final String TASK_NAME = "RARE_DATA_FETCHING_TASK";
-
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
 
@@ -24,7 +23,7 @@ public class RareDataFetchingTask extends TaskWrapper {
         Database database,
         Logger logger
     ) {
-        super(database, logger, TASK_NAME);
+        super(database, logger, Tasks.RARE_DATA_FETCHING_TASK.getName());
         mErgastProxy = ergastProxy;
         mDatabase = database;
     }
