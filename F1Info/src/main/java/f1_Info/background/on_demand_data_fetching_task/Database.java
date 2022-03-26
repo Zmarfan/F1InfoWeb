@@ -66,7 +66,7 @@ public class Database extends TaskDatabase {
                             "second_practice_date," +
                             "third_practice_date," +
                             "wikipedia_page" +
-                        ") values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?,?);"
+                        ") values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?,?) on duplicate key update id = id;"
                 )) {
                     preparedStatement.setString(1, raceData.getCircuitData().getCircuitIdentifier());
                     preparedStatement.setInt(2, raceData.getYear());
