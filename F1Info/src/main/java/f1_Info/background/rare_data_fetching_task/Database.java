@@ -4,6 +4,7 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,6 +62,20 @@ public class Database extends TaskDatabase {
                     preparedStatement.setDate(6, new Date(driverData.getDateOfBirth().getTime()));
                     preparedStatement.setString(7, driverData.getCountry().getCode());
                     preparedStatement.setString(8, driverData.getWikipediaUrl());
+                    preparedStatement.executeUpdate();
+                }
+            }
+        }
+    }
+
+    public void mergeIntoSeasonsData(final List<SeasonData> seasonDataList) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            for (final SeasonData seasonData : seasonDataList) {
+                try (final PreparedStatement preparedStatement = connection.prepareStatement(
+                    "insert into seasons (year, wikipedia_page) values (?,?) on duplicate key update year = year;"
+                )) {
+                    preparedStatement.setInt(1, seasonData.getYear());
+                    preparedStatement.setString(2, seasonData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }

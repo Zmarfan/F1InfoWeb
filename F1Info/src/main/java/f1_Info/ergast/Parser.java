@@ -3,10 +3,7 @@ package f1_Info.ergast;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.ResponseHeader;
-import f1_Info.ergast.responses.TopResponseData;
+import f1_Info.ergast.responses.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,6 +19,7 @@ public class Parser {
     private static final String MAIN_DATA_LABEL = "MRData";
     private static final List<String> CONSTRUCTORS_PARENTS = List.of("ConstructorTable", "Constructors");
     private static final List<String> DRIVERS_PARENTS = List.of("DriverTable", "Drivers");
+    private static final List<String> SEASON_PARENTS = List.of("SeasonTable", "Seasons");
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
@@ -36,6 +34,11 @@ public class Parser {
     public List<DriverData> parseDriversResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, DRIVERS_PARENTS));
         return Arrays.asList(mObjectMapper.readValue(data.getDataString(), DriverData[].class));
+    }
+
+    public List<SeasonData> parseSeasonsResponseToObjects(final String json) throws IOException {
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, SEASON_PARENTS));
+        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), SeasonData[].class));
     }
 
     private String dataExtractor(final JsonNode mainNode, final List<String> parents) {

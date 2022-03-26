@@ -5,6 +5,7 @@ import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class RareDataFetchingTask extends TaskWrapper {
     protected void runTask() throws SQLException {
         fetchConstructors();
         fetchDrivers();
+        fetchSeasons();
     }
 
     private void fetchConstructors() throws SQLException {
@@ -45,6 +47,13 @@ public class RareDataFetchingTask extends TaskWrapper {
         final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
         if (!drivers.isEmpty()) {
             mDatabase.mergeIntoDriversData(drivers);
+        }
+    }
+
+    private void fetchSeasons() throws SQLException {
+        final List<SeasonData> seasons = mErgastProxy.fetchAllSeasons();
+        if (!seasons.isEmpty()) {
+            mDatabase.mergeIntoSeasonsData(seasons);
         }
     }
 }
