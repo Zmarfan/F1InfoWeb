@@ -1,6 +1,6 @@
 package f1_Info;
 
-import f1_Info.background.RareDataFetchingTask;
+import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

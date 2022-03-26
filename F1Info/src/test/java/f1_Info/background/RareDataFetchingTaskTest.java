@@ -1,5 +1,7 @@
 package f1_Info.background;
 
+import f1_Info.background.rare_data_fetching_task.Database;
+import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;

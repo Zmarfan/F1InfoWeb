@@ -1,6 +1,6 @@
 package f1_Info;
 
-import f1_Info.background.Database;
+import f1_Info.background.rare_data_fetching_task.Database;
 import f1_Info.configuration.Configuration;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
