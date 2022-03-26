@@ -1,6 +1,7 @@
 package f1_Info.database;
 
 import f1_Info.constants.Country;
+import f1_Info.constants.Url;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,6 +15,10 @@ public class DatabaseUtils {
 
     public static void setCountry(final PreparedStatement preparedStatement, final int parameterIndex, final Country value) throws SQLException {
         preparedStatement.setString(parameterIndex, value.getCode());
+    }
+
+    public static void setUrl(final PreparedStatement preparedStatement, final int parameterIndex, final Url url) throws SQLException {
+        preparedStatement.setString(parameterIndex, url.getUrl());
     }
 
     public static void setNullableInt(final PreparedStatement preparedStatement, final int parameterIndex, final Integer value) throws SQLException {

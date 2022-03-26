@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 public class ErgastProxyTest {
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
+    private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
 
     @Mock
     Parser mParser;
@@ -77,7 +78,7 @@ public class ErgastProxyTest {
 
     @Test
     void should_return_formatted_data_from_parser_when_fetching_constructors() throws IOException {
-        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", "", "", Country.GERMANY.getNationalityKeywords().get(0)));
+        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", WIKIPEDIA_URL, "", Country.GERMANY.getNationalityKeywords().get(0)));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(expectedReturnData);
@@ -122,7 +123,7 @@ public class ErgastProxyTest {
     void should_return_formatted_data_from_parser_when_fetching_drivers() throws IOException, ParseException {
         final List<DriverData> expectedReturnData = List.of(new DriverData(
             "",
-            "",
+            WIKIPEDIA_URL,
             "",
             "",
             "1999-01-01",
@@ -172,7 +173,7 @@ public class ErgastProxyTest {
 
     @Test
     void should_return_formatted_data_from_parser_when_fetching_seasons() throws IOException {
-        final List<SeasonData> expectedReturnData = List.of(new SeasonData(1950, ""));
+        final List<SeasonData> expectedReturnData = List.of(new SeasonData(1950, WIKIPEDIA_URL));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(expectedReturnData);
@@ -216,7 +217,7 @@ public class ErgastProxyTest {
     @Test
     void should_return_formatted_data_from_parser_when_fetching_circuits() throws IOException {
         final List<CircuitData> expectedReturnData = List.of(
-            new CircuitData("", "", "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
+            new CircuitData("", WIKIPEDIA_URL, "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);

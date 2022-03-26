@@ -1,12 +1,15 @@
 package f1_Info.ergast.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import f1_Info.constants.Url;
 import lombok.Value;
+
+import java.net.MalformedURLException;
 
 @Value
 public class CircuitData {
     String circuitIdentifier;
-    String wikipediaUrl;
+    Url wikipediaUrl;
     String circuitName;
     LocationData locationData;
 
@@ -15,9 +18,9 @@ public class CircuitData {
         @JsonProperty("url") String wikipediaUrl,
         @JsonProperty("circuitName") String circuitName,
         @JsonProperty("Location") LocationData locationData
-    ) {
+    ) throws MalformedURLException {
         this.circuitIdentifier = circuitIdentifier;
-        this.wikipediaUrl = wikipediaUrl;
+        this.wikipediaUrl = new Url(wikipediaUrl);
         this.circuitName = circuitName;
         this.locationData = locationData;
     }

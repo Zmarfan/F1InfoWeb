@@ -2,9 +2,11 @@ package f1_Info.ergast.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.constants.Country;
+import f1_Info.constants.Url;
 import f1_Info.utils.DateUtils;
 import lombok.Value;
 
+import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Optional;
@@ -12,7 +14,7 @@ import java.util.Optional;
 @Value
 public class DriverData {
     String driverIdentifier;
-    String wikipediaUrl;
+    Url wikipediaUrl;
     String firstName;
     String lastName;
     Date dateOfBirth;
@@ -29,9 +31,9 @@ public class DriverData {
         @JsonProperty("nationality") String nationality,
         @JsonProperty("permanentNumber") Integer permanentNumber,
         @JsonProperty("code") String code
-    ) throws ParseException {
+    ) throws ParseException, MalformedURLException {
         this.driverIdentifier = driverIdentifier;
-        this.wikipediaUrl = wikipediaUrl;
+        this.wikipediaUrl = new Url(wikipediaUrl);
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = DateUtils.parse(dateOfBirthString);

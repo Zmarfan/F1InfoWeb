@@ -37,7 +37,7 @@ public class Database extends TaskDatabase {
                     preparedStatement.setString(1, constructorData.getConstructorIdentifier());
                     preparedStatement.setString(2, constructorData.getName());
                     setCountry(preparedStatement, 3, constructorData.getCountry());
-                    preparedStatement.setString(4, constructorData.getWikipediaUrl());
+                    setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }
@@ -58,7 +58,7 @@ public class Database extends TaskDatabase {
                     preparedStatement.setString(5, driverData.getLastName());
                     setDate(preparedStatement, 6, driverData.getDateOfBirth());
                     setCountry(preparedStatement, 7, driverData.getCountry());
-                    preparedStatement.setString(8, driverData.getWikipediaUrl());
+                    setUrl(preparedStatement, 8, driverData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }
@@ -72,7 +72,7 @@ public class Database extends TaskDatabase {
                     "insert into seasons (year, wikipedia_page) values (?,?) on duplicate key update year = year;"
                 )) {
                     preparedStatement.setInt(1, seasonData.getYear());
-                    preparedStatement.setString(2, seasonData.getWikipediaUrl());
+                    setUrl(preparedStatement, 2, seasonData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }
@@ -92,7 +92,7 @@ public class Database extends TaskDatabase {
                     setCountry(preparedStatement, 4, circuitData.getLocationData().getCountry());
                     preparedStatement.setBigDecimal(5, circuitData.getLocationData().getLatitude());
                     preparedStatement.setBigDecimal(6, circuitData.getLocationData().getLongitude());
-                    preparedStatement.setString(7, circuitData.getWikipediaUrl());
+                    setUrl(preparedStatement, 7, circuitData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }

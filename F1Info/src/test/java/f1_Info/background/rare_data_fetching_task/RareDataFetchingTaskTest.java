@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
@@ -21,6 +22,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RareDataFetchingTaskTest {
+
+    private static final String WIKIPEDIA_URL = "https://f1.com/gaming/visst";
 
     @Mock
     ErgastProxy mErgastProxy;
@@ -44,8 +47,8 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_merge_in_constructors_data_sent_from_ergast_to_database() throws SQLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().get(0)));
+    void should_merge_in_constructors_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException {
+        final List<ConstructorData> data = List.of(new ConstructorData("1", WIKIPEDIA_URL, "3", Country.GERMANY.getNationalityKeywords().get(0)));
         when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
 
         mRareDataFetchingTask.run();
@@ -63,10 +66,10 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_merge_in_drivers_data_sent_from_ergast_to_database() throws SQLException, ParseException {
+    void should_merge_in_drivers_data_sent_from_ergast_to_database() throws SQLException, ParseException, MalformedURLException {
         final List<DriverData> data = List.of(new DriverData(
             "",
-            "",
+            WIKIPEDIA_URL,
             "",
             "",
             "1999-01-01",
@@ -91,8 +94,8 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_merge_in_seasons_data_sent_from_ergast_to_database() throws SQLException {
-        final List<SeasonData> data = List.of(new SeasonData(1950, ""));
+    void should_merge_in_seasons_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException {
+        final List<SeasonData> data = List.of(new SeasonData(1950, WIKIPEDIA_URL));
         when(mErgastProxy.fetchAllSeasons()).thenReturn(data);
 
         mRareDataFetchingTask.run();
@@ -110,9 +113,9 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_merge_in_circuits_data_sent_from_ergast_to_database() throws SQLException {
+    void should_merge_in_circuits_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException {
         final List<CircuitData> data = List.of(
-            new CircuitData("", "", "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
+            new CircuitData("", WIKIPEDIA_URL, "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
         );
         when(mErgastProxy.fetchAllCircuits()).thenReturn(data);
 
@@ -122,8 +125,8 @@ public class RareDataFetchingTaskTest {
     }
 
     @Test
-    void should_log_severe_if_exception_is_thrown() throws SQLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", "2", "3", Country.GERMANY.getNationalityKeywords().get(0)));
+    void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException {
+        final List<ConstructorData> data = List.of(new ConstructorData("1", WIKIPEDIA_URL, "3", Country.GERMANY.getNationalityKeywords().get(0)));
         when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoConstructorsData(anyList());
 
