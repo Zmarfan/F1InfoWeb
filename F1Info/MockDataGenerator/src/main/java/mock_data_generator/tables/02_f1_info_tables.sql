@@ -51,8 +51,8 @@ create table races(
   round int not null,
   circuit_id int not null,
   name varchar(255) not null,
-  date date not null unique,
-  time time unique,
+  date date not null,
+  time time,
   wikipedia_page varchar(255),
 
   constraint races_pk primary key (id, year, round),
