@@ -4,6 +4,7 @@ import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,6 +80,25 @@ public class RareDataFetchingTaskTest {
         mRareDataFetchingTask.run();
 
         verify(mDatabase).mergeIntoDriversData(data);
+    }
+
+    @Test
+    void should_not_attempt_to_merge_in_seasons_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
+        when(mErgastProxy.fetchAllSeasons()).thenReturn(emptyList());
+
+        mRareDataFetchingTask.run();
+
+        verify(mDatabase, never()).mergeIntoSeasonsData(anyList());
+    }
+
+    @Test
+    void should_merge_in_seasons_data_sent_from_ergast_to_database() throws SQLException {
+        final List<SeasonData> data = List.of(new SeasonData(1950, ""));
+        when(mErgastProxy.fetchAllSeasons()).thenReturn(data);
+
+        mRareDataFetchingTask.run();
+
+        verify(mDatabase).mergeIntoSeasonsData(data);
     }
 
     @Test

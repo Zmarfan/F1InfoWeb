@@ -5,6 +5,7 @@ import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -135,5 +136,48 @@ public class ErgastProxyTest {
         when(mParser.parseDriversResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllDrivers());
+    }
+
+    @Test
+    void should_not_fetch_season_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString(), anyInt());
+    }
+
+    @Test
+    void should_return_empty_list_of_seasons_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchAllSeasons());
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchAllSeasons());
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString(), anyInt())).thenThrow(new IOException());
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_seasons() throws IOException {
+        final List<SeasonData> expectedReturnData = List.of(new SeasonData(1950, ""));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchAllSeasons());
     }
 }

@@ -3,6 +3,7 @@ package f1_Info.ergast;
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -66,6 +67,26 @@ public class ParserTest {
         "        }\n" +
         "    }\n" +
         "}";
+
+    private static final String TEST_SEASONS_JSON = "{\n" +
+        "  \"MRData\": {\n" +
+        "    \"limit\": \"2\",\n" +
+        "    \"offset\": \"0\",\n" +
+        "    \"total\": \"73\",\n" +
+        "    \"SeasonTable\": {\n" +
+        "      \"Seasons\": [\n" +
+        "        {\n" +
+        "          \"season\": \"1950\",\n" +
+        "          \"url\": \"http://en.wikipedia.org/wiki/1950_Formula_One_season\"\n" +
+        "        },\n" +
+        "        {\n" +
+        "          \"season\": \"1951\",\n" +
+        "          \"url\": \"http://en.wikipedia.org/wiki/1951_Formula_One_season\"\n" +
+        "        }\n" +
+        "      ]\n" +
+        "    }\n" +
+        "  }\n" +
+        "}";
     // endregion
 
     @Test
@@ -126,5 +147,21 @@ public class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_drivers() {
         assertThrows(IOException.class, () -> new Parser().parseDriversResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_seasons_json_to_correct_season_object_list() throws IOException {
+        final List<SeasonData> expectedData = List.of(
+            new SeasonData(1950, "http://en.wikipedia.org/wiki/1950_Formula_One_season"),
+            new SeasonData(1951, "http://en.wikipedia.org/wiki/1951_Formula_One_season")
+        );
+        final List<SeasonData> parsedData = new Parser().parseSeasonsResponseToObjects(TEST_SEASONS_JSON);
+
+        assertEquals(expectedData, parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_seasons() {
+        assertThrows(IOException.class, () -> new Parser().parseSeasonsResponseToObjects(BAD_JSON_FORMAT));
     }
 }
