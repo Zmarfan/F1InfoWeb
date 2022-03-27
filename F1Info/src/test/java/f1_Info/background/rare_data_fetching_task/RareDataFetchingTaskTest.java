@@ -3,7 +3,8 @@ package f1_Info.background.rare_data_fetching_task;
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.logger.Logger;
@@ -16,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -57,34 +57,6 @@ public class RareDataFetchingTaskTest {
         mRareDataFetchingTask.run();
 
         verify(mDatabase).mergeIntoConstructorsData(data);
-    }
-
-    @Test
-    void should_not_attempt_to_merge_in_drivers_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
-        when(mErgastProxy.fetchAllDrivers()).thenReturn(emptyList());
-
-        mRareDataFetchingTask.run();
-
-        verify(mDatabase, never()).mergeIntoDriversData(anyList());
-    }
-
-    @Test
-    void should_merge_in_drivers_data_sent_from_ergast_to_database() throws SQLException, ParseException, MalformedURLException {
-        final List<DriverData> data = List.of(new DriverData(
-            "",
-            WIKIPEDIA_URL,
-            "",
-            "",
-            "1999-01-01",
-            Country.GERMANY.getNationalityKeywords().get(0),
-            0,
-            ""
-        ));
-        when(mErgastProxy.fetchAllDrivers()).thenReturn(data);
-
-        mRareDataFetchingTask.run();
-
-        verify(mDatabase).mergeIntoDriversData(data);
     }
 
     @Test

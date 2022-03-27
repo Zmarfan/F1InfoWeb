@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum Tasks {
     RARE_DATA_FETCHING_TASK(1, "RARE_DATA_FETCHING_TASK"),
-    ON_DEMAND_DATA_FETCHING_TASK(2, "ON_DEMAND_DATA_FETCHING_TASK");
+    FETCH_DRIVERS_TASK(2, "Fetch Drivers Task"),
+    FETCH_RACES_TASK(3, "Fetch Races Task");
 
     private final int id;
     private final String name;

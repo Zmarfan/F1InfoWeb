@@ -1,4 +1,4 @@
-package f1_Info.background.on_demand_data_fetching_task;
+package f1_Info.background.fetch_races_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OnDemandDataFetchingTask extends TaskWrapper {
+public class FetchRacesTask extends TaskWrapper {
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
 
     @Autowired
-    public OnDemandDataFetchingTask(
+    public FetchRacesTask(
         ErgastProxy ergastProxy,
         Database database,
         Logger logger
@@ -35,7 +35,7 @@ public class OnDemandDataFetchingTask extends TaskWrapper {
 
     @Override
     protected Tasks getTaskType() {
-        return Tasks.ON_DEMAND_DATA_FETCHING_TASK;
+        return Tasks.FETCH_RACES_TASK;
     }
 
     private void fetchRaces() throws SQLException {

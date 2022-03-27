@@ -4,7 +4,6 @@ import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
@@ -33,7 +32,6 @@ public class RareDataFetchingTask extends TaskWrapper {
     @Override
     protected void runTask() throws SQLException {
         fetchConstructors();
-        fetchDrivers();
         fetchSeasons();
         fetchCircuits();
     }
@@ -47,13 +45,6 @@ public class RareDataFetchingTask extends TaskWrapper {
         final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
         if (!constructors.isEmpty()) {
             mDatabase.mergeIntoConstructorsData(constructors);
-        }
-    }
-
-    private void fetchDrivers() throws SQLException {
-        final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
-        if (!drivers.isEmpty()) {
-            mDatabase.mergeIntoDriversData(drivers);
         }
     }
 

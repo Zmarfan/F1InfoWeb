@@ -1,4 +1,4 @@
-package f1_Info.background.on_demand_data_fetching_task;
+package f1_Info.background.fetch_races_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static f1_Info.database.DatabaseUtils.*;
 
-@Component(value = "OnDemandDataFetchingTask")
+@Component(value = "FetchRacesTaskDatabase")
 public class Database extends TaskDatabase {
     private static final int FIRST_SEASON_IN_FORMULA_1 = 1950;
 

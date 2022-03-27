@@ -1,6 +1,7 @@
 package f1_Info;
 
-import f1_Info.background.on_demand_data_fetching_task.OnDemandDataFetchingTask;
+import f1_Info.background.fetch_drivers_task.FetchDriversTask;
+import f1_Info.background.fetch_races_task.FetchRacesTask;
 import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +20,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private RareDataFetchingTask mRareDataFetchingTask;
 
 	@Autowired
-	private OnDemandDataFetchingTask mOnDemandDataFetchingTask;
+	private FetchDriversTask mFetchDriversTask;
+
+	@Autowired
+	private FetchRacesTask mFetchRacesTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -31,8 +35,13 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		mRareDataFetchingTask.run();
 	}
 
-	@Scheduled(cron = "*/19 * * * * *")
-	public void runDailyTasks() {
-		mOnDemandDataFetchingTask.run();
+	@Scheduled(cron = "0 * * * * *")
+	public void runFetchDriversTask() {
+		mFetchDriversTask.run();
+	}
+
+	@Scheduled(cron = "1 * * * * *")
+	public void runFetchRacesTask() {
+		mFetchRacesTask.run();
 	}
 }

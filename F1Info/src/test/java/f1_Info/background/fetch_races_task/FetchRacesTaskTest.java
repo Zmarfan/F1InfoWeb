@@ -1,4 +1,4 @@
-package f1_Info.background.on_demand_data_fetching_task;
+package f1_Info.background.fetch_races_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class OnDemandDataFetchingTaskTest {
+public class FetchRacesTaskTest {
     private static final String WIKIPEDIA_URL = "https://f1.com/gaming/visst";
 
     @Mock
@@ -38,13 +38,13 @@ public class OnDemandDataFetchingTaskTest {
     Logger mLogger;
 
     @InjectMocks
-    OnDemandDataFetchingTask mOnDemandDataFetchingTask;
+    FetchRacesTask mFetchRacesTask;
 
     @Test
     void should_not_call_ergast_for_races_data_if_there_is_no_next_season_to_fetch_for() throws SQLException {
         when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.empty());
 
-        mOnDemandDataFetchingTask.runTask();
+        mFetchRacesTask.runTask();
 
         verify(mErgastProxy, never()).fetchRacesFromYear(anyInt());
     }
@@ -54,7 +54,7 @@ public class OnDemandDataFetchingTaskTest {
         when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.of(1998));
         when(mErgastProxy.fetchRacesFromYear(anyInt())).thenReturn(emptyList());
 
-        mOnDemandDataFetchingTask.run();
+        mFetchRacesTask.run();
 
         verify(mDatabase, never()).mergeIntoRacesData(anyList());
     }
@@ -64,7 +64,7 @@ public class OnDemandDataFetchingTaskTest {
         when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.of(1998));
         when(mErgastProxy.fetchRacesFromYear(1998)).thenReturn(getRaceData());
 
-        mOnDemandDataFetchingTask.run();
+        mFetchRacesTask.run();
 
         verify(mDatabase).mergeIntoRacesData(getRaceData());
     }
@@ -75,7 +75,7 @@ public class OnDemandDataFetchingTaskTest {
         when(mErgastProxy.fetchRacesFromYear(1998)).thenReturn(getRaceData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoRacesData(anyList());
 
-        mOnDemandDataFetchingTask.run();
+        mFetchRacesTask.run();
 
         verify(mLogger).severe(anyString(), eq(TaskWrapper.class), anyString(), any(SQLException.class));
     }
