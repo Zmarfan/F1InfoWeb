@@ -1,5 +1,6 @@
 package f1_Info.background.rare_data_fetching_task;
 
+import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.*;
@@ -134,6 +135,6 @@ public class RareDataFetchingTaskTest {
 
         mRareDataFetchingTask.run();
 
-        verify(mLogger).severe(anyString(), eq(RareDataFetchingTask.class), anyString(), any(SQLException.class));
+        verify(mLogger).severe(anyString(), eq(TaskWrapper.class), anyString(), any(SQLException.class));
     }
 }

@@ -23,7 +23,7 @@ public class OnDemandDataFetchingTask extends TaskWrapper {
         Database database,
         Logger logger
     ) {
-        super(database, logger, Tasks.RARE_DATA_FETCHING_TASK.getName());
+        super(database, logger, Tasks.ON_DEMAND_DATA_FETCHING_TASK.getName());
         mErgastProxy = ergastProxy;
         mDatabase = database;
     }

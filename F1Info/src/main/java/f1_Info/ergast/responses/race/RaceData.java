@@ -7,8 +7,8 @@ import f1_Info.utils.DateUtils;
 import lombok.Value;
 
 import java.net.MalformedURLException;
+import java.sql.Time;
 import java.text.ParseException;
-import java.time.Instant;
 import java.util.Date;
 
 @Value
@@ -17,12 +17,17 @@ public class RaceData {
     int round;
     Url wikipediaUrl;
     String raceName;
-    Instant raceTime;
+    Time raceTime;
     Date raceDate;
+    Time qualifyingTime;
     Date qualifyingDate;
+    Time sprintTime;
     Date sprintDate;
+    Time firstPracticeTime;
     Date firstPracticeDate;
+    Time secondPracticeTime;
     Date secondPracticeDate;
+    Time thirdPracticeTime;
     Date thirdPracticeDate;
     CircuitData circuitData;
 
@@ -33,24 +38,29 @@ public class RaceData {
         @JsonProperty("raceName") String raceName,
         @JsonProperty("time") String raceTimeStart,
         @JsonProperty("date") String raceDate,
-        @JsonProperty("Qualifying") ErgastDate qualifyingDate,
-        @JsonProperty("Sprint") ErgastDate sprintDate,
-        @JsonProperty("FirstPractice") ErgastDate firstPracticeDate,
-        @JsonProperty("SecondPractice") ErgastDate secondPracticeDate,
-        @JsonProperty("ThirdPractice") ErgastDate thirdPracticeDate,
+        @JsonProperty("Qualifying") ErgastSessionTimes qualifyingDateAndTime,
+        @JsonProperty("Sprint") ErgastSessionTimes sprintDateAndTime,
+        @JsonProperty("FirstPractice") ErgastSessionTimes firstPracticeDateAndTime,
+        @JsonProperty("SecondPractice") ErgastSessionTimes secondPracticeDateAndTime,
+        @JsonProperty("ThirdPractice") ErgastSessionTimes thirdPracticeDateAndTime,
         @JsonProperty("Circuit") CircuitData circuitData
     ) throws MalformedURLException, ParseException {
         this.year = year;
         this.round = round;
         this.wikipediaUrl = new Url(wikipediaUrl);
         this.raceName = raceName;
-        this.raceTime = raceTimeStart != null ? Instant.parse(raceTimeStart) : null;
+        this.raceTime = raceTimeStart != null ? DateUtils.parseTime(raceTimeStart) : null;
         this.raceDate = DateUtils.parse(raceDate);
-        this.qualifyingDate = qualifyingDate != null ? qualifyingDate.getDate() : null;
-        this.sprintDate = sprintDate != null ? sprintDate.getDate() : null;
-        this.firstPracticeDate = firstPracticeDate != null ? firstPracticeDate.getDate() : null;
-        this.secondPracticeDate = secondPracticeDate != null ? secondPracticeDate.getDate() : null;
-        this.thirdPracticeDate = thirdPracticeDate != null ? thirdPracticeDate.getDate() : null;
+        this.qualifyingTime = qualifyingDateAndTime != null ? qualifyingDateAndTime.getTime() : null;
+        this.qualifyingDate = qualifyingDateAndTime != null ? qualifyingDateAndTime.getDate() : null;
+        this.sprintTime = sprintDateAndTime != null ? sprintDateAndTime.getTime() : null;
+        this.sprintDate = sprintDateAndTime != null ? sprintDateAndTime.getDate() : null;
+        this.firstPracticeTime = firstPracticeDateAndTime != null ? firstPracticeDateAndTime.getTime() : null;
+        this.firstPracticeDate = firstPracticeDateAndTime != null ? firstPracticeDateAndTime.getDate() : null;
+        this.secondPracticeTime = secondPracticeDateAndTime != null ? secondPracticeDateAndTime.getTime() : null;
+        this.secondPracticeDate = secondPracticeDateAndTime != null ? secondPracticeDateAndTime.getDate() : null;
+        this.thirdPracticeTime = thirdPracticeDateAndTime != null ? thirdPracticeDateAndTime.getTime() : null;
+        this.thirdPracticeDate = thirdPracticeDateAndTime != null ? thirdPracticeDateAndTime.getDate() : null;
         this.circuitData = circuitData;
     }
 }

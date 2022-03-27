@@ -1,6 +1,5 @@
 package f1_Info.background;
 
-import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
 import f1_Info.logger.Logger;
 
 import java.util.Optional;
@@ -32,7 +31,7 @@ public abstract class TaskWrapper {
             runTask();
         } catch (final Exception e) {
             exception = e;
-            mLogger.severe("run", RareDataFetchingTask.class, "Failed to complete " + mTaskName, e);
+            mLogger.severe("run", TaskWrapper.class, "Failed to complete " + mTaskName, e);
         } finally {
             stopBackgroundJob(id.get(), exception);
         }
@@ -44,7 +43,7 @@ public abstract class TaskWrapper {
         try {
             return Optional.of(mDatabase.startBackgroundJob(mTaskName));
         } catch (final Exception e) {
-            mLogger.severe("startBackgroundJob", RareDataFetchingTask.class, "Failed to init " + mTaskName, e);
+            mLogger.severe("startBackgroundJob", TaskWrapper.class, "Failed to init " + mTaskName, e);
             return Optional.empty();
         }
     }
@@ -53,7 +52,7 @@ public abstract class TaskWrapper {
         try {
             mDatabase.stopBackgroundJob(backgroundId, exception);
         } catch (final Exception e) {
-            mLogger.severe("stopBackgroundJob", RareDataFetchingTask.class, "Failed to finish " + mTaskName, e);
+            mLogger.severe("stopBackgroundJob", TaskWrapper.class, "Failed to finish " + mTaskName, e);
         }
     }
 }

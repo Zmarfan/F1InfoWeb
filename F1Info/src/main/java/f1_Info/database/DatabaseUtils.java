@@ -3,9 +3,7 @@ package f1_Info.database;
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.time.Instant;
 import java.util.Date;
 
@@ -15,6 +13,14 @@ public class DatabaseUtils {
             preparedStatement.setDate(parameterIndex, new java.sql.Date(date.getTime()));
         } else {
             preparedStatement.setNull(parameterIndex, Types.DATE);
+        }
+    }
+
+    public static void setTime(final PreparedStatement preparedStatement, final int parameterIndex, final Time time) throws SQLException {
+        if (time != null) {
+            preparedStatement.setTime(parameterIndex, time);
+        } else {
+            preparedStatement.setNull(parameterIndex, Types.TIME);
         }
     }
 

@@ -4,6 +4,8 @@ import f1_Info.constants.Country;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.race.ErgastSessionTimes;
+import f1_Info.ergast.responses.race.RaceData;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -122,6 +124,89 @@ public class ParserTest {
         "        }\n" +
         "    }\n" +
         "}";
+
+    private static final String TEST_RACES_JSON = "{\n" +
+        "    \"MRData\": {\n" +
+        "        \"limit\": \"2\",\n" +
+        "        \"offset\": \"0\",\n" +
+        "        \"total\": \"22\",\n" +
+        "        \"RaceTable\": {\n" +
+        "            \"season\": \"2021\",\n" +
+        "            \"Races\": [\n" +
+        "                {\n" +
+        "                    \"season\": \"2021\",\n" +
+        "                    \"round\": \"1\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix\",\n" +
+        "                    \"raceName\": \"Bahrain Grand Prix\",\n" +
+        "                    \"Circuit\": {\n" +
+        "                        \"circuitId\": \"bahrain\",\n" +
+        "                        \"url\": \"http://en.wikipedia.org/wiki/Bahrain_International_Circuit\",\n" +
+        "                        \"circuitName\": \"Bahrain International Circuit\",\n" +
+        "                        \"Location\": {\n" +
+        "                            \"lat\": \"26.0325\",\n" +
+        "                            \"long\": \"50.5106\",\n" +
+        "                            \"locality\": \"Sakhir\",\n" +
+        "                            \"country\": \"Bahrain\"\n" +
+        "                        }\n" +
+        "                    },\n" +
+        "                    \"date\": \"2021-03-28\",\n" +
+        "                    \"time\": \"15:00:00Z\",\n" +
+        "                    \"FirstPractice\": {\n" +
+        "                        \"date\": \"2021-03-26\",\n" +
+        "                        \"time\": \"12:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"SecondPractice\": {\n" +
+        "                        \"date\": \"2021-03-26\",\n" +
+        "                        \"time\": \"15:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"ThirdPractice\": {\n" +
+        "                        \"date\": \"2021-03-27\",\n" +
+        "                        \"time\": \"10:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"Qualifying\": {\n" +
+        "                        \"date\": \"2021-03-27\",\n" +
+        "                        \"time\": \"17:00:00Z\"\n" +
+        "                    }\n" +
+        "                },\n" +
+        "                {\n" +
+        "                    \"season\": \"2021\",\n" +
+        "                    \"round\": \"2\",\n" +
+        "                    \"url\": \"http://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix\",\n" +
+        "                    \"raceName\": \"Emilia Romagna Grand Prix\",\n" +
+        "                    \"Circuit\": {\n" +
+        "                        \"circuitId\": \"imola\",\n" +
+        "                        \"url\": \"http://en.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari\",\n" +
+        "                        \"circuitName\": \"Autodromo Enzo e Dino Ferrari\",\n" +
+        "                        \"Location\": {\n" +
+        "                            \"lat\": \"44.3439\",\n" +
+        "                            \"long\": \"11.7167\",\n" +
+        "                            \"locality\": \"Imola\",\n" +
+        "                            \"country\": \"Italy\"\n" +
+        "                        }\n" +
+        "                    },\n" +
+        "                    \"date\": \"2021-04-18\",\n" +
+        "                    \"time\": \"13:00:00Z\",\n" +
+        "                    \"FirstPractice\": {\n" +
+        "                        \"date\": \"2021-04-16\",\n" +
+        "                        \"time\": \"07:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"SecondPractice\": {\n" +
+        "                        \"date\": \"2021-04-16\",\n" +
+        "                        \"time\": \"11:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"ThirdPractice\": {\n" +
+        "                        \"date\": \"2021-04-17\",\n" +
+        "                        \"time\": \"15:00:00Z\"\n" +
+        "                    },\n" +
+        "                    \"Qualifying\": {\n" +
+        "                        \"date\": \"2021-04-17\",\n" +
+        "                        \"time\": \"17:00:00Z\"\n" +
+        "                    }\n" +
+        "                }\n" +
+        "            ]\n" +
+        "        }\n" +
+        "    }\n" +
+        "}";
     // endregion
 
     @Test
@@ -224,5 +309,57 @@ public class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_circuits() {
         assertThrows(IOException.class, () -> new Parser().parseCircuitsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_races_json_to_correct_race_object_list() throws IOException, ParseException {
+        final List<RaceData> expectedData = List.of(
+            new RaceData(
+                2021,
+                1,
+                "http://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix",
+                "Bahrain Grand Prix",
+                "15:00:00Z",
+                "2021-03-28",
+                new ErgastSessionTimes("2021-03-27", "17:00:00Z"),
+                null,
+                new ErgastSessionTimes("2021-03-26", "12:00:00Z"),
+                new ErgastSessionTimes("2021-03-26", "15:00:00Z"),
+                new ErgastSessionTimes("2021-03-27", "10:00:00Z"),
+                new CircuitData(
+                    "bahrain",
+                    "http://en.wikipedia.org/wiki/Bahrain_International_Circuit",
+                    "Bahrain International Circuit",
+                    new LocationData(BigDecimal.valueOf(26.0325), BigDecimal.valueOf(50.5106), "Sakhir", Country.BAHRAIN.getNames().get(0))
+                )
+            ),
+            new RaceData(
+                2021,
+                2,
+                "http://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix",
+                "Emilia Romagna Grand Prix",
+                "13:00:00Z",
+                "2021-04-18",
+                new ErgastSessionTimes("2021-04-17", "17:00:00Z"),
+                null,
+                new ErgastSessionTimes("2021-04-16", "07:00:00Z"),
+                new ErgastSessionTimes("2021-04-16", "11:00:00Z"),
+                new ErgastSessionTimes("2021-04-17", "15:00:00Z"),
+                new CircuitData(
+                    "imola",
+                    "http://en.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari",
+                    "Autodromo Enzo e Dino Ferrari",
+                    new LocationData(BigDecimal.valueOf(44.3439), BigDecimal.valueOf(11.7167), "Imola", Country.ITALY.getNames().get(0))
+                )
+            )
+        );
+        final List<RaceData> parsedData = new Parser().parseRacesResponseToObjects(TEST_RACES_JSON);
+
+        assertEquals(expectedData, parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_races() {
+        assertThrows(IOException.class, () -> new Parser().parseRacesResponseToObjects(BAD_JSON_FORMAT));
     }
 }

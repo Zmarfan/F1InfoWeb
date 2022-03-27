@@ -8,6 +8,7 @@ import f1_Info.ergast.responses.DriverData;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -227,5 +228,55 @@ public class ErgastProxyTest {
         when(mParser.parseCircuitsResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllCircuits());
+    }
+
+    @Test
+    void should_not_fetch_race_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchRacesFromYear(1998);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_races_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchRacesFromYear(1998));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_races() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchRacesFromYear(1998));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_races() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchRacesFromYear(1998);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_races() throws IOException, ParseException {
+        final List<RaceData> expectedReturnData = List.of(
+            new RaceData(1998, 1, WIKIPEDIA_URL, "race", null, "1998-01-01", null, null, null, null, null, new CircuitData(
+                "circuit",
+                WIKIPEDIA_URL,
+                "circuit",
+                new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "location", Country.GERMANY.getNames().get(0))
+            ))
+        );
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseRacesResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchRacesFromYear(1998));
     }
 }

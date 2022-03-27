@@ -45,24 +45,37 @@ create table circuits(
   constraint circuits_country_code foreign key (country_code) references countries(country_code)
 );
 
+create table time_and_dates(
+  id int not null auto_increment,
+  date date,
+  time time,
+
+  constraint time_and_dates_pk primary key (id)
+);
+
 create table races(
   id int not null auto_increment,
   year int not null,
   round int not null,
   circuit_id int not null,
   name varchar(255) not null,
-  race_time_start time,
-  race_date date not null,
-  qualifying_date date,
-  sprint_date date,
-  first_practice_date date,
-  second_practice_date date,
-  third_practice_date date,
+  race_time_and_date_id int,
+  qualifying_time_and_date_id int,
+  sprint_time_and_date_id int,
+  first_practice_time_and_date_id int,
+  second_practice_time_and_date_id int,
+  third_practice_time_and_date_id int,
   wikipedia_page varchar(255),
 
   constraint races_pk primary key (id, year, round),
   constraint races_year foreign key (year) references seasons(year),
-  constraint races_circuit_id foreign key (circuit_id) references circuits(id)
+  constraint races_circuit_id foreign key (circuit_id) references circuits(id),
+  constraint races_race_time_and_date_id foreign key (race_time_and_date_id) references time_and_dates(id),
+  constraint races_qualifying_time_and_date_id foreign key (qualifying_time_and_date_id) references time_and_dates(id),
+  constraint races_sprint_time_and_date_id foreign key (sprint_time_and_date_id) references time_and_dates(id),
+  constraint races_first_practice_time_and_date_id foreign key (first_practice_time_and_date_id) references time_and_dates(id),
+  constraint races_second_practice_time_and_date_id foreign key (second_practice_time_and_date_id) references time_and_dates(id),
+  constraint races_third_practice_time_and_date_id foreign key (third_practice_time_and_date_id) references time_and_dates(id)
 );
 
 create table pit_stops(
