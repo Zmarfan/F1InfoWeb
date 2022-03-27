@@ -1,11 +1,19 @@
+create table background_tasks(
+  id int not null unique,
+  name varchar(255) not null unique,
+
+  constraint background_tasks_pk primary key (id)
+);
+
 create table background_jobs(
   id int not null auto_increment,
-  name varchar(255) not null,
+  task_id int not null,
   start_timestamp timestamp not null,
   done_timestamp timestamp,
   error_message varchar(255),
 
-  constraint background_jobs_pk primary key (id, name)
+  constraint background_jobs_pk primary key (id, task_id),
+  constraint background_jobs_task_id foreign key (task_id) references background_tasks(id)
 );
 
 create table countries(

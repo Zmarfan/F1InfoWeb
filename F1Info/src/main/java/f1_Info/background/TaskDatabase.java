@@ -22,7 +22,7 @@ public abstract class TaskDatabase extends DatabaseBase {
     public long startBackgroundJob(final Tasks task) throws SQLException {
         try (final Connection connection = getConnection()) {
             try (final PreparedStatement preparedStatement = connection.prepareStatement(START_BACKGROUND_JOB_SQL, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, task.getName());
+                preparedStatement.setInt(1, task.getId());
                 preparedStatement.executeUpdate();
                 final ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
