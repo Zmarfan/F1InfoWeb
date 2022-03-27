@@ -2,7 +2,6 @@ package f1_Info.background.rare_data_fetching_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +24,6 @@ public class Database extends TaskDatabase {
         Logger logger
     ) {
         super(configuration, logger);
-    }
-
-    public void mergeIntoConstructorsData(final List<ConstructorData> constructorDataList) throws SQLException {
-        try (final Connection connection = getConnection()) {
-            for (final ConstructorData constructorData : constructorDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values (?,?,?,?) on duplicate key update id = id;"
-                )) {
-                    preparedStatement.setString(1, constructorData.getConstructorIdentifier());
-                    preparedStatement.setString(2, constructorData.getName());
-                    setCountry(preparedStatement, 3, constructorData.getCountry());
-                    setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
-                    preparedStatement.executeUpdate();
-                }
-            }
-        }
     }
 
     public void mergeIntoCircuitsData(final List<CircuitData> circuitDataList) throws SQLException {

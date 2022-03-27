@@ -3,7 +3,6 @@ package f1_Info.background.rare_data_fetching_task;
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.logger.Logger;
@@ -39,25 +38,6 @@ public class RareDataFetchingTaskTest {
     RareDataFetchingTask mRareDataFetchingTask;
 
     @Test
-    void should_not_attempt_to_merge_in_constructors_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
-        when(mErgastProxy.fetchAllConstructors()).thenReturn(emptyList());
-
-        mRareDataFetchingTask.run();
-
-        verify(mDatabase, never()).mergeIntoConstructorsData(anyList());
-    }
-
-    @Test
-    void should_merge_in_constructors_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", WIKIPEDIA_URL, "3", Country.GERMANY.getNationalityKeywords().get(0)));
-        when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
-
-        mRareDataFetchingTask.run();
-
-        verify(mDatabase).mergeIntoConstructorsData(data);
-    }
-
-    @Test
     void should_not_attempt_to_merge_in_circuits_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
         when(mErgastProxy.fetchAllCircuits()).thenReturn(emptyList());
 
@@ -80,9 +60,11 @@ public class RareDataFetchingTaskTest {
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException {
-        final List<ConstructorData> data = List.of(new ConstructorData("1", WIKIPEDIA_URL, "3", Country.GERMANY.getNationalityKeywords().get(0)));
-        when(mErgastProxy.fetchAllConstructors()).thenReturn(data);
-        doThrow(new SQLException("error")).when(mDatabase).mergeIntoConstructorsData(anyList());
+        final List<CircuitData> data = List.of(
+            new CircuitData("", WIKIPEDIA_URL, "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
+        );
+        when(mErgastProxy.fetchAllCircuits()).thenReturn(data);
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoCircuitsData(anyList());
 
         mRareDataFetchingTask.run();
 

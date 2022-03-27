@@ -1,5 +1,6 @@
 package f1_Info;
 
+import f1_Info.background.fetch_constructors_task.FetchConstructorsTask;
 import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.background.fetch_races_task.FetchRacesTask;
 import f1_Info.background.fetch_seasons_task.FetchSeasonsTask;
@@ -29,6 +30,9 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Autowired
 	private FetchRacesTask mFetchRacesTask;
 
+	@Autowired
+	private FetchConstructorsTask mFetchConstructorsTask;
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(F1InfoApplication.class);
@@ -52,5 +56,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "2 * * * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
+	}
+
+	@Scheduled(cron = "3 * * * * *")
+	public void runFetchConstructorsTask() {
+		mFetchConstructorsTask.run();
 	}
 }
