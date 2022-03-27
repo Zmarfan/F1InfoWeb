@@ -1,7 +1,6 @@
 package f1_Info.background.fetch_drivers_task;
 
 import f1_Info.background.TaskWrapper;
-import f1_Info.background.rare_data_fetching_task.Database;
 import f1_Info.constants.Country;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.DriverData;
