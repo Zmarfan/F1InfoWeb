@@ -4,7 +4,7 @@ import f1_Info.background.fetch_constructors_task.FetchConstructorsTask;
 import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.background.fetch_races_task.FetchRacesTask;
 import f1_Info.background.fetch_seasons_task.FetchSeasonsTask;
-import f1_Info.background.rare_data_fetching_task.RareDataFetchingTask;
+import f1_Info.background.fetch_circuits_task.FetchCircuitsTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +19,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	}
 
 	@Autowired
-	private RareDataFetchingTask mRareDataFetchingTask;
+	private FetchCircuitsTask mFetchCircuitsTask;
 
 	@Autowired
 	private FetchDriversTask mFetchDriversTask;
@@ -38,28 +38,28 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "*/20 * * * * *")
+	@Scheduled(cron = "0 * * * * *")
 	public void runMonthlyTasks() {
-		mRareDataFetchingTask.run();
+		mFetchCircuitsTask.run();
 	}
 
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "1 * * * * *")
 	public void runFetchDriversTask() {
 		mFetchDriversTask.run();
 	}
 
-	@Scheduled(cron = "1 * * * * *")
+	@Scheduled(cron = "2 * * * * *")
 	public void runFetchSeasonsTask() {
 		mFetchSeasonsTask.run();
-	}
-
-	@Scheduled(cron = "2 * * * * *")
-	public void runFetchRacesTask() {
-		mFetchRacesTask.run();
 	}
 
 	@Scheduled(cron = "3 * * * * *")
 	public void runFetchConstructorsTask() {
 		mFetchConstructorsTask.run();
+	}
+
+	@Scheduled(cron = "4 * * * * *")
+	public void runFetchRacesTask() {
+		mFetchRacesTask.run();
 	}
 }

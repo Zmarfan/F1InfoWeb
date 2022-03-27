@@ -1,4 +1,4 @@
-package f1_Info.background.rare_data_fetching_task;
+package f1_Info.background.fetch_circuits_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
@@ -15,7 +15,7 @@ import java.util.List;
 import static f1_Info.database.DatabaseUtils.setCountry;
 import static f1_Info.database.DatabaseUtils.setUrl;
 
-@Component(value = "RareDataFetchingTaskDatabase")
+@Component(value = "FetchCircuitsTaskDatabase")
 public class Database extends TaskDatabase {
 
     @Autowired

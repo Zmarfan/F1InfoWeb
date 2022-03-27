@@ -1,4 +1,4 @@
-package f1_Info.background.rare_data_fetching_task;
+package f1_Info.background.fetch_circuits_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
@@ -12,12 +12,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class RareDataFetchingTask extends TaskWrapper {
+public class FetchCircuitsTask extends TaskWrapper {
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
 
     @Autowired
-    public RareDataFetchingTask(
+    public FetchCircuitsTask(
         ErgastProxy ergastProxy,
         Database database,
         Logger logger

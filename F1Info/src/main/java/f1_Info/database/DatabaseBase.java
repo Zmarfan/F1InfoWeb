@@ -1,6 +1,5 @@
 package f1_Info.database;
 
-import f1_Info.background.rare_data_fetching_task.Database;
 import f1_Info.configuration.Configuration;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public abstract class DatabaseBase {
                 mConfiguration.getRules().getDatabasePassword()
             );
         } catch (final SQLException e) {
-            mLogger.severe("getConnection", Database.class, "Unable to establish connection with database", e);
+            mLogger.severe("getConnection", DatabaseBase.class, "Unable to establish connection with database", e);
             throw e;
         }
     }

@@ -1,4 +1,4 @@
-package f1_Info.background.rare_data_fetching_task;
+package f1_Info.background.fetch_circuits_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class RareDataFetchingTaskTest {
+public class FetchCircuitsTaskTest {
     private static final String WIKIPEDIA_URL = "https://f1.com/gaming/visst";
 
     @Mock
@@ -35,13 +35,13 @@ public class RareDataFetchingTaskTest {
     Logger mLogger;
 
     @InjectMocks
-    RareDataFetchingTask mRareDataFetchingTask;
+    FetchCircuitsTask mFetchCircuitsTask;
 
     @Test
     void should_not_attempt_to_merge_in_circuits_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
         when(mErgastProxy.fetchAllCircuits()).thenReturn(emptyList());
 
-        mRareDataFetchingTask.run();
+        mFetchCircuitsTask.run();
 
         verify(mDatabase, never()).mergeIntoCircuitsData(anyList());
     }
@@ -53,7 +53,7 @@ public class RareDataFetchingTaskTest {
         );
         when(mErgastProxy.fetchAllCircuits()).thenReturn(data);
 
-        mRareDataFetchingTask.run();
+        mFetchCircuitsTask.run();
 
         verify(mDatabase).mergeIntoCircuitsData(data);
     }
@@ -66,7 +66,7 @@ public class RareDataFetchingTaskTest {
         when(mErgastProxy.fetchAllCircuits()).thenReturn(data);
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoCircuitsData(anyList());
 
-        mRareDataFetchingTask.run();
+        mFetchCircuitsTask.run();
 
         verify(mLogger).severe(anyString(), eq(TaskWrapper.class), anyString(), any(SQLException.class));
     }
