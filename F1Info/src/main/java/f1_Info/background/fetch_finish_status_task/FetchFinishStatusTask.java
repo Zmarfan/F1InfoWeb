@@ -6,6 +6,7 @@ import f1_Info.constants.FinishStatus;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.FinishStatusData;
 import f1_Info.logger.Logger;
+import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,13 +34,7 @@ public class FetchFinishStatusTask extends TaskWrapper {
         final List<FinishStatusData> finishStatuses = mErgastProxy.fetchAllFinishStatuses();
         if (!finishStatuses.isEmpty()) {
             checkFetchedFinishStatuses(finishStatuses);
-
-            mDatabase.mergeIntoFinishStatusData(finishStatuses);
-            mLogger.info(
-                "runTask",
-                FetchFinishStatusTask.class,
-                String.format("Fetched a total of %d finish statuses entries from ergast and merged into database", finishStatuses.size())
-            );
+            mergeIntoDatabase(finishStatuses);
         }
     }
 
@@ -49,12 +44,36 @@ public class FetchFinishStatusTask extends TaskWrapper {
     }
 
     private void checkFetchedFinishStatuses(final List<FinishStatusData> finishStatusData) {
-        final List<FinishStatusData> unsupportedData = finishStatusData.stream().filter(statusData -> !FinishStatus.exists(statusData.getId())).toList();
-        unsupportedData.forEach(entry -> mLogger.warning("checkFetchedFinishStatuses", FetchFinishStatusTask.class, String.format(
-            "Fetched finish status data with id: %d and name: %s that is not implemented in enum," +
-                "will store it in database but will not be able to read it properly",
-            entry.getId(),
-            entry.getStatus()
-        )));
+        finishStatusData
+            .stream()
+            .filter(statusData -> !FinishStatus.exists(statusData.getId()))
+            .forEach(entry -> mLogger.warning("checkFetchedFinishStatuses", FetchFinishStatusTask.class, String.format(
+                "Fetched finish status data with id: %d and name: %s that is not implemented in enum," +
+                    "will store it in database but will not be able to read it properly",
+                entry.getId(),
+                entry.getStatus()
+            )));
+    }
+
+    private void mergeIntoDatabase(final List<FinishStatusData> finishStatuses) {
+        try {
+            mDatabase.mergeIntoFinishStatusData(finishStatuses);
+            mLogger.info(
+                "mergeIntoDatabase",
+                FetchFinishStatusTask.class,
+                String.format("Fetched a total of %d finish statuses entries from ergast and merged into database", finishStatuses.size())
+            );
+        } catch (final SQLException e) {
+            mLogger.severe(
+                "mergeIntoDatabase",
+                FetchFinishStatusTask.class,
+                String.format(
+                    "Unable to merge in a total of %d entries for finish statuses into the database. Data: %s",
+                    finishStatuses.size(),
+                    ListUtils.listToString(finishStatuses, FinishStatusData::toString)
+                ),
+                e
+            );
+        }
     }
 }
