@@ -2,7 +2,6 @@ package f1_Info.background.fetch_constructors_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
-import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.logger.Logger;
