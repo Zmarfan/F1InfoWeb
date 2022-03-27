@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Tasks {
-    RARE_DATA_FETCHING_TASK(1, "RARE_DATA_FETCHING_TASK"),
+    FETCH_CIRCUITS_TASK(1, "Fetch Circuits Task"),
     FETCH_DRIVERS_TASK(2, "Fetch Drivers Task"),
     FETCH_RACES_TASK(3, "Fetch Races Task"),
     FETCH_SEASONS_TASK(4, "Fetch Seasons Task"),

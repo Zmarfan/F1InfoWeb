@@ -37,6 +37,6 @@ public class FetchCircuitsTask extends TaskWrapper {
 
     @Override
     protected Tasks getTaskType() {
-        return Tasks.RARE_DATA_FETCHING_TASK;
+        return Tasks.FETCH_CIRCUITS_TASK;
     }
 }
