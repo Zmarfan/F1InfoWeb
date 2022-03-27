@@ -3,7 +3,6 @@ package f1_Info.background.rare_data_fetching_task;
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +37,6 @@ public class Database extends TaskDatabase {
                     preparedStatement.setString(2, constructorData.getName());
                     setCountry(preparedStatement, 3, constructorData.getCountry());
                     setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
-                    preparedStatement.executeUpdate();
-                }
-            }
-        }
-    }
-
-    public void mergeIntoSeasonsData(final List<SeasonData> seasonDataList) throws SQLException {
-        try (final Connection connection = getConnection()) {
-            for (final SeasonData seasonData : seasonDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into seasons (year, wikipedia_page) values (?,?) on duplicate key update year = year;"
-                )) {
-                    preparedStatement.setInt(1, seasonData.getYear());
-                    setUrl(preparedStatement, 2, seasonData.getWikipediaUrl());
                     preparedStatement.executeUpdate();
                 }
             }

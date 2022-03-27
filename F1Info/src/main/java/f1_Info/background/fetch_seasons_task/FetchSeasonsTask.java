@@ -1,9 +1,9 @@
-package f1_Info.background.fetch_drivers_task;
+package f1_Info.background.fetch_seasons_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,12 +12,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class FetchDriversTask extends TaskWrapper {
+public class FetchSeasonsTask extends TaskWrapper {
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
 
     @Autowired
-    public FetchDriversTask(
+    public FetchSeasonsTask(
         ErgastProxy ergastProxy,
         Database database,
         Logger logger
@@ -29,15 +29,14 @@ public class FetchDriversTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
-        if (!drivers.isEmpty()) {
-            mDatabase.mergeIntoDriversData(drivers);
+        final List<SeasonData> seasons = mErgastProxy.fetchAllSeasons();
+        if (!seasons.isEmpty()) {
+            mDatabase.mergeIntoSeasonsData(seasons);
         }
     }
 
     @Override
     protected Tasks getTaskType() {
-        return Tasks.FETCH_DRIVERS_TASK;
+        return Tasks.FETCH_SEASONS_TASK;
     }
 }
-

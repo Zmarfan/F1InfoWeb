@@ -4,7 +4,6 @@ import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ public class RareDataFetchingTask extends TaskWrapper {
     @Override
     protected void runTask() throws SQLException {
         fetchConstructors();
-        fetchSeasons();
         fetchCircuits();
     }
 
@@ -45,13 +43,6 @@ public class RareDataFetchingTask extends TaskWrapper {
         final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
         if (!constructors.isEmpty()) {
             mDatabase.mergeIntoConstructorsData(constructors);
-        }
-    }
-
-    private void fetchSeasons() throws SQLException {
-        final List<SeasonData> seasons = mErgastProxy.fetchAllSeasons();
-        if (!seasons.isEmpty()) {
-            mDatabase.mergeIntoSeasonsData(seasons);
         }
     }
 

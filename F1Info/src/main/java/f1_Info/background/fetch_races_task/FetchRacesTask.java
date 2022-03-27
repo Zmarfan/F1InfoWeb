@@ -30,15 +30,6 @@ public class FetchRacesTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        fetchRaces();
-    }
-
-    @Override
-    protected Tasks getTaskType() {
-        return Tasks.FETCH_RACES_TASK;
-    }
-
-    private void fetchRaces() throws SQLException {
         final Optional<Integer> nextSeasonToFetch = mDatabase.getNextSeasonToFetchForRaces();
         if (nextSeasonToFetch.isEmpty()) {
             return;
@@ -48,5 +39,10 @@ public class FetchRacesTask extends TaskWrapper {
         if (!races.isEmpty()) {
             mDatabase.mergeIntoRacesData(races);
         }
+    }
+
+    @Override
+    protected Tasks getTaskType() {
+        return Tasks.FETCH_RACES_TASK;
     }
 }
