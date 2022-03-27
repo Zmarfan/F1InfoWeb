@@ -55,7 +55,7 @@ public class FetchFinishStatusTask extends TaskWrapper {
             )));
     }
 
-    private void mergeIntoDatabase(final List<FinishStatusData> finishStatuses) {
+    private void mergeIntoDatabase(final List<FinishStatusData> finishStatuses) throws SQLException {
         try {
             mDatabase.mergeIntoFinishStatusData(finishStatuses);
             mLogger.info(
@@ -64,16 +64,11 @@ public class FetchFinishStatusTask extends TaskWrapper {
                 String.format("Fetched a total of %d finish statuses entries from ergast and merged into database", finishStatuses.size())
             );
         } catch (final SQLException e) {
-            mLogger.severe(
-                "mergeIntoDatabase",
-                FetchFinishStatusTask.class,
-                String.format(
-                    "Unable to merge in a total of %d entries for finish statuses into the database. Data: %s",
-                    finishStatuses.size(),
-                    ListUtils.listToString(finishStatuses, FinishStatusData::toString)
-                ),
-                e
-            );
+            throw new SQLException(String.format(
+                "Unable to merge in a total of %d entries for finish statuses into the database. Data: %s",
+                finishStatuses.size(),
+                ListUtils.listToString(finishStatuses, FinishStatusData::toString)
+            ), e);
         }
     }
 }
