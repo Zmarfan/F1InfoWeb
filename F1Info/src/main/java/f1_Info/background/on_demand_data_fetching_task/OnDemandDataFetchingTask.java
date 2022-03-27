@@ -23,7 +23,7 @@ public class OnDemandDataFetchingTask extends TaskWrapper {
         Database database,
         Logger logger
     ) {
-        super(database, logger, Tasks.ON_DEMAND_DATA_FETCHING_TASK.getName());
+        super(logger, database);
         mErgastProxy = ergastProxy;
         mDatabase = database;
     }
@@ -33,6 +33,10 @@ public class OnDemandDataFetchingTask extends TaskWrapper {
         fetchRaces();
     }
 
+    @Override
+    protected Tasks getTaskType() {
+        return Tasks.ON_DEMAND_DATA_FETCHING_TASK;
+    }
 
     private void fetchRaces() throws SQLException {
         final Optional<Integer> nextSeasonToFetch = mDatabase.getNextSeasonToFetchForRaces();

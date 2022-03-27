@@ -25,7 +25,7 @@ public class RareDataFetchingTask extends TaskWrapper {
         Database database,
         Logger logger
     ) {
-        super(database, logger, Tasks.RARE_DATA_FETCHING_TASK.getName());
+        super(logger, database);
         mErgastProxy = ergastProxy;
         mDatabase = database;
     }
@@ -36,6 +36,11 @@ public class RareDataFetchingTask extends TaskWrapper {
         fetchDrivers();
         fetchSeasons();
         fetchCircuits();
+    }
+
+    @Override
+    protected Tasks getTaskType() {
+        return Tasks.RARE_DATA_FETCHING_TASK;
     }
 
     private void fetchConstructors() throws SQLException {

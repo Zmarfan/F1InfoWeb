@@ -19,10 +19,10 @@ public abstract class TaskDatabase extends DatabaseBase {
         super(configuration, logger);
     }
 
-    public long startBackgroundJob(final String taskName) throws SQLException {
+    public long startBackgroundJob(final Tasks task) throws SQLException {
         try (final Connection connection = getConnection()) {
             try (final PreparedStatement preparedStatement = connection.prepareStatement(START_BACKGROUND_JOB_SQL, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, taskName);
+                preparedStatement.setString(1, task.getName());
                 preparedStatement.executeUpdate();
                 final ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
