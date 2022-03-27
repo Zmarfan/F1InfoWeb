@@ -16,6 +16,11 @@ public class Logger {
     }
 
     // TODO: Make proper logging
+    public <T> void warning(final String methodName, final Class<T> classType, final String message) {
+        System.out.println(String.format(INFO_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName()));
+    }
+
+    // TODO: Make proper logging
     public <T> void severe(final String methodName, final Class<T> classType, final String message, final Exception exception) {
         System.out.println(String.format(ERROR_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName(), exception));
         exception.printStackTrace();

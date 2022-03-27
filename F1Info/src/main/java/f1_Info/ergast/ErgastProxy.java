@@ -1,15 +1,17 @@
 package f1_Info.ergast;
 
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.FinishStatusData;
 import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -22,11 +24,13 @@ public class ErgastProxy {
     private static final String FETCH_ALL_SEASONS_URI = "https://ergast.com/api/f1/seasons.json?limit=%d";
     private static final String FETCH_ALL_CIRCUITS_URI = "http://ergast.com/api/f1/circuits.json?limit=%d";
     private static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json?limit=%d";
+    private static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json?limit=%d";
     private static final int CONSTRUCTOR_LIMIT = 250;
     private static final int DRIVER_LIMIT = 1000;
     private static final int SEASON_LIMIT = 200;
     private static final int CIRCUIT_LIMIT = 200;
     private static final int RACES_LIMIT = 50;
+    private static final int FINISH_STATUS_LIMIT = 200;
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -89,6 +93,18 @@ public class ErgastProxy {
             }
         } catch (final Exception e) {
             mLogger.severe("fetchRacesFromYear", ErgastProxy.class, "Unable to fetch race data from ergast for the year: " + fetchYear, e);
+        }
+        return emptyList();
+    }
+
+    public List<FinishStatusData> fetchAllFinishStatuses() {
+        try {
+            if (!mConfiguration.getRules().isMock()) {
+                final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_FINISH_STATUS_URI, FINISH_STATUS_LIMIT));
+                return mParser.parseFinishStatusResponseToObjects(responseJson);
+            }
+        } catch (final Exception e) {
+            mLogger.severe("fetchRacesFromYear", ErgastProxy.class, "Unable to fetch finish status data from ergast", e);
         }
         return emptyList();
     }

@@ -3,6 +3,7 @@ package f1_Info;
 import f1_Info.background.fetch_circuits_task.FetchCircuitsTask;
 import f1_Info.background.fetch_constructors_task.FetchConstructorsTask;
 import f1_Info.background.fetch_drivers_task.FetchDriversTask;
+import f1_Info.background.fetch_finish_status_task.FetchFinishStatusTask;
 import f1_Info.background.fetch_races_task.FetchRacesTask;
 import f1_Info.background.fetch_seasons_task.FetchSeasonsTask;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		SpringApplication.run(F1InfoApplication.class, args);
 	}
 
+	private final FetchFinishStatusTask mFetchFinishStatusTask;
 	private final FetchCircuitsTask mFetchCircuitsTask;
 	private final FetchDriversTask mFetchDriversTask;
 	private final FetchSeasonsTask mFetchSeasonsTask;
@@ -32,26 +34,31 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	}
 
 	@Scheduled(cron = "0 * * * * *")
+	public void runFetchFinishStatusTask() {
+		mFetchFinishStatusTask.run();
+	}
+
+	@Scheduled(cron = "1 * * * * *")
 	public void runMonthlyTasks() {
 		mFetchCircuitsTask.run();
 	}
 
-	@Scheduled(cron = "1 * * * * *")
+	@Scheduled(cron = "2 * * * * *")
 	public void runFetchDriversTask() {
 		mFetchDriversTask.run();
 	}
 
-	@Scheduled(cron = "2 * * * * *")
+	@Scheduled(cron = "3 * * * * *")
 	public void runFetchSeasonsTask() {
 		mFetchSeasonsTask.run();
 	}
 
-	@Scheduled(cron = "3 * * * * *")
+	@Scheduled(cron = "4 * * * * *")
 	public void runFetchConstructorsTask() {
 		mFetchConstructorsTask.run();
 	}
 
-	@Scheduled(cron = "4 * * * * *")
+	@Scheduled(cron = "5 * * * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
 	}

@@ -24,6 +24,7 @@ public class Parser {
     private static final List<String> SEASON_PARENTS = List.of("SeasonTable", "Seasons");
     private static final List<String> CIRCUIT_PARENTS = List.of("CircuitTable", "Circuits");
     private static final List<String> RACES_PARENTS = List.of("RaceTable", "Races");
+    private static final List<String> FINISH_STATUS_PARENTS = List.of("StatusTable", "Status");
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
@@ -53,6 +54,11 @@ public class Parser {
     public List<RaceData> parseRacesResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACES_PARENTS));
         return Arrays.asList(mObjectMapper.readValue(data.getDataString(), RaceData[].class));
+    }
+
+    public List<FinishStatusData> parseFinishStatusResponseToObjects(final String json) throws IOException {
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, FINISH_STATUS_PARENTS));
+        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), FinishStatusData[].class));
     }
 
     private String dataExtractor(final JsonNode mainNode, final List<String> parents) {
