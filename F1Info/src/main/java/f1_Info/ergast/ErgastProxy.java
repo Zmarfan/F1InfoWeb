@@ -7,6 +7,7 @@ import f1_Info.ergast.responses.DriverData;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 @Service
+@AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class ErgastProxy {
     private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json?limit=%d";
     private static final String FETCH_ALL_DRIVERS_URI = "http://ergast.com/api/f1/drivers.json?limit=%d";
@@ -30,14 +32,6 @@ public class ErgastProxy {
     private final Fetcher mFetcher;
     private final Configuration mConfiguration;
     private final Logger mLogger;
-
-    @Autowired
-    public ErgastProxy(Parser parser, Fetcher fetcher, Configuration configuration, Logger logger) {
-        mParser = parser;
-        mFetcher = fetcher;
-        mConfiguration = configuration;
-        mLogger = logger;
-    }
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
