@@ -32,6 +32,11 @@ public class FetchSeasonsTask extends TaskWrapper {
         final List<SeasonData> seasons = mErgastProxy.fetchAllSeasons();
         if (!seasons.isEmpty()) {
             mDatabase.mergeIntoSeasonsData(seasons);
+            mLogger.info(
+                "runTask",
+                FetchSeasonsTask.class,
+                String.format("Fetched a total of %d season entries from ergast and merged into database", seasons.size())
+            );
         }
     }
 

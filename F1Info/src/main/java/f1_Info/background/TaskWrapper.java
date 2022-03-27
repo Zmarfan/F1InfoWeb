@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public abstract class TaskWrapper {
-    private final Logger mLogger;
+    protected final Logger mLogger;
     private final TaskDatabase mDatabase;
 
     public void run() {

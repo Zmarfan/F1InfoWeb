@@ -2,6 +2,7 @@ package f1_Info.background.fetch_drivers_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
+import f1_Info.background.fetch_circuits_task.FetchCircuitsTask;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.DriverData;
 import f1_Info.logger.Logger;
@@ -32,6 +33,11 @@ public class FetchDriversTask extends TaskWrapper {
         final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
         if (!drivers.isEmpty()) {
             mDatabase.mergeIntoDriversData(drivers);
+            mLogger.info(
+                "runTask",
+                FetchDriversTask.class,
+                String.format("Fetched a total of %d driver entries from ergast and merged into database", drivers.size())
+            );
         }
     }
 

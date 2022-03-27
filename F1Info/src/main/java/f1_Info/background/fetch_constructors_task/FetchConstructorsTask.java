@@ -2,6 +2,7 @@ package f1_Info.background.fetch_constructors_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
+import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.logger.Logger;
@@ -32,6 +33,11 @@ public class FetchConstructorsTask extends TaskWrapper {
         final List<ConstructorData> constructors = mErgastProxy.fetchAllConstructors();
         if (!constructors.isEmpty()) {
             mDatabase.mergeIntoConstructorsData(constructors);
+            mLogger.info(
+                "runTask",
+                FetchConstructorsTask.class,
+                String.format("Fetched a total of %d constructor entries from ergast and merged into database", constructors.size())
+            );
         }
     }
 

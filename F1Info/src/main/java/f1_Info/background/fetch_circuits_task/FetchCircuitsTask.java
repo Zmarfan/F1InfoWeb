@@ -32,6 +32,11 @@ public class FetchCircuitsTask extends TaskWrapper {
         final List<CircuitData> circuits = mErgastProxy.fetchAllCircuits();
         if (!circuits.isEmpty()) {
             mDatabase.mergeIntoCircuitsData(circuits);
+            mLogger.info(
+                "runTask",
+                FetchCircuitsTask.class,
+                String.format("Fetched a total of %d circuit entries from ergast and merged into database", circuits.size())
+            );
         }
     }
 
