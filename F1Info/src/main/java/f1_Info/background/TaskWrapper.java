@@ -28,7 +28,9 @@ public abstract class TaskWrapper {
 
         Exception exception = null;
         try {
+            mLogger.info("run", TaskWrapper.class, String.format("Started the task: %s", mTaskName));
             runTask();
+            mLogger.info("run", TaskWrapper.class, String.format("Finished the task: %s with no errors", mTaskName));
         } catch (final Exception e) {
             exception = e;
             mLogger.severe("run", TaskWrapper.class, "Failed to complete " + mTaskName, e);
