@@ -207,6 +207,28 @@ public class ParserTest {
         "        }\n" +
         "    }\n" +
         "}";
+
+    private static final String TEST_FINISH_STATUS_JSON = "{\n" +
+        "  \"MRData\": {\n" +
+        "    \"limit\": \"150\",\n" +
+        "    \"offset\": \"0\",\n" +
+        "    \"total\": \"135\",\n" +
+        "    \"StatusTable\": {\n" +
+        "      \"Status\": [\n" +
+        "        {\n" +
+        "          \"statusId\": \"1\",\n" +
+        "          \"count\": \"6833\",\n" +
+        "          \"status\": \"Finished\"\n" +
+        "        },\n" +
+        "        {\n" +
+        "          \"statusId\": \"139\",\n" +
+        "          \"count\": \"2\",\n" +
+        "          \"status\": \"Illness\"\n" +
+        "        }\n" +
+        "      ]\n" +
+        "    }\n" +
+        "  }\n" +
+        "}";
     // endregion
 
     @Test
@@ -361,5 +383,17 @@ public class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_races() {
         assertThrows(IOException.class, () -> new Parser().parseRacesResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_finish_status_json_to_correct_race_object_list() throws IOException {
+        final List<FinishStatusData> expectedData = List.of(new FinishStatusData(1, "Finished"), new FinishStatusData(139, "Illness"));
+        final List<FinishStatusData> parsedData = new Parser().parseFinishStatusResponseToObjects(TEST_FINISH_STATUS_JSON);
+        assertEquals(expectedData, parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_finish_status() {
+        assertThrows(IOException.class, () -> new Parser().parseFinishStatusResponseToObjects(BAD_JSON_FORMAT));
     }
 }

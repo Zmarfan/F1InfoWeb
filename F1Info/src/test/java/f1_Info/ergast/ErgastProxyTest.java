@@ -5,6 +5,7 @@ import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.FinishStatusData;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
@@ -278,5 +279,48 @@ public class ErgastProxyTest {
         when(mParser.parseRacesResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchRacesFromYear(1998));
+    }
+
+    @Test
+    void should_not_fetch_finish_status_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchAllFinishStatuses();
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_finish_status_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchAllFinishStatuses());
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_finish_status() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchAllFinishStatuses());
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_finish_status() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchAllFinishStatuses();
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_finish_status() throws IOException {
+        final List<FinishStatusData> expectedReturnData = List.of(new FinishStatusData(1, "status"));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(expectedReturnData);
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchAllFinishStatuses());
     }
 }
