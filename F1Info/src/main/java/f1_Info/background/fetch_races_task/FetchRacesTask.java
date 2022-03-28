@@ -2,10 +2,10 @@ package f1_Info.background.fetch_races_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
-import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
+import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,17 +38,29 @@ public class FetchRacesTask extends TaskWrapper {
 
         final List<RaceData> races = mErgastProxy.fetchRacesFromYear(nextSeasonToFetch.get());
         if (!races.isEmpty()) {
-            mDatabase.mergeIntoRacesData(races);
-            mLogger.info(
-                "runTask",
-                FetchRacesTask.class,
-                String.format("Fetched a total of %d race entries from ergast and merged into database", races.size())
-            );
+            mergeIntoDatabase(races);
         }
     }
 
     @Override
     protected Tasks getTaskType() {
         return Tasks.FETCH_RACES_TASK;
+    }
+
+    private void mergeIntoDatabase(final List<RaceData> races) throws SQLException {
+        try {
+            mDatabase.mergeIntoRacesData(races);
+            mLogger.info(
+                "mergeIntoDatabase",
+                FetchRacesTask.class,
+                String.format("Fetched a total of %d race entries from ergast and merged into database", races.size())
+            );
+        } catch (final SQLException e) {
+            throw new SQLException(String.format(
+                "Unable to merge in a total of %d entries for races into the database. Races: %s",
+                races.size(),
+                ListUtils.listToString(races, RaceData::toString)
+            ), e);
+        }
     }
 }

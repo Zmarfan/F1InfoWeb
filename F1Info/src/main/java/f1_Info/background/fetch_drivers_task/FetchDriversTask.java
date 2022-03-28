@@ -5,6 +5,7 @@ import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.DriverData;
 import f1_Info.logger.Logger;
+import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,18 +32,30 @@ public class FetchDriversTask extends TaskWrapper {
     protected void runTask() throws SQLException {
         final List<DriverData> drivers = mErgastProxy.fetchAllDrivers();
         if (!drivers.isEmpty()) {
-            mDatabase.mergeIntoDriversData(drivers);
-            mLogger.info(
-                "runTask",
-                FetchDriversTask.class,
-                String.format("Fetched a total of %d driver entries from ergast and merged into database", drivers.size())
-            );
+            mergeIntoDatabase(drivers);
         }
     }
 
     @Override
     protected Tasks getTaskType() {
         return Tasks.FETCH_DRIVERS_TASK;
+    }
+
+    private void mergeIntoDatabase(final List<DriverData> drivers) throws SQLException {
+        try {
+            mDatabase.mergeIntoDriversData(drivers);
+            mLogger.info(
+                "mergeIntoDatabase",
+                FetchDriversTask.class,
+                String.format("Fetched a total of %d driver entries from ergast and merged into database", drivers.size())
+            );
+        } catch (final SQLException e) {
+            throw new SQLException(String.format(
+                "Unable to merge in a total of %d entries for drivers into the database. Drivers: %s",
+                drivers.size(),
+                ListUtils.listToString(drivers, DriverData::toString)
+            ), e);
+        }
     }
 }
 

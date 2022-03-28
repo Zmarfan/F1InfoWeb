@@ -5,6 +5,7 @@ import f1_Info.background.Tasks;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
+import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,17 +32,29 @@ public class FetchSeasonsTask extends TaskWrapper {
     protected void runTask() throws SQLException {
         final List<SeasonData> seasons = mErgastProxy.fetchAllSeasons();
         if (!seasons.isEmpty()) {
-            mDatabase.mergeIntoSeasonsData(seasons);
-            mLogger.info(
-                "runTask",
-                FetchSeasonsTask.class,
-                String.format("Fetched a total of %d season entries from ergast and merged into database", seasons.size())
-            );
+            mergeIntoDatabase(seasons);
         }
     }
 
     @Override
     protected Tasks getTaskType() {
         return Tasks.FETCH_SEASONS_TASK;
+    }
+
+    private void mergeIntoDatabase(final List<SeasonData> seasons) throws SQLException {
+        try {
+            mDatabase.mergeIntoSeasonsData(seasons);
+            mLogger.info(
+                "mergeIntoDatabase",
+                FetchSeasonsTask.class,
+                String.format("Fetched a total of %d season entries from ergast and merged into database", seasons.size())
+            );
+        } catch (final SQLException e) {
+            throw new SQLException(String.format(
+                "Unable to merge in a total of %d entries for seasons into the database. Seasons: %s",
+                seasons.size(),
+                ListUtils.listToString(seasons, SeasonData::toString)
+            ), e);
+        }
     }
 }
