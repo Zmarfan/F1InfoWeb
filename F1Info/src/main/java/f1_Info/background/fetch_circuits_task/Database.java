@@ -29,9 +29,10 @@ public class Database extends TaskDatabase {
     public void mergeIntoCircuitsData(final List<CircuitData> circuitDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final CircuitData circuitData : circuitDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)" +
-                        "values (?,?,?,?,?,?,?) on duplicate key update id = id;"
+                try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                   insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
+                      values (?,?,?,?,?,?,?) on duplicate key update id = id;
+                   """
                 )) {
                     preparedStatement.setString(1, circuitData.getCircuitIdentifier());
                     preparedStatement.setString(2, circuitData.getCircuitName());

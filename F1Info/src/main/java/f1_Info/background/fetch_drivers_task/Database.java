@@ -28,9 +28,10 @@ public class Database extends TaskDatabase {
     public void mergeIntoDriversData(final List<DriverData> driverDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final DriverData driverData : driverDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page)" +
-                        "values (?,?,?,?,?,?,?,?) on duplicate key update id = id;"
+                try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                    insert into drivers (driver_identifier, number, code, first_name, last_name, date_of_birth, country_code, wikipedia_page)
+                       values (?,?,?,?,?,?,?,?) on duplicate key update id = id;
+                    """
                 )) {
                     preparedStatement.setString(1, driverData.getDriverIdentifier());
                     setNullableInt(preparedStatement, 2, driverData.getPermanentNumber().orElse(null));
