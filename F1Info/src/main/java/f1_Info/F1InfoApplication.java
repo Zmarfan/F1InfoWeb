@@ -39,7 +39,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	}
 
 	@Scheduled(cron = "1 * * * * *")
-	public void runMonthlyTasks() {
+	public void runFetchCircuitsTask() {
 		mFetchCircuitsTask.run();
 	}
 
