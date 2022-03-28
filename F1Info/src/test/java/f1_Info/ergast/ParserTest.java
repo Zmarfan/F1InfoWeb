@@ -19,216 +19,222 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ParserTest {
     private static final String BAD_JSON_FORMAT = "{field: \"bara skit\"}";
     // region test jsons
-    private static final String TEST_CONSTRUCTOR_JSON = "{\n" +
-            "    \"MRData\": {\n" +
-            "        \"limit\": \"2\",\n" +
-            "        \"offset\": \"0\",\n" +
-            "        \"total\": \"211\",\n" +
-            "        \"ConstructorTable\": {\n" +
-            "            \"Constructors\": [\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"adams\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Adams_(constructor)\",\n" +
-            "                    \"name\": \"Adams\",\n" +
-            "                    \"nationality\": \"American\"\n" +
-            "                },\n" +
-            "                {\n" +
-            "                    \"constructorId\": \"afm\",\n" +
-            "                    \"url\": \"http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau\",\n" +
-            "                    \"name\": \"AFM\",\n" +
-            "                    \"nationality\": \"German\"\n" +
-            "                }\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    }\n" +
-            "}";
+    private static final String TEST_CONSTRUCTOR_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "211",
+                "ConstructorTable": {
+                    "Constructors": [
+                        {
+                            "constructorId": "adams",
+                            "url": "http://en.wikipedia.org/wiki/Adams_(constructor)",
+                            "name": "Adams",
+                            "nationality": "American"
+                        },
+                        {
+                            "constructorId": "afm",
+                            "url": "http://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau",
+                            "name": "AFM",
+                            "nationality": "German"
+                        }
+                    ]
+                }
+            }
+        }""";
 
-    private static final String TEST_DRIVER_JSON = "{\n" +
-        "    \"MRData\": {\n" +
-        "        \"limit\": \"2\",\n" +
-        "        \"offset\": \"0\",\n" +
-        "        \"total\": \"854\",\n" +
-        "        \"DriverTable\": {\n" +
-        "            \"Drivers\": [\n" +
-        "                {\n" +
-        "                    \"driverId\": \"abate\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/Carlo_Mario_Abate\",\n" +
-        "                    \"givenName\": \"Carlo\",\n" +
-        "                    \"familyName\": \"Abate\",\n" +
-        "                    \"dateOfBirth\": \"1932-07-10\",\n" +
-        "                    \"nationality\": \"Italian\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"driverId\": \"abecassis\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/George_Abecassis\",\n" +
-        "                    \"givenName\": \"George\",\n" +
-        "                    \"familyName\": \"Abecassis\",\n" +
-        "                    \"dateOfBirth\": \"1913-03-21\",\n" +
-        "                    \"nationality\": \"British\"\n" +
-        "                }\n" +
-        "            ]\n" +
-        "        }\n" +
-        "    }\n" +
-        "}";
+    private static final String TEST_DRIVER_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "854",
+                "DriverTable": {
+                    "Drivers": [
+                        {
+                            "driverId": "abate",
+                            "url": "http://en.wikipedia.org/wiki/Carlo_Mario_Abate",
+                            "givenName": "Carlo",
+                            "familyName": "Abate",
+                            "dateOfBirth": "1932-07-10",
+                            "nationality": "Italian"
+                        },
+                        {
+                            "driverId": "abecassis",
+                            "url": "http://en.wikipedia.org/wiki/George_Abecassis",
+                            "givenName": "George",
+                            "familyName": "Abecassis",
+                            "dateOfBirth": "1913-03-21",
+                            "nationality": "British"
+                        }
+                    ]
+                }
+            }
+        }""";
 
-    private static final String TEST_SEASONS_JSON = "{\n" +
-        "  \"MRData\": {\n" +
-        "    \"limit\": \"2\",\n" +
-        "    \"offset\": \"0\",\n" +
-        "    \"total\": \"73\",\n" +
-        "    \"SeasonTable\": {\n" +
-        "      \"Seasons\": [\n" +
-        "        {\n" +
-        "          \"season\": \"1950\",\n" +
-        "          \"url\": \"http://en.wikipedia.org/wiki/1950_Formula_One_season\"\n" +
-        "        },\n" +
-        "        {\n" +
-        "          \"season\": \"1951\",\n" +
-        "          \"url\": \"http://en.wikipedia.org/wiki/1951_Formula_One_season\"\n" +
-        "        }\n" +
-        "      ]\n" +
-        "    }\n" +
-        "  }\n" +
-        "}";
+    private static final String TEST_SEASONS_JSON = """
+        {
+          "MRData": {
+            "limit": "2",
+            "offset": "0",
+            "total": "73",
+            "SeasonTable": {
+              "Seasons": [
+                {
+                  "season": "1950",
+                  "url": "http://en.wikipedia.org/wiki/1950_Formula_One_season"
+                },
+                {
+                  "season": "1951",
+                  "url": "http://en.wikipedia.org/wiki/1951_Formula_One_season"
+                }
+              ]
+            }
+          }
+        }""";
 
-    private static final String TEST_CIRCUITS_JSON = "{\n" +
-        "    \"MRData\": {\n" +
-        "        \"limit\": \"2\",\n" +
-        "        \"offset\": \"0\",\n" +
-        "        \"total\": \"79\",\n" +
-        "        \"CircuitTable\": {\n" +
-        "            \"Circuits\": [\n" +
-        "                {\n" +
-        "                    \"circuitId\": \"adelaide\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/Adelaide_Street_Circuit\",\n" +
-        "                    \"circuitName\": \"Adelaide Street Circuit\",\n" +
-        "                    \"Location\": {\n" +
-        "                        \"lat\": \"-34.9272\",\n" +
-        "                        \"long\": \"138.617\",\n" +
-        "                        \"locality\": \"Adelaide\",\n" +
-        "                        \"country\": \"Australia\"\n" +
-        "                    }\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"circuitId\": \"ain-diab\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/Ain-Diab_Circuit\",\n" +
-        "                    \"circuitName\": \"Ain Diab\",\n" +
-        "                    \"Location\": {\n" +
-        "                        \"lat\": \"33.5786\",\n" +
-        "                        \"long\": \"-7.6875\",\n" +
-        "                        \"locality\": \"Casablanca\",\n" +
-        "                        \"country\": \"Morocco\"\n" +
-        "                    }\n" +
-        "                }\n" +
-        "            ]\n" +
-        "        }\n" +
-        "    }\n" +
-        "}";
+    private static final String TEST_CIRCUITS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "79",
+                "CircuitTable": {
+                    "Circuits": [
+                        {
+                            "circuitId": "adelaide",
+                            "url": "http://en.wikipedia.org/wiki/Adelaide_Street_Circuit",
+                            "circuitName": "Adelaide Street Circuit",
+                            "Location": {
+                                "lat": "-34.9272",
+                                "long": "138.617",
+                                "locality": "Adelaide",
+                                "country": "Australia"
+                            }
+                        },
+                        {
+                            "circuitId": "ain-diab",
+                            "url": "http://en.wikipedia.org/wiki/Ain-Diab_Circuit",
+                            "circuitName": "Ain Diab",
+                            "Location": {
+                                "lat": "33.5786",
+                                "long": "-7.6875",
+                                "locality": "Casablanca",
+                                "country": "Morocco"
+                            }
+                        }
+                    ]
+                }
+            }
+        }""";
 
-    private static final String TEST_RACES_JSON = "{\n" +
-        "    \"MRData\": {\n" +
-        "        \"limit\": \"2\",\n" +
-        "        \"offset\": \"0\",\n" +
-        "        \"total\": \"22\",\n" +
-        "        \"RaceTable\": {\n" +
-        "            \"season\": \"2021\",\n" +
-        "            \"Races\": [\n" +
-        "                {\n" +
-        "                    \"season\": \"2021\",\n" +
-        "                    \"round\": \"1\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix\",\n" +
-        "                    \"raceName\": \"Bahrain Grand Prix\",\n" +
-        "                    \"Circuit\": {\n" +
-        "                        \"circuitId\": \"bahrain\",\n" +
-        "                        \"url\": \"http://en.wikipedia.org/wiki/Bahrain_International_Circuit\",\n" +
-        "                        \"circuitName\": \"Bahrain International Circuit\",\n" +
-        "                        \"Location\": {\n" +
-        "                            \"lat\": \"26.0325\",\n" +
-        "                            \"long\": \"50.5106\",\n" +
-        "                            \"locality\": \"Sakhir\",\n" +
-        "                            \"country\": \"Bahrain\"\n" +
-        "                        }\n" +
-        "                    },\n" +
-        "                    \"date\": \"2021-03-28\",\n" +
-        "                    \"time\": \"15:00:00Z\",\n" +
-        "                    \"FirstPractice\": {\n" +
-        "                        \"date\": \"2021-03-26\",\n" +
-        "                        \"time\": \"12:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"SecondPractice\": {\n" +
-        "                        \"date\": \"2021-03-26\",\n" +
-        "                        \"time\": \"15:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"ThirdPractice\": {\n" +
-        "                        \"date\": \"2021-03-27\",\n" +
-        "                        \"time\": \"10:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"Qualifying\": {\n" +
-        "                        \"date\": \"2021-03-27\",\n" +
-        "                        \"time\": \"17:00:00Z\"\n" +
-        "                    }\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"season\": \"2021\",\n" +
-        "                    \"round\": \"2\",\n" +
-        "                    \"url\": \"http://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix\",\n" +
-        "                    \"raceName\": \"Emilia Romagna Grand Prix\",\n" +
-        "                    \"Circuit\": {\n" +
-        "                        \"circuitId\": \"imola\",\n" +
-        "                        \"url\": \"http://en.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari\",\n" +
-        "                        \"circuitName\": \"Autodromo Enzo e Dino Ferrari\",\n" +
-        "                        \"Location\": {\n" +
-        "                            \"lat\": \"44.3439\",\n" +
-        "                            \"long\": \"11.7167\",\n" +
-        "                            \"locality\": \"Imola\",\n" +
-        "                            \"country\": \"Italy\"\n" +
-        "                        }\n" +
-        "                    },\n" +
-        "                    \"date\": \"2021-04-18\",\n" +
-        "                    \"time\": \"13:00:00Z\",\n" +
-        "                    \"FirstPractice\": {\n" +
-        "                        \"date\": \"2021-04-16\",\n" +
-        "                        \"time\": \"07:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"SecondPractice\": {\n" +
-        "                        \"date\": \"2021-04-16\",\n" +
-        "                        \"time\": \"11:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"ThirdPractice\": {\n" +
-        "                        \"date\": \"2021-04-17\",\n" +
-        "                        \"time\": \"15:00:00Z\"\n" +
-        "                    },\n" +
-        "                    \"Qualifying\": {\n" +
-        "                        \"date\": \"2021-04-17\",\n" +
-        "                        \"time\": \"17:00:00Z\"\n" +
-        "                    }\n" +
-        "                }\n" +
-        "            ]\n" +
-        "        }\n" +
-        "    }\n" +
-        "}";
+    private static final String TEST_RACES_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "22",
+                "RaceTable": {
+                    "season": "2021",
+                    "Races": [
+                        {
+                            "season": "2021",
+                            "round": "1",
+                            "url": "http://en.wikipedia.org/wiki/2021_Bahrain_Grand_Prix",
+                            "raceName": "Bahrain Grand Prix",
+                            "Circuit": {
+                                "circuitId": "bahrain",
+                                "url": "http://en.wikipedia.org/wiki/Bahrain_International_Circuit",
+                                "circuitName": "Bahrain International Circuit",
+                                "Location": {
+                                    "lat": "26.0325",
+                                    "long": "50.5106",
+                                    "locality": "Sakhir",
+                                    "country": "Bahrain"
+                                }
+                            },
+                            "date": "2021-03-28",
+                            "time": "15:00:00Z",
+                            "FirstPractice": {
+                                "date": "2021-03-26",
+                                "time": "12:00:00Z"
+                            },
+                            "SecondPractice": {
+                                "date": "2021-03-26",
+                                "time": "15:00:00Z"
+                            },
+                            "ThirdPractice": {
+                                "date": "2021-03-27",
+                                "time": "10:00:00Z"
+                            },
+                            "Qualifying": {
+                                "date": "2021-03-27",
+                                "time": "17:00:00Z"
+                            }
+                        },
+                        {
+                            "season": "2021",
+                            "round": "2",
+                            "url": "http://en.wikipedia.org/wiki/2021_Emilia_Romagna_Grand_Prix",
+                            "raceName": "Emilia Romagna Grand Prix",
+                            "Circuit": {
+                                "circuitId": "imola",
+                                "url": "http://en.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari",
+                                "circuitName": "Autodromo Enzo e Dino Ferrari",
+                                "Location": {
+                                    "lat": "44.3439",
+                                    "long": "11.7167",
+                                    "locality": "Imola",
+                                    "country": "Italy"
+                                }
+                            },
+                            "date": "2021-04-18",
+                            "time": "13:00:00Z",
+                            "FirstPractice": {
+                                "date": "2021-04-16",
+                                "time": "07:00:00Z"
+                            },
+                            "SecondPractice": {
+                                "date": "2021-04-16",
+                                "time": "11:00:00Z"
+                            },
+                            "ThirdPractice": {
+                                "date": "2021-04-17",
+                                "time": "15:00:00Z"
+                            },
+                            "Qualifying": {
+                                "date": "2021-04-17",
+                                "time": "17:00:00Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        }""";
 
-    private static final String TEST_FINISH_STATUS_JSON = "{\n" +
-        "  \"MRData\": {\n" +
-        "    \"limit\": \"150\",\n" +
-        "    \"offset\": \"0\",\n" +
-        "    \"total\": \"135\",\n" +
-        "    \"StatusTable\": {\n" +
-        "      \"Status\": [\n" +
-        "        {\n" +
-        "          \"statusId\": \"1\",\n" +
-        "          \"count\": \"6833\",\n" +
-        "          \"status\": \"Finished\"\n" +
-        "        },\n" +
-        "        {\n" +
-        "          \"statusId\": \"139\",\n" +
-        "          \"count\": \"2\",\n" +
-        "          \"status\": \"Illness\"\n" +
-        "        }\n" +
-        "      ]\n" +
-        "    }\n" +
-        "  }\n" +
-        "}";
+    private static final String TEST_FINISH_STATUS_JSON = """
+        {
+          "MRData": {
+            "limit": "150",
+            "offset": "0",
+            "total": "135",
+            "StatusTable": {
+              "Status": [
+                {
+                  "statusId": "1",
+                  "count": "6833",
+                  "status": "Finished"
+                },
+                {
+                  "statusId": "139",
+                  "count": "2",
+                  "status": "Illness"
+                }
+              ]
+            }
+          }
+        }""";
     // endregion
 
     @Test
