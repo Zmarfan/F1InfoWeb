@@ -1,11 +1,11 @@
 package f1_Info.ergast;
 
+import f1_Info.background.fetch_pitstops_task.PitStopFetchInformation;
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.FinishStatusData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
@@ -25,12 +25,14 @@ public class ErgastProxy {
     private static final String FETCH_ALL_CIRCUITS_URI = "http://ergast.com/api/f1/circuits.json?limit=%d";
     private static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json?limit=%d";
     private static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json?limit=%d";
+    private static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json?limit=%d";
     private static final int CONSTRUCTOR_LIMIT = 250;
     private static final int DRIVER_LIMIT = 1000;
     private static final int SEASON_LIMIT = 200;
     private static final int CIRCUIT_LIMIT = 200;
     private static final int RACES_LIMIT = 50;
     private static final int FINISH_STATUS_LIMIT = 200;
+    private static final int PIT_STOPS_STATUS_LIMIT = 200;
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -105,6 +107,26 @@ public class ErgastProxy {
             }
         } catch (final Exception e) {
             mLogger.severe("fetchRacesFromYear", ErgastProxy.class, "Unable to fetch finish status data from ergast", e);
+        }
+        return emptyList();
+    }
+
+    public List<PitStopData> fetchPitStopsFromRoundAndSeason(final PitStopFetchInformation fetchInformation) {
+        try {
+            if (!mConfiguration.getRules().isMock()) {
+                final String responseJson = mFetcher.readDataAsJsonStringFromUri(
+                    String.format(FETCH_PIT_STOPS_URI, fetchInformation.getSeason(), fetchInformation.getRound(), PIT_STOPS_STATUS_LIMIT)
+                );
+                final List<PitStopDataHolder> dataHolder = mParser.parsePitStopResponseToObjects(responseJson);
+                return dataHolder.isEmpty() ? emptyList() : dataHolder.get(0).getPitStopData();
+            }
+        } catch (final Exception e) {
+            mLogger.severe(
+                "fetchPitStopsFromRoundAndSeason",
+                ErgastProxy.class,
+                String.format("Unable to fetch pit stop data from ergast for season: %d, round: %d", fetchInformation.getSeason(), fetchInformation.getRound()),
+                e
+            );
         }
         return emptyList();
     }

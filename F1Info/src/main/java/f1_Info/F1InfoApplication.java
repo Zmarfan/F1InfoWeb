@@ -4,6 +4,7 @@ import f1_Info.background.fetch_circuits_task.FetchCircuitsTask;
 import f1_Info.background.fetch_constructors_task.FetchConstructorsTask;
 import f1_Info.background.fetch_drivers_task.FetchDriversTask;
 import f1_Info.background.fetch_finish_status_task.FetchFinishStatusTask;
+import f1_Info.background.fetch_pitstops_task.FetchPitStopsTask;
 import f1_Info.background.fetch_races_task.FetchRacesTask;
 import f1_Info.background.fetch_seasons_task.FetchSeasonsTask;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private final FetchSeasonsTask mFetchSeasonsTask;
 	private final FetchRacesTask mFetchRacesTask;
 	private final FetchConstructorsTask mFetchConstructorsTask;
+	private final FetchPitStopsTask mFetchPitStopsTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -61,5 +63,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "5 * * * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
+	}
+
+	@Scheduled(cron = "6 * * * * *")
+	public void runFetchPitStopsTask() {
+		mFetchPitStopsTask.run();
 	}
 }
