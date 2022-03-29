@@ -41,7 +41,7 @@ public class ErgastProxy {
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_ALL_CONSTRUCTORS_URI, CONSTRUCTOR_LIMIT));
                 return mParser.parseConstructorsResponseToObjects(responseJson);
             }
@@ -53,7 +53,7 @@ public class ErgastProxy {
 
     public List<DriverData> fetchAllDrivers() {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_ALL_DRIVERS_URI, DRIVER_LIMIT));
                 return mParser.parseDriversResponseToObjects(responseJson);
             }
@@ -65,7 +65,7 @@ public class ErgastProxy {
 
     public List<SeasonData> fetchAllSeasons() {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_ALL_SEASONS_URI, SEASON_LIMIT));
                 return mParser.parseSeasonsResponseToObjects(responseJson);
             }
@@ -77,7 +77,7 @@ public class ErgastProxy {
 
     public List<CircuitData> fetchAllCircuits() {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_ALL_CIRCUITS_URI, CIRCUIT_LIMIT));
                 return mParser.parseCircuitsResponseToObjects(responseJson);
             }
@@ -89,7 +89,7 @@ public class ErgastProxy {
 
     public List<RaceData> fetchRacesFromYear(final int fetchYear) {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_RACES_URI, fetchYear, RACES_LIMIT));
                 return mParser.parseRacesResponseToObjects(responseJson);
             }
@@ -101,7 +101,7 @@ public class ErgastProxy {
 
     public List<FinishStatusData> fetchAllFinishStatuses() {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(String.format(FETCH_FINISH_STATUS_URI, FINISH_STATUS_LIMIT));
                 return mParser.parseFinishStatusResponseToObjects(responseJson);
             }
@@ -113,7 +113,7 @@ public class ErgastProxy {
 
     public List<PitStopData> fetchPitStopsFromRoundAndSeason(final PitStopFetchInformation fetchInformation) {
         try {
-            if (!mConfiguration.getRules().isMock()) {
+            if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(
                     String.format(FETCH_PIT_STOPS_URI, fetchInformation.getSeason(), fetchInformation.getRound(), PIT_STOPS_STATUS_LIMIT)
                 );
@@ -129,5 +129,9 @@ public class ErgastProxy {
             );
         }
         return emptyList();
+    }
+
+    private boolean isProduction() {
+        return mConfiguration.getRules().isMock();
     }
 }
