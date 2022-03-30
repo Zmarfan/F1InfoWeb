@@ -70,6 +70,16 @@ public class FetchRacesTaskTest {
     }
 
     @Test
+    void should_set_last_fetched_season_to_fetched_seasons_if_able_merge_in_all_races() throws SQLException, MalformedURLException, ParseException {
+        when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.of(1998));
+        when(mErgastProxy.fetchRacesFromYear(1998)).thenReturn(getRaceData());
+
+        mFetchRacesTask.run();
+
+        verify(mDatabase).setLastFetchedSeason(1998);
+    }
+
+    @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException, ParseException {
         when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.of(1998));
         when(mErgastProxy.fetchRacesFromYear(1998)).thenReturn(getRaceData());
@@ -79,6 +89,18 @@ public class FetchRacesTaskTest {
 
         verify(mLogger).severe(anyString(), eq(TaskWrapper.class), anyString(), any(SQLException.class));
     }
+
+    @Test
+    void should_never_set_last_fetched_season_of_race_data_if_unable_to_merge_in_all_fetched_races() throws SQLException, MalformedURLException, ParseException {
+        when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.of(1998));
+        when(mErgastProxy.fetchRacesFromYear(1998)).thenReturn(getRaceData());
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoRacesData(anyList());
+
+        mFetchRacesTask.run();
+
+        verify(mDatabase, never()).setLastFetchedSeason(anyInt());
+    }
+
 
     private List<RaceData> getRaceData() throws MalformedURLException, ParseException {
         return List.of(
