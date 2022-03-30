@@ -6,6 +6,7 @@ import f1_Info.constants.Url;
 import java.sql.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Optional;
 
 public class DatabaseUtils {
     public static void setDate(final PreparedStatement preparedStatement, final int parameterIndex, final Date date) throws SQLException {
@@ -70,5 +71,10 @@ public class DatabaseUtils {
         } else {
             preparedStatement.setNull(parameterIndex, Types.VARCHAR);
         }
+    }
+
+    public static Optional<Integer> readNullableInt(final ResultSet resultSet, final int columnIndex) throws SQLException {
+        final int readInt = resultSet.getInt(columnIndex);
+        return resultSet.wasNull() ? Optional.empty() : Optional.of(readInt);
     }
 }

@@ -15,7 +15,8 @@ import static f1_Info.database.DatabaseUtils.*;
 
 @Component(value = "FetchRacesTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int FIRST_SEASON_IN_FORMULA_1 = 1950;
+    private static final int FIRST_FORMULA_ONE_SEASON = 1950;
+    private static final int NO_MORE_DATA_CAN_BE_FETCHED = -1;
 
     @Autowired
     public Database(
@@ -27,28 +28,31 @@ public class Database extends TaskDatabase {
 
     public Optional<Integer> getNextSeasonToFetchForRaces() throws SQLException {
         try (final Connection connection = getConnection()) {
-            try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                "select max(seasons.year), max(races.year) from seasons left join races on races.year = seasons.year;"
-            )) {
+            try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                select ifnull((select
+                  case when seasons.year is not null then history.season + 1 else -1 end as next_season_to_fetch
+                from
+                  races_fetching_history history
+                    left join seasons on seasons.year = history.season + 1
+                where
+                    is_active = 'Y'), ?) as next_fetch_year;
+            """)) {
+                preparedStatement.setInt(1, FIRST_FORMULA_ONE_SEASON);
                 final ResultSet resultSet = preparedStatement.executeQuery();
-
                 resultSet.next();
-                final int readSeasonYear = resultSet.getInt(1);
-                final Optional<Integer> seasonYear = resultSet.wasNull() ? Optional.empty() : Optional.of(readSeasonYear);
-                final int readRacesYear = resultSet.getInt(2);
-                final Optional<Integer> racesYear = resultSet.wasNull() ? Optional.empty() : Optional.of(readRacesYear);
-
-                if (seasonYear.isEmpty() || (racesYear.isPresent() && seasonYear.get().equals(racesYear.get()))) {
-                    return Optional.empty();
-                }
-                return Optional.of(racesYear.isEmpty() ? FIRST_SEASON_IN_FORMULA_1 : racesYear.get() + 1);
+                return readNullableInt(resultSet, 1).filter(nextSeason -> nextSeason != NO_MORE_DATA_CAN_BE_FETCHED);
             }
         }
     }
 
     public void mergeIntoRacesData(final List<RaceData> raceDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
+
             for (final RaceData raceData : raceDataList) {
+                if (raceDataAlreadyExistInDatabase(raceData, connection)) {
+                    continue;
+                }
+
                 final Optional<Integer> raceTimeAndDateId = insertTimeAndDate(raceData.getRaceTime(), raceData.getRaceDate(), connection);
                 final Optional<Integer> qualifyingTimeAndDateId = insertTimeAndDate(raceData.getQualifyingTime(), raceData.getQualifyingDate(), connection);
                 final Optional<Integer> sprintTimeAndDateId = insertTimeAndDate(raceData.getSprintTime(), raceData.getSprintDate(), connection);
@@ -87,6 +91,30 @@ public class Database extends TaskDatabase {
                     preparedStatement.executeUpdate();
                 }
             }
+        }
+    }
+
+    public void setLastFetchedSeason(final int lastFetchedSeason) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                update races_fetching_history set is_active = 'N' where is_active = 'Y';
+            """)) {
+                preparedStatement.executeUpdate();
+            }
+            try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                insert into races_fetching_history (season, is_active) values (?,'Y');
+            """)) {
+                preparedStatement.setInt(1, lastFetchedSeason);
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+
+    private boolean raceDataAlreadyExistInDatabase(final RaceData raceData, final Connection connection) throws SQLException {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement("select id from races where year = ? and round = ?;")) {
+            preparedStatement.setInt(1, raceData.getYear());
+            preparedStatement.setInt(2, raceData.getRound());
+            return preparedStatement.executeQuery().next();
         }
     }
 

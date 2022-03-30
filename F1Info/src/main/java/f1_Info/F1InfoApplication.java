@@ -60,7 +60,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		mFetchConstructorsTask.run();
 	}
 
-	@Scheduled(cron = "5 * * * * *")
+	@Scheduled(cron = "* * * * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
 	}

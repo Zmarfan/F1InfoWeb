@@ -39,6 +39,7 @@ public class FetchRacesTask extends TaskWrapper {
         final List<RaceData> races = mErgastProxy.fetchRacesFromYear(nextSeasonToFetch.get());
         if (!races.isEmpty()) {
             mergeIntoDatabase(races);
+            mDatabase.setLastFetchedSeason(nextSeasonToFetch.get());
         }
     }
 
