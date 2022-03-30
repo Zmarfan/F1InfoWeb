@@ -47,48 +47,9 @@ public class Database extends TaskDatabase {
 
     public void mergeIntoRacesData(final List<RaceData> raceDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
-
             for (final RaceData raceData : raceDataList) {
-                if (raceDataAlreadyExistInDatabase(raceData, connection)) {
-                    continue;
-                }
-
-                final Optional<Integer> raceTimeAndDateId = insertTimeAndDate(raceData.getRaceTime(), raceData.getRaceDate(), connection);
-                final Optional<Integer> qualifyingTimeAndDateId = insertTimeAndDate(raceData.getQualifyingTime(), raceData.getQualifyingDate(), connection);
-                final Optional<Integer> sprintTimeAndDateId = insertTimeAndDate(raceData.getSprintTime(), raceData.getSprintDate(), connection);
-                final Optional<Integer> fp1TimeAndDateId = insertTimeAndDate(raceData.getFirstPracticeTime(), raceData.getFirstPracticeDate(), connection);
-                final Optional<Integer> fp2TimeAndDateId = insertTimeAndDate(raceData.getSecondPracticeTime(), raceData.getSecondPracticeDate(), connection);
-                final Optional<Integer> fp3TimeAndDateId = insertTimeAndDate(raceData.getThirdPracticeTime(), raceData.getThirdPracticeDate(), connection);
-
-                try (final PreparedStatement preparedStatement = connection.prepareStatement("""
-                    insert into races(
-                        circuit_id,
-                        year,
-                        round,
-                        name,
-                        race_time_and_date_id,
-                        qualifying_time_and_date_id,
-                        sprint_time_and_date_id,
-                        first_practice_time_and_date_id,
-                        second_practice_time_and_date_id,
-                        third_practice_time_and_date_id,
-                        wikipedia_page
-                    ) values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?) on duplicate key update id = id;
-                    """
-                )) {
-                    preparedStatement.setString(1, raceData.getCircuitData().getCircuitIdentifier());
-                    preparedStatement.setInt(2, raceData.getYear());
-                    preparedStatement.setInt(3, raceData.getRound());
-                    preparedStatement.setString(4, raceData.getRaceName());
-                    setNullableInt(preparedStatement, 5, raceTimeAndDateId.orElse(null));
-                    setNullableInt(preparedStatement, 6, qualifyingTimeAndDateId.orElse(null));
-                    setNullableInt(preparedStatement, 7, sprintTimeAndDateId.orElse(null));
-                    setNullableInt(preparedStatement, 8, fp1TimeAndDateId.orElse(null));
-                    setNullableInt(preparedStatement, 9, fp2TimeAndDateId.orElse(null));
-                    setNullableInt(preparedStatement, 10, fp3TimeAndDateId.orElse(null));
-                    setUrl(preparedStatement, 11, raceData.getWikipediaUrl());
-
-                    preparedStatement.executeUpdate();
+                if (!raceDataAlreadyExistInDatabase(raceData, connection)) {
+                    insertRaceDataEntry(raceData, connection);
                 }
             }
         }
@@ -115,6 +76,46 @@ public class Database extends TaskDatabase {
             preparedStatement.setInt(1, raceData.getYear());
             preparedStatement.setInt(2, raceData.getRound());
             return preparedStatement.executeQuery().next();
+        }
+    }
+
+    private void insertRaceDataEntry(final RaceData raceData, final Connection connection) throws SQLException {
+        final Optional<Integer> raceTimeAndDateId = insertTimeAndDate(raceData.getRaceTime(), raceData.getRaceDate(), connection);
+        final Optional<Integer> qualifyingTimeAndDateId = insertTimeAndDate(raceData.getQualifyingTime(), raceData.getQualifyingDate(), connection);
+        final Optional<Integer> sprintTimeAndDateId = insertTimeAndDate(raceData.getSprintTime(), raceData.getSprintDate(), connection);
+        final Optional<Integer> fp1TimeAndDateId = insertTimeAndDate(raceData.getFirstPracticeTime(), raceData.getFirstPracticeDate(), connection);
+        final Optional<Integer> fp2TimeAndDateId = insertTimeAndDate(raceData.getSecondPracticeTime(), raceData.getSecondPracticeDate(), connection);
+        final Optional<Integer> fp3TimeAndDateId = insertTimeAndDate(raceData.getThirdPracticeTime(), raceData.getThirdPracticeDate(), connection);
+
+        try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+                    insert into races(
+                        circuit_id,
+                        year,
+                        round,
+                        name,
+                        race_time_and_date_id,
+                        qualifying_time_and_date_id,
+                        sprint_time_and_date_id,
+                        first_practice_time_and_date_id,
+                        second_practice_time_and_date_id,
+                        third_practice_time_and_date_id,
+                        wikipedia_page
+                    ) values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?) on duplicate key update id = id;
+                    """
+        )) {
+            preparedStatement.setString(1, raceData.getCircuitData().getCircuitIdentifier());
+            preparedStatement.setInt(2, raceData.getYear());
+            preparedStatement.setInt(3, raceData.getRound());
+            preparedStatement.setString(4, raceData.getRaceName());
+            setNullableInt(preparedStatement, 5, raceTimeAndDateId.orElse(null));
+            setNullableInt(preparedStatement, 6, qualifyingTimeAndDateId.orElse(null));
+            setNullableInt(preparedStatement, 7, sprintTimeAndDateId.orElse(null));
+            setNullableInt(preparedStatement, 8, fp1TimeAndDateId.orElse(null));
+            setNullableInt(preparedStatement, 9, fp2TimeAndDateId.orElse(null));
+            setNullableInt(preparedStatement, 10, fp3TimeAndDateId.orElse(null));
+            setUrl(preparedStatement, 11, raceData.getWikipediaUrl());
+
+            preparedStatement.executeUpdate();
         }
     }
 
