@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class UrlTest {
+class UrlTest {
 
     @Test
     void should_return_same_url_as_passed_in_to_url_when_fetching() throws MalformedURLException {

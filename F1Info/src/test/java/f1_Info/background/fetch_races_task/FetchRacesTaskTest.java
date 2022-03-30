@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class FetchRacesTaskTest {
+class FetchRacesTaskTest {
     private static final String WIKIPEDIA_URL = "https://f1.com/gaming/visst";
 
     @Mock

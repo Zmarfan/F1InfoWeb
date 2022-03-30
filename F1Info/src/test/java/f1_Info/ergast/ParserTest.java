@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ParserTest {
+class ParserTest {
     private static final String BAD_JSON_FORMAT = "{field: \"bara skit\"}";
     // region test jsons
     private static final String TEST_CONSTRUCTOR_JSON = """
