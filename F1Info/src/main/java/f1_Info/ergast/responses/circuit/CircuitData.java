@@ -8,10 +8,10 @@ import java.net.MalformedURLException;
 
 @Value
 public class CircuitData {
-    String circuitIdentifier;
-    Url wikipediaUrl;
-    String circuitName;
-    LocationData locationData;
+    String mCircuitIdentifier;
+    Url mWikipediaUrl;
+    String mCircuitName;
+    LocationData mLocationData;
 
     public CircuitData(
         @JsonProperty("circuitId") String circuitIdentifier,
@@ -19,9 +19,9 @@ public class CircuitData {
         @JsonProperty("circuitName") String circuitName,
         @JsonProperty("Location") LocationData locationData
     ) throws MalformedURLException {
-        this.circuitIdentifier = circuitIdentifier;
-        this.wikipediaUrl = new Url(wikipediaUrl);
-        this.circuitName = circuitName;
-        this.locationData = locationData;
+        mCircuitIdentifier = circuitIdentifier;
+        mWikipediaUrl = new Url(wikipediaUrl);
+        mCircuitName = circuitName;
+        mLocationData = locationData;
     }
 }

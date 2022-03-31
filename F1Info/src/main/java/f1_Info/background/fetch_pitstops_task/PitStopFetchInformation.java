@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class PitStopFetchInformation {
-    int season;
-    int round;
+    int mSeason;
+    int mRound;
 }

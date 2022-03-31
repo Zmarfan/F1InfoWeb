@@ -12,7 +12,7 @@ public abstract class TaskDatabase extends DatabaseBase {
     private static final String START_BACKGROUND_JOB_SQL = "insert into background_jobs (task_id, start_timestamp) values (?,current_timestamp)";
     private static final String STOP_BACKGROUND_JOB_SQL = "update background_jobs set done_timestamp = current_timestamp, error_message = ? where id = ?";
 
-    public TaskDatabase(
+    protected TaskDatabase(
         Configuration configuration,
         Logger logger
     ) {

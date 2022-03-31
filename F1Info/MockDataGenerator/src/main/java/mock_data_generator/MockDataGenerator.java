@@ -1,18 +1,21 @@
 package mock_data_generator;
 
-import lombok.AllArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static mock_data_generator.ConsoleLogger.*;
 
-@AllArgsConstructor
+@UtilityClass
 public class MockDataGenerator {
     public static final String DATABASE_URL = "jdbc:mysql://localhost:3306/f1database";
     public static final String DATABASE_NAME = "f1User";

@@ -254,20 +254,20 @@ public enum Country{
     ZAMBIA("zm", List.of("zambia"), emptyList()),
     ZIMBABWE("zw", List.of("zimbabwe"), emptyList());
 
-    private final String code;
-    private final List<String> names;
-    private final List<String> nationalityKeywords;
+    private final String mCode;
+    private final List<String> mNames;
+    private final List<String> mNationalityKeywords;
 
     public static Country fromName(final String name) {
         return Arrays.stream(values())
-            .filter(country -> country.names.contains(name.toLowerCase()))
+            .filter(country -> country.mNames.contains(name.toLowerCase()))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the name: %s to a valid country", name)));
     }
 
     public static Country fromNationality(final String nationality) {
          return Arrays.stream(values())
-             .filter(country -> country.nationalityKeywords.contains(nationality.toLowerCase()))
+             .filter(country -> country.mNationalityKeywords.contains(nationality.toLowerCase()))
              .findFirst()
              .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the nationality: %s to a valid country", nationality)));
     }

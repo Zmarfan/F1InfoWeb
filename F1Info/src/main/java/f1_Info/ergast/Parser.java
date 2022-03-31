@@ -30,7 +30,7 @@ public class Parser {
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
-        this.mObjectMapper = new ObjectMapper();
+        mObjectMapper = new ObjectMapper();
     }
 
     public List<ConstructorData> parseConstructorsResponseToObjects(final String json) throws IOException {

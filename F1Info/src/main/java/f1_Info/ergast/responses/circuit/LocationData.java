@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 
 @Value
 public class LocationData {
-    BigDecimal latitude;
-    BigDecimal longitude;
-    String locationName;
-    Country country;
+    BigDecimal mLatitude;
+    BigDecimal mLongitude;
+    String mLocationName;
+    Country mCountry;
 
     public LocationData(
         @JsonProperty("lat") BigDecimal latitude,
@@ -19,9 +19,9 @@ public class LocationData {
         @JsonProperty("locality") String locationName,
         @JsonProperty("country") String countryName
     ) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.locationName = locationName;
-        this.country = Country.fromName(countryName);
+        mLatitude = latitude;
+        mLongitude = longitude;
+        mLocationName = locationName;
+        mCountry = Country.fromName(countryName);
     }
 }

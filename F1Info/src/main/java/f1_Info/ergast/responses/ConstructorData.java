@@ -9,10 +9,10 @@ import java.net.MalformedURLException;
 
 @Value
 public class ConstructorData {
-    String constructorIdentifier;
-    Url wikipediaUrl;
-    String name;
-    Country country;
+    String mConstructorIdentifier;
+    Url mWikipediaUrl;
+    String mName;
+    Country mCountry;
 
     public ConstructorData(
         @JsonProperty("constructorId") String constructorIdentifier,
@@ -20,9 +20,9 @@ public class ConstructorData {
         @JsonProperty("name") String name,
         @JsonProperty("nationality") String nationality
     ) throws MalformedURLException {
-        this.constructorIdentifier = constructorIdentifier;
-        this.wikipediaUrl = new Url(wikipediaUrl);
-        this.name = name;
-        this.country = Country.fromNationality(nationality);
+        mConstructorIdentifier = constructorIdentifier;
+        mWikipediaUrl = new Url(wikipediaUrl);
+        mName = name;
+        mCountry = Country.fromNationality(nationality);
     }
 }

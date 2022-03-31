@@ -13,14 +13,14 @@ import java.util.Optional;
 
 @Value
 public class DriverData {
-    String driverIdentifier;
-    Url wikipediaUrl;
-    String firstName;
-    String lastName;
-    Date dateOfBirth;
-    Country country;
-    Integer permanentNumber;
-    String code;
+    String mDriverIdentifier;
+    Url mWikipediaUrl;
+    String mFirstName;
+    String mLastName;
+    Date mDateOfBirth;
+    Country mCountry;
+    Integer mPermanentNumber;
+    String mCode;
 
     public DriverData(
         @JsonProperty("driverId") String driverIdentifier,
@@ -32,21 +32,21 @@ public class DriverData {
         @JsonProperty("permanentNumber") Integer permanentNumber,
         @JsonProperty("code") String code
     ) throws ParseException, MalformedURLException {
-        this.driverIdentifier = driverIdentifier;
-        this.wikipediaUrl = new Url(wikipediaUrl);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = DateUtils.parse(dateOfBirthString);
-        this.country = Country.fromNationality(nationality);
-        this.permanentNumber = permanentNumber;
-        this.code = code;
+        mDriverIdentifier = driverIdentifier;
+        mWikipediaUrl = new Url(wikipediaUrl);
+        mFirstName = firstName;
+        mLastName = lastName;
+        mDateOfBirth = DateUtils.parse(dateOfBirthString);
+        mCountry = Country.fromNationality(nationality);
+        mPermanentNumber = permanentNumber;
+        mCode = code;
     }
 
     public Optional<Integer> getPermanentNumber() {
-        return Optional.ofNullable(permanentNumber);
+        return Optional.ofNullable(mPermanentNumber);
     }
 
     public Optional<String> getCode() {
-        return Optional.ofNullable(code);
+        return Optional.ofNullable(mCode);
     }
 }

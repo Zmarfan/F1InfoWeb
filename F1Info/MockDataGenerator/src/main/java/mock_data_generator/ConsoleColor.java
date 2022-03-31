@@ -12,5 +12,5 @@ public enum ConsoleColor {
     SUCCESS("\033[0;32m");
 
     @Getter
-    private final String code;
+    private final String mCode;
 }

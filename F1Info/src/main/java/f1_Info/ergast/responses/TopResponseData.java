@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class TopResponseData {
-    ResponseHeader header;
-    String dataString;
+    ResponseHeader mHeader;
+    String mDataString;
 }

@@ -144,16 +144,16 @@ public enum FinishStatus {
     DEBRIS(138),
     ILLNESS(139);
 
-    private final int id;
+    private final int mId;
 
     public static FinishStatus fromId(final int id) {
         return Arrays.stream(values())
-            .filter(finishStatus -> finishStatus.id == id)
+            .filter(finishStatus -> finishStatus.mId == id)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the id: %d to a valid finish status", id)));
     }
 
     public static boolean exists(final int id) {
-        return Arrays.stream(values()).anyMatch(finishStatus -> finishStatus.id == id);
+        return Arrays.stream(values()).anyMatch(finishStatus -> finishStatus.mId == id);
     }
 }

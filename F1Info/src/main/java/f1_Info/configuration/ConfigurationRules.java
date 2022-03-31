@@ -5,10 +5,10 @@ import lombok.Value;
 
 @Value
 public class ConfigurationRules {
-    String databaseUrl;
-    String databaseName;
-    String databasePassword;
-    boolean isMock;
+    String mDatabaseUrl;
+    String mDatabaseName;
+    String mDatabasePassword;
+    boolean mIsMock;
 
     public ConfigurationRules(
         @JsonProperty("databaseUrl") final String databaseUrl,
@@ -16,9 +16,9 @@ public class ConfigurationRules {
         @JsonProperty("databasePassword") final String databasePassword,
         @JsonProperty("isMock") final boolean isMock
     ) {
-        this.databaseUrl = databaseUrl;
-        this.databaseName = databaseName;
-        this.databasePassword = databasePassword;
-        this.isMock = isMock;
+        mDatabaseUrl = databaseUrl;
+        mDatabaseName = databaseName;
+        mDatabasePassword = databasePassword;
+        mIsMock = isMock;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public abstract class TaskWrapper {
     protected final Logger mLogger;
-    private final TaskDatabase mDatabase;
+    private final TaskDatabase mTaskDatabase;
 
     public void run() {
         final Optional<Long> id = startBackgroundJob();
@@ -34,7 +34,7 @@ public abstract class TaskWrapper {
 
     private Optional<Long> startBackgroundJob() {
         try {
-            return Optional.of(mDatabase.startBackgroundJob(getTaskType()));
+            return Optional.of(mTaskDatabase.startBackgroundJob(getTaskType()));
         } catch (final Exception e) {
             mLogger.severe("startBackgroundJob", TaskWrapper.class, "Failed to init " + getTaskType().getName(), e);
             return Optional.empty();
@@ -43,7 +43,7 @@ public abstract class TaskWrapper {
 
     private void stopBackgroundJob(final long backgroundId, final Exception exception) {
         try {
-            mDatabase.stopBackgroundJob(backgroundId, exception);
+            mTaskDatabase.stopBackgroundJob(backgroundId, exception);
         } catch (final Exception e) {
             mLogger.severe("stopBackgroundJob", TaskWrapper.class, "Failed to finish " + getTaskType().getName(), e);
         }

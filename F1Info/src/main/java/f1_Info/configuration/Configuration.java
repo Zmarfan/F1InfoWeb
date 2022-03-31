@@ -13,13 +13,13 @@ import java.io.IOException;
 public class Configuration {
     private static final String RULES_LOCATION = "src/main/java/f1_Info/configuration/configuration.json";
 
-    final Logger mLogger;
-    final ObjectMapper mObjectMapper;
-    ConfigurationRules mRules;
+    private final Logger mLogger;
+    private final ObjectMapper mObjectMapper;
+    private ConfigurationRules mRules;
 
     @Autowired
-    public Configuration(Logger mLogger) {
-        this.mLogger = mLogger;
+    public Configuration(Logger logger) {
+        mLogger = logger;
         mObjectMapper = new ObjectMapper();
     }
 

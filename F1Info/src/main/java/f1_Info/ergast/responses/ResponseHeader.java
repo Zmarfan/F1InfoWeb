@@ -7,17 +7,17 @@ import lombok.Value;
 @Value
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseHeader {
-    long limit;
-    long offset;
-    long total;
+    long mLimit;
+    long mOffset;
+    long mTotal;
 
     public ResponseHeader(
         @JsonProperty("limit") long limit,
         @JsonProperty("offset") long offset,
         @JsonProperty("total") long total
     ) {
-        this.limit = limit;
-        this.offset = offset;
-        this.total = total;
+        mLimit = limit;
+        mOffset = offset;
+        mTotal = total;
     }
 }

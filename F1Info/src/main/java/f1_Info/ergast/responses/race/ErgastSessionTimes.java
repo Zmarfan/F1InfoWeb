@@ -11,14 +11,14 @@ import java.util.Date;
 @Value
 public
 class ErgastSessionTimes {
-    Date date;
-    Time time;
+    Date mDate;
+    Time mTime;
 
     public ErgastSessionTimes(
         @JsonProperty("date") String dateString,
         @JsonProperty("time") String timeString
     ) throws ParseException {
-        this.date = dateString != null ? DateUtils.parse(dateString) : null;
-        this.time = timeString != null ? DateUtils.parseTime(timeString) : null;
+        mDate = dateString != null ? DateUtils.parse(dateString) : null;
+        mTime = timeString != null ? DateUtils.parseTime(timeString) : null;
     }
 }

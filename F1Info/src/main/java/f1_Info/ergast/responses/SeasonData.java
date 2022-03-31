@@ -8,14 +8,14 @@ import java.net.MalformedURLException;
 
 @Value
 public class SeasonData {
-    int year;
-    Url wikipediaUrl;
+    int mYear;
+    Url mWikipediaUrl;
 
     public SeasonData(
         @JsonProperty("season") int year,
         @JsonProperty("url") String wikipediaUrl
     ) throws MalformedURLException {
-        this.year = year;
-        this.wikipediaUrl = new Url(wikipediaUrl);
+        mYear = year;
+        mWikipediaUrl = new Url(wikipediaUrl);
     }
 }

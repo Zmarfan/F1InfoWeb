@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 
 @Value
 public class PitStopData {
-    String driverIdentification;
-    int lap;
-    int stop;
-    String time;
-    BigDecimal durationInSeconds;
+    String mDriverIdentification;
+    int mLap;
+    int mStop;
+    String mTime;
+    BigDecimal mDurationInSeconds;
 
     public PitStopData(
         @JsonProperty("driverId") String driverIdentification,
@@ -20,10 +20,10 @@ public class PitStopData {
         @JsonProperty("time") String time,
         @JsonProperty("duration") BigDecimal durationInSeconds
     ) {
-        this.driverIdentification = driverIdentification;
-        this.lap = lap;
-        this.stop = stop;
-        this.time = time;
-        this.durationInSeconds = durationInSeconds;
+        mDriverIdentification = driverIdentification;
+        mLap = lap;
+        mStop = stop;
+        mTime = time;
+        mDurationInSeconds = durationInSeconds;
     }
 }

@@ -9,11 +9,11 @@ import java.util.List;
 @Value
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PitStopDataHolder {
-    List<PitStopData> pitStopData;
+    List<PitStopData> mPitStopData;
 
     public PitStopDataHolder(
         @JsonProperty("PitStops") List<PitStopData> pitStopData
     ) {
-        this.pitStopData = pitStopData;
+        mPitStopData = pitStopData;
     }
 }
