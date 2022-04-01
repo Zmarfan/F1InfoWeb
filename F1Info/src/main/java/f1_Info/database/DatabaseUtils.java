@@ -2,12 +2,13 @@ package f1_Info.database;
 
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
+import lombok.experimental.UtilityClass;
 
 import java.sql.*;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 
+@UtilityClass
 public class DatabaseUtils {
     public static void setDate(final PreparedStatement preparedStatement, final int parameterIndex, final Date date) throws SQLException {
         if (date != null) {
@@ -36,14 +37,6 @@ public class DatabaseUtils {
     public static void setUrl(final PreparedStatement preparedStatement, final int parameterIndex, final Url url) throws SQLException {
         if (url != null) {
             preparedStatement.setString(parameterIndex, url.getUrl());
-        } else {
-            preparedStatement.setNull(parameterIndex, Types.VARCHAR);
-        }
-    }
-
-    public static void setInstant(final PreparedStatement preparedStatement, final int parameterIndex, final Instant instant) throws SQLException {
-        if (instant != null) {
-            preparedStatement.setString(parameterIndex, instant.toString());
         } else {
             preparedStatement.setNull(parameterIndex, Types.VARCHAR);
         }

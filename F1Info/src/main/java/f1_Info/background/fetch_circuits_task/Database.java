@@ -29,21 +29,33 @@ public class Database extends TaskDatabase {
     public void mergeIntoCircuitsData(final List<CircuitData> circuitDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final CircuitData circuitData : circuitDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement("""
-                   insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
-                      values (?,?,?,?,?,?,?) on duplicate key update id = id;
-                   """
-                )) {
-                    preparedStatement.setString(1, circuitData.getCircuitIdentifier());
-                    preparedStatement.setString(2, circuitData.getCircuitName());
-                    preparedStatement.setString(3, circuitData.getLocationData().getLocationName());
-                    setCountry(preparedStatement, 4, circuitData.getLocationData().getCountry());
-                    preparedStatement.setBigDecimal(5, circuitData.getLocationData().getLatitude());
-                    preparedStatement.setBigDecimal(6, circuitData.getLocationData().getLongitude());
-                    setUrl(preparedStatement, 7, circuitData.getWikipediaUrl());
-                    preparedStatement.executeUpdate();
+                if (circuitDataAlreadyExistInDatabase(circuitData, connection)) {
+                    insertCircuitDataEntry(circuitData, connection);
                 }
             }
+        }
+    }
+
+    private boolean circuitDataAlreadyExistInDatabase(final CircuitData circuitData, final Connection connection) throws SQLException {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement("select id from circuits where circuit_identifier = ?;")) {
+            preparedStatement.setString(1, circuitData.getCircuitIdentifier());
+            return preparedStatement.executeQuery().next();
+        }
+    }
+
+    private void insertCircuitDataEntry(final CircuitData circuitData, final Connection connection) throws SQLException {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement("""
+           insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page) values (?,?,?,?,?,?,?);
+           """
+        )) {
+            preparedStatement.setString(1, circuitData.getCircuitIdentifier());
+            preparedStatement.setString(2, circuitData.getCircuitName());
+            preparedStatement.setString(3, circuitData.getLocationData().getLocationName());
+            setCountry(preparedStatement, 4, circuitData.getLocationData().getCountry());
+            preparedStatement.setBigDecimal(5, circuitData.getLocationData().getLatitude());
+            preparedStatement.setBigDecimal(6, circuitData.getLocationData().getLongitude());
+            setUrl(preparedStatement, 7, circuitData.getWikipediaUrl());
+            preparedStatement.executeUpdate();
         }
     }
 }
