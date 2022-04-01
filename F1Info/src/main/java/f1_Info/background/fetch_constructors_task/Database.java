@@ -29,16 +29,29 @@ public class Database extends TaskDatabase {
     public void mergeIntoConstructorsData(final List<ConstructorData> constructorDataList) throws SQLException {
         try (final Connection connection = getConnection()) {
             for (final ConstructorData constructorData : constructorDataList) {
-                try (final PreparedStatement preparedStatement = connection.prepareStatement(
-                    "insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values (?,?,?,?) on duplicate key update id = id;"
-                )) {
-                    preparedStatement.setString(1, constructorData.getConstructorIdentifier());
-                    preparedStatement.setString(2, constructorData.getName());
-                    setCountry(preparedStatement, 3, constructorData.getCountry());
-                    setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
-                    preparedStatement.executeUpdate();
+                if (!constructorDataAlreadyExistInDatabase(constructorData, connection)) {
+                    insertConstructorDataEntry(constructorData, connection);
                 }
             }
+        }
+    }
+
+    private boolean constructorDataAlreadyExistInDatabase(final ConstructorData constructorData, final Connection connection) throws SQLException {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement("select id from constructors where constructor_identifier = ?;")) {
+            preparedStatement.setString(1, constructorData.getConstructorIdentifier());
+            return preparedStatement.executeQuery().next();
+        }
+    }
+
+    private void insertConstructorDataEntry(final ConstructorData constructorData, final Connection connection) throws SQLException {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(
+            "insert into constructors (constructor_identifier, name, country_code, wikipedia_page) values (?,?,?,?);"
+        )) {
+            preparedStatement.setString(1, constructorData.getConstructorIdentifier());
+            preparedStatement.setString(2, constructorData.getName());
+            setCountry(preparedStatement, 3, constructorData.getCountry());
+            setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
+            preparedStatement.executeUpdate();
         }
     }
 }

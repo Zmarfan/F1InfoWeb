@@ -88,20 +88,20 @@ public class Database extends TaskDatabase {
         final Optional<Integer> fp3TimeAndDateId = insertTimeAndDate(raceData.getThirdPracticeTime(), raceData.getThirdPracticeDate(), connection);
 
         try (final PreparedStatement preparedStatement = connection.prepareStatement("""
-                    insert into races(
-                        circuit_id,
-                        year,
-                        round,
-                        name,
-                        race_time_and_date_id,
-                        qualifying_time_and_date_id,
-                        sprint_time_and_date_id,
-                        first_practice_time_and_date_id,
-                        second_practice_time_and_date_id,
-                        third_practice_time_and_date_id,
-                        wikipedia_page
-                    ) values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?) on duplicate key update id = id;
-                    """
+            insert into races(
+                circuit_id,
+                year,
+                round,
+                name,
+                race_time_and_date_id,
+                qualifying_time_and_date_id,
+                sprint_time_and_date_id,
+                first_practice_time_and_date_id,
+                second_practice_time_and_date_id,
+                third_practice_time_and_date_id,
+                wikipedia_page
+            ) values ((select id from circuits where circuit_identifier = ?),?,?,?,?,?,?,?,?,?,?);
+            """
         )) {
             preparedStatement.setString(1, raceData.getCircuitData().getCircuitIdentifier());
             preparedStatement.setInt(2, raceData.getYear());
