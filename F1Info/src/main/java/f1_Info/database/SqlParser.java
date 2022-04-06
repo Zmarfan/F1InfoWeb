@@ -15,12 +15,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static java.util.Map.entry;
+
 @Getter
 @AllArgsConstructor
 public class SqlParser<T> {
-    private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.of(
-        "int", StatementHelper::readInteger,
-        "java.lang.Integer", StatementHelper::readInteger
+    private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.ofEntries(
+        entry("int", SqlParserFunctions::readInteger),
+        entry("java.lang.Integer", SqlParserFunctions::readInteger),
+        entry("long", SqlParserFunctions::readLong),
+        entry("java.lang.Long", SqlParserFunctions::readLong),
+        entry("java.lang.String", SqlParserFunctions::readString),
+        entry("java.util.Date", SqlParserFunctions::readDate),
+        entry("java.sql.Time", SqlParserFunctions::readTime),
+        entry("boolean", SqlParserFunctions::readBoolean),
+        entry("java.lang.Boolean", SqlParserFunctions::readBoolean),
+        entry("java.math.BigDecimal", SqlParserFunctions::readBigDecimal),
+        entry("double", SqlParserFunctions::readDouble),
+        entry("java.lang.Double", SqlParserFunctions::readDouble),
+        entry("f1_Info.constants.Country", SqlParserFunctions::readCountry),
+        entry("f1_Info.constants.Url", SqlParserFunctions::readUrl)
     );
 
     private final Class<T> mRecordClass;
@@ -68,11 +82,22 @@ public class SqlParser<T> {
 
         final List<Object> values = new ArrayList<>();
         for (final Parameter parameter : parameters) {
-            final Object value = SQL_MAPPING.get(parameter.getType().getName()).apply(new SqlParserInstance(mResult, columnCount));
-            columnCount++;
-            values.add(value);
+            values.add(extractParameter(parameter, columnCount++));
         }
 
         return values;
+    }
+
+    private Object extractParameter(final Parameter parameter, final int columnIndex) {
+        try {
+            return SQL_MAPPING.get(parameter.getType().getName()).apply(new SqlParserInstance(mResult, columnIndex));
+        } catch (final IllegalArgumentException e) {
+            throw new IllegalArgumentException(String.format(
+                "Unable to parse the parameter %s, to the type: %s at column index: %d",
+                parameter.getName(),
+                parameter.getType().getName(),
+                columnIndex
+            ), e);
+        }
     }
 }

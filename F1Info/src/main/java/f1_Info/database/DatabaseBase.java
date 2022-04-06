@@ -16,7 +16,8 @@ public abstract class DatabaseBase {
     private final Logger mLogger;
 
     public <T> T executeQuery(final IQueryData<T> queryData) throws SQLException {
-        return executeAnyQuery(queryData, SqlParser::parseRecordsList).get(0);
+        final List<T> records = executeListQuery(queryData);
+        return records.isEmpty() ? null : records.get(0);
     }
 
     public <T> List<T> executeListQuery(final IQueryData<T> queryData) throws SQLException {
@@ -24,17 +25,12 @@ public abstract class DatabaseBase {
     }
 
     public <T> T executeBasicQuery(final IQueryData<T> queryData) throws SQLException {
-        return executeAnyQuery(queryData, SqlParser::parseBasicList).get(0);
+        final List<T> records = executeBasicListQuery(queryData);
+        return records.isEmpty() ? null : records.get(0);
     }
 
     public <T> List<T> executeBasicListQuery(final IQueryData<T> queryData) throws SQLException {
         return executeAnyQuery(queryData, SqlParser::parseBasicList);
-    }
-
-    private <T> List<T> executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, List<T>> parseCallback) throws SQLException {
-        try (final Connection connection = getConnection()) {
-            return DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
-        }
     }
 
     protected Connection getConnection() throws SQLException {
@@ -47,6 +43,12 @@ public abstract class DatabaseBase {
         } catch (final SQLException e) {
             mLogger.severe("getConnection", DatabaseBase.class, "Unable to establish connection with database", e);
             throw e;
+        }
+    }
+
+    private <T> List<T> executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, List<T>> parseCallback) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            return DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
         }
     }
 }

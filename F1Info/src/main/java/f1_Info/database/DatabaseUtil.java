@@ -1,5 +1,7 @@
 package f1_Info.database;
 
+import f1_Info.constants.Country;
+import f1_Info.constants.Url;
 import f1_Info.logger.Logger;
 import lombok.experimental.UtilityClass;
 
@@ -11,7 +13,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static java.util.Collections.singletonList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
@@ -32,11 +34,11 @@ public class DatabaseUtil {
         try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
             final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
             if (!hasResult) {
-                return singletonList(null);
+                return emptyList();
             }
 
             try (final ResultSet result = statement.getResultSet()) {
-                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : singletonList(null);
+                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : emptyList();
             }
         }
     }
@@ -94,6 +96,8 @@ public class DatabaseUtil {
                 case "boolean", "java.lang.Boolean" -> StatementHelper.setBoolean(statement, columnIndex, (Boolean) value);
                 case "java.math.BigDecimal" -> statement.setBigDecimal(columnIndex, (BigDecimal) value);
                 case "double", "java.lang.Double" -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
+                case "f1_Info.constants.Country" -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
+                case "f1_Info.constants.Url" -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
                 default -> logger.warning("setColumn", DatabaseUtil.class, String.format("Failed to set column %s of type %s", columnIndex, typeName));
             }
         } catch (final SQLException e) {

@@ -4,7 +4,7 @@ import f1_Info.database.IQueryData;
 import lombok.Value;
 
 @Value
-public class TestQueryData implements IQueryData<Integer> {
+public class TestQueryData implements IQueryData<TestRecord> {
     @Override
     public String getStoredProcedureName() {
         return "test_procedure";

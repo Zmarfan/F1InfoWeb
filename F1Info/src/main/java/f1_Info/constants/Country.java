@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 
@@ -257,6 +258,13 @@ public enum Country{
     private final String mCode;
     private final List<String> mNames;
     private final List<String> mNationalityKeywords;
+
+    public static Country fromCountryCode(final String countryCode) {
+        return Arrays.stream(values())
+            .filter(country -> Objects.equals(country.mCode, countryCode.toLowerCase()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the countryCode: %s to a valid country", countryCode)));
+    }
 
     public static Country fromName(final String name) {
         return Arrays.stream(values())

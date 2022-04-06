@@ -65,13 +65,4 @@ public class StatementHelper {
             preparedStatement.setNull(parameterIndex, Types.VARCHAR);
         }
     }
-
-    public static Integer readInteger(final SqlParserInstance instance) {
-        try {
-            final int readInt = instance.getResultSet().getInt(instance.getColumnIndex());
-            return instance.getResultSet().wasNull() ? null : readInt;
-        } catch (final SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
 }
