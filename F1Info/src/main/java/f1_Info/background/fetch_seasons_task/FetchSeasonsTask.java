@@ -2,7 +2,6 @@ package f1_Info.background.fetch_seasons_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
-import f1_Info.background.test_query_datas.TestRecord;
 import f1_Info.ergast.ErgastProxy;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
@@ -32,7 +31,7 @@ public class FetchSeasonsTask extends TaskWrapper {
     @Override
     protected void runTask() throws SQLException {
         if (true) {
-            final TestRecord test = mDatabase.testCall();
+            final List<Integer> test = mDatabase.testCall();
             return;
         }
 

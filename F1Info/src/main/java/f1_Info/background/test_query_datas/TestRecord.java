@@ -4,9 +4,5 @@ import lombok.Value;
 
 @Value
 public class TestRecord {
-    int mParameter1;
-    int mParameter2;
-    int mParameter3;
-    int mParameter4;
-    int mParameter5;
+    Integer mNumber;
 }

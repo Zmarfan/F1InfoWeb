@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
@@ -19,10 +20,10 @@ import static java.util.stream.Collectors.joining;
 public class DatabaseUtil {
     private static final Set<String> I_DATABASE_QUERY_DATA_METHOD_NAMES = Set.of("getStoredProcedureName", "getResponseClass");
 
-    public static <T> T executeQuery(
+    public static <T> List<T> executeQuery(
         final Connection connection,
         final IQueryData<T> queryData,
-        final Function<SqlParser<T>, T> parseCallback,
+        final Function<SqlParser<T>, List<T>> parseCallback,
         final Logger logger
     ) throws SQLException {
         final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
@@ -31,11 +32,11 @@ public class DatabaseUtil {
         try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
             final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
             if (!hasResult) {
-                return null;
+                return singletonList(null);
             }
 
             try (final ResultSet result = statement.getResultSet()) {
-                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : null;
+                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : singletonList(null);
             }
         }
     }

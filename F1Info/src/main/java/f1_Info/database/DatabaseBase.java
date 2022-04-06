@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.function.Function;
 
 @AllArgsConstructor
@@ -15,14 +16,22 @@ public abstract class DatabaseBase {
     private final Logger mLogger;
 
     public <T> T executeQuery(final IQueryData<T> queryData) throws SQLException {
-        return executeAnyQuery(queryData, SqlParser::parseRecord);
+        return executeAnyQuery(queryData, SqlParser::parseRecordsList).get(0);
+    }
+
+    public <T> List<T> executeListQuery(final IQueryData<T> queryData) throws SQLException {
+        return executeAnyQuery(queryData, SqlParser::parseRecordsList);
     }
 
     public <T> T executeBasicQuery(final IQueryData<T> queryData) throws SQLException {
-        return executeAnyQuery(queryData, SqlParser::parseBasic);
+        return executeAnyQuery(queryData, SqlParser::parseBasicList).get(0);
     }
 
-    private <T> T executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, T> parseCallback) throws SQLException {
+    public <T> List<T> executeBasicListQuery(final IQueryData<T> queryData) throws SQLException {
+        return executeAnyQuery(queryData, SqlParser::parseBasicList);
+    }
+
+    private <T> List<T> executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, List<T>> parseCallback) throws SQLException {
         try (final Connection connection = getConnection()) {
             return DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
         }

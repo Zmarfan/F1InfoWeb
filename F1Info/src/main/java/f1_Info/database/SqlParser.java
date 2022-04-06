@@ -1,9 +1,11 @@
 package f1_Info.database;
 
 import f1_Info.logger.Logger;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Getter
+@AllArgsConstructor
 public class SqlParser<T> {
     private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.of(
         "int", StatementHelper::readInteger,
@@ -24,33 +27,40 @@ public class SqlParser<T> {
     private final ResultSet mResult;
     private final Logger mLogger;
 
-    public SqlParser(Class<T> recordClass, ResultSet result, Logger logger) {
-        mRecordClass = recordClass;
-        mResult = result;
-        mLogger = logger;
-    }
-
-    public T parseRecord() {
+    public List<T> parseRecordsList() {
         try {
-            mResult.next();
+            final RecordParsingInfo recordParsingInfo = getRecordParsingInfo();
 
-            final Constructor<?> constructor = mRecordClass.getConstructors()[0];
-            final List<Parameter> parameters = Arrays.stream(constructor.getParameters()).toList();
-
-            final List<Object> parameterValues = extractParameters(parameters);
-            return (T)constructor.newInstance(parameterValues.toArray());
+            final List<T> records = new ArrayList<>();
+            while (mResult.next()) {
+                records.add(readRecord(recordParsingInfo));
+            }
+            return records;
         } catch (final Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException(String.format("Unable to parse query to the record: %s", mRecordClass.getName()), e);
         }
     }
 
-    public T parseBasic() {
+    public List<T> parseBasicList() {
         try {
-            mResult.next();
-            return (T)SQL_MAPPING.get(mRecordClass.getName()).apply(new SqlParserInstance(mResult, 1));
+            final List<T> values = new ArrayList<>();
+            while (mResult.next()) {
+                values.add((T)SQL_MAPPING.get(mRecordClass.getName()).apply(new SqlParserInstance(mResult, 1)));
+            }
+            return values;
         } catch (final SQLException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException(String.format("Unable to parse query to the value: %s", mRecordClass.getName()), e);
         }
+    }
+
+    private T readRecord(final RecordParsingInfo recordParsingInfo) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        final List<Object> parameterValues = extractParameters(recordParsingInfo.getParameters());
+        return (T)recordParsingInfo.getConstructor().newInstance(parameterValues.toArray());
+    }
+
+    private RecordParsingInfo getRecordParsingInfo() {
+        final Constructor<?> constructor = mRecordClass.getConstructors()[0];
+        return new RecordParsingInfo(constructor, Arrays.stream(constructor.getParameters()).toList());
     }
 
     private List<Object> extractParameters(final List<Parameter> parameters) {
