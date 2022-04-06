@@ -35,11 +35,7 @@ public class DatabaseUtil {
             }
 
             try (final ResultSet result = statement.getResultSet()) {
-                if (result == null) {
-                    return null;
-                } else {
-                    return parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger));
-                }
+                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : null;
             }
         }
     }
@@ -56,13 +52,13 @@ public class DatabaseUtil {
         } catch (final SQLException e) {
             final StringBuilder callParametersBuilder = new StringBuilder();
             for (final ValueWithType entry : sqlParameters) {
-                callParametersBuilder.append(String.format("%s %s\n", entry.getTypeName(), entry.getData()));
+                callParametersBuilder.append(String.format("%s %s%n", entry.getTypeName(), entry.getData()));
             }
             logger.warning(
                 "executeQuery",
                 DatabaseUtil.class,
                 String.format(
-                    "There was a problem when calling the sql function %s using class %s. The function parameters :\n %s",
+                    "There was a problem when calling the sql function %s using class %s. The function parameters :%n %s",
                     queryData.getStoredProcedureName(),
                     queryData.getClass(),
                     callParametersBuilder

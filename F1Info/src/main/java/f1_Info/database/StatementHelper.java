@@ -66,11 +66,10 @@ public class StatementHelper {
         }
     }
 
-    public static Integer readInteger(final SqlParser<?> sqlParser) {
+    public static Integer readInteger(final SqlParserInstance instance) {
         try {
-            sqlParser.getResult().next();
-            final int readInt = sqlParser.getResult().getInt(sqlParser.getColumnIndex());
-            return sqlParser.getResult().wasNull() ? null : readInt;
+            final int readInt = instance.getResultSet().getInt(instance.getColumnIndex());
+            return instance.getResultSet().wasNull() ? null : readInt;
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e);
         }

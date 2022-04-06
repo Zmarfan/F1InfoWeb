@@ -4,7 +4,7 @@ import f1_Info.database.IQueryData;
 import lombok.Value;
 
 @Value
-public class TestQueryData implements IQueryData<Integer> {
+public class TestQueryData implements IQueryData<TestRecord> {
     int m3TestParameter = 16;
     int m5TestParameter = 5;
     int m1TestParameter = 15;
