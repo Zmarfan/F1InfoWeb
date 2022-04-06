@@ -33,6 +33,16 @@ public abstract class DatabaseBase {
         return executeAnyQuery(queryData, SqlParser::parseBasicList);
     }
 
+    public <T> void executeBulkVoidQueries(final List<IQueryData<T>> queryDatas) throws SQLException {
+        try (final Connection connection = getConnection()) {
+            connection.setAutoCommit(false);
+            for (final IQueryData<T> queryData : queryDatas) {
+                DatabaseUtil.executeQuery(connection, queryData, null, mLogger);
+            }
+            connection.commit();
+        }
+    }
+
     protected Connection getConnection() throws SQLException {
         try {
             return DriverManager.getConnection(
@@ -48,7 +58,10 @@ public abstract class DatabaseBase {
 
     private <T> List<T> executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, List<T>> parseCallback) throws SQLException {
         try (final Connection connection = getConnection()) {
-            return DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
+            connection.setAutoCommit(false);
+            final List<T> result = DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
+            connection.commit();
+            return result;
         }
     }
 }

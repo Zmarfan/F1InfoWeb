@@ -20,7 +20,7 @@ import static java.util.stream.Collectors.joining;
 
 @UtilityClass
 public class DatabaseUtil {
-    private static final Set<String> I_DATABASE_QUERY_DATA_METHOD_NAMES = Set.of("getStoredProcedureName", "getResponseClass");
+    private static final Set<String> I_DATABASE_QUERY_DATA_METHOD_NAMES = Set.of("getStoredProcedureName", "getRecordClass");
 
     public static <T> List<T> executeQuery(
         final Connection connection,
@@ -33,12 +33,12 @@ public class DatabaseUtil {
 
         try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
             final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
-            if (!hasResult) {
+            if (!hasResult || parseCallback == null) {
                 return emptyList();
             }
 
             try (final ResultSet result = statement.getResultSet()) {
-                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getResponseClass(), result, logger)) : emptyList();
+                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getRecordClass(), result, logger)) : emptyList();
             }
         }
     }
