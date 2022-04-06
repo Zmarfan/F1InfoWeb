@@ -12,8 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import static f1_Info.database.DatabaseUtils.setCountry;
-import static f1_Info.database.DatabaseUtils.setUrl;
+import static f1_Info.database.StatementHelper.setString;
 
 @Component(value = "FetchConstructorsTaskDatabase")
 public class Database extends TaskDatabase {
@@ -49,8 +48,8 @@ public class Database extends TaskDatabase {
         )) {
             preparedStatement.setString(1, constructorData.getConstructorIdentifier());
             preparedStatement.setString(2, constructorData.getName());
-            setCountry(preparedStatement, 3, constructorData.getCountry());
-            setUrl(preparedStatement, 4, constructorData.getWikipediaUrl());
+            setString(preparedStatement, 3, constructorData.getCountry().getCode());
+            setString(preparedStatement, 4, constructorData.getWikipediaUrl().getUrl());
             preparedStatement.executeUpdate();
         }
     }

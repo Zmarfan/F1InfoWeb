@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
-import static f1_Info.database.DatabaseUtils.*;
+import static f1_Info.database.StatementHelper.*;
 
 @Component(value = "FetchRacesTaskDatabase")
 public class Database extends TaskDatabase {
@@ -40,7 +40,8 @@ public class Database extends TaskDatabase {
                 preparedStatement.setInt(1, FIRST_FORMULA_ONE_SEASON);
                 final ResultSet resultSet = preparedStatement.executeQuery();
                 resultSet.next();
-                return readNullableInt(resultSet, 1).filter(nextSeason -> nextSeason != NO_MORE_DATA_CAN_BE_FETCHED);
+                return Optional.empty();
+                //return readNullableInt(resultSet, 1).filter(nextSeason -> nextSeason != NO_MORE_DATA_CAN_BE_FETCHED);
             }
         }
     }
@@ -107,13 +108,13 @@ public class Database extends TaskDatabase {
             preparedStatement.setInt(2, raceData.getYear());
             preparedStatement.setInt(3, raceData.getRound());
             preparedStatement.setString(4, raceData.getRaceName());
-            setNullableInt(preparedStatement, 5, raceTimeAndDateId.orElse(null));
-            setNullableInt(preparedStatement, 6, qualifyingTimeAndDateId.orElse(null));
-            setNullableInt(preparedStatement, 7, sprintTimeAndDateId.orElse(null));
-            setNullableInt(preparedStatement, 8, fp1TimeAndDateId.orElse(null));
-            setNullableInt(preparedStatement, 9, fp2TimeAndDateId.orElse(null));
-            setNullableInt(preparedStatement, 10, fp3TimeAndDateId.orElse(null));
-            setUrl(preparedStatement, 11, raceData.getWikipediaUrl());
+            setInt(preparedStatement, 5, raceTimeAndDateId.orElse(null));
+            setInt(preparedStatement, 6, qualifyingTimeAndDateId.orElse(null));
+            setInt(preparedStatement, 7, sprintTimeAndDateId.orElse(null));
+            setInt(preparedStatement, 8, fp1TimeAndDateId.orElse(null));
+            setInt(preparedStatement, 9, fp2TimeAndDateId.orElse(null));
+            setInt(preparedStatement, 10, fp3TimeAndDateId.orElse(null));
+            setString(preparedStatement, 11, raceData.getWikipediaUrl().getUrl());
 
             preparedStatement.executeUpdate();
         }

@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import static f1_Info.database.DatabaseUtils.*;
+import static f1_Info.database.StatementHelper.*;
 
 @Component(value = "FetchDriversTaskDatabase")
 public class Database extends TaskDatabase {
@@ -48,13 +48,13 @@ public class Database extends TaskDatabase {
             """
         )) {
             preparedStatement.setString(1, driverData.getDriverIdentifier());
-            setNullableInt(preparedStatement, 2, driverData.getPermanentNumber().orElse(null));
-            setNullableString(preparedStatement, 3, driverData.getCode().orElse(null));
+            setInt(preparedStatement, 2, driverData.getPermanentNumber().orElse(null));
+            setString(preparedStatement, 3, driverData.getCode().orElse(null));
             preparedStatement.setString(4, driverData.getFirstName());
             preparedStatement.setString(5, driverData.getLastName());
             setDate(preparedStatement, 6, driverData.getDateOfBirth());
-            setCountry(preparedStatement, 7, driverData.getCountry());
-            setUrl(preparedStatement, 8, driverData.getWikipediaUrl());
+            setString(preparedStatement, 7, driverData.getCountry().getCode());
+            setString(preparedStatement, 8, driverData.getWikipediaUrl().getUrl());
             preparedStatement.executeUpdate();
         }
     }

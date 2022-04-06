@@ -12,8 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import static f1_Info.database.DatabaseUtils.setCountry;
-import static f1_Info.database.DatabaseUtils.setUrl;
+import static f1_Info.database.StatementHelper.setString;
 
 @Component(value = "FetchCircuitsTaskDatabase")
 public class Database extends TaskDatabase {
@@ -51,10 +50,10 @@ public class Database extends TaskDatabase {
             preparedStatement.setString(1, circuitData.getCircuitIdentifier());
             preparedStatement.setString(2, circuitData.getCircuitName());
             preparedStatement.setString(3, circuitData.getLocationData().getLocationName());
-            setCountry(preparedStatement, 4, circuitData.getLocationData().getCountry());
+            setString(preparedStatement, 4, circuitData.getLocationData().getCountry().getCode());
             preparedStatement.setBigDecimal(5, circuitData.getLocationData().getLatitude());
             preparedStatement.setBigDecimal(6, circuitData.getLocationData().getLongitude());
-            setUrl(preparedStatement, 7, circuitData.getWikipediaUrl());
+            setString(preparedStatement, 7, circuitData.getWikipediaUrl().getUrl());
             preparedStatement.executeUpdate();
         }
     }

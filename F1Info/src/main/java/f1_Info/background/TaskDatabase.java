@@ -6,7 +6,7 @@ import f1_Info.logger.Logger;
 
 import java.sql.*;
 
-import static f1_Info.database.DatabaseUtils.setNullableException;
+import static f1_Info.database.StatementHelper.setString;
 
 public abstract class TaskDatabase extends DatabaseBase {
     private static final String START_BACKGROUND_JOB_SQL = "insert into background_jobs (task_id, start_timestamp) values (?,current_timestamp)";
@@ -36,7 +36,7 @@ public abstract class TaskDatabase extends DatabaseBase {
     public void stopBackgroundJob(final long backgroundId, final Exception exception) throws SQLException {
         try (final Connection connection = getConnection()) {
             try (final PreparedStatement preparedStatement = connection.prepareStatement(STOP_BACKGROUND_JOB_SQL)) {
-                setNullableException(preparedStatement, 1, exception);
+                setString(preparedStatement, 1, exception.getMessage());
                 preparedStatement.setLong(2, backgroundId);
                 preparedStatement.executeUpdate();
             }
