@@ -21,6 +21,10 @@ public abstract class DatabaseBase {
         return records.isEmpty() ? null : records.get(0);
     }
 
+    public <T> void executeVoidQuery(final IQueryData<T> queryData) throws SQLException {
+        executeAnyQuery(queryData, null);
+    }
+
     public <T> List<T> executeListQuery(final IQueryData<T> queryData) throws SQLException {
         return executeAnyQuery(queryData, SqlParser::parseRecordsList);
     }

@@ -1,17 +1,12 @@
 package f1_Info.background;
 
-import f1_Info.database.DatabaseBase;
 import f1_Info.configuration.Configuration;
+import f1_Info.database.DatabaseBase;
 import f1_Info.logger.Logger;
 
-import java.sql.*;
-
-import static f1_Info.database.StatementHelper.setString;
+import java.sql.SQLException;
 
 public abstract class TaskDatabase extends DatabaseBase {
-    private static final String START_BACKGROUND_JOB_SQL = "insert into background_jobs (task_id, start_timestamp) values (?,current_timestamp)";
-    private static final String STOP_BACKGROUND_JOB_SQL = "update background_jobs set done_timestamp = current_timestamp, error_message = ? where id = ?";
-
     protected TaskDatabase(
         Configuration configuration,
         Logger logger
@@ -20,26 +15,10 @@ public abstract class TaskDatabase extends DatabaseBase {
     }
 
     public long startBackgroundJob(final Tasks task) throws SQLException {
-        try (final Connection connection = getConnection()) {
-            try (final PreparedStatement preparedStatement = connection.prepareStatement(START_BACKGROUND_JOB_SQL, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setInt(1, task.getId());
-                preparedStatement.executeUpdate();
-                final ResultSet resultSet = preparedStatement.getGeneratedKeys();
-                if (resultSet.next()) {
-                    return resultSet.getLong(1);
-                }
-                throw new SQLException("Unable to read and return corresponding id created from background job insert");
-            }
-        }
+        return executeBasicQuery(new StartBackgroundJobQueryData(task.getId()));
     }
 
     public void stopBackgroundJob(final long backgroundId, final Exception exception) throws SQLException {
-        try (final Connection connection = getConnection()) {
-            try (final PreparedStatement preparedStatement = connection.prepareStatement(STOP_BACKGROUND_JOB_SQL)) {
-                setString(preparedStatement, 1, exception.getMessage());
-                preparedStatement.setLong(2, backgroundId);
-                preparedStatement.executeUpdate();
-            }
-        }
+        executeVoidQuery(new StopBackgroundJobQueryData(backgroundId, exception == null ? null : exception.getMessage()));
     }
 }
