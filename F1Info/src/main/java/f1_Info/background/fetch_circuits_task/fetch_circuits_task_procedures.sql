@@ -10,7 +10,7 @@ create procedure tasks_insert_circuit_if_not_present(
 )
 begin
 declare v_exists_in_table char;
-  set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') as exists_in_table from circuits where circuit_identifier = p_circuit_identifier);
+  set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from circuits where circuit_identifier = p_circuit_identifier);
 
   if (v_exists_in_table = 'N') then
     insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
