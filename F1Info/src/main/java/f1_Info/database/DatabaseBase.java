@@ -33,10 +33,10 @@ public abstract class DatabaseBase {
         return executeAnyQuery(queryData, SqlParser::parseBasicList);
     }
 
-    public <T> void executeBulkVoidQueries(final List<IQueryData<T>> queryDatas) throws SQLException {
+    public void executeBulkVoidQueries(final DatabaseBulkOfWork bulkOfWork) throws SQLException {
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
-            for (final IQueryData<T> queryData : queryDatas) {
+            for (final IQueryData<Void> queryData : bulkOfWork.getQueryDatas()) {
                 DatabaseUtil.executeQuery(connection, queryData, null, mLogger);
             }
             connection.commit();
