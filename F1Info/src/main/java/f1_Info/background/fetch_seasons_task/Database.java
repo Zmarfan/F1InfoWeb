@@ -1,8 +1,6 @@
 package f1_Info.background.fetch_seasons_task;
 
 import f1_Info.background.TaskDatabase;
-import f1_Info.background.test_query_datas.TestQueryData;
-import f1_Info.background.test_query_datas.TestRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
@@ -25,10 +23,6 @@ public class Database extends TaskDatabase {
         Logger logger
     ) {
         super(configuration, logger);
-    }
-
-    public List<TestRecord> testCall() throws SQLException {
-        return executeListQuery(new TestQueryData());
     }
 
     public void mergeIntoSeasonsData(final List<SeasonData> seasonDataList) throws SQLException {
