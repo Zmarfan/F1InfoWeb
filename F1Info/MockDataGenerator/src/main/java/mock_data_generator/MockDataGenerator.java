@@ -4,12 +4,15 @@ import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
@@ -31,6 +34,7 @@ public class MockDataGenerator {
             resetDatabase();
             createTables();
             createData();
+            createProcedures();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
             logError("Unable to finish the mock data generation!");
@@ -53,12 +57,32 @@ public class MockDataGenerator {
         executeSqlFilesInDirectory(DATA_DIRECTORY);
     }
 
+    private static void createProcedures() throws SQLException, IOException {
+        logInfo("Setting up Procedures...");
+        executeSqlProcedureFiles();
+    }
+
     private static void executeSqlFilesInDirectory(final String directoryPath) throws SQLException, IOException {
         final File tablesFolder = new File(directoryPath);
         final List<Path> paths = stream(requireNonNull(tablesFolder.listFiles())).map(file -> Path.of(file.getPath())).toList();
 
         for (final Path path : paths) {
             runSqlStatementsFromFilePath(path);
+        }
+    }
+
+    private static void executeSqlProcedureFiles() throws SQLException, IOException {
+        Path start = Paths.get("./src/main/java/f1_Info");
+        try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
+            List<File> proceduresSqlFiles = stream
+                .map(Path::toFile)
+                .filter(File::isFile)
+                .filter(file -> file.getName().endsWith("_procedures.sql"))
+                .toList();
+
+            for (final File file : proceduresSqlFiles) {
+                runSqlStatementsFromFilePath(file.toPath());
+            }
         }
     }
 
