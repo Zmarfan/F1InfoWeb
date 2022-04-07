@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static f1_Info.database.ObjectNames.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Comparator.comparing;
@@ -89,16 +90,16 @@ public class DatabaseUtil {
     ) throws SQLException {
         try {
             switch (typeName) {
-                case "long", "java.lang.Long" -> StatementHelper.setLong(statement, columnIndex, (Long) value);
-                case "java.lang.String" -> StatementHelper.setString(statement, columnIndex, (String) value);
-                case "int", "java.lang.Integer" -> StatementHelper.setInt(statement, columnIndex, (Integer) value);
-                case "java.util.Date" -> StatementHelper.setDate(statement, columnIndex, (Date) value);
-                case "java.sql.Time" -> StatementHelper.setTime(statement, columnIndex, (Time) value);
-                case "boolean", "java.lang.Boolean" -> StatementHelper.setBoolean(statement, columnIndex, (Boolean) value);
-                case "java.math.BigDecimal" -> statement.setBigDecimal(columnIndex, (BigDecimal) value);
-                case "double", "java.lang.Double" -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
-                case "f1_Info.constants.Country" -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
-                case "f1_Info.constants.Url" -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
+                case LONG, NULLABLE_LONG -> StatementHelper.setLong(statement, columnIndex, (Long) value);
+                case STRING -> StatementHelper.setString(statement, columnIndex, (String) value);
+                case INT, NULLABLE_INT -> StatementHelper.setInt(statement, columnIndex, (Integer) value);
+                case DATE -> StatementHelper.setDate(statement, columnIndex, (Date) value);
+                case TIME -> StatementHelper.setTime(statement, columnIndex, (Time) value);
+                case BOOLEAN, NULLABLE_BOOLEAN -> StatementHelper.setBoolean(statement, columnIndex, (Boolean) value);
+                case BIG_DECIMAL -> statement.setBigDecimal(columnIndex, (BigDecimal) value);
+                case DOUBLE, NULLABLE_DOUBLE -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
+                case COUNTRY -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
+                case URL -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
                 default -> logger.warning("setColumn", DatabaseUtil.class, String.format("Failed to set column %s of type %s", columnIndex, typeName));
             }
         } catch (final SQLException e) {

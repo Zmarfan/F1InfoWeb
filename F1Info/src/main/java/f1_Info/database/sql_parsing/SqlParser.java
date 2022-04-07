@@ -15,26 +15,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static f1_Info.database.ObjectNames.*;
 import static java.util.Map.entry;
 
 @Getter
 @AllArgsConstructor
 public class SqlParser<T> {
     private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.ofEntries(
-        entry("int", SqlParserFunctions::readInteger),
-        entry("java.lang.Integer", SqlParserFunctions::readInteger),
-        entry("long", SqlParserFunctions::readLong),
-        entry("java.lang.Long", SqlParserFunctions::readLong),
-        entry("java.lang.String", SqlParserFunctions::readString),
-        entry("java.util.Date", SqlParserFunctions::readDate),
-        entry("java.sql.Time", SqlParserFunctions::readTime),
-        entry("boolean", SqlParserFunctions::readBoolean),
-        entry("java.lang.Boolean", SqlParserFunctions::readBoolean),
-        entry("java.math.BigDecimal", SqlParserFunctions::readBigDecimal),
-        entry("double", SqlParserFunctions::readDouble),
-        entry("java.lang.Double", SqlParserFunctions::readDouble),
-        entry("f1_Info.constants.Country", SqlParserFunctions::readCountry),
-        entry("f1_Info.constants.Url", SqlParserFunctions::readUrl)
+        entry(INT, SqlParserFunctions::readInteger),
+        entry(NULLABLE_INT, SqlParserFunctions::readInteger),
+        entry(LONG, SqlParserFunctions::readLong),
+        entry(NULLABLE_LONG, SqlParserFunctions::readLong),
+        entry(STRING, SqlParserFunctions::readString),
+        entry(DATE, SqlParserFunctions::readDate),
+        entry(TIME, SqlParserFunctions::readTime),
+        entry(BOOLEAN, SqlParserFunctions::readBoolean),
+        entry(NULLABLE_BOOLEAN, SqlParserFunctions::readBoolean),
+        entry(BIG_DECIMAL, SqlParserFunctions::readBigDecimal),
+        entry(DOUBLE, SqlParserFunctions::readDouble),
+        entry(NULLABLE_DOUBLE, SqlParserFunctions::readDouble),
+        entry(COUNTRY, SqlParserFunctions::readCountry),
+        entry(URL, SqlParserFunctions::readUrl)
     );
 
     private final Class<T> mRecordClass;
