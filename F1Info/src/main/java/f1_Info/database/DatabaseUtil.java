@@ -30,7 +30,6 @@ public class DatabaseUtil {
         final Function<SqlParser<T>, List<T>> parseCallback,
         final Logger logger
     ) throws SQLException {
-
         final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
         final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
 
