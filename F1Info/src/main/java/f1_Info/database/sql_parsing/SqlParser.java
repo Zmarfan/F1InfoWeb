@@ -62,7 +62,7 @@ public class SqlParser<T> {
         try {
             final List<T> values = new ArrayList<>();
             while (mResult.next()) {
-                values.add((T)SQL_MAPPING.get(mRecordClass.getName()).apply(new SqlParserInstance(mResult, 1)));
+                values.add((T) SQL_MAPPING.get(mRecordClass.getName()).apply(new SqlParserInstance(mResult, 1)));
             }
             return values;
         } catch (final SQLException e) {
@@ -72,7 +72,7 @@ public class SqlParser<T> {
 
     private T readRecord(final RecordParsingInfo recordParsingInfo) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         final List<Object> parameterValues = extractParameters(recordParsingInfo.getParameters());
-        return (T)recordParsingInfo.getConstructor().newInstance(parameterValues.toArray());
+        return (T) recordParsingInfo.getConstructor().newInstance(parameterValues.toArray());
     }
 
     private RecordParsingInfo getRecordParsingInfo() {
