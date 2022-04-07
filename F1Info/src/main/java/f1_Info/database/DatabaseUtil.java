@@ -2,6 +2,7 @@ package f1_Info.database;
 
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
+import f1_Info.database.sql_parsing.SqlParser;
 import f1_Info.logger.Logger;
 import lombok.experimental.UtilityClass;
 

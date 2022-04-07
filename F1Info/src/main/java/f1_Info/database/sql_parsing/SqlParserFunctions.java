@@ -1,4 +1,4 @@
-package f1_Info.database;
+package f1_Info.database.sql_parsing;
 
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;

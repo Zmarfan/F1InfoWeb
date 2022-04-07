@@ -1,6 +1,7 @@
 package f1_Info.database;
 
 import f1_Info.configuration.Configuration;
+import f1_Info.database.sql_parsing.SqlParser;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
 
