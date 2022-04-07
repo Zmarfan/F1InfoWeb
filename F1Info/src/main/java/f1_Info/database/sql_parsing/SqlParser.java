@@ -44,7 +44,7 @@ public class SqlParser<T> {
     private final ResultSet mResult;
     private final Logger mLogger;
 
-    public List<T> parseRecordsList() {
+    public List<T> parseRecordsList() throws IllegalArgumentException {
         try {
             final RecordParsingInfo recordParsingInfo = getRecordParsingInfo();
 
@@ -58,7 +58,7 @@ public class SqlParser<T> {
         }
     }
 
-    public List<T> parseBasicList() {
+    public List<T> parseBasicList() throws IllegalArgumentException {
         try {
             final List<T> values = new ArrayList<>();
             while (mResult.next()) {

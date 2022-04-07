@@ -30,18 +30,23 @@ public class DatabaseUtil {
         final Function<SqlParser<T>, List<T>> parseCallback,
         final Logger logger
     ) throws SQLException {
-        final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
-        final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
+        try {
+            final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
+            final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
 
-        try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
-            final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
-            if (!hasResult || parseCallback == null) {
-                return emptyList();
-            }
+            try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
+                final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
+                if (!hasResult || parseCallback == null) {
+                    return emptyList();
+                }
 
-            try (final ResultSet result = statement.getResultSet()) {
-                return result != null ? parseCallback.apply(new SqlParser<>(queryData.getRecordClass(), result, logger)) : emptyList();
+                try (final ResultSet result = statement.getResultSet()) {
+                    return result != null ? parseCallback.apply(new SqlParser<>(queryData.getRecordClass(), result, logger)) : emptyList();
+                }
             }
+        } catch (final Exception e) {
+            logger.severe("executeQuery", DatabaseUtil.class, String.format("Unable to execute query for querydata: %s", queryData.toString()), e);
+            throw new SQLException(e);
         }
     }
 
@@ -51,7 +56,7 @@ public class DatabaseUtil {
         final List<ValueWithType> sqlParameters,
         final CallableStatement statement
     ) throws SQLException {
-        setSqlColumns(statement, sqlParameters, logger);
+        setSqlColumns(statement, sqlParameters);
         try {
             return statement.execute();
         } catch (final SQLException e) {
@@ -73,21 +78,15 @@ public class DatabaseUtil {
         }
     }
 
-    private static void setSqlColumns(final CallableStatement statement, final List<ValueWithType>  sqlParameters, final Logger logger) throws SQLException {
+    private static void setSqlColumns(final CallableStatement statement, final List<ValueWithType>  sqlParameters) throws SQLException {
         int columnIndex = 1;
         for (final ValueWithType valueWithType : sqlParameters) {
-            setColumn(statement, columnIndex, valueWithType.getTypeName(), valueWithType.getData(), logger);
+            setColumn(statement, columnIndex, valueWithType.getTypeName(), valueWithType.getData());
             columnIndex++;
         }
     }
 
-    private static void setColumn(
-        final CallableStatement statement,
-        final int columnIndex,
-        final String typeName,
-        final Object value,
-        final Logger logger
-    ) throws SQLException {
+    private static void setColumn(final CallableStatement statement, final int columnIndex, final String typeName, final Object value) throws SQLException {
         try {
             switch (typeName) {
                 case LONG, NULLABLE_LONG -> StatementHelper.setLong(statement, columnIndex, (Long) value);
@@ -100,11 +99,10 @@ public class DatabaseUtil {
                 case DOUBLE, NULLABLE_DOUBLE -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
                 case COUNTRY -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
                 case URL -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
-                default -> throw new SQLException(String.format("Failed to set column %s of type %s", columnIndex, typeName));
+                default -> throw new SQLException(String.format("No parser exists to set column %s of type %s", columnIndex, typeName));
             }
         } catch (final SQLException e) {
-            logger.severe("setColumn", DatabaseUtil.class, String.format("Could not set column %s in sql query", columnIndex), e);
-            throw e;
+            throw new SQLException(String.format("Unable to properly set column %s with index %d in sql query", typeName, columnIndex), e);
         }
     }
 
