@@ -9,7 +9,7 @@ import java.util.List;
 public class DatabaseBulkOfWork {
     final List<IQueryData<Void>> mQueryDatas = new LinkedList<>();
 
-    public void add(final IQueryData<Void> queryData) {
-        mQueryDatas.add(queryData);
+    public void add(final List<? extends IQueryData<Void>> queryDatas) {
+        mQueryDatas.addAll(queryDatas);
     }
 }
