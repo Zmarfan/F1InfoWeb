@@ -30,6 +30,7 @@ public class DatabaseUtil {
         final Function<SqlParser<T>, List<T>> parseCallback,
         final Logger logger
     ) throws SQLException {
+
         final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
         final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
 
@@ -100,10 +101,10 @@ public class DatabaseUtil {
                 case DOUBLE, NULLABLE_DOUBLE -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
                 case COUNTRY -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
                 case URL -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
-                default -> logger.warning("setColumn", DatabaseUtil.class, String.format("Failed to set column %s of type %s", columnIndex, typeName));
+                default -> throw new SQLException(String.format("Failed to set column %s of type %s", columnIndex, typeName));
             }
         } catch (final SQLException e) {
-            logger.severe("setColumn", DatabaseUtil.class, String.format("Could not find column %s in sql query", columnIndex), e);
+            logger.severe("setColumn", DatabaseUtil.class, String.format("Could not set column %s in sql query", columnIndex), e);
             throw e;
         }
     }

@@ -2,6 +2,7 @@ package f1_Info.database.sql_parsing;
 
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.lang.reflect.Constructor;
@@ -20,6 +21,7 @@ import static java.util.Map.entry;
 
 @Getter
 @AllArgsConstructor
+@EqualsAndHashCode
 public class SqlParser<T> {
     private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.ofEntries(
         entry(INT, SqlParserFunctions::readInteger),
