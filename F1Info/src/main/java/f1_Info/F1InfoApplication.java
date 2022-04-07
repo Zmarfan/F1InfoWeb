@@ -35,37 +35,37 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchFinishStatusTask() {
 		mFetchFinishStatusTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchCircuitsTask() {
 		mFetchCircuitsTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchDriversTask() {
 		mFetchDriversTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchSeasonsTask() {
 		mFetchSeasonsTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchConstructorsTask() {
 		mFetchConstructorsTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchPitStopsTask() {
 		mFetchPitStopsTask.run();
 	}
