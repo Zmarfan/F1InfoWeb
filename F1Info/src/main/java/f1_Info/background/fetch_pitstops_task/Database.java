@@ -2,6 +2,7 @@ package f1_Info.background.fetch_pitstops_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoPitStopsData(final List<PitStopData> pitStopDataList, final PitStopFetchInformationRecord fetchInformation) throws SQLException {
-
+        executeBulkOfWork(new BulkOfWork(pitStopDataList.stream().map(pitStopData -> new MergeIntoPitStopsQueryData(pitStopData, fetchInformation)).toList()));
     }
+
+    public void setLastFetchedPitstopsForRace(final PitStopFetchInformationRecord fetchInformationRecord) throws SQLException {
+        executeVoidQuery(new SetLastFetchedRacePitStopFetchingQueryData(fetchInformationRecord));
+    }
+
 }

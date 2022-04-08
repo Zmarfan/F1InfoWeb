@@ -51,6 +51,7 @@ public class FetchPitStopsTask extends TaskWrapper {
         try {
             mDatabase.mergeIntoPitStopsData(pitStops, fetchInformation);
             logMergeIntoDatabaseInfo(pitStops, fetchInformation);
+            mDatabase.setLastFetchedPitstopsForRace(fetchInformation);
         } catch (final SQLException e) {
             throw new SQLException(String.format(
                 "Unable to merge in a total of %d Pit Stop entries for season: %d, round: %d into the database. Pit Stops: %s",
