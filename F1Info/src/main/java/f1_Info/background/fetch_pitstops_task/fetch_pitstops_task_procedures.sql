@@ -11,7 +11,7 @@ declare v_next_season_race_exists char;
   set v_next_round_in_season_exists := (select if(count(*) = 1, 'Y', 'N') from races where year = v_last_fetched_season and round = v_last_fetched_round + 1);
 
   if (v_last_fetched_season = p_first_season_with_pistop_data and v_last_fetched_round = 0 and v_next_round_in_season_exists = 'N') then
-    select 1 from dual where false;
+    call return_null();
   end if;
 
   if (v_next_round_in_season_exists = 'Y') then
@@ -24,5 +24,5 @@ declare v_next_season_race_exists char;
     select v_last_fetched_season + 1, 1;
   end if;
 
-  select 1 from dual where false;
+  call return_null();
 end;

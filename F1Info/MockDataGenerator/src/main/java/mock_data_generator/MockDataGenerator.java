@@ -27,6 +27,7 @@ public class MockDataGenerator {
     private static final String RESET_DATABASE_FILE_PATH = "MockDataGenerator/src/main/java/mock_data_generator/setup/reset_database.sql";
     private static final String TABLES_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/tables";
     private static final String DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/data";
+    private static final String HELPER_FUNCTIONS_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/helper";
 
     public static void run() {
         try {
@@ -34,6 +35,7 @@ public class MockDataGenerator {
             resetDatabase();
             createTables();
             createData();
+            createHelperFunctions();
             createProcedures();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
@@ -55,6 +57,11 @@ public class MockDataGenerator {
     private static void createData() throws SQLException, IOException {
         logInfo("Setting up Data...");
         executeSqlFilesInDirectory(DATA_DIRECTORY);
+    }
+
+    private static void createHelperFunctions() throws SQLException, IOException {
+        logInfo("Setting up Helper Functions...");
+        executeSqlFilesInDirectory(HELPER_FUNCTIONS_DIRECTORY);
     }
 
     private static void createProcedures() throws SQLException, IOException {
