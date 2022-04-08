@@ -18,22 +18,22 @@ public class MockDataFileReader {
     }
 
     private List<String> refineRawStatements(final List<String> rawStatements) {
-        boolean doingProcedure = false;
+        boolean doingProcedureOrFunction = false;
 
         StringBuilder builder = new StringBuilder();
         final List<String> refinedStatements = new LinkedList<>();
         for (final String rawStatement : rawStatements) {
-            if (isProcedure(rawStatement)) {
+            if (isProcedureOrFunction(rawStatement)) {
                 builder.append(rawStatement);
-                doingProcedure = true;
+                doingProcedureOrFunction = true;
                 continue;
             }
-            if (doingProcedure) {
+            if (doingProcedureOrFunction) {
                 builder.append(rawStatement);
                 if (isEnd(rawStatement)) {
                     refinedStatements.add(builder.toString());
                     builder = new StringBuilder();
-                    doingProcedure = false;
+                    doingProcedureOrFunction = false;
                 }
             } else {
                 refinedStatements.add(rawStatement);
@@ -42,8 +42,8 @@ public class MockDataFileReader {
         return refinedStatements;
     }
 
-    private boolean isProcedure(final String rawStatement) {
-        return rawStatement.startsWith("create procedure");
+    private boolean isProcedureOrFunction(final String rawStatement) {
+        return rawStatement.startsWith("create procedure") || rawStatement.startsWith("create function");
     }
 
     private boolean isEnd(final String rawStatement) {

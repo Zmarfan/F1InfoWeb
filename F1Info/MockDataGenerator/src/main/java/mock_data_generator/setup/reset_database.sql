@@ -14,3 +14,4 @@ deallocate prepare stmt;
 set foreign_key_checks = 1;
 
 set autocommit='OFF';
+set global log_bin_trust_function_creators = 1;
