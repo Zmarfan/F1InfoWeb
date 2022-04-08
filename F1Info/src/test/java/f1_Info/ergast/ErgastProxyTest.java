@@ -1,5 +1,6 @@
 package f1_Info.ergast;
 
+import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
@@ -9,6 +10,8 @@ import f1_Info.ergast.responses.FinishStatusData;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -32,6 +36,7 @@ class ErgastProxyTest {
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
+    private static final PitStopFetchInformationRecord FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2);
 
     @Mock
     Parser mParser;
@@ -322,5 +327,48 @@ class ErgastProxyTest {
         when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(expectedReturnData);
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllFinishStatuses());
+    }
+
+    @Test
+    void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException, ParseException {
+        final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", BigDecimal.TEN));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parsePitStopResponseToObjects(any())).thenReturn(singletonList(new PitStopDataHolder(expectedReturnData)));
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
     }
 }
