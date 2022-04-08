@@ -12,7 +12,7 @@ public class DateUtils {
     }
 
     public static Time parseTime(final String isoTimestamp) throws ParseException {
-        final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss'Z'");
+        final SimpleDateFormat formatter = new SimpleDateFormat(isoTimestamp.endsWith("Z") ? "HH:mm:ss'Z'" : "HH:mm:ss");
         return new Time(formatter.parse(isoTimestamp).getTime());
     }
 }
