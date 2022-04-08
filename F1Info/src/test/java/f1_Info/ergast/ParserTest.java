@@ -1,9 +1,14 @@
 package f1_Info.ergast;
 
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.*;
+import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.ergast.responses.DriverData;
+import f1_Info.ergast.responses.FinishStatusData;
+import f1_Info.ergast.responses.SeasonData;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.ergast.responses.race.ErgastSessionTimes;
 import f1_Info.ergast.responses.race.RaceData;
 import org.junit.jupiter.api.Test;
@@ -13,6 +18,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -235,6 +241,57 @@ class ParserTest {
             }
           }
         }""";
+
+    private static final String TEST_PITSTOP_JSON = """
+            {
+                "MRData": {
+                    "limit": "2",
+                    "offset": "0",
+                    "total": "58",
+                    "RaceTable": {
+                        "season": "2022",
+                        "round": "1",
+                        "Races": [
+                            {
+                                "season": "2022",
+                                "round": "1",
+                                "url": "http://en.wikipedia.org/wiki/2022_Bahrain_Grand_Prix",
+                                "raceName": "Bahrain Grand Prix",
+                                "Circuit": {
+                                    "circuitId": "bahrain",
+                                    "url": "http://en.wikipedia.org/wiki/Bahrain_International_Circuit",
+                                    "circuitName": "Bahrain International Circuit",
+                                    "Location": {
+                                        "lat": "26.0325",
+                                        "long": "50.5106",
+                                        "locality": "Sakhir",
+                                        "country": "Bahrain"
+                                    }
+                                },
+                                "date": "2022-03-20",
+                                "time": "15:00:00Z",
+                                "PitStops": [
+                                    {
+                                        "driverId": "hamilton",
+                                        "lap": "11",
+                                        "stop": "1",
+                                        "time": "18:21:54",
+                                        "duration": "25.201"
+                                    },
+                                    {
+                                        "driverId": "alonso",
+                                        "lap": "11",
+                                        "stop": "1",
+                                        "time": "18:22:10",
+                                        "duration": "25.365"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        """;
     // endregion
 
     @Test
@@ -401,5 +458,20 @@ class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_finish_status() {
         assertThrows(IOException.class, () -> new Parser().parseFinishStatusResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_pitstops_json_to_correct_pitstop_object_list() throws IOException, ParseException {
+        final List<PitStopData> expectedData = List.of(
+            new PitStopData("hamilton", 11, 1, "18:21:54", BigDecimal.valueOf(25.201)),
+            new PitStopData("alonso", 11, 1, "18:22:10", BigDecimal.valueOf(25.365))
+        );
+        final List<PitStopDataHolder> parsedData = new Parser().parsePitStopResponseToObjects(TEST_PITSTOP_JSON);
+        assertEquals(singletonList(new PitStopDataHolder(expectedData)), parsedData);
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_pitstop() {
+        assertThrows(IOException.class, () -> new Parser().parsePitStopResponseToObjects(BAD_JSON_FORMAT));
     }
 }
