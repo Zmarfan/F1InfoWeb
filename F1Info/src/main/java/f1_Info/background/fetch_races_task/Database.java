@@ -2,7 +2,7 @@ package f1_Info.background.fetch_races_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBulkOfWork;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,7 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoRacesData(final List<RaceData> raceDataList) throws SQLException {
-        final DatabaseBulkOfWork bulkOfWork = new DatabaseBulkOfWork();
-        bulkOfWork.add(raceDataList.stream().map(MergeIntoRacesQueryData::new).toList());
-        executeBulkOfWork(bulkOfWork);
+        executeBulkOfWork(new BulkOfWork(raceDataList.stream().map(MergeIntoRacesQueryData::new).toList()));
     }
 
     public void setLastFetchedSeason(final int lastFetchedSeason) throws SQLException {

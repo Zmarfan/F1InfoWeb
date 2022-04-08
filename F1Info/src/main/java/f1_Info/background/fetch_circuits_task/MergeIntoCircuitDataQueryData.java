@@ -3,6 +3,7 @@ package f1_Info.background.fetch_circuits_task;
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
 import f1_Info.database.IQueryData;
+import f1_Info.ergast.responses.circuit.CircuitData;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -16,6 +17,16 @@ public class MergeIntoCircuitDataQueryData implements IQueryData<Void> {
     BigDecimal m5Latitude;
     BigDecimal m6Longitude;
     Url m7Url;
+
+    public MergeIntoCircuitDataQueryData(final CircuitData circuitData) {
+        m1CircuitIdentifier = circuitData.getCircuitIdentifier();
+        m2CircuitName = circuitData.getCircuitName();
+        m3LocationName = circuitData.getLocationData().getLocationName();
+        m4Country = circuitData.getLocationData().getCountry();
+        m5Latitude = circuitData.getLocationData().getLatitude();
+        m6Longitude = circuitData.getLocationData().getLongitude();
+        m7Url = circuitData.getWikipediaUrl();
+    }
 
     @Override
     public String getStoredProcedureName() {

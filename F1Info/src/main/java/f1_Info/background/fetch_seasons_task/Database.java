@@ -2,7 +2,7 @@ package f1_Info.background.fetch_seasons_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBulkOfWork;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,7 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoSeasonsData(final List<SeasonData> seasonDataList) throws SQLException {
-        final DatabaseBulkOfWork bulkOfWork = new DatabaseBulkOfWork();
-        bulkOfWork.add(seasonDataList.stream().map(data -> new MergeIntoSeasonQueryData(data.getYear(), data.getWikipediaUrl())).toList());
-        executeBulkOfWork(bulkOfWork);
+        executeBulkOfWork(new BulkOfWork(seasonDataList.stream().map(MergeIntoSeasonQueryData::new).toList()));
     }
 }
 

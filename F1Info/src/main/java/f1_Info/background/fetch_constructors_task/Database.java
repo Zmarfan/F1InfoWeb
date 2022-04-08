@@ -2,7 +2,7 @@ package f1_Info.background.fetch_constructors_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBulkOfWork;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.ConstructorData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,6 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoConstructorsData(final List<ConstructorData> constructorDataList) throws SQLException {
-        final DatabaseBulkOfWork bulkOfWork = new DatabaseBulkOfWork();
-        bulkOfWork.add(constructorDataList.stream().map(constructorData -> new MergeIntoConstructorDataQueryData(
-            constructorData.getConstructorIdentifier(),
-            constructorData.getName(),
-            constructorData.getCountry(),
-            constructorData.getWikipediaUrl()
-        )).toList());
-        executeBulkOfWork(bulkOfWork);
+        executeBulkOfWork(new BulkOfWork(constructorDataList.stream().map(MergeIntoConstructorDataQueryData::new).toList()));
     }
 }

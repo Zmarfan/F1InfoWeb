@@ -2,7 +2,7 @@ package f1_Info.background.fetch_finish_status_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBulkOfWork;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.FinishStatusData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,6 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoFinishStatusData(final List<FinishStatusData> finishStatusDataList) throws SQLException {
-        final DatabaseBulkOfWork bulkOfWork = new DatabaseBulkOfWork();
-        bulkOfWork.add(finishStatusDataList.stream().map(data -> new MergeIntoFinishStatusQueryData(data.getId(), data.getStatus())).toList());
-        executeBulkOfWork(bulkOfWork);
+        executeBulkOfWork(new BulkOfWork(finishStatusDataList.stream().map(MergeIntoFinishStatusQueryData::new).toList()));
     }
 }

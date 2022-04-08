@@ -1,12 +1,18 @@
 package f1_Info.background.fetch_finish_status_task;
 
 import f1_Info.database.IQueryData;
+import f1_Info.ergast.responses.FinishStatusData;
 import lombok.Value;
 
 @Value
 public class MergeIntoFinishStatusQueryData implements IQueryData<Void> {
     int m1Id;
     String m2Status;
+
+    public MergeIntoFinishStatusQueryData(final FinishStatusData finishStatusData) {
+        m1Id = finishStatusData.getId();
+        m2Status = finishStatusData.getStatus();
+    }
 
     @Override
     public String getStoredProcedureName() {

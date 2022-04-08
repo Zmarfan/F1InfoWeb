@@ -2,7 +2,7 @@ package f1_Info.background.fetch_circuits_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBulkOfWork;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,6 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoCircuitsData(final List<CircuitData> circuitDataList) throws SQLException {
-        final DatabaseBulkOfWork bulkOfWork = new DatabaseBulkOfWork();
-        bulkOfWork.add(circuitDataList.stream().map(circuitData -> new MergeIntoCircuitDataQueryData(
-            circuitData.getCircuitIdentifier(),
-            circuitData.getCircuitName(),
-            circuitData.getLocationData().getLocationName(),
-            circuitData.getLocationData().getCountry(),
-            circuitData.getLocationData().getLatitude(),
-            circuitData.getLocationData().getLongitude(),
-            circuitData.getWikipediaUrl()
-        )).toList());
-        executeBulkOfWork(bulkOfWork);
+        executeBulkOfWork(new BulkOfWork(circuitDataList.stream().map(MergeIntoCircuitDataQueryData::new).toList()));
     }
 }
