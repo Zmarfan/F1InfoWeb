@@ -2,6 +2,15 @@ create table races_fetching_history(
    season int not null,
    is_active char not null,
 
-   constraint pit_stops_fetching_history_pk primary key (season),
-   constraint pit_stops_fetching_season foreign key (season) references seasons(year)
+   constraint races_fetching_history_pk primary key (season),
+   constraint races_fetching_history_season foreign key (season) references seasons(year)
+);
+
+create table pit_stop_fetching_history(
+   season int not null,
+   round int not null,
+   is_active char not null,
+
+   constraint pit_stop_fetching_history_pk primary key (season, round),
+   constraint pit_stop_fetching_history_season foreign key (season) references seasons (year)
 );

@@ -26,8 +26,8 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<Integer> getNextSeasonToFetchForRaces() throws SQLException {
-        final Integer fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchForRacesQueryData(FIRST_FORMULA_ONE_SEASON));
-        return Optional.ofNullable(fetchedSeason).filter(season -> season != NO_MORE_DATA_CAN_BE_FETCHED);
+        final int fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchForRacesQueryData(FIRST_FORMULA_ONE_SEASON));
+        return Optional.of(fetchedSeason).filter(season -> season != NO_MORE_DATA_CAN_BE_FETCHED);
     }
 
     public void mergeIntoRacesData(final List<RaceData> raceDataList) throws SQLException {

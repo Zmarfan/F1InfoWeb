@@ -6,7 +6,7 @@ begin
       case when seasons.year is not null then history.season + 1 else -1 end as next_season_to_fetch
     from
       races_fetching_history history
-        left join seasons on seasons.year = history.season + 1
+      left join seasons on seasons.year = history.season + 1
     where
         is_active = 'Y'
     ), p_first_formula_1_race) as next_fetch_year;

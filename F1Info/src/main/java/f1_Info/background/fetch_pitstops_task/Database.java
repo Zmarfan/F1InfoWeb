@@ -14,6 +14,8 @@ import java.util.Optional;
 @Component(value = "FetchPitStopsTaskDatabase")
 public class Database extends TaskDatabase {
 
+    private static final int FIRST_SEASON_WITH_PISTOP_DATA = 2011;
+
     @Autowired
     public Database(
         Configuration configuration,
@@ -22,11 +24,11 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public Optional<PitStopFetchInformation> getNextSeasonAndRoundToFetchPitStopsFor() throws SQLException {
-        return Optional.of(new PitStopFetchInformation(2011, 1));
+    public Optional<PitStopFetchInformationRecord> getNextSeasonAndRoundToFetchPitStopsFor() throws SQLException {
+        return Optional.ofNullable(executeQuery(new GetNextRaceToFetchPitStopsForQueryData(FIRST_SEASON_WITH_PISTOP_DATA)));
     }
 
-    public void mergeIntoPitStopsData(final List<PitStopData> pitStopDataList, final PitStopFetchInformation fetchInformation) throws SQLException {
+    public void mergeIntoPitStopsData(final List<PitStopData> pitStopDataList, final PitStopFetchInformationRecord fetchInformation) throws SQLException {
 
     }
 }

@@ -1,6 +1,6 @@
 package f1_Info.ergast;
 
-import f1_Info.background.fetch_pitstops_task.PitStopFetchInformation;
+import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
@@ -111,7 +111,7 @@ public class ErgastProxy {
         return emptyList();
     }
 
-    public List<PitStopData> fetchPitStopsFromRoundAndSeason(final PitStopFetchInformation fetchInformation) {
+    public List<PitStopData> fetchPitStopsFromRoundAndSeason(final PitStopFetchInformationRecord fetchInformation) {
         try {
             if (isProduction()) {
                 final String responseJson = mFetcher.readDataAsJsonStringFromUri(

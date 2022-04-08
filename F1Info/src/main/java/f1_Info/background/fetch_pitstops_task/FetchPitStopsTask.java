@@ -31,7 +31,7 @@ public class FetchPitStopsTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        final Optional<PitStopFetchInformation> fetchInformation = mDatabase.getNextSeasonAndRoundToFetchPitStopsFor();
+        final Optional<PitStopFetchInformationRecord> fetchInformation = mDatabase.getNextSeasonAndRoundToFetchPitStopsFor();
         if (fetchInformation.isEmpty()) {
             return;
         }
@@ -47,7 +47,7 @@ public class FetchPitStopsTask extends TaskWrapper {
         return Tasks.FETCH_PIT_STOPS_TASK;
     }
 
-    private void mergeIntoDatabase(final List<PitStopData> pitStops, final PitStopFetchInformation fetchInformation) throws SQLException {
+    private void mergeIntoDatabase(final List<PitStopData> pitStops, final PitStopFetchInformationRecord fetchInformation) throws SQLException {
         try {
             mDatabase.mergeIntoPitStopsData(pitStops, fetchInformation);
             logMergeIntoDatabaseInfo(pitStops, fetchInformation);
@@ -62,7 +62,7 @@ public class FetchPitStopsTask extends TaskWrapper {
         }
     }
 
-    private void logMergeIntoDatabaseInfo(final List<PitStopData> pitStops, final PitStopFetchInformation fetchInformation) {
+    private void logMergeIntoDatabaseInfo(final List<PitStopData> pitStops, final PitStopFetchInformationRecord fetchInformation) {
         mLogger.info(
             "mergeIntoDatabase",
             FetchPitStopsTask.class,
