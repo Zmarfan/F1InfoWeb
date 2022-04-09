@@ -52,6 +52,72 @@ class ErgastProxyTest {
     ErgastProxy mErgastProxy;
 
     @Test
+    void should_only_make_one_call_to_fetcher_if_first_response_contains_a_total_lesser_than_limit() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
+        when(mParser.parseSeasonsResponseToObjects(anyString())).thenReturn(
+            new ErgastResponse<>(new ResponseHeader(5, 0, 7), emptyList())
+        );
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mFetcher).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_make_one_call_to_fetcher_for_every_limit_partition_needed_to_get_full_response() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
+        when(mParser.parseSeasonsResponseToObjects(anyString()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), emptyList()));
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mFetcher, times(4)).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_make_one_call_to_fetcher_containing_growing_offset_for_every_limit_partition_needed_to_get_full_response() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
+        when(mParser.parseSeasonsResponseToObjects(anyString()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), emptyList()));
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 0));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 1000));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 2000));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 3000));
+    }
+
+    @Test
+    void should_combine_results_given_from_parser_into_one_list_when_calling_for_multiple_partitions() throws IOException {
+        final SeasonData seasonData1 = new SeasonData(1998, WIKIPEDIA_URL);
+        final SeasonData seasonData2 = new SeasonData(1999, WIKIPEDIA_URL);
+        final SeasonData seasonData3 = new SeasonData(2000, WIKIPEDIA_URL);
+        final SeasonData seasonData4 = new SeasonData(2001, WIKIPEDIA_URL);
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
+        when(mParser.parseSeasonsResponseToObjects(anyString()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), singletonList(seasonData1)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), singletonList(seasonData2)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), singletonList(seasonData3)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), singletonList(seasonData4)));
+
+        final List<SeasonData> list = mErgastProxy.fetchAllSeasons();
+
+        assertEquals(List.of(seasonData1, seasonData2, seasonData3, seasonData4), list);
+    }
+
+    @Test
     void should_not_fetch_constructor_data_from_ergast_if_running_mock_configuration() throws IOException {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
 

@@ -22,16 +22,16 @@ import static java.util.Collections.emptyList;
 @Service
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class ErgastProxy {
-    private static final String QUERY_PARAMETERS = "?limit=%d&offset=%d";
-    private static final int MAX_LIMIT = 1000;
+    static final String QUERY_PARAMETERS = "?limit=%d&offset=%d";
+    static final int MAX_LIMIT = 1000;
 
-    private static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json";
-    private static final String FETCH_ALL_DRIVERS_URI = "http://ergast.com/api/f1/drivers.json";
-    private static final String FETCH_ALL_SEASONS_URI = "https://ergast.com/api/f1/seasons.json";
-    private static final String FETCH_ALL_CIRCUITS_URI = "http://ergast.com/api/f1/circuits.json";
-    private static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json";
-    private static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json";
-    private static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
+    static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json";
+    static final String FETCH_ALL_DRIVERS_URI = "http://ergast.com/api/f1/drivers.json";
+    static final String FETCH_ALL_SEASONS_URI = "https://ergast.com/api/f1/seasons.json";
+    static final String FETCH_ALL_CIRCUITS_URI = "http://ergast.com/api/f1/circuits.json";
+    static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json";
+    static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json";
+    static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
