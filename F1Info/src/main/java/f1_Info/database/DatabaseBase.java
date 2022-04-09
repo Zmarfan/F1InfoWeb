@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 @AllArgsConstructor
@@ -19,6 +20,10 @@ public abstract class DatabaseBase {
     public <T> T executeQuery(final IQueryData<T> queryData) throws SQLException {
         final List<T> records = executeListQuery(queryData);
         return records.isEmpty() ? null : records.get(0);
+    }
+
+    public <T> Optional<T> executeOptionalQuery(final IQueryData<T> queryData) throws SQLException {
+        return Optional.ofNullable(executeQuery(queryData));
     }
 
     public <T> void executeVoidQuery(final IQueryData<T> queryData) throws SQLException {
@@ -32,6 +37,10 @@ public abstract class DatabaseBase {
     public <T> T executeBasicQuery(final IQueryData<T> queryData) throws SQLException {
         final List<T> records = executeBasicListQuery(queryData);
         return records.isEmpty() ? null : records.get(0);
+    }
+
+    public <T> Optional<T> executeOptionalBasicQuery(final IQueryData<T> queryData) throws SQLException {
+        return Optional.ofNullable(executeBasicQuery(queryData));
     }
 
     public <T> List<T> executeBasicListQuery(final IQueryData<T> queryData) throws SQLException {

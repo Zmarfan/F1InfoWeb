@@ -4,6 +4,9 @@ import f1_Info.constants.Country;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.lap_times.LapTimeData;
+import f1_Info.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.ergast.responses.lap_times.TimingData;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
 import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.ergast.responses.race.ErgastSessionTimes;
@@ -289,6 +292,57 @@ class ParserTest {
                 }
             }
         """;
+
+    private static final String TEST_LAP_TIMES_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "812",
+                "RaceTable": {
+                    "season": "1996",
+                    "round": "1",
+                    "Races": [
+                        {
+                            "season": "1996",
+                            "round": "1",
+                            "url": "http://en.wikipedia.org/wiki/1996_Australian_Grand_Prix",
+                            "raceName": "Australian Grand Prix",
+                            "Circuit": {
+                                "circuitId": "albert_park",
+                                "url": "http://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit",
+                                "circuitName": "Albert Park Grand Prix Circuit",
+                                "Location": {
+                                    "lat": "-37.8497",
+                                    "long": "144.968",
+                                    "locality": "Melbourne",
+                                    "country": "Australia"
+                                }
+                            },
+                            "date": "1996-03-10",
+                            "Laps": [
+                                {
+                                    "number": "1",
+                                    "Timings": [
+                                        {
+                                            "driverId": "villeneuve",
+                                            "position": "1",
+                                            "time": "1:43.702"
+                                        },
+                                        {
+                                            "driverId": "damon_hill",
+                                            "position": "2",
+                                            "time": "1:44.243"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -470,5 +524,20 @@ class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_pitstop() {
         assertThrows(IOException.class, () -> new Parser().parsePitStopResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_lap_times_json_to_correct_Lap_times_object_list() throws IOException, ParseException {
+        final List<LapTimeData> expectedData = List.of(new LapTimeData(1, List.of(
+            new TimingData("villeneuve", 1, "1:43.702"),
+            new TimingData("damon_hill", 2, "1:44.243")
+        )));
+        final ErgastResponse<LapTimesDataHolder> parsedData = new Parser().parseLapTimesResponseToObjects(TEST_LAP_TIMES_JSON);
+        assertEquals(singletonList(new LapTimesDataHolder(expectedData)), parsedData.getData());
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_lap_times() {
+        assertThrows(IOException.class, () -> new Parser().parseLapTimesResponseToObjects(BAD_JSON_FORMAT));
     }
 }

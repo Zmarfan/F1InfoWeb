@@ -35,7 +35,7 @@ public class FetchLapTimesTask extends TaskWrapper {
     }
 
     @Override
-    protected void runTask() throws Exception {
+    protected void runTask() throws SQLException {
         final Optional<LapTimesFetchInformationRecord> fetchInformation = mDatabase.getNextSeasonAndRoundToFetchLapTimesFor();
         if (fetchInformation.isEmpty()) {
             return;

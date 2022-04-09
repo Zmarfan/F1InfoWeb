@@ -25,7 +25,7 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<PitStopFetchInformationRecord> getNextSeasonAndRoundToFetchPitStopsFor() throws SQLException {
-        return Optional.ofNullable(executeQuery(new GetNextRaceToFetchPitStopsForQueryData(FIRST_SEASON_WITH_PISTOP_DATA)));
+        return executeOptionalQuery(new GetNextRaceToFetchPitStopsForQueryData(FIRST_SEASON_WITH_PISTOP_DATA));
     }
 
     public void mergeIntoPitStopsData(final List<PitStopData> pitStopDataList, final PitStopFetchInformationRecord fetchInformation) throws SQLException {

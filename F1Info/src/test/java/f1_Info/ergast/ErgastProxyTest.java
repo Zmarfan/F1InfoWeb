@@ -1,5 +1,6 @@
 package f1_Info.ergast;
 
+import f1_Info.background.fetch_lap_times_task.LapTimesFetchInformationRecord;
 import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
@@ -7,6 +8,9 @@ import f1_Info.constants.Country;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.ergast.responses.lap_times.LapTimeData;
+import f1_Info.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.ergast.responses.lap_times.TimingData;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
 import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.ergast.responses.race.RaceData;
@@ -34,7 +38,8 @@ class ErgastProxyTest {
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
-    private static final PitStopFetchInformationRecord FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2);
+    private static final PitStopFetchInformationRecord PIT_STOP_FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2);
+    private static final LapTimesFetchInformationRecord LAP_TIMES_FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2);
 
     @Mock
     Parser mParser;
@@ -405,7 +410,7 @@ class ErgastProxyTest {
     void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
 
-        mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD);
 
         verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
@@ -413,7 +418,7 @@ class ErgastProxyTest {
     @Test
     void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
-        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
     }
 
     @Test
@@ -421,7 +426,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
     }
 
     @Test
@@ -429,7 +434,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD);
 
         verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
     }
@@ -444,6 +449,54 @@ class ErgastProxyTest {
             singletonList(new PitStopDataHolder(expectedReturnData)))
         );
 
-        assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
+        assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
+    }
+
+    @Test
+    void should_not_fetch_lap_time_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_lap_times_data_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_lap_times() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_lap_times() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_lap_times() throws IOException, ParseException {
+        final List<LapTimeData> expectedReturnData = singletonList(
+            new LapTimeData(1, singletonList(new TimingData("as", 1, "0:59:123")))
+        );
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseLapTimesResponseToObjects(any())).thenReturn(new ErgastResponse<>(
+            RESPONSE_HEADER,
+            singletonList(new LapTimesDataHolder(expectedReturnData)))
+        );
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
     }
 }

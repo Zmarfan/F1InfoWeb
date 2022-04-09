@@ -40,9 +40,9 @@ class FetchPitStopsTaskTest {
     void should_not_call_ergast_for_pitstop_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
         when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.empty());
 
-        mFetchPitStopsTask.runTask();
+        mFetchPitStopsTask.run();
 
-        verify(mErgastProxy, never()).fetchRacesFromYear(anyInt());
+        verify(mErgastProxy, never()).fetchPitStopsFromRoundAndSeason(any(PitStopFetchInformationRecord.class));
     }
 
     @Test
