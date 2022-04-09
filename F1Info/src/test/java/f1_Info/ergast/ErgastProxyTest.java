@@ -66,13 +66,15 @@ class ErgastProxyTest {
 
     @Test
     void should_make_one_call_to_fetcher_for_every_limit_partition_needed_to_get_full_response() throws IOException {
+        final int total = (int)Math.round(ErgastProxy.MAX_LIMIT * 3.5);
+
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), emptyList()));
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3, total), emptyList()));
 
         mErgastProxy.fetchAllSeasons();
 
@@ -81,24 +83,28 @@ class ErgastProxyTest {
 
     @Test
     void should_make_one_call_to_fetcher_containing_growing_offset_for_every_limit_partition_needed_to_get_full_response() throws IOException {
+        final int total = (int)Math.round(ErgastProxy.MAX_LIMIT * 3.5);
+
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), emptyList()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), emptyList()));
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2, total), emptyList()))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3, total), emptyList()));
 
         mErgastProxy.fetchAllSeasons();
 
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 0));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 1000));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 2000));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, 1000, 3000));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, 0));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2));
+        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3));
     }
 
     @Test
     void should_combine_results_given_from_parser_into_one_list_when_calling_for_multiple_partitions() throws IOException {
+        final int total = (int)Math.round(ErgastProxy.MAX_LIMIT * 3.5);
+
         final SeasonData seasonData1 = new SeasonData(1998, WIKIPEDIA_URL);
         final SeasonData seasonData2 = new SeasonData(1999, WIKIPEDIA_URL);
         final SeasonData seasonData3 = new SeasonData(2000, WIKIPEDIA_URL);
@@ -107,10 +113,10 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 0, 3500), singletonList(seasonData1)))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 1000, 3500), singletonList(seasonData2)))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 2000, 3500), singletonList(seasonData3)))
-            .thenReturn(new ErgastResponse<>(new ResponseHeader(1000, 3000, 3500), singletonList(seasonData4)));
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), singletonList(seasonData1)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT , total), singletonList(seasonData2)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2, total), singletonList(seasonData3)))
+            .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3, total), singletonList(seasonData4)));
 
         final List<SeasonData> list = mErgastProxy.fetchAllSeasons();
 
