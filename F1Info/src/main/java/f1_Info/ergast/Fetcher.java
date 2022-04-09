@@ -15,7 +15,7 @@ public class Fetcher {
     private static final int CONNECT_TIME_OUT = 10000;
     private static final int READ_TIME_OUT = 25000;
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
-    private static final int RATE_LIMIT_PER_SECOND = 3;
+    private static final double RATE_LIMIT_PER_SECOND = 0.5;
 
     private final RateLimiter mRateLimiter = RateLimiter.create(RATE_LIMIT_PER_SECOND);
 

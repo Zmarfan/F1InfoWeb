@@ -33,39 +33,39 @@ public class Parser {
         mObjectMapper = new ObjectMapper();
     }
 
-    public List<ConstructorData> parseConstructorsResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<ConstructorData> parseConstructorsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, CONSTRUCTORS_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), ConstructorData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), ConstructorData[].class)));
     }
 
-    public List<DriverData> parseDriversResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<DriverData> parseDriversResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, DRIVERS_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), DriverData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), DriverData[].class)));
     }
 
-    public List<SeasonData> parseSeasonsResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<SeasonData> parseSeasonsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, SEASON_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), SeasonData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), SeasonData[].class)));
     }
 
-    public List<CircuitData> parseCircuitsResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<CircuitData> parseCircuitsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, CIRCUIT_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), CircuitData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), CircuitData[].class)));
     }
 
-    public List<RaceData> parseRacesResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<RaceData> parseRacesResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACES_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), RaceData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), RaceData[].class)));
     }
 
-    public List<FinishStatusData> parseFinishStatusResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<FinishStatusData> parseFinishStatusResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, FINISH_STATUS_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), FinishStatusData[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), FinishStatusData[].class)));
     }
 
-    public List<PitStopDataHolder> parsePitStopResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<PitStopDataHolder> parsePitStopResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, PIT_STOP_PARENTS));
-        return Arrays.asList(mObjectMapper.readValue(data.getDataString(), PitStopDataHolder[].class));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), PitStopDataHolder[].class)));
     }
 
     private String dataExtractor(final JsonNode mainNode, final List<String> parents) {

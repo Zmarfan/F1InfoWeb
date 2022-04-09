@@ -4,10 +4,7 @@ import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.FinishStatusData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
@@ -33,6 +30,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ErgastProxyTest {
+    private static final ResponseHeader RESPONSE_HEADER = new ResponseHeader(1000, 0, 500);
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
@@ -88,10 +86,12 @@ class ErgastProxyTest {
 
     @Test
     void should_return_formatted_data_from_parser_when_fetching_constructors() throws IOException {
-        final List<ConstructorData> expectedReturnData = List.of(new ConstructorData("", WIKIPEDIA_URL, "", Country.GERMANY.getNationalityKeywords().get(0)));
+        final List<ConstructorData> expectedReturnData = singletonList(
+            new ConstructorData("", WIKIPEDIA_URL, "", Country.GERMANY.getNationalityKeywords().get(0))
+        );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllConstructors());
     }
@@ -143,7 +143,7 @@ class ErgastProxyTest {
         ));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseDriversResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseDriversResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllDrivers());
     }
@@ -186,7 +186,7 @@ class ErgastProxyTest {
         final List<SeasonData> expectedReturnData = List.of(new SeasonData(1950, WIKIPEDIA_URL));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllSeasons());
     }
@@ -231,7 +231,7 @@ class ErgastProxyTest {
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseCircuitsResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseCircuitsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllCircuits());
     }
@@ -281,7 +281,7 @@ class ErgastProxyTest {
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseRacesResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseRacesResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchRacesFromYear(1998));
     }
@@ -324,7 +324,7 @@ class ErgastProxyTest {
         final List<FinishStatusData> expectedReturnData = List.of(new FinishStatusData(1, "status"));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(expectedReturnData);
+        when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllFinishStatuses());
     }
@@ -367,7 +367,10 @@ class ErgastProxyTest {
         final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", BigDecimal.TEN));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parsePitStopResponseToObjects(any())).thenReturn(singletonList(new PitStopDataHolder(expectedReturnData)));
+        when(mParser.parsePitStopResponseToObjects(any())).thenReturn(new ErgastResponse<>(
+            RESPONSE_HEADER,
+            singletonList(new PitStopDataHolder(expectedReturnData)))
+        );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD));
     }

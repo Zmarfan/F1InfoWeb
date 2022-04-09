@@ -1,10 +1,7 @@
 package f1_Info.ergast;
 
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.ConstructorData;
-import f1_Info.ergast.responses.DriverData;
-import f1_Info.ergast.responses.FinishStatusData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
 import f1_Info.ergast.responses.circuit.LocationData;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
@@ -310,9 +307,9 @@ class ParserTest {
                 Country.GERMANY.getNationalityKeywords().get(0)
             )
         );
-        final List<ConstructorData> parsedData = new Parser().parseConstructorsResponseToObjects(TEST_CONSTRUCTOR_JSON);
+        final ErgastResponse<ConstructorData> parsedData = new Parser().parseConstructorsResponseToObjects(TEST_CONSTRUCTOR_JSON);
 
-        assertEquals(expectedData, parsedData);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -344,9 +341,9 @@ class ParserTest {
                 null
             )
         );
-        final List<DriverData> parsedData = new Parser().parseDriversResponseToObjects(TEST_DRIVER_JSON);
+        final ErgastResponse<DriverData> parsedData = new Parser().parseDriversResponseToObjects(TEST_DRIVER_JSON);
 
-        assertEquals(expectedData, parsedData);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -360,9 +357,9 @@ class ParserTest {
             new SeasonData(1950, "http://en.wikipedia.org/wiki/1950_Formula_One_season"),
             new SeasonData(1951, "http://en.wikipedia.org/wiki/1951_Formula_One_season")
         );
-        final List<SeasonData> parsedData = new Parser().parseSeasonsResponseToObjects(TEST_SEASONS_JSON);
+        final ErgastResponse<SeasonData> parsedData = new Parser().parseSeasonsResponseToObjects(TEST_SEASONS_JSON);
 
-        assertEquals(expectedData, parsedData);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -386,9 +383,9 @@ class ParserTest {
                 Country.MOROCCO.getNames().get(0)
             ))
         );
-        final List<CircuitData> parsedData = new Parser().parseCircuitsResponseToObjects(TEST_CIRCUITS_JSON);
+        final ErgastResponse<CircuitData> parsedData = new Parser().parseCircuitsResponseToObjects(TEST_CIRCUITS_JSON);
 
-        assertEquals(expectedData, parsedData);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -438,9 +435,9 @@ class ParserTest {
                 )
             )
         );
-        final List<RaceData> parsedData = new Parser().parseRacesResponseToObjects(TEST_RACES_JSON);
+        final ErgastResponse<RaceData> parsedData = new Parser().parseRacesResponseToObjects(TEST_RACES_JSON);
 
-        assertEquals(expectedData, parsedData);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -451,8 +448,8 @@ class ParserTest {
     @Test
     void should_parse_valid_finish_status_json_to_correct_race_object_list() throws IOException {
         final List<FinishStatusData> expectedData = List.of(new FinishStatusData(1, "Finished"), new FinishStatusData(139, "Illness"));
-        final List<FinishStatusData> parsedData = new Parser().parseFinishStatusResponseToObjects(TEST_FINISH_STATUS_JSON);
-        assertEquals(expectedData, parsedData);
+        final ErgastResponse<FinishStatusData> parsedData = new Parser().parseFinishStatusResponseToObjects(TEST_FINISH_STATUS_JSON);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
@@ -466,8 +463,8 @@ class ParserTest {
             new PitStopData("hamilton", 11, 1, "18:21:54", BigDecimal.valueOf(25.201)),
             new PitStopData("alonso", 11, 1, "18:22:10", BigDecimal.valueOf(25.365))
         );
-        final List<PitStopDataHolder> parsedData = new Parser().parsePitStopResponseToObjects(TEST_PITSTOP_JSON);
-        assertEquals(singletonList(new PitStopDataHolder(expectedData)), parsedData);
+        final ErgastResponse<PitStopDataHolder> parsedData = new Parser().parsePitStopResponseToObjects(TEST_PITSTOP_JSON);
+        assertEquals(singletonList(new PitStopDataHolder(expectedData)), parsedData.getData());
     }
 
     @Test
