@@ -70,7 +70,7 @@ public class FetchLapTimesTask extends TaskWrapper {
             String.format(
                 "Fetched a total of %d lap entries with lap data containing %d laps from ergast and merged into database for season: %d, round: %d",
                 lapTimes.size(),
-                lapTimes.size(),
+                lapTimes.stream().map(LapTimeData::getTimingData).flatMap(List::stream).toList().size(),
                 fetchInformation.getSeason(),
                 fetchInformation.getRound()
             )
