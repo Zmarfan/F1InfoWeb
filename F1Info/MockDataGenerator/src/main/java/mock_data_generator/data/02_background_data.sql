@@ -5,3 +5,4 @@ insert into background_tasks (id, name) values (4, 'Fetch Seasons Task');
 insert into background_tasks (id, name) values (5, 'Fetch Constructors Task');
 insert into background_tasks (id, name) values (6, 'Fetch Finish Status Task');
 insert into background_tasks (id, name) values (7, 'Fetch Pit Stops Task');
+insert into background_tasks (id, name) values (8, 'Fetch Lap Times Task');

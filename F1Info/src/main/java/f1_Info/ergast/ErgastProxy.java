@@ -1,9 +1,11 @@
 package f1_Info.ergast;
 
+import f1_Info.background.fetch_lap_times_task.LapTimesFetchInformationRecord;
 import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.ergast.responses.*;
 import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.ergast.responses.lap_times.LapTimeData;
 import f1_Info.ergast.responses.pit_stop.PitStopData;
 import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
@@ -32,6 +34,7 @@ public class ErgastProxy {
     static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json";
     static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json";
     static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
+    static final String FETCH_LAP_TIMES_URI = "https://ergast.com/api/f1/%d/%d/laps.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -105,6 +108,25 @@ public class ErgastProxy {
                 "fetchPitStopsFromRoundAndSeason",
                 ErgastProxy.class,
                 String.format("Unable to fetch pit stop data from ergast for season: %d, round: %d", fetchInformation.getSeason(), fetchInformation.getRound()),
+                e
+            );
+        }
+        return emptyList();
+    }
+
+    public List<LapTimeData> fetchLapTimesFromRoundAndSeason(final LapTimesFetchInformationRecord fetchInformation) {
+        try {
+            if (isProduction()) {
+                return getData(
+                    String.format(FETCH_LAP_TIMES_URI, fetchInformation.getSeason(), fetchInformation.getRound()),
+                    wrapper(mParser::parseLapTimesResponseToObjects)
+                ).get(0).getLapTimeData();
+            }
+        } catch (final Exception e) {
+            mLogger.severe(
+                "fetchLapTimesFromRoundAndSeason",
+                ErgastProxy.class,
+                String.format("Unable to fetch lap times data from ergast for season: %d, round: %d", fetchInformation.getSeason(), fetchInformation.getRound()),
                 e
             );
         }

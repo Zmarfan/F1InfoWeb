@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Component(value = "FetchPitStopsTaskDatabase")
 public class Database extends TaskDatabase {
-
     private static final int FIRST_SEASON_WITH_PISTOP_DATA = 2011;
 
     @Autowired
@@ -36,5 +35,4 @@ public class Database extends TaskDatabase {
     public void setLastFetchedPitstopsForRace(final PitStopFetchInformationRecord fetchInformationRecord) throws SQLException {
         executeVoidQuery(new SetLastFetchedRacePitStopFetchingQueryData(fetchInformationRecord));
     }
-
 }
