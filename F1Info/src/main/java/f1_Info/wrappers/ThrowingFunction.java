@@ -1,4 +1,4 @@
-package f1_Info.utils;
+package f1_Info.wrappers;
 
 import java.util.function.Function;
 

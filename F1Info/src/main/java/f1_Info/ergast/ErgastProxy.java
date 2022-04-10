@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static f1_Info.utils.ThrowingFunction.wrapper;
+import static f1_Info.wrappers.ThrowingFunction.wrapper;
 import static java.util.Collections.emptyList;
 
 @Service
