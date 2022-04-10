@@ -2,6 +2,7 @@ package f1_Info.background.fetch_lap_times_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
+import f1_Info.database.BulkOfWork;
 import f1_Info.ergast.responses.lap_times.LapTimeData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,25 @@ public class Database extends TaskDatabase {
     }
 
     public void mergeIntoLapTimesData(final List<LapTimeData> lapTimeDataList, final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
+        final List<MergeIntoLapTimesQueryData> queryDataList = lapTimeDataList
+            .stream()
+            .map(lapData -> mapToMergeQueryData(lapData, fetchInformation))
+            .flatMap(List::stream)
+            .toList();
+        executeBulkOfWork(new BulkOfWork(queryDataList));
     }
 
     public void setLastFetchedLapTimesForRace(final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
+        executeVoidQuery(new SetLastFetchedRaceLapTimesFetchingQueryData(fetchInformation));
+    }
+
+    private List<MergeIntoLapTimesQueryData> mapToMergeQueryData(
+        final LapTimeData lapData,
+        final LapTimesFetchInformationRecord fetchInformation
+    ) {
+        return lapData.getTimingData()
+            .stream()
+            .map(timingData -> new MergeIntoLapTimesQueryData(lapData.getNumber(), timingData, fetchInformation))
+            .toList();
     }
 }

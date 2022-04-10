@@ -6,4 +6,5 @@ import lombok.Value;
 public class LapTimesFetchInformationRecord {
     int mSeason;
     int mRound;
+    int mRaceId;
 }
