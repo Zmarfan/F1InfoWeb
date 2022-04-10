@@ -3,7 +3,6 @@ package f1_Info.background.ergast_tasks.fetch_driver_standings_task;
 import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.SetLastFetchedRacePitStopFetchingQueryData;
 import f1_Info.configuration.Configuration;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,6 @@ public class Database extends TaskDatabase {
     }
 
     public void setLastFetchedRaceInHistory(final RaceRecord raceRecord) throws SQLException {
-        executeVoidQuery(new SetLastFetchedRacePitStopFetchingQueryData(raceRecord));
+        executeVoidQuery(new SetLastFetchedDriverStandingsFetchingQueryData(raceRecord));
     }
 }
