@@ -7,6 +7,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
 import lombok.Value;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Value
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,14 +16,14 @@ public class DriverStandingsData {
     BigDecimal mPoints;
     int mAmountOfWinsInSeasonSoFar;
     DriverData mDriverData;
-    ConstructorData mConstructorData;
+    List<ConstructorData> mConstructorData;
 
     public DriverStandingsData(
         @JsonProperty("position") int position,
         @JsonProperty("points") BigDecimal points,
         @JsonProperty("wins") int amountOfWinsInSeasonSoFar,
         @JsonProperty("Driver") DriverData driverData,
-        @JsonProperty("Constructors") ConstructorData constructorData
+        @JsonProperty("Constructors") List<ConstructorData> constructorData
     ) {
         mPosition = position;
         mPoints = points;
