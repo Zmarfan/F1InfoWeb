@@ -1,8 +1,11 @@
 package f1_Info.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.List;
 import java.util.function.Function;
 
+@UtilityClass
 public class ListUtils {
     public static String stringListToString(final List<String> list) {
         return String.join(", ", list);
