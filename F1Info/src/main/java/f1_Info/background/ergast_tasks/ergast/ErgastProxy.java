@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.ergast;
 
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
@@ -34,6 +35,7 @@ public class ErgastProxy {
     static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json";
     static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
     static final String FETCH_LAP_TIMES_URI = "https://ergast.com/api/f1/%d/%d/laps.json";
+    static final String FETCH_DRIVER_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/driverStandings.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -126,6 +128,25 @@ public class ErgastProxy {
                 "fetchLapTimesFromRoundAndSeason",
                 ErgastProxy.class,
                 String.format("Unable to fetch lap times data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
+                e
+            );
+        }
+        return emptyList();
+    }
+
+    public List<DriverStandingsData> fetchDriverStandingsForRace(final RaceRecord raceRecord) {
+        try {
+            if (isProduction()) {
+                return getData(
+                    String.format(FETCH_DRIVER_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    wrapper(mParser::parseDriverStandingsResponseToObjects)
+                ).get(0).getDriverStandingsData();
+            }
+        } catch (final Exception e) {
+            mLogger.severe(
+                "fetchDriverStandingsForRace",
+                ErgastProxy.class,
+                String.format("Unable to fetch driver standings data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
                 e
             );
         }
