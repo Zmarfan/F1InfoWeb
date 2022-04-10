@@ -34,8 +34,8 @@ public class MockDataGenerator {
             logInfo("Starting Mock Data Generator");
             resetDatabase();
             createTables();
-            createData();
             createHelperFunctions();
+            createData();
             createProcedures();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
