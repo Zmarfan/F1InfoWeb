@@ -6,4 +6,5 @@ import lombok.Value;
 public class PitStopFetchInformationRecord {
     int mSeason;
     int mRound;
+    int mRaceId;
 }

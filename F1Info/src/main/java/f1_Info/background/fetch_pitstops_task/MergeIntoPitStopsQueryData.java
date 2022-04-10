@@ -9,22 +9,20 @@ import java.sql.Time;
 
 @Value
 public class MergeIntoPitStopsQueryData implements IQueryData<Void> {
-    int m1Season;
-    int m2Round;
-    String m3DriverIdentification;
-    int m4Lap;
-    int m5Stop;
-    Time m6Time;
-    BigDecimal m7DurationInSeconds;
+    int m1RaceId;
+    String m2DriverIdentification;
+    int m3Lap;
+    int m4Stop;
+    Time m5Time;
+    BigDecimal m6DurationInSeconds;
 
     public MergeIntoPitStopsQueryData(final PitStopData pitStopData, final PitStopFetchInformationRecord fetchInformationRecord) {
-        m1Season = fetchInformationRecord.getSeason();
-        m2Round = fetchInformationRecord.getRound();
-        m3DriverIdentification = pitStopData.getDriverIdentification();
-        m4Lap = pitStopData.getLap();
-        m5Stop = pitStopData.getStop();
-        m6Time = pitStopData.getTime();
-        m7DurationInSeconds = pitStopData.getDurationInSeconds();
+        m1RaceId = fetchInformationRecord.getRaceId();
+        m2DriverIdentification = pitStopData.getDriverIdentification();
+        m3Lap = pitStopData.getLap();
+        m4Stop = pitStopData.getStop();
+        m5Time = pitStopData.getTime();
+        m6DurationInSeconds = pitStopData.getDurationInSeconds();
     }
 
     @Override
