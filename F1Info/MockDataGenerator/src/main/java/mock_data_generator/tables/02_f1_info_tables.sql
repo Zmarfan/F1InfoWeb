@@ -188,14 +188,16 @@ create table driver_standings(
   id int not null auto_increment,
   race_id int not null,
   driver_id int not null,
+  constructor_id int not null,
   points float not null,
-  position int,
+  position int not null,
   position_type varchar(255),
   win_amount int not null,
 
   constraint driver_standings_pk primary key (id, race_id, driver_id),
   constraint driver_standings_race_id foreign key (race_id) references races(id),
   constraint driver_standings_driver_id foreign key (driver_id) references drivers(id),
+  constraint driver_standings_constructor_id foreign key (constructor_id) references constructors(id),
   constraint driver_standings_position_type foreign key (position_type) references position_types(type)
 );
 
