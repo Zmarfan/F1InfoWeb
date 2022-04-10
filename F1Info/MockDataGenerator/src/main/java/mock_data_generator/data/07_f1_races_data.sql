@@ -1,3 +1,5 @@
+insert into races_fetching_history (season, is_active) values (2022, 'Y');
+
 insert into time_and_dates (id, date, time) values (1, to_date('1950-05-13'), null);
 insert into time_and_dates (id, date, time) values (2, to_date('1950-05-21'), null);
 insert into time_and_dates (id, date, time) values (3, to_date('1950-05-30'), null);

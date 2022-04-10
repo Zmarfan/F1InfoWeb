@@ -97,7 +97,7 @@ create table lap_times(
   lap int not null,
   position int,
   time varchar(255),
-  length_in_milliseconds int,
+  length_in_seconds float,
 
   constraint lap_times_pk primary key (race_id, driver_id, lap),
   constraint lap_times_race_id foreign key (race_id) references races(id),
