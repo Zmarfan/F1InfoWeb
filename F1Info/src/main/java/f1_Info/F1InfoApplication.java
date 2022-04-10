@@ -2,6 +2,7 @@ package f1_Info;
 
 import f1_Info.background.ergast_tasks.fetch_circuits_task.FetchCircuitsTask;
 import f1_Info.background.ergast_tasks.fetch_constructors_task.FetchConstructorsTask;
+import f1_Info.background.ergast_tasks.fetch_driver_standings_task.FetchDriverStandingsTask;
 import f1_Info.background.ergast_tasks.fetch_drivers_task.FetchDriversTask;
 import f1_Info.background.ergast_tasks.fetch_finish_status_task.FetchFinishStatusTask;
 import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
@@ -31,6 +32,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private final FetchConstructorsTask mFetchConstructorsTask;
 	private final FetchPitStopsTask mFetchPitStopsTask;
 	private final FetchLapTimesTask mFetchLapTimesTask;
+	private final FetchDriverStandingsTask mFetchDriverStandingsTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -75,5 +77,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchLapTimesTask() {
 		mFetchLapTimesTask.run();
+	}
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void runFetchDriverStandingsTask() {
+		mFetchDriverStandingsTask.run();
 	}
 }

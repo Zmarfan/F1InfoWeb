@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimesDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
@@ -29,6 +30,7 @@ public class Parser {
     private static final List<String> FINISH_STATUS_PARENTS = List.of("StatusTable", "Status");
     private static final List<String> PIT_STOP_PARENTS = List.of("RaceTable", "Races");
     private static final List<String> LAP_TIMES_PARENTS = List.of("RaceTable", "Races");
+    private static final List<String> DRIVER_STANDINGS_PARENTS = List.of("StandingsTable", "StandingsLists");
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
@@ -73,6 +75,11 @@ public class Parser {
     public ErgastResponse<LapTimesDataHolder> parseLapTimesResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, LAP_TIMES_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), LapTimesDataHolder[].class)));
+    }
+
+    public ErgastResponse<StandingsDataHolder> parseDriverStandingsResponseToObjects(final String json) throws IOException {
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, DRIVER_STANDINGS_PARENTS));
+        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), StandingsDataHolder[].class)));
     }
 
     private String dataExtractor(final JsonNode mainNode, final List<String> parents) {
