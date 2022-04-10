@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class GetNextRaceToFetchPitStopsForQueryData implements IQueryData<PitStopFetchInformationRecord> {
-    int mFirstSeasonWithPistopData;
+    int mFirstSeasonWithPitstopData;
 
     @Override
     public String getStoredProcedureName() {
