@@ -50,7 +50,7 @@ public class FetchDriverStandingsTask extends TaskWrapper {
 
     private void mergeIntoDatabase(final List<DriverStandingsData> driverStandings, final RaceRecord raceRecord) throws SQLException {
         try {
-            mDatabase.mergeIntoPitStopsData(driverStandings, raceRecord);
+            mDatabase.mergeIntoDriverStandingsData(driverStandings, raceRecord);
             logMergeIntoDatabaseInfo(driverStandings, raceRecord);
             mDatabase.setLastFetchedRaceInHistory(raceRecord);
         } catch (final SQLException e) {

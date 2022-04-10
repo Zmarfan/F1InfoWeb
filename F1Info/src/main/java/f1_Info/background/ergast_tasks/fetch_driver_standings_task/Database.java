@@ -29,7 +29,7 @@ public class Database extends TaskDatabase {
         return executeOptionalQuery(new GetNextRaceToFetchDriverStandingsForQueryData(FIRST_FORMULA_1_SEASON));
     }
 
-    public void mergeIntoPitStopsData(final List<DriverStandingsData> driverStandings, final RaceRecord raceRecord) throws SQLException {
+    public void mergeIntoDriverStandingsData(final List<DriverStandingsData> driverStandings, final RaceRecord raceRecord) throws SQLException {
         executeBulkOfWork(
             new BulkOfWork(driverStandings.stream().map(driverStanding -> new MergeIntoDriverStandingsQueryData(driverStanding, raceRecord)).toList())
         );

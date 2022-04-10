@@ -1,8 +1,6 @@
 package f1_Info.background.ergast_tasks.ergast;
 
-import f1_Info.background.ergast_tasks.ergast.Parser;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
-import f1_Info.constants.Country;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.LocationData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
@@ -12,6 +10,9 @@ import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.ErgastSessionTimes;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
+import f1_Info.constants.Country;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -344,6 +345,76 @@ class ParserTest {
             }
         }
         """;
+
+    private static final String TEST_DRIVER_STANDINGS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "22",
+                "StandingsTable": {
+                    "season": "2008",
+                    "round": "5",
+                    "StandingsLists": [
+                        {
+                            "season": "2008",
+                            "round": "5",
+                            "DriverStandings": [
+                                {
+                                    "position": "1",
+                                    "positionText": "1",
+                                    "points": "35",
+                                    "wins": "2",
+                                    "Driver": {
+                                        "driverId": "raikkonen",
+                                        "permanentNumber": "7",
+                                        "code": "RAI",
+                                        "url": "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
+                                        "givenName": "Kimi",
+                                        "familyName": "Räikkönen",
+                                        "dateOfBirth": "1979-10-17",
+                                        "nationality": "Finnish"
+                                    },
+                                    "Constructors": [
+                                        {
+                                            "constructorId": "ferrari",
+                                            "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                            "name": "Ferrari",
+                                            "nationality": "Italian"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "position": "2",
+                                    "positionText": "2",
+                                    "points": "28",
+                                    "wins": "2",
+                                    "Driver": {
+                                        "driverId": "massa",
+                                        "permanentNumber": "19",
+                                        "code": "MAS",
+                                        "url": "http://en.wikipedia.org/wiki/Felipe_Massa",
+                                        "givenName": "Felipe",
+                                        "familyName": "Massa",
+                                        "dateOfBirth": "1981-04-25",
+                                        "nationality": "Brazilian"
+                                    },
+                                    "Constructors": [
+                                        {
+                                            "constructorId": "ferrari",
+                                            "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                            "name": "Ferrari",
+                                            "nationality": "Italian"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -528,7 +599,7 @@ class ParserTest {
     }
 
     @Test
-    void should_parse_valid_lap_times_json_to_correct_Lap_times_object_list() throws IOException, ParseException {
+    void should_parse_valid_lap_times_json_to_correct_lap_times_object_list() throws IOException, ParseException {
         final List<LapTimeData> expectedData = List.of(new LapTimeData(1, List.of(
             new TimingData("villeneuve", 1, "1:43.702"),
             new TimingData("damon_hill", 2, "1:44.243")
@@ -540,5 +611,48 @@ class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_lap_times() {
         assertThrows(IOException.class, () -> new Parser().parseLapTimesResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_driver_standings_json_to_correct_driver_standings_object_list() throws IOException, ParseException {
+        final List<DriverStandingsData> expectedData = List.of(
+            new DriverStandingsData(1, BigDecimal.valueOf(35), 2, new DriverData(
+                "raikkonen",
+                "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
+                "Kimi",
+                "Räikkönen",
+                "1979-10-17",
+                "Finnish",
+                7,
+                "RAI"
+            ), singletonList(new ConstructorData(
+                "ferrari",
+                "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                "Ferrari",
+                "Italian"
+            ))),
+            new DriverStandingsData(2, BigDecimal.valueOf(28), 2, new DriverData(
+                "massa",
+                "http://en.wikipedia.org/wiki/Felipe_Massa",
+                "Felipe",
+                "Massa",
+                "1981-04-25",
+                "Brazilian",
+                19,
+                "MAS"
+            ), singletonList(new ConstructorData(
+                "ferrari",
+                "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                "Ferrari",
+                "Italian"
+            )))
+        );
+        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseDriverStandingsResponseToObjects(TEST_DRIVER_STANDINGS_JSON);
+        assertEquals(singletonList(new StandingsDataHolder(expectedData)), parsedData.getData());
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_driver_standings() {
+        assertThrows(IOException.class, () -> new Parser().parseDriverStandingsResponseToObjects(BAD_JSON_FORMAT));
     }
 }

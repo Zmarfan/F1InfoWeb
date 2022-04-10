@@ -1,13 +1,11 @@
 package f1_Info.background.ergast_tasks.fetch_races_task;
 
 import f1_Info.background.TaskWrapper;
-import f1_Info.background.ergast_tasks.fetch_races_task.Database;
-import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
-import f1_Info.constants.Country;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.LocationData;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
+import f1_Info.constants.Country;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +44,7 @@ class FetchRacesTaskTest {
     void should_not_call_ergast_for_races_data_if_there_is_no_next_season_to_fetch_for() throws SQLException {
         when(mDatabase.getNextSeasonToFetchForRaces()).thenReturn(Optional.empty());
 
-        mFetchRacesTask.runTask();
+        mFetchRacesTask.run();
 
         verify(mErgastProxy, never()).fetchRacesFromYear(anyInt());
     }

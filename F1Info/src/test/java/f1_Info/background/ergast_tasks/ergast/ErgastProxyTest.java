@@ -10,6 +10,8 @@ import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
 import f1_Info.background.ergast_tasks.RaceRecord;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
@@ -496,5 +498,62 @@ class ErgastProxyTest {
         );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_not_fetch_driver_standings_data_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_driver_standings_data_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_driver_standings() throws IOException, ParseException {
+        final List<DriverStandingsData> expectedReturnData = singletonList(
+            new DriverStandingsData(1, BigDecimal.ONE, 2, new DriverData(
+                "driverId",
+                WIKIPEDIA_URL,
+                "firstName",
+                "secondName",
+                "1998-04-11",
+                Country.GERMANY.getNationalityKeywords().get(0),
+                11,
+                "FES"
+            ), singletonList(new ConstructorData("constId", WIKIPEDIA_URL, "vroom", Country.SWEDEN.getNationalityKeywords().get(0))))
+        );
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseDriverStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
+            RESPONSE_HEADER,
+            singletonList(new StandingsDataHolder(expectedReturnData)))
+        );
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
     }
 }
