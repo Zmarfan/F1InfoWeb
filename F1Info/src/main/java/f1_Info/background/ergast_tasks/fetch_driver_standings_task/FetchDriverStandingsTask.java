@@ -32,7 +32,7 @@ public class FetchDriverStandingsTask extends TaskWrapper {
 
     @Override
     protected Tasks getTaskType() {
-        return Tasks.FETCH_SEASONS_TASK;
+        return Tasks.FETCH_DRIVER_STANDINGS_TASK;
     }
 
     @Override
