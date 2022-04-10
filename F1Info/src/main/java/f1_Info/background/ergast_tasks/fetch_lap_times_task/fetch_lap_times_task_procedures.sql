@@ -42,5 +42,3 @@ begin
       values (p_race_id, v_driver_id, p_lap, p_position, p_time_string, p_length_in_seconds);
   end if;
 end;
-
-show procedure status where db = 'f1database';

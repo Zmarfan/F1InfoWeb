@@ -31,4 +31,8 @@ public class DriverStandingsData {
         mDriverData = driverData;
         mConstructorData = constructorData;
     }
+
+    public String getConstructorIdentification() {
+        return mConstructorData.get(mConstructorData.size() - 1).getConstructorIdentifier();
+    }
 }

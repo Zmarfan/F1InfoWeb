@@ -4,6 +4,7 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.configuration.Configuration;
+import f1_Info.database.BulkOfWork;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,8 +29,10 @@ public class Database extends TaskDatabase {
         return executeOptionalQuery(new GetNextRaceToFetchDriverStandingsForQueryData(FIRST_FORMULA_1_SEASON));
     }
 
-    public void mergeIntoPitStopsData(final List<DriverStandingsData> driverStandingsDataList, final RaceRecord raceRecord) throws SQLException {
-        // executeBulkOfWork();
+    public void mergeIntoPitStopsData(final List<DriverStandingsData> driverStandings, final RaceRecord raceRecord) throws SQLException {
+        executeBulkOfWork(
+            new BulkOfWork(driverStandings.stream().map(driverStanding -> new MergeIntoDriverStandingsQueryData(driverStanding, raceRecord)).toList())
+        );
     }
 
     public void setLastFetchedRaceInHistory(final RaceRecord raceRecord) throws SQLException {
