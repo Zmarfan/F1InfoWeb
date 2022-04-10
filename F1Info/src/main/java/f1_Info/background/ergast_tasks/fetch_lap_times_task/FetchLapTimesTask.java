@@ -52,7 +52,7 @@ public class FetchLapTimesTask extends TaskWrapper {
         try {
             mDatabase.mergeIntoLapTimesData(lapTimes, raceRecord);
             logMergeIntoDatabaseInfo(lapTimes, raceRecord);
-            mDatabase.setLastFetchedLapTimesForRace(raceRecord);
+            mDatabase.setLastFetchedRaceInHistory(raceRecord);
         } catch (final SQLException e) {
             throw new SQLException(String.format(
                 "Unable to merge in a total of %d Lap entries containing laps for season: %d, round: %d into the database. Lap Times: %s",

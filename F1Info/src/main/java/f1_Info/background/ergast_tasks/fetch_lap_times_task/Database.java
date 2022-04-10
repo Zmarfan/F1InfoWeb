@@ -38,7 +38,7 @@ public class Database extends TaskDatabase {
         executeBulkOfWork(new BulkOfWork(queryDataList));
     }
 
-    public void setLastFetchedLapTimesForRace(final RaceRecord raceRecord) throws SQLException {
+    public void setLastFetchedRaceInHistory(final RaceRecord raceRecord) throws SQLException {
         executeVoidQuery(new SetLastFetchedRaceLapTimesFetchingQueryData(raceRecord));
     }
 

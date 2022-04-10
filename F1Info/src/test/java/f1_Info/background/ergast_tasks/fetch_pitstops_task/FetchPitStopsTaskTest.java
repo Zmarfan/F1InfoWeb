@@ -85,7 +85,7 @@ class FetchPitStopsTaskTest {
         mFetchPitStopsTask.run();
 
         verify(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
-        verify(mDatabase).setLastFetchedPitstopsForRace(RACE_RECORD);
+        verify(mDatabase).setLastFetchedRaceInHistory(RACE_RECORD);
     }
 
     @Test
@@ -96,7 +96,7 @@ class FetchPitStopsTaskTest {
 
         mFetchPitStopsTask.run();
 
-        verify(mDatabase, never()).setLastFetchedPitstopsForRace(any(RaceRecord.class));
+        verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
 
     private List<PitStopData> getPitstopData() throws ParseException {

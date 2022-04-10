@@ -86,7 +86,7 @@ class FetchLapTimesTaskTest {
         mFetchLapTimesTask.run();
 
         verify(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
-        verify(mDatabase).setLastFetchedLapTimesForRace(RACE_RECORD);
+        verify(mDatabase).setLastFetchedRaceInHistory(RACE_RECORD);
     }
 
     @Test
@@ -97,7 +97,7 @@ class FetchLapTimesTaskTest {
 
         mFetchLapTimesTask.run();
 
-        verify(mDatabase, never()).setLastFetchedLapTimesForRace(any(RaceRecord.class));
+        verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
 
     private List<LapTimeData> getLapTimesData() throws ParseException {

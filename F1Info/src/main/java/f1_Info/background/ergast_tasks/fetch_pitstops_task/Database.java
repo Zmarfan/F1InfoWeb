@@ -33,7 +33,7 @@ public class Database extends TaskDatabase {
         executeBulkOfWork(new BulkOfWork(pitStopDataList.stream().map(pitStopData -> new MergeIntoPitStopsQueryData(pitStopData, raceRecord)).toList()));
     }
 
-    public void setLastFetchedPitstopsForRace(final RaceRecord raceRecord) throws SQLException {
+    public void setLastFetchedRaceInHistory(final RaceRecord raceRecord) throws SQLException {
         executeVoidQuery(new SetLastFetchedRacePitStopFetchingQueryData(raceRecord));
     }
 }
