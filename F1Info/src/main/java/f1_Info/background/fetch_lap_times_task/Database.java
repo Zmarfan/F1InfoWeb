@@ -24,7 +24,7 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<LapTimesFetchInformationRecord> getNextSeasonAndRoundToFetchLapTimesFor() throws SQLException {
-        return Optional.of(new LapTimesFetchInformationRecord(1996, 1));
+        return executeOptionalQuery(new GetNextRaceToFetchLapTimesForQueryData(FIRST_SEASON_WITH_LAP_TIME_DATA));
     }
 
     public void mergeIntoLapTimesData(final List<LapTimeData> lapTimeDataList, final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
