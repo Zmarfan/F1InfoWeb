@@ -1,8 +1,8 @@
 package f1_Info.background.fetch_pitstops_task;
 
 import f1_Info.background.TaskWrapper;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FetchPitStopsTaskTest {
-    private static final PitStopFetchInformationRecord FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2);
+    private static final PitStopFetchInformationRecord FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2, 1);
 
     @Mock
     ErgastProxy mErgastProxy;

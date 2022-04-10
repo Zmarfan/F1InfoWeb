@@ -1,7 +1,7 @@
 package f1_Info.background.fetch_pitstops_task;
 
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
 import lombok.Value;
 
 import java.math.BigDecimal;

@@ -2,7 +2,7 @@ package f1_Info.background.fetch_races_task;
 
 import f1_Info.constants.Url;
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.race.RaceData;
+import f1_Info.background.ergast.responses.race.RaceData;
 import lombok.Value;
 
 import java.sql.Time;

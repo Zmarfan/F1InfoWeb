@@ -1,8 +1,8 @@
-package f1_Info.ergast.responses.race;
+package f1_Info.background.ergast.responses.race;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.constants.Url;
-import f1_Info.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
 import f1_Info.utils.DateUtils;
 import lombok.Value;
 

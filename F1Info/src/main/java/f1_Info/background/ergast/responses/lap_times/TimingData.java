@@ -1,4 +1,4 @@
-package f1_Info.ergast.responses.lap_times;
+package f1_Info.background.ergast.responses.lap_times;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.utils.DateUtils;

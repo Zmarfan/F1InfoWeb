@@ -1,13 +1,13 @@
-package f1_Info.ergast;
+package f1_Info.background.ergast;
 
+import f1_Info.background.ergast.responses.*;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.lap_times.LapTimeData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.responses.race.RaceData;
 import f1_Info.background.fetch_lap_times_task.LapTimesFetchInformationRecord;
 import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
-import f1_Info.ergast.responses.*;
-import f1_Info.ergast.responses.circuit.CircuitData;
-import f1_Info.ergast.responses.lap_times.LapTimeData;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
-import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,9 +2,9 @@ package f1_Info.background.fetch_circuits_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.circuit.CircuitData;
-import f1_Info.ergast.responses.circuit.LocationData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.circuit.LocationData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

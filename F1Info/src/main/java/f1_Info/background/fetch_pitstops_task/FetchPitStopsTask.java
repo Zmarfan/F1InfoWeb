@@ -2,8 +2,8 @@ package f1_Info.background.fetch_pitstops_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
 import f1_Info.logger.Logger;
 import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;

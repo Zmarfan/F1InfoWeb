@@ -1,7 +1,7 @@
 package f1_Info.background.fetch_finish_status_task;
 
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.FinishStatusData;
+import f1_Info.background.ergast.responses.FinishStatusData;
 import lombok.Value;
 
 @Value

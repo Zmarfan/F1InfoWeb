@@ -1,13 +1,13 @@
-package f1_Info.ergast;
+package f1_Info.background.ergast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import f1_Info.ergast.responses.*;
-import f1_Info.ergast.responses.circuit.CircuitData;
-import f1_Info.ergast.responses.lap_times.LapTimesDataHolder;
-import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
-import f1_Info.ergast.responses.race.RaceData;
+import f1_Info.background.ergast.responses.*;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.background.ergast.responses.pit_stop.PitStopDataHolder;
+import f1_Info.background.ergast.responses.race.RaceData;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

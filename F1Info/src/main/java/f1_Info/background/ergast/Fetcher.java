@@ -1,4 +1,4 @@
-package f1_Info.ergast;
+package f1_Info.background.ergast;
 
 import com.google.common.util.concurrent.RateLimiter;
 import org.springframework.stereotype.Component;

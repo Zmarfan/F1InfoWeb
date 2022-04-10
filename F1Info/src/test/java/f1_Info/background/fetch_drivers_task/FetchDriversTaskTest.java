@@ -2,8 +2,8 @@ package f1_Info.background.fetch_drivers_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.constants.Country;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.DriverData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.DriverData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

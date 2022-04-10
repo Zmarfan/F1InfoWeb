@@ -3,7 +3,7 @@ package f1_Info.background.fetch_drivers_task;
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.DriverData;
+import f1_Info.background.ergast.responses.DriverData;
 import lombok.Value;
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package f1_Info.ergast.responses.race;
+package f1_Info.background.ergast.responses.race;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.utils.DateUtils;

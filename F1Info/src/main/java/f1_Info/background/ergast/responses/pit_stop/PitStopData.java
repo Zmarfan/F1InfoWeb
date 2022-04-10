@@ -1,4 +1,4 @@
-package f1_Info.ergast.responses.pit_stop;
+package f1_Info.background.ergast.responses.pit_stop;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.utils.DateUtils;

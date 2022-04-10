@@ -2,7 +2,7 @@ package f1_Info.background.fetch_seasons_task;
 
 import f1_Info.constants.Url;
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.background.ergast.responses.SeasonData;
 import lombok.Value;
 
 @Value

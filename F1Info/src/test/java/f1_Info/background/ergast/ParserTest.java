@@ -1,16 +1,17 @@
-package f1_Info.ergast;
+package f1_Info.background.ergast;
 
+import f1_Info.background.ergast.Parser;
+import f1_Info.background.ergast.responses.*;
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.*;
-import f1_Info.ergast.responses.circuit.CircuitData;
-import f1_Info.ergast.responses.circuit.LocationData;
-import f1_Info.ergast.responses.lap_times.LapTimeData;
-import f1_Info.ergast.responses.lap_times.LapTimesDataHolder;
-import f1_Info.ergast.responses.lap_times.TimingData;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
-import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
-import f1_Info.ergast.responses.race.ErgastSessionTimes;
-import f1_Info.ergast.responses.race.RaceData;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.circuit.LocationData;
+import f1_Info.background.ergast.responses.lap_times.LapTimeData;
+import f1_Info.background.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.background.ergast.responses.lap_times.TimingData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopDataHolder;
+import f1_Info.background.ergast.responses.race.ErgastSessionTimes;
+import f1_Info.background.ergast.responses.race.RaceData;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

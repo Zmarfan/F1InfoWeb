@@ -1,19 +1,19 @@
-package f1_Info.ergast;
+package f1_Info.background.ergast;
 
+import f1_Info.background.ergast.responses.*;
+import f1_Info.background.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast.responses.circuit.LocationData;
+import f1_Info.background.ergast.responses.lap_times.LapTimeData;
+import f1_Info.background.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.background.ergast.responses.lap_times.TimingData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopData;
+import f1_Info.background.ergast.responses.pit_stop.PitStopDataHolder;
+import f1_Info.background.ergast.responses.race.RaceData;
 import f1_Info.background.fetch_lap_times_task.LapTimesFetchInformationRecord;
 import f1_Info.background.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
-import f1_Info.ergast.responses.*;
-import f1_Info.ergast.responses.circuit.CircuitData;
-import f1_Info.ergast.responses.circuit.LocationData;
-import f1_Info.ergast.responses.lap_times.LapTimeData;
-import f1_Info.ergast.responses.lap_times.LapTimesDataHolder;
-import f1_Info.ergast.responses.lap_times.TimingData;
-import f1_Info.ergast.responses.pit_stop.PitStopData;
-import f1_Info.ergast.responses.pit_stop.PitStopDataHolder;
-import f1_Info.ergast.responses.race.RaceData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +38,8 @@ class ErgastProxyTest {
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
-    private static final PitStopFetchInformationRecord PIT_STOP_FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2);
-    private static final LapTimesFetchInformationRecord LAP_TIMES_FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2);
+    private static final PitStopFetchInformationRecord PIT_STOP_FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2, 1);
+    private static final LapTimesFetchInformationRecord LAP_TIMES_FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2, 1);
 
     @Mock
     Parser mParser;

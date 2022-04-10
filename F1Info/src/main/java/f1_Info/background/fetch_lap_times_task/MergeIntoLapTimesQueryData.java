@@ -1,7 +1,7 @@
 package f1_Info.background.fetch_lap_times_task;
 
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.lap_times.TimingData;
+import f1_Info.background.ergast.responses.lap_times.TimingData;
 import lombok.Value;
 
 import java.math.BigDecimal;

@@ -1,9 +1,9 @@
 package f1_Info.background.fetch_lap_times_task;
 
 import f1_Info.background.TaskWrapper;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.lap_times.LapTimeData;
-import f1_Info.ergast.responses.lap_times.TimingData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.lap_times.LapTimeData;
+import f1_Info.background.ergast.responses.lap_times.TimingData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FetchLapTimesTaskTest {
-    private static final LapTimesFetchInformationRecord FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2);
+    private static final LapTimesFetchInformationRecord FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2, 1);
 
     @Mock
     ErgastProxy mErgastProxy;

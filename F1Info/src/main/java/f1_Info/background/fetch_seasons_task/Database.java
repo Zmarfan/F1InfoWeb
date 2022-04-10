@@ -3,7 +3,7 @@ package f1_Info.background.fetch_seasons_task;
 import f1_Info.background.TaskDatabase;
 import f1_Info.configuration.Configuration;
 import f1_Info.database.BulkOfWork;
-import f1_Info.ergast.responses.SeasonData;
+import f1_Info.background.ergast.responses.SeasonData;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

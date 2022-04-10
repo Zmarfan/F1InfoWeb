@@ -1,8 +1,8 @@
 package f1_Info.background.fetch_finish_status_task;
 
 import f1_Info.background.TaskWrapper;
-import f1_Info.ergast.ErgastProxy;
-import f1_Info.ergast.responses.FinishStatusData;
+import f1_Info.background.ergast.ErgastProxy;
+import f1_Info.background.ergast.responses.FinishStatusData;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

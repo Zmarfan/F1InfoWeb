@@ -3,7 +3,7 @@ package f1_Info.background.fetch_constructors_task;
 import f1_Info.constants.Country;
 import f1_Info.constants.Url;
 import f1_Info.database.IQueryData;
-import f1_Info.ergast.responses.ConstructorData;
+import f1_Info.background.ergast.responses.ConstructorData;
 import lombok.Value;
 
 @Value
