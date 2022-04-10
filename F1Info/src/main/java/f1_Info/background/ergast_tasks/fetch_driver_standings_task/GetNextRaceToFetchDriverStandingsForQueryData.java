@@ -6,8 +6,10 @@ import lombok.Value;
 
 @Value
 public class GetNextRaceToFetchDriverStandingsForQueryData implements IQueryData<RaceRecord> {
+    int mFirstFormula1Season;
+
     @Override
     public String getStoredProcedureName() {
-        return null;
+        return "tasks_get_next_race_to_fetch_driver_standings_for";
     }
 }

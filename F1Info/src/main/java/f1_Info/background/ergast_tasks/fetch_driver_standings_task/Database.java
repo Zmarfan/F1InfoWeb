@@ -15,6 +15,8 @@ import java.util.Optional;
 
 @Component(value = "FetchDriverStandingsTaskDatabase")
 public class Database extends TaskDatabase {
+    private static final int FIRST_FORMULA_1_SEASON = 1950;
+
     @Autowired
     public Database(
         Configuration configuration,
@@ -24,8 +26,7 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<RaceRecord> getNextRaceToFetchDriverStandingsFor() throws SQLException {
-        return Optional.of(new RaceRecord(1950, 1, 1));
-        // return executeOptionalQuery(new GetNextRaceToFetchDriverStandingsForQueryData());
+        return executeOptionalQuery(new GetNextRaceToFetchDriverStandingsForQueryData(FIRST_FORMULA_1_SEASON));
     }
 
     public void mergeIntoPitStopsData(final List<DriverStandingsData> driverStandingsDataList, final RaceRecord raceRecord) throws SQLException {

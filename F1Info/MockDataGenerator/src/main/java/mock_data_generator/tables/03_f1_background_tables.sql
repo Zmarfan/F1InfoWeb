@@ -23,3 +23,12 @@ create table lap_times_fetching_history(
   constraint lap_times_fetching_history_pk primary key (season, round),
   constraint lap_times_fetching_history_season foreign key (season) references seasons (year)
 );
+
+create table driver_standings_fetching_history(
+  season int not null,
+  round int not null,
+  is_active char not null,
+
+  constraint driver_standings_fetching_history_pk primary key (season, round),
+  constraint driver_standings_fetching_history_season foreign key (season) references seasons (year)
+);
