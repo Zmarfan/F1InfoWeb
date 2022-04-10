@@ -4,9 +4,7 @@ import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
-import f1_Info.background.ergast_tasks.fetch_lap_times_task.Database;
-import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
-import f1_Info.background.ergast_tasks.fetch_lap_times_task.LapTimesFetchInformationRecord;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FetchLapTimesTaskTest {
-    private static final LapTimesFetchInformationRecord FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2, 1);
+    private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 
     @Mock
     ErgastProxy mErgastProxy;
@@ -42,38 +40,38 @@ class FetchLapTimesTaskTest {
 
     @Test
     void should_not_call_ergast_for_lap_times_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.empty());
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.empty());
 
         mFetchLapTimesTask.run();
 
-        verify(mErgastProxy, never()).fetchLapTimesFromRoundAndSeason(any(LapTimesFetchInformationRecord.class));
+        verify(mErgastProxy, never()).fetchLapTimesForRace(any(RaceRecord.class));
     }
 
     @Test
     void should_not_attempt_to_merge_in_lap_times_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchLapTimesFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(emptyList());
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(emptyList());
 
         mFetchLapTimesTask.run();
 
-        verify(mDatabase, never()).mergeIntoLapTimesData(anyList(), any(LapTimesFetchInformationRecord.class));
+        verify(mDatabase, never()).mergeIntoLapTimesData(anyList(), any(RaceRecord.class));
     }
 
     @Test
     void should_merge_in_lap_times_data_sent_from_ergast_to_database() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchLapTimesFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getLapTimesData());
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
 
         mFetchLapTimesTask.run();
 
-        verify(mDatabase).mergeIntoLapTimesData(getLapTimesData(), FETCH_INFORMATION_RECORD);
+        verify(mDatabase).mergeIntoLapTimesData(getLapTimesData(), RACE_RECORD);
     }
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchLapTimesFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getLapTimesData());
-        doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(FETCH_INFORMATION_RECORD));
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
 
         mFetchLapTimesTask.run();
 
@@ -82,24 +80,24 @@ class FetchLapTimesTaskTest {
 
     @Test
     void should_set_last_fetched_race_after_merging_lap_times() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchLapTimesFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getLapTimesData());
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
 
         mFetchLapTimesTask.run();
 
-        verify(mDatabase).mergeIntoLapTimesData(anyList(), eq(FETCH_INFORMATION_RECORD));
-        verify(mDatabase).setLastFetchedLapTimesForRace(FETCH_INFORMATION_RECORD);
+        verify(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
+        verify(mDatabase).setLastFetchedLapTimesForRace(RACE_RECORD);
     }
 
     @Test
     void should_not_set_last_fetched_race_after_merging_lap_times_if_it_throws() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchLapTimesFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchLapTimesFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getLapTimesData());
-        doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(FETCH_INFORMATION_RECORD));
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
 
         mFetchLapTimesTask.run();
 
-        verify(mDatabase, never()).setLastFetchedLapTimesForRace(any(LapTimesFetchInformationRecord.class));
+        verify(mDatabase, never()).setLastFetchedLapTimesForRace(any(RaceRecord.class));
     }
 
     private List<LapTimeData> getLapTimesData() throws ParseException {

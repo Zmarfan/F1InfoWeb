@@ -5,8 +5,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
-import f1_Info.background.ergast_tasks.fetch_lap_times_task.LapTimesFetchInformationRecord;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.PitStopFetchInformationRecord;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
@@ -95,11 +94,11 @@ public class ErgastProxy {
         }
     }
 
-    public List<PitStopData> fetchPitStopsFromRoundAndSeason(final PitStopFetchInformationRecord fetchInformation) {
+    public List<PitStopData> fetchPitStopsForRace(final RaceRecord raceRecord) {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_PIT_STOPS_URI, fetchInformation.getSeason(), fetchInformation.getRound()),
+                    String.format(FETCH_PIT_STOPS_URI, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parsePitStopResponseToObjects)
                 ).get(0).getPitStopData();
             }
@@ -107,18 +106,18 @@ public class ErgastProxy {
             mLogger.severe(
                 "fetchPitStopsFromRoundAndSeason",
                 ErgastProxy.class,
-                String.format("Unable to fetch pit stop data from ergast for season: %d, round: %d", fetchInformation.getSeason(), fetchInformation.getRound()),
+                String.format("Unable to fetch pit stop data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
                 e
             );
         }
         return emptyList();
     }
 
-    public List<LapTimeData> fetchLapTimesFromRoundAndSeason(final LapTimesFetchInformationRecord fetchInformation) {
+    public List<LapTimeData> fetchLapTimesForRace(final RaceRecord raceRecord) {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_LAP_TIMES_URI, fetchInformation.getSeason(), fetchInformation.getRound()),
+                    String.format(FETCH_LAP_TIMES_URI, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseLapTimesResponseToObjects)
                 ).get(0).getLapTimeData();
             }
@@ -126,7 +125,7 @@ public class ErgastProxy {
             mLogger.severe(
                 "fetchLapTimesFromRoundAndSeason",
                 ErgastProxy.class,
-                String.format("Unable to fetch lap times data from ergast for season: %d, round: %d", fetchInformation.getSeason(), fetchInformation.getRound()),
+                String.format("Unable to fetch lap times data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
                 e
             );
         }

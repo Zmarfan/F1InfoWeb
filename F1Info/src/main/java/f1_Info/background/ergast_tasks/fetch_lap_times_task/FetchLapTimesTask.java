@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.logger.Logger;
@@ -36,34 +37,34 @@ public class FetchLapTimesTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        final Optional<LapTimesFetchInformationRecord> fetchInformation = mDatabase.getNextSeasonAndRoundToFetchLapTimesFor();
-        if (fetchInformation.isEmpty()) {
+        final Optional<RaceRecord> raceRecord = mDatabase.getNextRaceToFetchLapTimesFor();
+        if (raceRecord.isEmpty()) {
             return;
         }
 
-        final List<LapTimeData> lapTimesPerLap = mErgastProxy.fetchLapTimesFromRoundAndSeason(fetchInformation.get());
+        final List<LapTimeData> lapTimesPerLap = mErgastProxy.fetchLapTimesForRace(raceRecord.get());
         if (!lapTimesPerLap.isEmpty()) {
-            mergeIntoDatabase(lapTimesPerLap, fetchInformation.get());
+            mergeIntoDatabase(lapTimesPerLap, raceRecord.get());
         }
     }
 
-    private void mergeIntoDatabase(final List<LapTimeData> lapTimes, final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
+    private void mergeIntoDatabase(final List<LapTimeData> lapTimes, final RaceRecord raceRecord) throws SQLException {
         try {
-            mDatabase.mergeIntoLapTimesData(lapTimes, fetchInformation);
-            logMergeIntoDatabaseInfo(lapTimes, fetchInformation);
-            mDatabase.setLastFetchedLapTimesForRace(fetchInformation);
+            mDatabase.mergeIntoLapTimesData(lapTimes, raceRecord);
+            logMergeIntoDatabaseInfo(lapTimes, raceRecord);
+            mDatabase.setLastFetchedLapTimesForRace(raceRecord);
         } catch (final SQLException e) {
             throw new SQLException(String.format(
                 "Unable to merge in a total of %d Lap entries containing laps for season: %d, round: %d into the database. Lap Times: %s",
                 lapTimes.size(),
-                fetchInformation.getSeason(),
-                fetchInformation.getRound(),
+                raceRecord.getSeason(),
+                raceRecord.getRound(),
                 ListUtils.listToString(lapTimes, LapTimeData::toString)
             ), e);
         }
     }
 
-    private void logMergeIntoDatabaseInfo(final List<LapTimeData> lapTimes, final LapTimesFetchInformationRecord fetchInformation) {
+    private void logMergeIntoDatabaseInfo(final List<LapTimeData> lapTimes, final RaceRecord raceRecord) {
         mLogger.info(
             "mergeIntoDatabase",
             FetchLapTimesTask.class,
@@ -71,8 +72,8 @@ public class FetchLapTimesTask extends TaskWrapper {
                 "Fetched a total of %d lap entries with lap data containing %d laps from ergast and merged into database for season: %d, round: %d",
                 lapTimes.size(),
                 lapTimes.stream().map(LapTimeData::getTimingData).flatMap(List::stream).toList().size(),
-                fetchInformation.getSeason(),
-                fetchInformation.getRound()
+                raceRecord.getSeason(),
+                raceRecord.getRound()
             )
         );
     }

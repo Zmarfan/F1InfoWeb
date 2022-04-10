@@ -1,11 +1,9 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
 import f1_Info.background.TaskWrapper;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.Database;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.PitStopFetchInformationRecord;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FetchPitStopsTaskTest {
-    private static final PitStopFetchInformationRecord FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2, 1);
+    private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 
     @Mock
     ErgastProxy mErgastProxy;
@@ -41,38 +39,38 @@ class FetchPitStopsTaskTest {
 
     @Test
     void should_not_call_ergast_for_pitstop_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.empty());
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.empty());
 
         mFetchPitStopsTask.run();
 
-        verify(mErgastProxy, never()).fetchPitStopsFromRoundAndSeason(any(PitStopFetchInformationRecord.class));
+        verify(mErgastProxy, never()).fetchPitStopsForRace(any(RaceRecord.class));
     }
 
     @Test
     void should_not_attempt_to_merge_in_pitstop_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(emptyList());
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(emptyList());
 
         mFetchPitStopsTask.run();
 
-        verify(mDatabase, never()).mergeIntoPitStopsData(anyList(), any(PitStopFetchInformationRecord.class));
+        verify(mDatabase, never()).mergeIntoPitStopsData(anyList(), any(RaceRecord.class));
     }
 
     @Test
     void should_merge_in_pitstop_data_sent_from_ergast_to_database() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getPitstopData());
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
         mFetchPitStopsTask.run();
 
-        verify(mDatabase).mergeIntoPitStopsData(getPitstopData(), FETCH_INFORMATION_RECORD);
+        verify(mDatabase).mergeIntoPitStopsData(getPitstopData(), RACE_RECORD);
     }
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getPitstopData());
-        doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(FETCH_INFORMATION_RECORD));
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
 
         mFetchPitStopsTask.run();
 
@@ -81,24 +79,24 @@ class FetchPitStopsTaskTest {
 
     @Test
     void should_set_last_fetched_race_after_merging_pitstops() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getPitstopData());
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
         mFetchPitStopsTask.run();
 
-        verify(mDatabase).mergeIntoPitStopsData(anyList(), eq(FETCH_INFORMATION_RECORD));
-        verify(mDatabase).setLastFetchedPitstopsForRace(FETCH_INFORMATION_RECORD);
+        verify(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
+        verify(mDatabase).setLastFetchedPitstopsForRace(RACE_RECORD);
     }
 
     @Test
     void should_not_set_last_fetched_race_after_merging_pitstops_if_it_throws() throws SQLException, ParseException {
-        when(mDatabase.getNextSeasonAndRoundToFetchPitStopsFor()).thenReturn(Optional.of(FETCH_INFORMATION_RECORD));
-        when(mErgastProxy.fetchPitStopsFromRoundAndSeason(FETCH_INFORMATION_RECORD)).thenReturn(getPitstopData());
-        doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(FETCH_INFORMATION_RECORD));
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
+        doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
 
         mFetchPitStopsTask.run();
 
-        verify(mDatabase, never()).setLastFetchedPitstopsForRace(any(PitStopFetchInformationRecord.class));
+        verify(mDatabase, never()).setLastFetchedPitstopsForRace(any(RaceRecord.class));
     }
 
     private List<PitStopData> getPitstopData() throws ParseException {

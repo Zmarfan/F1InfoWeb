@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import lombok.Value;
 
@@ -8,7 +9,7 @@ public class SetLastFetchedRaceLapTimesFetchingQueryData implements IQueryData<V
     int m1LastFetchedSeason;
     int m2LastFetchedRound;
 
-    public SetLastFetchedRaceLapTimesFetchingQueryData(final LapTimesFetchInformationRecord fetchInformation) {
+    public SetLastFetchedRaceLapTimesFetchingQueryData(final RaceRecord fetchInformation) {
         m1LastFetchedSeason = fetchInformation.getSeason();
         m2LastFetchedRound = fetchInformation.getRound();
     }

@@ -1,10 +1,11 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import lombok.Value;
 
 @Value
-public class GetNextRaceToFetchLapTimesForQueryData implements IQueryData<LapTimesFetchInformationRecord> {
+public class GetNextRaceToFetchLapTimesForQueryData implements IQueryData<RaceRecord> {
     int mFirstSeasonWithLapTimeData;
 
     @Override

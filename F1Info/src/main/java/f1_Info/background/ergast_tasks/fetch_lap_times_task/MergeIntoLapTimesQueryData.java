@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import lombok.Value;
@@ -15,8 +16,8 @@ public class MergeIntoLapTimesQueryData implements IQueryData<Void> {
     String m5TimeString;
     BigDecimal m6LengthInSeconds;
 
-    public MergeIntoLapTimesQueryData(final int lap, final TimingData timingData, final LapTimesFetchInformationRecord fetchInformation) {
-        m1RaceId = fetchInformation.getRaceId();
+    public MergeIntoLapTimesQueryData(final int lap, final TimingData timingData, final RaceRecord raceRecord) {
+        m1RaceId = raceRecord.getRaceId();
         m2DriverIdentification = timingData.getDriverIdentification();
         m3Lap = lap;
         m4Position = timingData.getPosition();

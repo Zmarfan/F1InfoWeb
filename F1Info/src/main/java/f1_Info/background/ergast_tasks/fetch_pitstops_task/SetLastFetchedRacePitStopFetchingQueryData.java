@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import lombok.Value;
 
@@ -8,9 +9,9 @@ public class SetLastFetchedRacePitStopFetchingQueryData implements IQueryData<Vo
     int m1LastFetchedSeason;
     int m2LastFetchedRound;
 
-    public SetLastFetchedRacePitStopFetchingQueryData(final PitStopFetchInformationRecord pitStopFetchInformationRecord) {
-        m1LastFetchedSeason = pitStopFetchInformationRecord.getSeason();
-        m2LastFetchedRound = pitStopFetchInformationRecord.getRound();
+    public SetLastFetchedRacePitStopFetchingQueryData(final RaceRecord raceRecord) {
+        m1LastFetchedSeason = raceRecord.getSeason();
+        m2LastFetchedRound = raceRecord.getRound();
     }
 
     @Override

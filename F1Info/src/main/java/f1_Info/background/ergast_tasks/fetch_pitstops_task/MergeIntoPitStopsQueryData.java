@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import lombok.Value;
@@ -16,8 +17,8 @@ public class MergeIntoPitStopsQueryData implements IQueryData<Void> {
     Time m5Time;
     BigDecimal m6DurationInSeconds;
 
-    public MergeIntoPitStopsQueryData(final PitStopData pitStopData, final PitStopFetchInformationRecord fetchInformationRecord) {
-        m1RaceId = fetchInformationRecord.getRaceId();
+    public MergeIntoPitStopsQueryData(final PitStopData pitStopData, final RaceRecord raceRecord) {
+        m1RaceId = raceRecord.getRaceId();
         m2DriverIdentification = pitStopData.getDriverIdentification();
         m3Lap = pitStopData.getLap();
         m4Stop = pitStopData.getStop();

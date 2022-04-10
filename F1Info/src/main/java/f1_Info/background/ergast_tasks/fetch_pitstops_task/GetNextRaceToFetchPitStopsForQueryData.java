@@ -1,10 +1,11 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.database.IQueryData;
 import lombok.Value;
 
 @Value
-public class GetNextRaceToFetchPitStopsForQueryData implements IQueryData<PitStopFetchInformationRecord> {
+public class GetNextRaceToFetchPitStopsForQueryData implements IQueryData<RaceRecord> {
     int mFirstSeasonWithPitstopData;
 
     @Override

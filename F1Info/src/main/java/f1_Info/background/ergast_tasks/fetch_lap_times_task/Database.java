@@ -1,6 +1,7 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
 import f1_Info.background.TaskDatabase;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.database.BulkOfWork;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
@@ -24,30 +25,30 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public Optional<LapTimesFetchInformationRecord> getNextSeasonAndRoundToFetchLapTimesFor() throws SQLException {
+    public Optional<RaceRecord> getNextRaceToFetchLapTimesFor() throws SQLException {
         return executeOptionalQuery(new GetNextRaceToFetchLapTimesForQueryData(FIRST_SEASON_WITH_LAP_TIME_DATA));
     }
 
-    public void mergeIntoLapTimesData(final List<LapTimeData> lapTimeDataList, final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
+    public void mergeIntoLapTimesData(final List<LapTimeData> lapTimeDataList, final RaceRecord raceRecord) throws SQLException {
         final List<MergeIntoLapTimesQueryData> queryDataList = lapTimeDataList
             .stream()
-            .map(lapData -> mapToMergeQueryData(lapData, fetchInformation))
+            .map(lapData -> mapToMergeQueryData(lapData, raceRecord))
             .flatMap(List::stream)
             .toList();
         executeBulkOfWork(new BulkOfWork(queryDataList));
     }
 
-    public void setLastFetchedLapTimesForRace(final LapTimesFetchInformationRecord fetchInformation) throws SQLException {
-        executeVoidQuery(new SetLastFetchedRaceLapTimesFetchingQueryData(fetchInformation));
+    public void setLastFetchedLapTimesForRace(final RaceRecord raceRecord) throws SQLException {
+        executeVoidQuery(new SetLastFetchedRaceLapTimesFetchingQueryData(raceRecord));
     }
 
     private List<MergeIntoLapTimesQueryData> mapToMergeQueryData(
         final LapTimeData lapData,
-        final LapTimesFetchInformationRecord fetchInformation
+        final RaceRecord raceRecord
     ) {
         return lapData.getTimingData()
             .stream()
-            .map(timingData -> new MergeIntoLapTimesQueryData(lapData.getNumber(), timingData, fetchInformation))
+            .map(timingData -> new MergeIntoLapTimesQueryData(lapData.getNumber(), timingData, raceRecord))
             .toList();
     }
 }

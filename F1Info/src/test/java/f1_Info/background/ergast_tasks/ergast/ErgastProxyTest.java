@@ -9,8 +9,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
-import f1_Info.background.ergast_tasks.fetch_lap_times_task.LapTimesFetchInformationRecord;
-import f1_Info.background.ergast_tasks.fetch_pitstops_task.PitStopFetchInformationRecord;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
@@ -38,8 +37,7 @@ class ErgastProxyTest {
     private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true);
     private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
-    private static final PitStopFetchInformationRecord PIT_STOP_FETCH_INFORMATION_RECORD = new PitStopFetchInformationRecord(1998, 2, 1);
-    private static final LapTimesFetchInformationRecord LAP_TIMES_FETCH_INFORMATION_RECORD = new LapTimesFetchInformationRecord(1998, 2, 1);
+    private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 
     @Mock
     Parser mParser;
@@ -410,7 +408,7 @@ class ErgastProxyTest {
     void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
 
-        mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchPitStopsForRace(RACE_RECORD);
 
         verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
@@ -418,7 +416,7 @@ class ErgastProxyTest {
     @Test
     void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
-        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
@@ -426,7 +424,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        assertEquals(emptyList(), mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
@@ -434,7 +432,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchPitStopsForRace(RACE_RECORD);
 
         verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
     }
@@ -449,14 +447,14 @@ class ErgastProxyTest {
             singletonList(new PitStopDataHolder(expectedReturnData)))
         );
 
-        assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsFromRoundAndSeason(PIT_STOP_FETCH_INFORMATION_RECORD));
+        assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
     void should_not_fetch_lap_time_data_from_ergast_if_running_mock_configuration() throws IOException {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
 
-        mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchLapTimesForRace(RACE_RECORD);
 
         verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
     }
@@ -464,7 +462,7 @@ class ErgastProxyTest {
     @Test
     void should_return_empty_list_of_lap_times_data_if_running_mock_configuration() {
         when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
-        assertEquals(emptyList(), mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
     }
 
     @Test
@@ -472,7 +470,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        assertEquals(emptyList(), mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
+        assertEquals(emptyList(), mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
     }
 
     @Test
@@ -480,7 +478,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
-        mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD);
+        mErgastProxy.fetchLapTimesForRace(RACE_RECORD);
 
         verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
     }
@@ -497,6 +495,6 @@ class ErgastProxyTest {
             singletonList(new LapTimesDataHolder(expectedReturnData)))
         );
 
-        assertEquals(expectedReturnData, mErgastProxy.fetchLapTimesFromRoundAndSeason(LAP_TIMES_FETCH_INFORMATION_RECORD));
+        assertEquals(expectedReturnData, mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
     }
 }

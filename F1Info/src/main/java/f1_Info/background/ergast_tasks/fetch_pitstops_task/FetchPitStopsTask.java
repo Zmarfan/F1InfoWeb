@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.logger.Logger;
@@ -31,14 +32,14 @@ public class FetchPitStopsTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        final Optional<PitStopFetchInformationRecord> fetchInformation = mDatabase.getNextSeasonAndRoundToFetchPitStopsFor();
-        if (fetchInformation.isEmpty()) {
+        final Optional<RaceRecord> raceRecord = mDatabase.getNextRaceToFetchPitStopsFor();
+        if (raceRecord.isEmpty()) {
             return;
         }
 
-        final List<PitStopData> pitStops = mErgastProxy.fetchPitStopsFromRoundAndSeason(fetchInformation.get());
+        final List<PitStopData> pitStops = mErgastProxy.fetchPitStopsForRace(raceRecord.get());
         if (!pitStops.isEmpty()) {
-            mergeIntoDatabase(pitStops, fetchInformation.get());
+            mergeIntoDatabase(pitStops, raceRecord.get());
         }
     }
 
@@ -47,31 +48,31 @@ public class FetchPitStopsTask extends TaskWrapper {
         return Tasks.FETCH_PIT_STOPS_TASK;
     }
 
-    private void mergeIntoDatabase(final List<PitStopData> pitStops, final PitStopFetchInformationRecord fetchInformation) throws SQLException {
+    private void mergeIntoDatabase(final List<PitStopData> pitStops, final RaceRecord raceRecord) throws SQLException {
         try {
-            mDatabase.mergeIntoPitStopsData(pitStops, fetchInformation);
-            logMergeIntoDatabaseInfo(pitStops, fetchInformation);
-            mDatabase.setLastFetchedPitstopsForRace(fetchInformation);
+            mDatabase.mergeIntoPitStopsData(pitStops, raceRecord);
+            logMergeIntoDatabaseInfo(pitStops, raceRecord);
+            mDatabase.setLastFetchedPitstopsForRace(raceRecord);
         } catch (final SQLException e) {
             throw new SQLException(String.format(
                 "Unable to merge in a total of %d Pit Stop entries for season: %d, round: %d into the database. Pit Stops: %s",
                 pitStops.size(),
-                fetchInformation.getSeason(),
-                fetchInformation.getRound(),
+                raceRecord.getSeason(),
+                raceRecord.getRound(),
                 ListUtils.listToString(pitStops, PitStopData::toString)
             ), e);
         }
     }
 
-    private void logMergeIntoDatabaseInfo(final List<PitStopData> pitStops, final PitStopFetchInformationRecord fetchInformation) {
+    private void logMergeIntoDatabaseInfo(final List<PitStopData> pitStops, final RaceRecord raceRecord) {
         mLogger.info(
             "mergeIntoDatabase",
             FetchPitStopsTask.class,
             String.format(
                 "Fetched a total of %d pit stop entries from ergast and merged into database for season: %d, round: %d",
                 pitStops.size(),
-                fetchInformation.getSeason(),
-                fetchInformation.getRound()
+                raceRecord.getSeason(),
+                raceRecord.getRound()
             )
         );
     }
