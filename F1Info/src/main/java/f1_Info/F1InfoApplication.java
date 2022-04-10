@@ -1,13 +1,13 @@
 package f1_Info;
 
-import f1_Info.background.fetch_circuits_task.FetchCircuitsTask;
-import f1_Info.background.fetch_constructors_task.FetchConstructorsTask;
-import f1_Info.background.fetch_drivers_task.FetchDriversTask;
-import f1_Info.background.fetch_finish_status_task.FetchFinishStatusTask;
-import f1_Info.background.fetch_lap_times_task.FetchLapTimesTask;
-import f1_Info.background.fetch_pitstops_task.FetchPitStopsTask;
-import f1_Info.background.fetch_races_task.FetchRacesTask;
-import f1_Info.background.fetch_seasons_task.FetchSeasonsTask;
+import f1_Info.background.ergast_tasks.fetch_circuits_task.FetchCircuitsTask;
+import f1_Info.background.ergast_tasks.fetch_constructors_task.FetchConstructorsTask;
+import f1_Info.background.ergast_tasks.fetch_drivers_task.FetchDriversTask;
+import f1_Info.background.ergast_tasks.fetch_finish_status_task.FetchFinishStatusTask;
+import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
+import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
+import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
+import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
