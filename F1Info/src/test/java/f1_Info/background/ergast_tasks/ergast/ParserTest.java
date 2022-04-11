@@ -10,6 +10,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.ErgastSessionTimes;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.constants.Country;
@@ -415,6 +416,52 @@ class ParserTest {
             }
         }
         """;
+
+    private static final String TEST_CONSTRUCTOR_STANDINGS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "10",
+                "StandingsTable": {
+                    "season": "2018",
+                    "round": "5",
+                    "StandingsLists": [
+                        {
+                            "season": "2018",
+                            "round": "5",
+                            "ConstructorStandings": [
+                                {
+                                    "position": "1",
+                                    "positionText": "1",
+                                    "points": "153",
+                                    "wins": "2",
+                                    "Constructor": {
+                                        "constructorId": "mercedes",
+                                        "url": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                                        "name": "Mercedes",
+                                        "nationality": "German"
+                                    }
+                                },
+                                {
+                                    "position": "2",
+                                    "positionText": "2",
+                                    "points": "126",
+                                    "wins": "2",
+                                    "Constructor": {
+                                        "constructorId": "ferrari",
+                                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                        "name": "Ferrari",
+                                        "nationality": "Italian"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -654,5 +701,30 @@ class ParserTest {
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_driver_standings() {
         assertThrows(IOException.class, () -> new Parser().parseDriverStandingsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_constructor_standings_json_to_correct_constructor_standings_object_list() throws IOException, ParseException {
+        final List<ConstructorStandingsData> expectedData = List.of(
+            new ConstructorStandingsData(1, BigDecimal.valueOf(153), 2, new ConstructorData(
+                "mercedes",
+                "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+                "Mercedes",
+                "German"
+            )),
+            new ConstructorStandingsData(2, BigDecimal.valueOf(126), 2, new ConstructorData(
+                "ferrari",
+                "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                "Ferrari",
+                "Italian"
+            ))
+        );
+        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseConstructorStandingsResponseToObjects(TEST_CONSTRUCTOR_STANDINGS_JSON);
+        assertEquals(singletonList(new StandingsDataHolder(null, expectedData)), parsedData.getData());
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_constructor_standings() {
+        assertThrows(IOException.class, () -> new Parser().parseConstructorStandingsResponseToObjects(BAD_JSON_FORMAT));
     }
 }
