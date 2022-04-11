@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -37,6 +39,9 @@ class DatabaseUtilTest {
 
     @Mock
     Logger mLogger;
+
+    @Captor
+    ArgumentCaptor<SqlParser<Integer>> mSqlParserArgumentCaptor;
 
     @BeforeEach
     void init() throws SQLException {
@@ -139,7 +144,7 @@ class DatabaseUtilTest {
 
         DatabaseUtil.executeQuery(mConnection, new ReturnQueryData(), mSqlParser, mLogger);
 
-        verify(mSqlParser).apply(any(SqlParser.class));
+        verify(mSqlParser).apply(any());
     }
 
     @Test
@@ -150,11 +155,9 @@ class DatabaseUtilTest {
         final SqlParser<Integer> expectedParser = new SqlParser<>(new ReturnQueryData().getRecordClass(), mResultSet, mLogger);
         DatabaseUtil.executeQuery(mConnection, new ReturnQueryData(), mSqlParser, mLogger);
 
-        ArgumentCaptor<SqlParser<Integer>> captor = ArgumentCaptor.forClass(SqlParser.class);
+        verify(mSqlParser).apply(mSqlParserArgumentCaptor.capture());
 
-        verify(mSqlParser).apply(captor.capture());
-
-        assertEquals(expectedParser, captor.getValue());
+        assertEquals(expectedParser, mSqlParserArgumentCaptor.getValue());
     }
 
     @Test
@@ -163,7 +166,7 @@ class DatabaseUtilTest {
 
         when(mCallableStatement.execute()).thenReturn(true);
         when(mCallableStatement.getResultSet()).thenReturn(mResultSet);
-        when(mSqlParser.apply(any(SqlParser.class))).thenReturn(expectedList);
+        when(mSqlParser.apply(any())).thenReturn(expectedList);
 
         final List<Integer> list = DatabaseUtil.executeQuery(mConnection, new ReturnQueryData(), mSqlParser, mLogger);
 
