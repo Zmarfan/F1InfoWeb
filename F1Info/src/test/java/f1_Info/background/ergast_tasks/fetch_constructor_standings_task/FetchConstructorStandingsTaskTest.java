@@ -105,7 +105,7 @@ class FetchConstructorStandingsTaskTest {
 
     private List<ConstructorStandingsData> getConstructorStandingsData() throws MalformedURLException {
         return singletonList(
-            new ConstructorStandingsData(1, BigDecimal.ONE, 1, new ConstructorData(
+            new ConstructorStandingsData(1, "1", BigDecimal.ONE, 1, new ConstructorData(
                 "cId",
                 WIKIPEDIA_URL,
                 "name",

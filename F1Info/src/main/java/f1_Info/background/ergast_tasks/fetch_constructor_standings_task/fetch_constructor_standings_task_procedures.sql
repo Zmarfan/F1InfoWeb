@@ -27,6 +27,7 @@ create procedure tasks_insert_constructor_standing_if_not_present(
   in p_constructor_identification varchar(255),
   in p_points float,
   in p_position int,
+  in p_position_type_id int,
   in p_amount_of_wins int
 )
 begin
@@ -37,7 +38,7 @@ begin
   set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from constructor_standings where race_id = p_race_id and constructor_id = v_constructor_id);
 
   if (v_exists_in_table = 'N') then
-    insert into constructor_standings (race_id, constructor_id, points, position, win_amount)
-      values (p_race_id, v_constructor_id, p_points, p_position, p_amount_of_wins);
+    insert into constructor_standings (race_id, constructor_id, points, position, position_type_id, win_amount)
+      values (p_race_id, v_constructor_id, p_points, p_position, p_position_type_id, p_amount_of_wins);
   end if;
 end;

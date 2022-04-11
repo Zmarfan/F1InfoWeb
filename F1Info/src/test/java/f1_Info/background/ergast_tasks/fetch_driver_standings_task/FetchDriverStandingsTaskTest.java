@@ -107,7 +107,7 @@ class FetchDriverStandingsTaskTest {
 
     private List<DriverStandingsData> getDriverStandingsData() throws ParseException, MalformedURLException {
         return singletonList(
-            new DriverStandingsData(1, BigDecimal.ONE, 2, new DriverData(
+            new DriverStandingsData(1, "1", BigDecimal.ONE, 2, new DriverData(
                 "driverId",
                 WIKIPEDIA_URL,
                 "firstName",

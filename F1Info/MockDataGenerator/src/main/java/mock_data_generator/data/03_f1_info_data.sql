@@ -1,13 +1,13 @@
 insert into result_types (type) values ('race');
 insert into result_types (type) values ('sprint');
 
-insert into position_types (type) values ('finished');
-insert into position_types (type) values ('disqualified');
-insert into position_types (type) values ('excluded');
-insert into position_types (type) values ('failed_to_qualify');
-insert into position_types (type) values ('not_classified');
-insert into position_types (type) values ('retired');
-insert into position_types (type) values ('withdrew');
+insert into position_types (id, type) values (1, 'finished');
+insert into position_types (id, type) values (2, 'retired');
+insert into position_types (id, type) values (3, 'disqualified');
+insert into position_types (id, type) values (4, 'excluded');
+insert into position_types (id, type) values (5, 'withdrawn');
+insert into position_types (id, type) values (6, 'failed to qualify');
+insert into position_types (id, type) values (7, 'not classified');
 
 insert into finish_status (id, type) values (1, 'finished');
 insert into finish_status (id, type) values (2, 'disqualified');

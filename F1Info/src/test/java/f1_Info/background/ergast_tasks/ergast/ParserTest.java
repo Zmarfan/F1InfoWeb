@@ -663,7 +663,7 @@ class ParserTest {
     @Test
     void should_parse_valid_driver_standings_json_to_correct_driver_standings_object_list() throws IOException, ParseException {
         final List<DriverStandingsData> expectedData = List.of(
-            new DriverStandingsData(1, BigDecimal.valueOf(35), 2, new DriverData(
+            new DriverStandingsData(1,"1", BigDecimal.valueOf(35), 2, new DriverData(
                 "raikkonen",
                 "http://en.wikipedia.org/wiki/Kimi_R%C3%A4ikk%C3%B6nen",
                 "Kimi",
@@ -678,7 +678,7 @@ class ParserTest {
                 "Ferrari",
                 "Italian"
             ))),
-            new DriverStandingsData(2, BigDecimal.valueOf(28), 2, new DriverData(
+            new DriverStandingsData(2, "2", BigDecimal.valueOf(28), 2, new DriverData(
                 "massa",
                 "http://en.wikipedia.org/wiki/Felipe_Massa",
                 "Felipe",
@@ -706,13 +706,13 @@ class ParserTest {
     @Test
     void should_parse_valid_constructor_standings_json_to_correct_constructor_standings_object_list() throws IOException, ParseException {
         final List<ConstructorStandingsData> expectedData = List.of(
-            new ConstructorStandingsData(1, BigDecimal.valueOf(153), 2, new ConstructorData(
+            new ConstructorStandingsData(1, "2", BigDecimal.valueOf(153), 2, new ConstructorData(
                 "mercedes",
                 "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
                 "Mercedes",
                 "German"
             )),
-            new ConstructorStandingsData(2, BigDecimal.valueOf(126), 2, new ConstructorData(
+            new ConstructorStandingsData(2, "2", BigDecimal.valueOf(126), 2, new ConstructorData(
                 "ferrari",
                 "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
                 "Ferrari",

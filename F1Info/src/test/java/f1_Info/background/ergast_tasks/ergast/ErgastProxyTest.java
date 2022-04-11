@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.ergast;
 
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.LocationData;
@@ -9,7 +10,6 @@ import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
-import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
@@ -537,7 +537,7 @@ class ErgastProxyTest {
     @Test
     void should_return_formatted_data_from_parser_when_fetching_driver_standings() throws IOException, ParseException {
         final List<DriverStandingsData> expectedReturnData = singletonList(
-            new DriverStandingsData(1, BigDecimal.ONE, 2, new DriverData(
+            new DriverStandingsData(1, "1", BigDecimal.ONE, 2, new DriverData(
                 "driverId",
                 WIKIPEDIA_URL,
                 "firstName",
@@ -594,7 +594,7 @@ class ErgastProxyTest {
     @Test
     void should_return_formatted_data_from_parser_when_fetching_constructor_standings() throws IOException {
         final List<ConstructorStandingsData> expectedReturnData = singletonList(
-            new ConstructorStandingsData(1, BigDecimal.ONE, 1, new ConstructorData(
+            new ConstructorStandingsData(1, "1", BigDecimal.ONE, 1, new ConstructorData(
                 "cId",
                 WIKIPEDIA_URL,
                 "name",

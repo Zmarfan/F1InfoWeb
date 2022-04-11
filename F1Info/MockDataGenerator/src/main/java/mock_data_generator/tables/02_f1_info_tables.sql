@@ -112,10 +112,10 @@ create table result_types(
 );
 
 create table position_types(
-  id int not null auto_increment,
+  id int not null unique,
   type varchar(255) not null unique,
 
-  constraint position_types primary key (id)
+  constraint position_types_pk primary key (id)
 );
 
 create table finish_status(
@@ -191,12 +191,14 @@ create table driver_standings(
   constructor_id int not null,
   points float not null,
   position int not null,
+  position_type_id int,
   win_amount int not null,
 
   constraint driver_standings_pk primary key (id, race_id, driver_id),
   constraint driver_standings_race_id foreign key (race_id) references races(id),
   constraint driver_standings_driver_id foreign key (driver_id) references drivers(id),
-  constraint driver_standings_constructor_id foreign key (constructor_id) references constructors(id)
+  constraint driver_standings_constructor_id foreign key (constructor_id) references constructors(id),
+  constraint driver_standings_position_type foreign key (position_type_id) references position_types(id)
 );
 
 create table constructor_standings(
@@ -205,11 +207,13 @@ create table constructor_standings(
   constructor_id int not null,
   points float not null,
   position int,
+  position_type_id int,
   win_amount int not null,
 
   constraint constructor_standings_pk primary key (id, race_id, constructor_id),
   constraint constructor_standings_race_id foreign key (race_id) references races(id),
-  constraint constructor_standings_constructor_id foreign key (constructor_id) references constructors(id)
+  constraint constructor_standings_constructor_id foreign key (constructor_id) references constructors(id),
+  constraint constructor_standings_position_type foreign key (position_type_id) references position_types(id)
 );
 
 create table constructor_results(
