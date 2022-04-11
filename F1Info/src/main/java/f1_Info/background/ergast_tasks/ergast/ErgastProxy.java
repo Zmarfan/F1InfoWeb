@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.ergast;
 
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
@@ -36,6 +37,7 @@ public class ErgastProxy {
     static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
     static final String FETCH_LAP_TIMES_URI = "https://ergast.com/api/f1/%d/%d/laps.json";
     static final String FETCH_DRIVER_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/driverStandings.json";
+    static final String FETCH_CONSTRUCTOR_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/constructorStandings.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -147,6 +149,25 @@ public class ErgastProxy {
                 "fetchDriverStandingsForRace",
                 ErgastProxy.class,
                 String.format("Unable to fetch driver standings data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
+                e
+            );
+        }
+        return emptyList();
+    }
+
+    public List<ConstructorStandingsData> fetchConstructorStandingsForRace(final RaceRecord raceRecord) {
+        try {
+            if (isProduction()) {
+                return getData(
+                    String.format(FETCH_CONSTRUCTOR_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    wrapper(mParser::parseConstructorStandingsResponseToObjects)
+                ).get(0).getConstructorStandingsData();
+            }
+        } catch (final Exception e) {
+            mLogger.severe(
+                "fetchConstructorStandingsForRace",
+                ErgastProxy.class,
+                String.format("Unable to fetch constructor standings data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
                 e
             );
         }

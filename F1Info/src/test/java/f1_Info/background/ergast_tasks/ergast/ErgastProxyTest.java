@@ -551,7 +551,7 @@ class ErgastProxyTest {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mParser.parseDriverStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
-            singletonList(new StandingsDataHolder(expectedReturnData)))
+            singletonList(new StandingsDataHolder(expectedReturnData, null)))
         );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));

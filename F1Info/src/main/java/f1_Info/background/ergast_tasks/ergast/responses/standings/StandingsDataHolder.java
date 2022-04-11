@@ -10,10 +10,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StandingsDataHolder {
     List<DriverStandingsData> mDriverStandingsData;
+    List<ConstructorStandingsData> mConstructorStandingsData;
 
     public StandingsDataHolder(
-        @JsonProperty("DriverStandings") List<DriverStandingsData> driverStandingsData
+        @JsonProperty("DriverStandings") List<DriverStandingsData> driverStandingsData,
+        @JsonProperty("ConstructorStandings") List<ConstructorStandingsData> constructorStandingsData
     ) {
         mDriverStandingsData = driverStandingsData;
+        mConstructorStandingsData = constructorStandingsData;
     }
 }

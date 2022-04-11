@@ -7,3 +7,4 @@ insert into background_tasks (id, name) values (6, 'Fetch Finish Status Task');
 insert into background_tasks (id, name) values (7, 'Fetch Pit Stops Task');
 insert into background_tasks (id, name) values (8, 'Fetch Lap Times Task');
 insert into background_tasks (id, name) values (9, 'Fetch Driver Standings Task');
+insert into background_tasks (id, name) values (10, 'Fetch Constructor Standings Task');

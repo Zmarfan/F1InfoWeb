@@ -648,7 +648,7 @@ class ParserTest {
             )))
         );
         final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseDriverStandingsResponseToObjects(TEST_DRIVER_STANDINGS_JSON);
-        assertEquals(singletonList(new StandingsDataHolder(expectedData)), parsedData.getData());
+        assertEquals(singletonList(new StandingsDataHolder(expectedData, null)), parsedData.getData());
     }
 
     @Test
