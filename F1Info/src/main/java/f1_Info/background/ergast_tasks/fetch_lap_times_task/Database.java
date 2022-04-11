@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_LAP_TIME_DATA;
+
 @Component(value = "FetchLapTimesTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int FIRST_SEASON_WITH_LAP_TIME_DATA = 1996;
-
     @Autowired
     public Database(
         Configuration configuration,

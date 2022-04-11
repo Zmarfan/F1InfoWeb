@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_PIT_STOP_DATA;
+
 @Component(value = "FetchPitStopsTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int FIRST_SEASON_WITH_PISTOP_DATA = 2011;
-
     @Autowired
     public Database(
         Configuration configuration,
@@ -26,7 +26,7 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<RaceRecord> getNextRaceToFetchPitStopsFor() throws SQLException {
-        return executeOptionalQuery(new GetNextRaceToFetchPitStopsForQueryData(FIRST_SEASON_WITH_PISTOP_DATA));
+        return executeOptionalQuery(new GetNextRaceToFetchPitStopsForQueryData(FIRST_SEASON_WITH_PIT_STOP_DATA));
     }
 
     public void mergeIntoPitStopsData(final List<PitStopData> pitStopDataList, final RaceRecord raceRecord) throws SQLException {

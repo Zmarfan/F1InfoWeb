@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_FORMULA_1_SEASON;
+
 @Component(value = "FetchDriverStandingsTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int FIRST_FORMULA_1_SEASON = 1950;
-
     @Autowired
     public Database(
         Configuration configuration,
