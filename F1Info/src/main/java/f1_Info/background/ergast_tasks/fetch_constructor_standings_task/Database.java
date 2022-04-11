@@ -4,6 +4,7 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.configuration.Configuration;
+import f1_Info.database.BulkOfWork;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_CONSTRUCTOR_STANDINGS_DATA;
+
 @Component(value = "FetchConstructorStandingsTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int FIRST_SEASON_IN_FORMULA_1 = 1950;
-
     @Autowired
     public Database(
         Configuration configuration,
@@ -25,12 +26,16 @@ public class Database extends TaskDatabase {
     }
 
     public Optional<RaceRecord> getNextRaceToFetchConstructorStandingsFor() throws SQLException {
-        return Optional.of(new RaceRecord(1990, 1, 1));
+        return executeOptionalQuery(new GetNextRaceToFetchConstructorStandingsForQueryData(FIRST_SEASON_WITH_CONSTRUCTOR_STANDINGS_DATA));
     }
 
     public void mergeIntoConstructorStandingsData(final List<ConstructorStandingsData> constructorStandings, final RaceRecord raceRecord) throws SQLException {
+        executeBulkOfWork(new BulkOfWork(
+            constructorStandings.stream().map(constructorData -> new MergeIntoConstructorStandingsQueryData(constructorData, raceRecord)).toList()
+        ));
     }
 
     public void setLastFetchedRaceInHistory(final RaceRecord raceRecord) throws SQLException {
+        executeVoidQuery(new SetLastFetchedConstructorStandingsFetchingQueryData(raceRecord));
     }
 }

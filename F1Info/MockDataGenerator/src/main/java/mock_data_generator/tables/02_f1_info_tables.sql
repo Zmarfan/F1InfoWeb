@@ -205,13 +205,11 @@ create table constructor_standings(
   constructor_id int not null,
   points float not null,
   position int,
-  position_type varchar(255),
   win_amount int not null,
 
   constraint constructor_standings_pk primary key (id, race_id, constructor_id),
   constraint constructor_standings_race_id foreign key (race_id) references races(id),
-  constraint constructor_standings_constructor_id foreign key (constructor_id) references constructors(id),
-  constraint constructor_standings_position_type foreign key (position_type) references position_types(type)
+  constraint constructor_standings_constructor_id foreign key (constructor_id) references constructors(id)
 );
 
 create table constructor_results(
