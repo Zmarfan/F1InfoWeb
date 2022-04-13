@@ -81,11 +81,11 @@ public class SqlParser<T> {
     }
 
     private List<Object> extractParameters(final List<Parameter> parameters) {
-        int columnCount = 1;
+        int columnIndex = 1;
 
         final List<Object> values = new ArrayList<>();
         for (final Parameter parameter : parameters) {
-            values.add(extractParameter(parameter, columnCount++));
+            values.add(extractParameter(parameter, columnIndex++));
         }
 
         return values;

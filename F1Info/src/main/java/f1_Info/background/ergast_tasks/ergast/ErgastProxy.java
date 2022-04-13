@@ -157,7 +157,7 @@ public class ErgastProxy {
 
     public List<ConstructorStandingsData> fetchConstructorStandingsForRace(final RaceRecord raceRecord) {
         try {
-            if (!isProduction()) {
+            if (isProduction()) {
                 return getData(
                     String.format(FETCH_CONSTRUCTOR_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseConstructorStandingsResponseToObjects)

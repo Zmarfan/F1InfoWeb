@@ -51,9 +51,14 @@ public abstract class DatabaseBase {
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
             for (final IQueryData<Void> queryData : bulkOfWork.getQueryDatas()) {
-                DatabaseUtil.executeQuery(connection, queryData, null, mLogger);
+                try {
+                    DatabaseUtil.executeQuery(connection, queryData, null, mLogger);
+                    connection.commit();
+                } catch (final SQLException e) {
+                    connection.rollback();
+                    throw e;
+                }
             }
-            connection.commit();
         }
     }
 
@@ -73,9 +78,14 @@ public abstract class DatabaseBase {
     private <T> List<T> executeAnyQuery(final IQueryData<T> queryData, final Function<SqlParser<T>, List<T>> parseCallback) throws SQLException {
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
-            final List<T> result = DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
-            connection.commit();
-            return result;
+            try {
+                final List<T> result = DatabaseUtil.executeQuery(connection, queryData, parseCallback, mLogger);
+                connection.commit();
+                return result;
+            } catch (final SQLException e) {
+                connection.rollback();
+                throw e;
+            }
         }
     }
 }
