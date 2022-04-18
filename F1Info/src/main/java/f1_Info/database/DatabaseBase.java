@@ -50,14 +50,14 @@ public abstract class DatabaseBase {
     public void executeBulkOfWork(final BulkOfWork bulkOfWork) throws SQLException {
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
-            for (final IQueryData<Void> queryData : bulkOfWork.getQueryDatas()) {
-                try {
-                    DatabaseUtil.executeQuery(connection, queryData, null, mLogger);
-                    connection.commit();
-                } catch (final SQLException e) {
-                    connection.rollback();
-                    throw e;
+            try {
+                for (final List<IQueryData<Void>> queryDataList : bulkOfWork.getQueryDatas()) {
+                    DatabaseUtil.executeBulkQuery(connection, queryDataList, mLogger);
                 }
+                connection.commit();
+            } catch (final SQLException e) {
+                connection.rollback();
+                throw e;
             }
         }
     }

@@ -4,6 +4,7 @@ import f1_Info.constants.Country;
 import f1_Info.constants.Url;
 import f1_Info.database.sql_parsing.SqlParser;
 import f1_Info.logger.Logger;
+import f1_Info.utils.ListUtils;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
@@ -35,7 +36,8 @@ public class DatabaseUtil {
             final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
 
             try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
-                final boolean hasResult = prepareStatementAndExecute(queryData, logger, sqlParameters, statement);
+                setSqlColumns(statement, sqlParameters);
+                final boolean hasResult = executeQueryStatement(queryData, logger, sqlParameters, statement);
                 if (!hasResult || parseCallback == null) {
                     return emptyList();
                 }
@@ -50,13 +52,34 @@ public class DatabaseUtil {
         }
     }
 
-    private static <T> boolean prepareStatementAndExecute(
+    public static void executeBulkQuery(
+        final Connection connection,
+        final List<? extends IQueryData<Void>> queryDataList,
+        final Logger logger
+    ) throws SQLException {
+        try {
+            final String procedureCallString = createMySqlProcedureCall(queryDataList.get(0), queryDataToSqlParameters(queryDataList.get(0)));
+            try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
+                for (final IQueryData<Void> queryData : queryDataList) {
+                    setSqlColumns(statement, queryDataToSqlParameters(queryData));
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+            }
+        } catch (final Exception e) {
+            logger.severe("executeBulkQuery", DatabaseUtil.class, String.format(
+                "Unable to execute %d bulk queries for querydata list: %s", queryDataList.size(), ListUtils.listToString(queryDataList, IQueryData::toString)
+            ), e);
+            throw new SQLException(e);
+        }
+    }
+
+    private static <T> boolean executeQueryStatement(
         final IQueryData<T> queryData,
         final Logger logger,
         final List<ValueWithType> sqlParameters,
         final CallableStatement statement
     ) throws SQLException {
-        setSqlColumns(statement, sqlParameters);
         try {
             return statement.execute();
         } catch (final SQLException e) {
@@ -65,7 +88,7 @@ public class DatabaseUtil {
                 callParametersBuilder.append(String.format("%s %s%n", entry.getTypeName(), entry.getData()));
             }
             logger.warning(
-                "executeQuery",
+                "executeQueryStatement",
                 DatabaseUtil.class,
                 String.format(
                     "There was a problem when calling the sql function %s using class %s. The function parameters :%n %s",
