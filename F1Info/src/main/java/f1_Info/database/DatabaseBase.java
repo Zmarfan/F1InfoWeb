@@ -48,10 +48,15 @@ public abstract class DatabaseBase {
     }
 
     public void executeBulkOfWork(final BulkOfWork bulkOfWork) throws SQLException {
+        final List<List<IQueryData<Void>>> bulkList = bulkOfWork.getQueryDatas();
+        if (bulkList.isEmpty() || bulkList.get(0).isEmpty()) {
+            return;
+        }
+        
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
             try {
-                for (final List<IQueryData<Void>> queryDataList : bulkOfWork.getQueryDatas()) {
+                for (final List<IQueryData<Void>> queryDataList : bulkList) {
                     DatabaseUtil.executeBulkQuery(connection, queryDataList, mLogger);
                 }
                 connection.commit();

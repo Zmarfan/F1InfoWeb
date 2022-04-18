@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collector;
 
 public class BulkOfWork {
-    final List<IQueryData<Void>> mQueryDatas = new LinkedList<>();
+    private final List<IQueryData<Void>> mQueryDatas = new LinkedList<>();
 
     public BulkOfWork() {
     }
