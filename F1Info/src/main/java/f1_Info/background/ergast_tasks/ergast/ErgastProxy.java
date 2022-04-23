@@ -203,7 +203,7 @@ public class ErgastProxy {
             }
             return responseData;
         } catch (final IOException e) {
-            throw new IOException(String.format("Unable to fetch or parse data for uri: %s with offset: %d", uri, offset));
+            throw new IOException(String.format("Unable to fetch or parse data for uri: %s with offset: %d with exception: %s", uri, offset, e.getMessage()));
         }
     }
 
