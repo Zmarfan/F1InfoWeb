@@ -25,6 +25,10 @@ public class DateUtils {
 
     public static BigDecimal parseTimeToSeconds(final String timeString) throws ParseException {
         try {
+            if (timeString == null) {
+                return null;
+            }
+
             final List<String> parts = Arrays.stream(timeString.split("(:)|(\\.)")).toList();
             return (BigDecimal.valueOf(Integer.parseInt(parts.get(0))).multiply(BigDecimal.valueOf(60)))
                 .add(BigDecimal.valueOf(Integer.parseInt(parts.get(1))))
