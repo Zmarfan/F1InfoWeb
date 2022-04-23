@@ -10,6 +10,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.*;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
@@ -17,6 +18,7 @@ import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
 import f1_Info.constants.FinishStatus;
+import f1_Info.constants.SpeedUnit;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -610,5 +612,71 @@ class ErgastProxyTest {
         );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_not_fetch_sprint_results_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchSprintResultsForSeason(2000);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_sprint_results_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchSprintResultsForSeason(2000));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_sprint_results() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchSprintResultsForSeason(2000));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_sprint_results() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchSprintResultsForSeason(2000);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_sprint_results() throws IOException, ParseException {
+        final List<ResultDataHolder> expectedReturnData = singletonList(
+            new ResultDataHolder(1998, 4, singletonList(new ResultData(
+                33,
+                1,
+                "1",
+                BigDecimal.valueOf(25),
+                new DriverData(
+                    "filip",
+                    WIKIPEDIA_URL,
+                    "F",
+                    "P",
+                    "1998-04-11",
+                    Country.SWEDEN.getNationalityKeywords().get(0),
+                    33,
+                    "FIL"
+                ),
+                new ConstructorData("const", WIKIPEDIA_URL, "cool", Country.UNITED_KINGDOM.getNationalityKeywords().get(0)),
+                1,
+                48,
+                FinishStatus.FINISHED.getStringCode(),
+                new TimeData(1000000L, "50:00.00"),
+                new FastestLapData(1, 33, new TimeData(null, "1:01:321"), new AverageSpeedData(SpeedUnit.KPH.getStringCode(), BigDecimal.valueOf(324)))
+            )))
+        );
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseSprintResultsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchSprintResultsForSeason(2000));
     }
 }
