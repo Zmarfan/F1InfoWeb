@@ -125,15 +125,23 @@ create table finish_status(
   constraint finish_status_pk primary key (id)
 );
 
+create table speed_units(
+  unit varchar(3) not null,
+
+  constraint speed_units_pk primary key (unit)
+);
+
 create table fastest_laps(
   id int not null auto_increment,
-  lap_fastest_lap_achieved int,
-  fastest_lap_rank int,
-  fastest_lap_time_in_milliseconds int,
-  fastest_lap_time varchar(255),
-  fastest_lap_speed varchar(255),
+  lap_achieved int,
+  lap_rank int,
+  time_in_seconds int,
+  display_time varchar(255),
+  speed_unit varchar(3),
+  speed varchar(255),
 
-  constraint fastest_laps_pk primary key (id)
+  constraint fastest_laps_pk primary key (id),
+  constraint fastest_laps_speed_unit foreign key (speed_unit) references speed_units(unit)
 );
 
 create table results(
@@ -144,7 +152,6 @@ create table results(
   result_type_id int not null,
   driver_number int,
   starting_position int not null,
-  finish_position int,
   position_type_id int not null,
   finish_position_order int not null,
   points float not null,

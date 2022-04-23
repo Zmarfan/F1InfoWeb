@@ -1,6 +1,9 @@
 insert into result_types (type) values ('race');
 insert into result_types (type) values ('sprint');
 
+insert into speed_units (unit) values ('kph');
+insert into speed_units (unit) values ('mph');
+
 insert into position_types (id, type) values (1, 'finished');
 insert into position_types (id, type) values (2, 'retired');
 insert into position_types (id, type) values (3, 'disqualified');
