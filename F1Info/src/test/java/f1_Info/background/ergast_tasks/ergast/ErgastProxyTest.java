@@ -16,6 +16,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataH
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
+import f1_Info.constants.FinishStatus;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -399,7 +400,7 @@ class ErgastProxyTest {
 
     @Test
     void should_return_formatted_data_from_parser_when_fetching_finish_status() throws IOException {
-        final List<FinishStatusData> expectedReturnData = List.of(new FinishStatusData(1, "status"));
+        final List<FinishStatusData> expectedReturnData = List.of(new FinishStatusData(FinishStatus.ACCIDENT.getStringCode()));
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));

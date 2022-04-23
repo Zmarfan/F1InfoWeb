@@ -46,11 +46,10 @@ public class FetchFinishStatusTask extends TaskWrapper {
     private void checkFetchedFinishStatuses(final List<FinishStatusData> finishStatusData) {
         finishStatusData
             .stream()
-            .filter(statusData -> !FinishStatus.exists(statusData.getId()))
+            .filter(statusData -> !FinishStatus.exists(statusData.getStatus()))
             .forEach(entry -> mLogger.warning("checkFetchedFinishStatuses", FetchFinishStatusTask.class, String.format(
-                "Fetched finish status data with id: %d and name: %s that is not implemented in enum," +
+                "Fetched finish status data with name: %s that is not implemented in enum," +
                     "will store it in database but will not be able to read it properly",
-                entry.getId(),
                 entry.getStatus()
             )));
     }

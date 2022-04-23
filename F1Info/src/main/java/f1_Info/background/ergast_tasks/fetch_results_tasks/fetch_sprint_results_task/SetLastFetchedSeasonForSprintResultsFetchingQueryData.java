@@ -1,4 +1,4 @@
-package f1_Info.background.ergast_tasks.fetch_sprint_results_task;
+package f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_sprint_results_task;
 
 import f1_Info.database.IQueryData;
 import lombok.Value;

@@ -3,8 +3,7 @@ package f1_Info.background.ergast_tasks.fetch_finish_status_task;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.FinishStatusData;
-import f1_Info.background.ergast_tasks.fetch_finish_status_task.Database;
-import f1_Info.background.ergast_tasks.fetch_finish_status_task.FetchFinishStatusTask;
+import f1_Info.constants.FinishStatus;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,7 +43,7 @@ class FetchFinishStatusTaskTest {
 
     @Test
     void should_merge_in_finish_status_data_sent_from_ergast_to_database() throws SQLException {
-        final List<FinishStatusData> data = List.of(new FinishStatusData(1, "status"));
+        final List<FinishStatusData> data = List.of(new FinishStatusData(FinishStatus.PNEUMATICS.getStringCode()));
         when(mErgastProxy.fetchAllFinishStatuses()).thenReturn(data);
 
         mFetchFinishStatusTask.run();
@@ -55,11 +54,11 @@ class FetchFinishStatusTaskTest {
     @Test
     void should_log_warning_for_every_finish_status_that_can_not_be_parsed_to_finish_status_enum() {
         final List<FinishStatusData> data = List.of(
-            new FinishStatusData(-1, "invalid"),
-            new FinishStatusData(-2, "invalid"),
-            new FinishStatusData(1, "valid"),
-            new FinishStatusData(2, "valid"),
-            new FinishStatusData(-3, "invalid")
+            new FinishStatusData("invalid1"),
+            new FinishStatusData("invalid2"),
+            new FinishStatusData(FinishStatus.FUEL_PUMP.getStringCode()),
+            new FinishStatusData(FinishStatus.PLUS_13_LAPS.getStringCode()),
+            new FinishStatusData("invalid3")
         );
         when(mErgastProxy.fetchAllFinishStatuses()).thenReturn(data);
 
@@ -71,11 +70,11 @@ class FetchFinishStatusTaskTest {
     @Test
     void should_merge_in_finish_status_data_sent_from_ergast_to_database_even_for_entries_that_can_not_be_parsed_to_enum() throws SQLException {
         final List<FinishStatusData> data = List.of(
-            new FinishStatusData(-1, "invalid"),
-            new FinishStatusData(-2, "invalid"),
-            new FinishStatusData(1, "valid"),
-            new FinishStatusData(2, "valid"),
-            new FinishStatusData(-3, "invalid")
+            new FinishStatusData("invalid1"),
+            new FinishStatusData("invalid2"),
+            new FinishStatusData(FinishStatus.FUEL_PUMP.getStringCode()),
+            new FinishStatusData(FinishStatus.PLUS_13_LAPS.getStringCode()),
+            new FinishStatusData("invalid3")
         );
         when(mErgastProxy.fetchAllFinishStatuses()).thenReturn(data);
 
@@ -86,7 +85,7 @@ class FetchFinishStatusTaskTest {
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException {
-        final List<FinishStatusData> data = List.of(new FinishStatusData(1, "status"));
+        final List<FinishStatusData> data = List.of(new FinishStatusData(FinishStatus.SEAT.getStringCode()));
         when(mErgastProxy.fetchAllFinishStatuses()).thenReturn(data);
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoFinishStatusData(anyList());
 

@@ -7,14 +7,11 @@ import lombok.Value;
 @Value
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FinishStatusData {
-    int mId;
     String mStatus;
 
     public FinishStatusData(
-        @JsonProperty("statusId") int id,
         @JsonProperty("status") String status
     ) {
-        mId = id;
         mStatus = status;
     }
 }

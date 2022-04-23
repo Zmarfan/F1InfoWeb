@@ -14,7 +14,7 @@ public class MergeIntoDriverStandingsQueryData implements IQueryData<Void> {
     String m3ConstructorIdentification;
     BigDecimal m4Points;
     int m5Position;
-    int m6PositionTypeId;
+    String m6PositionType;
     int m7AmountOfWins;
 
     public MergeIntoDriverStandingsQueryData(final DriverStandingsData driverStandingsData, final RaceRecord raceRecord) {
@@ -23,7 +23,7 @@ public class MergeIntoDriverStandingsQueryData implements IQueryData<Void> {
         m3ConstructorIdentification = driverStandingsData.getConstructorIdentification();
         m4Points = driverStandingsData.getPoints();
         m5Position = driverStandingsData.getPosition();
-        m6PositionTypeId = driverStandingsData.getPositionType().getId();
+        m6PositionType = driverStandingsData.getPositionType().getValue();
         m7AmountOfWins = driverStandingsData.getAmountOfWinsInSeasonSoFar();
     }
 

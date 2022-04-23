@@ -13,7 +13,7 @@ public class MergeIntoConstructorStandingsQueryData implements IQueryData<Void> 
     String m2ConstructorIdentifier;
     BigDecimal m3Points;
     int m4Position;
-    int m5PositionTypeId;
+    String m5PositionType;
     int m6AmountOfWins;
 
     public MergeIntoConstructorStandingsQueryData(final ConstructorStandingsData constructorStandingsData, final RaceRecord raceRecord) {
@@ -21,7 +21,7 @@ public class MergeIntoConstructorStandingsQueryData implements IQueryData<Void> 
         m2ConstructorIdentifier = constructorStandingsData.getConstructorData().getConstructorIdentifier();
         m3Points = constructorStandingsData.getPoints();
         m4Position = constructorStandingsData.getPosition();
-        m5PositionTypeId = constructorStandingsData.getPositionType().getId();
+        m5PositionType = constructorStandingsData.getPositionType().getValue();
         m6AmountOfWins = constructorStandingsData.getAmountOfWinsInSeasonSoFar();
     }
 

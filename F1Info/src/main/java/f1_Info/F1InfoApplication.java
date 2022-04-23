@@ -10,7 +10,7 @@ import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
 import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
 import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
 import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
-import f1_Info.background.ergast_tasks.fetch_sprint_results_task.FetchSprintResultsTask;
+import f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_sprint_results_task.FetchSprintResultsTask;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

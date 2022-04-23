@@ -8,6 +8,7 @@ import f1_Info.constants.PositionType;
 import lombok.Value;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Value
 public class ResultData {
@@ -22,6 +23,7 @@ public class ResultData {
     FastestLapData mFastestLapData;
     DriverData mDriverData;
     ConstructorData mConstructorData;
+    Integer mFinishPositionOrder;
 
     public ResultData(
         @JsonProperty("number") int number,
@@ -47,5 +49,25 @@ public class ResultData {
         mFastestLapData = fastestLapData;
         mDriverData = driverData;
         mConstructorData = constructorData;
+
+        Integer tempFinishPositionOrder = null;
+        try {
+            tempFinishPositionOrder = Integer.parseInt(positionTypeString);
+        } catch (final NumberFormatException ignored) {
+        } finally {
+            mFinishPositionOrder = tempFinishPositionOrder;
+        }
+    }
+
+    public Optional<TimeData> getTimeData() {
+        return Optional.ofNullable(mTimeData);
+    }
+
+    public Optional<FastestLapData> getFastestLapData() {
+        return Optional.ofNullable(mFastestLapData);
+    }
+
+    public Optional<Integer> getFinishPositionOrder() {
+        return Optional.ofNullable(mFinishPositionOrder);
     }
 }

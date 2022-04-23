@@ -6,12 +6,10 @@ import lombok.Value;
 
 @Value
 public class MergeIntoFinishStatusQueryData implements IQueryData<Void> {
-    int m1Id;
-    String m2Status;
+    String mStatus;
 
     public MergeIntoFinishStatusQueryData(final FinishStatusData finishStatusData) {
-        m1Id = finishStatusData.getId();
-        m2Status = finishStatusData.getStatus();
+        mStatus = finishStatusData.getStatus();
     }
 
     @Override

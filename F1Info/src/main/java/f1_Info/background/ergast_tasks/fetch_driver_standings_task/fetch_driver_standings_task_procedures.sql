@@ -28,7 +28,7 @@ create procedure tasks_insert_driver_standing_if_not_present(
   in p_constructor_identification varchar(255),
   in p_points float,
   in p_position int,
-  in p_position_type_id int,
+  in p_position_type varchar(255),
   in p_amount_of_wins int
 )
 begin
@@ -41,7 +41,7 @@ begin
   set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from driver_standings where race_id = p_race_id and driver_id = v_driver_id);
 
   if (v_exists_in_table = 'N') then
-    insert into driver_standings (race_id, driver_id, constructor_id, points, position, position_type_id, win_amount)
-      values (p_race_id, v_driver_id, v_constructor_id, p_points, p_position, p_position_type_id, p_amount_of_wins);
+    insert into driver_standings (race_id, driver_id, constructor_id, points, position, position_type, win_amount)
+      values (p_race_id, v_driver_id, v_constructor_id, p_points, p_position, p_position_type, p_amount_of_wins);
   end if;
 end;

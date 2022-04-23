@@ -14,6 +14,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorSta
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.constants.Country;
+import f1_Info.constants.FinishStatus;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -620,7 +621,10 @@ class ParserTest {
 
     @Test
     void should_parse_valid_finish_status_json_to_correct_race_object_list() throws IOException {
-        final List<FinishStatusData> expectedData = List.of(new FinishStatusData(1, "Finished"), new FinishStatusData(139, "Illness"));
+        final List<FinishStatusData> expectedData = List.of(
+            new FinishStatusData(FinishStatus.FINISHED.getStringCode()),
+            new FinishStatusData(FinishStatus.ILLNESS.getStringCode())
+        );
         final ErgastResponse<FinishStatusData> parsedData = new Parser().parseFinishStatusResponseToObjects(TEST_FINISH_STATUS_JSON);
         assertEquals(expectedData, parsedData.getData());
     }
