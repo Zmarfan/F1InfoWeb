@@ -10,6 +10,10 @@ import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.ErgastSessionTimes;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.FastestLapData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.ResultData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
+import f1_Info.background.ergast_tasks.ergast.responses.results.TimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
@@ -463,6 +467,102 @@ class ParserTest {
             }
         }
         """;
+
+    private static final String TEST_SPRINT_RESULTS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "38",
+                "total": "60",
+                "RaceTable": {
+                    "season": "2021",
+                    "Races": [
+                        {
+                            "season": "2021",
+                            "round": "14",
+                            "url": "http://en.wikipedia.org/wiki/2021_Italian_Grand_Prix",
+                            "raceName": "Italian Grand Prix",
+                            "Circuit": {
+                                "circuitId": "monza",
+                                "url": "http://en.wikipedia.org/wiki/Autodromo_Nazionale_Monza",
+                                "circuitName": "Autodromo Nazionale di Monza",
+                                "Location": {
+                                    "lat": "45.6156",
+                                    "long": "9.28111",
+                                    "locality": "Monza",
+                                    "country": "Italy"
+                                }
+                            },
+                            "date": "2021-09-12",
+                            "time": "13:00:00Z",
+                            "SprintResults": [
+                                {
+                                    "number": "47",
+                                    "position": "19",
+                                    "positionText": "19",
+                                    "points": "0",
+                                    "Driver": {
+                                        "driverId": "mick_schumacher",
+                                        "permanentNumber": "47",
+                                        "code": "MSC",
+                                        "url": "http://en.wikipedia.org/wiki/Mick_Schumacher",
+                                        "givenName": "Mick",
+                                        "familyName": "Schumacher",
+                                        "dateOfBirth": "1999-03-22",
+                                        "nationality": "German"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "haas",
+                                        "url": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+                                        "name": "Haas F1 Team",
+                                        "nationality": "American"
+                                    },
+                                    "grid": "18",
+                                    "laps": "18",
+                                    "status": "Finished",
+                                    "Time": {
+                                        "millis": "1740232",
+                                        "time": "+1:06.154"
+                                    },
+                                    "FastestLap": {
+                                        "lap": "7",
+                                        "Time": {
+                                            "time": "1:26.819"
+                                        }
+                                    }
+                                },
+                                {
+                                    "number": "10",
+                                    "position": "20",
+                                    "positionText": "R",
+                                    "points": "0",
+                                    "Driver": {
+                                        "driverId": "gasly",
+                                        "permanentNumber": "10",
+                                        "code": "GAS",
+                                        "url": "http://en.wikipedia.org/wiki/Pierre_Gasly",
+                                        "givenName": "Pierre",
+                                        "familyName": "Gasly",
+                                        "dateOfBirth": "1996-02-07",
+                                        "nationality": "French"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "alphatauri",
+                                        "url": "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri",
+                                        "name": "AlphaTauri",
+                                        "nationality": "Italian"
+                                    },
+                                    "grid": "6",
+                                    "laps": "0",
+                                    "status": "Accident"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -725,6 +825,63 @@ class ParserTest {
         );
         final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseStandingsResponseToObjects(TEST_CONSTRUCTOR_STANDINGS_JSON);
         assertEquals(singletonList(new StandingsDataHolder(null, expectedData)), parsedData.getData());
+    }
+
+    @Test
+    void should_throw_ioexception_if_unable_to_parse_json_to_sprint_results() {
+        assertThrows(IOException.class, () -> new Parser().parseSprintResultsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_sprint_results_json_to_correct_sprint_results_object_list() throws IOException, ParseException {
+        final List<ResultDataHolder> expectedData = singletonList(new ResultDataHolder(2021, 14, List.of(
+            new ResultData(
+                47,
+                19,
+                "19",
+                BigDecimal.ZERO,
+                new DriverData(
+                    "mick_schumacher",
+                    "http://en.wikipedia.org/wiki/Mick_Schumacher",
+                    "Mick",
+                    "Schumacher",
+                    "1999-03-22",
+                    "German",
+                    47,
+                    "MSC"
+                ),
+                new ConstructorData("haas", "http://en.wikipedia.org/wiki/Haas_F1_Team", "Haas F1 Team", "American"),
+                18,
+                18,
+                "Finished",
+                new TimeData(1740232L, "+1:06.154"),
+                new FastestLapData(null, 7, new TimeData(null, "1:26.819"), null)
+            ),
+            new ResultData(
+                10,
+                20,
+                "R",
+                BigDecimal.ZERO,
+                new DriverData(
+                    "gasly",
+                    "http://en.wikipedia.org/wiki/Pierre_Gasly",
+                    "Pierre",
+                    "Gasly",
+                    "1996-02-07",
+                    "French",
+                    10,
+                    "GAS"
+                ),
+                new ConstructorData("alphatauri", "http://en.wikipedia.org/wiki/Scuderia_AlphaTauri", "AlphaTauri", "Italian"),
+                6,
+                0,
+                "Accident",
+                null,
+                null
+            )
+        )));
+        final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseSprintResultsResponseToObjects(TEST_SPRINT_RESULTS_JSON);
+        assertEquals(expectedData, parsedData.getData());
     }
 
     @Test
