@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.ergast;
 
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
@@ -38,6 +39,7 @@ public class ErgastProxy {
     static final String FETCH_LAP_TIMES_URI = "https://ergast.com/api/f1/%d/%d/laps.json";
     static final String FETCH_DRIVER_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/driverStandings.json";
     static final String FETCH_CONSTRUCTOR_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/constructorStandings.json";
+    static final String FETCH_SPRINT_RESULTS_URI = "https://ergast.com/api/f1/%d/sprint.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -170,6 +172,19 @@ public class ErgastProxy {
                 String.format("Unable to fetch constructor standings data from ergast for season: %d, round: %d", raceRecord.getSeason(), raceRecord.getRound()),
                 e
             );
+        }
+        return emptyList();
+    }
+
+    public List<ResultDataHolder> fetchSprintResultsForSeason(final int season) {
+        try {
+            if (isProduction()) {
+                return getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseSprintResultsResponseToObjects));
+            }
+        } catch (final Exception e) {
+            mLogger.severe("fetchSprintResultsForSeason", ErgastProxy.class, String.format(
+                "Unable to fetch sprint result data from ergast for season: %d", season
+            ), e);
         }
         return emptyList();
     }

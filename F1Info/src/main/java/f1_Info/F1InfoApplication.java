@@ -10,6 +10,7 @@ import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
 import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
 import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
 import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
+import f1_Info.background.ergast_tasks.fetch_sprint_results_task.FetchSprintResultsTask;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -35,6 +36,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private final FetchLapTimesTask mFetchLapTimesTask;
 	private final FetchDriverStandingsTask mFetchDriverStandingsTask;
 	private final FetchConstructorStandingsTask mFetchConstructorStandingsTask;
+	private final FetchSprintResultsTask mFetchSprintResultsTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -89,5 +91,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchConstructorStandingsTask() {
 		mFetchConstructorStandingsTask.run();
+	}
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void runFetchSprintResultsTask() {
+		mFetchSprintResultsTask.run();
 	}
 }

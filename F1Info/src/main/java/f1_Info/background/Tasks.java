@@ -15,7 +15,8 @@ public enum Tasks {
     FETCH_PIT_STOPS_TASK(7, "Fetch Pit Stops Task"),
     FETCH_LAP_TIMES_TASK(8, "Fetch Lap Times Task"),
     FETCH_DRIVER_STANDINGS_TASK(9, "Fetch Driver Standings Task"),
-    FETCH_CONSTRUCTOR_STANDINGS_TASK(10, "Fetch Constructor Standings Task");
+    FETCH_CONSTRUCTOR_STANDINGS_TASK(10, "Fetch Constructor Standings Task"),
+    FETCH_SPRINT_RESULTS_TASK(11, "Fetch Sprint Results Task");
 
     private final int mId;
     private final String mName;

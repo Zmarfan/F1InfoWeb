@@ -41,3 +41,11 @@ create table constructor_standings_fetching_history(
   constraint constructor_standings_fetching_history_pk primary key (season, round),
   constraint constructor_standings_fetching_history_season foreign key (season) references seasons (year)
 );
+
+create table sprint_results_fetching_history(
+  season int not null,
+  is_active char not null,
+
+  constraint sprint_results_fetching_history_pk primary key (season),
+  constraint sprint_results_fetching_history_season foreign key (season) references seasons(year)
+);
