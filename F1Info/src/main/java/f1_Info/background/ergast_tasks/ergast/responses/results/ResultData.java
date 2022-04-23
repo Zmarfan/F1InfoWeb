@@ -23,7 +23,6 @@ public class ResultData {
     FastestLapData mFastestLapData;
     DriverData mDriverData;
     ConstructorData mConstructorData;
-    Integer mFinishPositionOrder;
 
     public ResultData(
         @JsonProperty("number") int number,
@@ -49,14 +48,6 @@ public class ResultData {
         mFastestLapData = fastestLapData;
         mDriverData = driverData;
         mConstructorData = constructorData;
-
-        Integer tempFinishPositionOrder = null;
-        try {
-            tempFinishPositionOrder = Integer.parseInt(positionTypeString);
-        } catch (final NumberFormatException ignored) {
-        } finally {
-            mFinishPositionOrder = tempFinishPositionOrder;
-        }
     }
 
     public Optional<TimeData> getTimeData() {
@@ -65,9 +56,5 @@ public class ResultData {
 
     public Optional<FastestLapData> getFastestLapData() {
         return Optional.ofNullable(mFastestLapData);
-    }
-
-    public Optional<Integer> getFinishPositionOrder() {
-        return Optional.ofNullable(mFinishPositionOrder);
     }
 }

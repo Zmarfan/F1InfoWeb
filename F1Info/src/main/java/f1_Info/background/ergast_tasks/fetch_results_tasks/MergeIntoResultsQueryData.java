@@ -20,7 +20,7 @@ public class MergeIntoResultsQueryData implements IQueryData<Void> {
     String m04DriverIdentifier;
     String m05ConstructorIdentifier;
     int m06DriverNumber;
-    Integer m07FinishPositionOrder;
+    int m07FinishPositionOrder;
     String m08PositionTypeCode;
     BigDecimal m09Points;
     int m10GridPosition;
@@ -42,7 +42,7 @@ public class MergeIntoResultsQueryData implements IQueryData<Void> {
         m04DriverIdentifier = resultData.getDriverData().getDriverIdentifier();
         m05ConstructorIdentifier = resultData.getConstructorData().getConstructorIdentifier();
         m06DriverNumber = resultData.getNumber();
-        m07FinishPositionOrder = resultData.getFinishPositionOrder().orElse(null);
+        m07FinishPositionOrder = resultData.getPosition();
         m08PositionTypeCode = resultData.getPositionType().getValue();
         m09Points = resultData.getPoints();
         m10GridPosition = resultData.getGridPosition();

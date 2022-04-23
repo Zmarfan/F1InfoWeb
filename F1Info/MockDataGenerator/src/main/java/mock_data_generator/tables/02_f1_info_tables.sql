@@ -150,7 +150,7 @@ create table results(
   driver_number int,
   starting_position int not null,
   position_type varchar(255) not null,
-  finish_position_order int,
+  finish_position_order int not null,
   points float not null,
   completed_laps int not null,
   finish_time_or_gap varchar(255),
