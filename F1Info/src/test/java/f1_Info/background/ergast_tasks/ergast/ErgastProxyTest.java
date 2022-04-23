@@ -550,7 +550,7 @@ class ErgastProxyTest {
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseDriverStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
+        when(mParser.parseStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new StandingsDataHolder(expectedReturnData, null)))
         );
@@ -603,7 +603,7 @@ class ErgastProxyTest {
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
-        when(mParser.parseConstructorStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
+        when(mParser.parseStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new StandingsDataHolder(null, expectedReturnData)))
         );

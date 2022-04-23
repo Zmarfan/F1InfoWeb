@@ -694,17 +694,17 @@ class ParserTest {
                 "Italian"
             )))
         );
-        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseDriverStandingsResponseToObjects(TEST_DRIVER_STANDINGS_JSON);
+        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseStandingsResponseToObjects(TEST_DRIVER_STANDINGS_JSON);
         assertEquals(singletonList(new StandingsDataHolder(expectedData, null)), parsedData.getData());
     }
 
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_driver_standings() {
-        assertThrows(IOException.class, () -> new Parser().parseDriverStandingsResponseToObjects(BAD_JSON_FORMAT));
+        assertThrows(IOException.class, () -> new Parser().parseStandingsResponseToObjects(BAD_JSON_FORMAT));
     }
 
     @Test
-    void should_parse_valid_constructor_standings_json_to_correct_constructor_standings_object_list() throws IOException, ParseException {
+    void should_parse_valid_constructor_standings_json_to_correct_constructor_standings_object_list() throws IOException {
         final List<ConstructorStandingsData> expectedData = List.of(
             new ConstructorStandingsData(1, "2", BigDecimal.valueOf(153), 2, new ConstructorData(
                 "mercedes",
@@ -719,12 +719,12 @@ class ParserTest {
                 "Italian"
             ))
         );
-        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseConstructorStandingsResponseToObjects(TEST_CONSTRUCTOR_STANDINGS_JSON);
+        final ErgastResponse<StandingsDataHolder> parsedData = new Parser().parseStandingsResponseToObjects(TEST_CONSTRUCTOR_STANDINGS_JSON);
         assertEquals(singletonList(new StandingsDataHolder(null, expectedData)), parsedData.getData());
     }
 
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_constructor_standings() {
-        assertThrows(IOException.class, () -> new Parser().parseConstructorStandingsResponseToObjects(BAD_JSON_FORMAT));
+        assertThrows(IOException.class, () -> new Parser().parseStandingsResponseToObjects(BAD_JSON_FORMAT));
     }
 }

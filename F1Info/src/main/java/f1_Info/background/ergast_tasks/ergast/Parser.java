@@ -27,12 +27,9 @@ public class Parser {
     private static final List<String> DRIVERS_PARENTS = List.of("DriverTable", "Drivers");
     private static final List<String> SEASON_PARENTS = List.of("SeasonTable", "Seasons");
     private static final List<String> CIRCUIT_PARENTS = List.of("CircuitTable", "Circuits");
-    private static final List<String> RACES_PARENTS = List.of("RaceTable", "Races");
+    private static final List<String> RACE_DATA_PARENTS = List.of("RaceTable", "Races");
     private static final List<String> FINISH_STATUS_PARENTS = List.of("StatusTable", "Status");
-    private static final List<String> PIT_STOP_PARENTS = List.of("RaceTable", "Races");
-    private static final List<String> LAP_TIMES_PARENTS = List.of("RaceTable", "Races");
     private static final List<String> STANDINGS_PARENTS = List.of("StandingsTable", "StandingsLists");
-    private static final List<String> SPRINT_RESULT_PARENTS = List.of("RaceTable", "Races");
     private final ObjectMapper mObjectMapper;
 
     public Parser() {
@@ -60,7 +57,7 @@ public class Parser {
     }
 
     public ErgastResponse<RaceData> parseRacesResponseToObjects(final String json) throws IOException {
-        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACES_PARENTS));
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACE_DATA_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), RaceData[].class)));
     }
 
@@ -70,27 +67,22 @@ public class Parser {
     }
 
     public ErgastResponse<PitStopDataHolder> parsePitStopResponseToObjects(final String json) throws IOException {
-        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, PIT_STOP_PARENTS));
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACE_DATA_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), PitStopDataHolder[].class)));
     }
 
     public ErgastResponse<LapTimesDataHolder> parseLapTimesResponseToObjects(final String json) throws IOException {
-        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, LAP_TIMES_PARENTS));
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACE_DATA_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), LapTimesDataHolder[].class)));
     }
 
-    public ErgastResponse<StandingsDataHolder> parseDriverStandingsResponseToObjects(final String json) throws IOException {
-        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, STANDINGS_PARENTS));
-        return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), StandingsDataHolder[].class)));
-    }
-
-    public ErgastResponse<StandingsDataHolder> parseConstructorStandingsResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<StandingsDataHolder> parseStandingsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, STANDINGS_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), StandingsDataHolder[].class)));
     }
 
     public ErgastResponse<ResultDataHolder> parseSprintResultsResponseToObjects(final String json) throws IOException {
-        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, SPRINT_RESULT_PARENTS));
+        final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACE_DATA_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), ResultDataHolder[].class)));
     }
 

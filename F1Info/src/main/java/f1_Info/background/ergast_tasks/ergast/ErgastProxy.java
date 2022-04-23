@@ -143,7 +143,7 @@ public class ErgastProxy {
             if (isProduction()) {
                 return getData(
                     String.format(FETCH_DRIVER_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
-                    wrapper(mParser::parseDriverStandingsResponseToObjects)
+                    wrapper(mParser::parseStandingsResponseToObjects)
                 ).get(0).getDriverStandingsData();
             }
         } catch (final Exception e) {
@@ -162,7 +162,7 @@ public class ErgastProxy {
             if (isProduction()) {
                 return getData(
                     String.format(FETCH_CONSTRUCTOR_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
-                    wrapper(mParser::parseConstructorStandingsResponseToObjects)
+                    wrapper(mParser::parseStandingsResponseToObjects)
                 ).get(0).getConstructorStandingsData();
             }
         } catch (final Exception e) {
