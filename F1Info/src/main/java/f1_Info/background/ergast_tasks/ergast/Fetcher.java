@@ -16,6 +16,7 @@ public class Fetcher {
     private static final String GET_REQUEST = "GET";
     private static final int CONNECT_TIME_OUT = 10000;
     private static final int READ_TIME_OUT = 25000;
+    private static final String TOO_MANY_REQUEST_PER_HOUR_MESSAGE = "Unable to make more requests since the maximum allowed %d requests per hour has been reached. Currently %d requests has been made this hour. There is %d minutes left until a request can be made";
     private static final String ERROR_RESPONSE_MESSAGE = "Got response code: %d as reply with the message: %s";
     private static final int MAX_REQUESTS_PER_HOUR = 200;
     private static final double RATE_LIMIT_PER_SECOND = 0.5;
@@ -27,7 +28,12 @@ public class Fetcher {
     public String readDataAsJsonStringFromUri(final String uri) throws IOException {
         try {
             if (hasMadeTooManyRequestThisHour()) {
-                throwTooManyRequestException();
+                throw new IOException(String.format(
+                    TOO_MANY_REQUEST_PER_HOUR_MESSAGE,
+                    MAX_REQUESTS_PER_HOUR,
+                    mRequestCounterPerHour,
+                    DateUtils.getMinutesLeftInCurrentHour()
+                ));
             }
 
             mRateLimiter.acquire();
@@ -54,16 +60,6 @@ public class Fetcher {
         }
 
         return ++mRequestCounterPerHour > MAX_REQUESTS_PER_HOUR;
-    }
-
-    private void throwTooManyRequestException() throws IOException {
-        throw new IOException(String.format(
-            "Unable to make more requests since the maximum allowed %d requests per hour has been reached." +
-                "Currently %d requests has been made this hour. There is %d minutes left until a request can be made",
-            MAX_REQUESTS_PER_HOUR,
-            mRequestCounterPerHour,
-            DateUtils.getMinutesLeftInCurrentHour()
-        ));
     }
 
     private HttpURLConnection createGetConnection(final String uri) throws IOException {
