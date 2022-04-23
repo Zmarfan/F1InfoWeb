@@ -7,6 +7,9 @@ import java.math.RoundingMode;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -36,5 +39,12 @@ public class DateUtils {
         } catch (final Exception e) {
             throw new ParseException(String.format("Unable to parse the time: %s to seconds", timeString), 0);
         }
+    }
+
+    public static long getMinutesLeftInCurrentHour() {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime end = now.plusHours(1).truncatedTo(ChronoUnit.HOURS);
+
+        return Duration.between(now, end).toMinutes();
     }
 }
