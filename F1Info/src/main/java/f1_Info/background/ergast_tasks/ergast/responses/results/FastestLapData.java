@@ -1,13 +1,11 @@
 package f1_Info.background.ergast_tasks.ergast.responses.results;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
 import java.util.Optional;
 
 @Value
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class FastestLapData {
     Integer mRank;
     int mLap;

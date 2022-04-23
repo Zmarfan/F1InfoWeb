@@ -7,7 +7,6 @@ import lombok.Value;
 import java.util.Optional;
 
 @Value
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class TimeData {
     Long mTimeInMilliseconds;
     String mDisplayTime;
