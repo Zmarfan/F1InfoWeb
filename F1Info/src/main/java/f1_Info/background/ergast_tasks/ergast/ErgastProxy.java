@@ -202,7 +202,7 @@ public class ErgastProxy {
 
     public List<ResultDataHolder> fetchQualifyingResultsForSeason(final int season) {
         try {
-            return !isProduction() ? getData(String.format(FETCH_QUALIFYING_RESULTS_PART, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(String.format(FETCH_QUALIFYING_RESULTS_PART, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchQualifyingResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch qualifying result data from ergast for season: %d", season

@@ -676,6 +676,88 @@ class ParserTest {
             }
         }
         """;
+
+    private static final String TEST_QUALIFYING_RESULTS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "456",
+                "RaceTable": {
+                    "season": "2010",
+                    "Races": [
+                        {
+                            "season": "2010",
+                            "round": "1",
+                            "url": "http://en.wikipedia.org/wiki/2010_Bahrain_Grand_Prix",
+                            "raceName": "Bahrain Grand Prix",
+                            "Circuit": {
+                                "circuitId": "bahrain",
+                                "url": "http://en.wikipedia.org/wiki/Bahrain_International_Circuit",
+                                "circuitName": "Bahrain International Circuit",
+                                "Location": {
+                                    "lat": "26.0325",
+                                    "long": "50.5106",
+                                    "locality": "Sakhir",
+                                    "country": "Bahrain"
+                                }
+                            },
+                            "date": "2010-03-14",
+                            "time": "12:00:00Z",
+                            "QualifyingResults": [
+                                {
+                                    "number": "5",
+                                    "position": "1",
+                                    "Driver": {
+                                        "driverId": "vettel",
+                                        "permanentNumber": "5",
+                                        "code": "VET",
+                                        "url": "http://en.wikipedia.org/wiki/Sebastian_Vettel",
+                                        "givenName": "Sebastian",
+                                        "familyName": "Vettel",
+                                        "dateOfBirth": "1987-07-03",
+                                        "nationality": "German"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "red_bull",
+                                        "url": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+                                        "name": "Red Bull",
+                                        "nationality": "Austrian"
+                                    },
+                                    "Q1": "1:55.029",
+                                    "Q2": "1:53.883",
+                                    "Q3": "1:54.101"
+                                },
+                                {
+                                    "number": "7",
+                                    "position": "2",
+                                    "Driver": {
+                                        "driverId": "massa",
+                                        "permanentNumber": "19",
+                                        "code": "MAS",
+                                        "url": "http://en.wikipedia.org/wiki/Felipe_Massa",
+                                        "givenName": "Felipe",
+                                        "familyName": "Massa",
+                                        "dateOfBirth": "1981-04-25",
+                                        "nationality": "Brazilian"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "ferrari",
+                                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                        "name": "Ferrari",
+                                        "nationality": "Italian"
+                                    },
+                                    "Q1": "1:55.313",
+                                    "Q2": "1:54.331",
+                                    "Q3": "1:54.242"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -1003,7 +1085,7 @@ class ParserTest {
     }
 
     @Test
-    void should_parse_valid_race_results_json_to_correct_sprint_results_object_list() throws IOException, ParseException {
+    void should_parse_valid_race_results_json_to_correct_race_results_object_list() throws IOException, ParseException {
         final List<ResultDataHolder> expectedData = singletonList(new ResultDataHolder(2022, 1, null, List.of(
             new ResultData(
                 16,
@@ -1051,6 +1133,50 @@ class ParserTest {
             )
         ), null));
         final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_RACE_RESULTS_JSON);
+        assertEquals(expectedData, parsedData.getData());
+    }
+
+    @Test
+    void should_parse_valid_qualifying_results_json_to_correct_qualifying_results_object_list() throws IOException, ParseException {
+        final List<ResultDataHolder> expectedData = singletonList(new ResultDataHolder(2010, 1, null,null, List.of(
+            new QualifyingResultData(
+                5,
+                1,
+                new DriverData(
+                    "vettel",
+                    "http://en.wikipedia.org/wiki/Sebastian_Vettel",
+                    "Sebastian",
+                    "Vettel",
+                    "1987-07-03",
+                    "German",
+                    5,
+                    "VET"
+                ),
+                new ConstructorData("red_bull", "http://en.wikipedia.org/wiki/Red_Bull_Racing", "Red Bull", "Austrian"),
+                "1:55.029",
+                "1:53.883",
+                "1:54.101"
+            ),
+            new QualifyingResultData(
+                7,
+                2,
+                new DriverData(
+                    "massa",
+                    "http://en.wikipedia.org/wiki/Felipe_Massa",
+                    "Felipe",
+                    "Massa",
+                    "1981-04-25",
+                    "Brazilian",
+                    19,
+                    "MAS"
+                ),
+                new ConstructorData("ferrari", "http://en.wikipedia.org/wiki/Scuderia_Ferrari", "Ferrari", "Italian"),
+                "1:55.313",
+                "1:54.331",
+                "1:54.242"
+            )
+        )));
+        final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_QUALIFYING_RESULTS_JSON);
         assertEquals(expectedData, parsedData.getData());
     }
 }

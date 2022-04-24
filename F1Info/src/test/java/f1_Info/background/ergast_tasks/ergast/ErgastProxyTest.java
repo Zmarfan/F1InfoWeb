@@ -758,4 +758,64 @@ class ErgastProxyTest {
 
         assertEquals(expectedReturnData, mErgastProxy.fetchRaceResultsForSeason(2000));
     }
+
+    @Test
+    void should_not_fetch_qualifying_results_from_ergast_if_running_mock_configuration() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+
+        mErgastProxy.fetchQualifyingResultsForSeason(2000);
+
+        verify(mFetcher, never()).readDataAsJsonStringFromUri(anyString());
+    }
+
+    @Test
+    void should_return_empty_list_of_qualifying_results_if_running_mock_configuration() {
+        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        assertEquals(emptyList(), mErgastProxy.fetchQualifyingResultsForSeason(2000));
+    }
+
+    @Test
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_qualifying_results() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        assertEquals(emptyList(), mErgastProxy.fetchQualifyingResultsForSeason(2000));
+    }
+
+    @Test
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_qualifying_results() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
+
+        mErgastProxy.fetchQualifyingResultsForSeason(2000);
+
+        verify(mLogger).severe(anyString(), eq(ErgastProxy.class), anyString(), any(IOException.class));
+    }
+
+    @Test
+    void should_return_formatted_data_from_parser_when_fetching_qualifying_results() throws IOException, ParseException {
+        final List<ResultDataHolder> expectedReturnData = singletonList(new ResultDataHolder(1998, 3, null, null, singletonList(new QualifyingResultData(
+            31,
+            1,
+            new DriverData(
+                "filip",
+                WIKIPEDIA_URL,
+                "F",
+                "P",
+                "1998-04-11",
+                Country.SWEDEN.getNationalityKeywords().get(0),
+                33,
+                "FIL"
+            ),
+            new ConstructorData("const", WIKIPEDIA_URL, "cool", Country.UNITED_KINGDOM.getNationalityKeywords().get(0)),
+            "1:30.132",
+            "1:29.552",
+            "1:29.321"
+        ))));
+
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mParser.parseResultsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
+
+        assertEquals(expectedReturnData, mErgastProxy.fetchQualifyingResultsForSeason(2000));
+    }
 }
