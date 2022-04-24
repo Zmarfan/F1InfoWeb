@@ -30,14 +30,29 @@ begin
 
   set v_race_id := (select id from races where year = p_season and round = p_round);
   set v_driver_id := (select id from drivers where driver_identifier = p_driver_identifier);
-  set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from results where race_id = v_race_id and driver_id = v_driver_id);
+  set v_exists_in_table := (
+    select
+      if(count(*) = 1, 'Y', 'N')
+    from
+      results
+    where
+      race_id = v_race_id
+      and driver_id = v_driver_id
+      and result_type = p_result_type
+  );
 
   if (v_exists_in_table = 'N') then
     set v_constructor_id := (select id from constructors where constructor_identifier = p_constructor_identifier);
 
     if (p_fastest_lap_lap is not null) then
-      insert into fastest_laps (lap_achieved, lap_rank, time_in_seconds, display_time, speed_unit, speed)
-      values (p_fastest_lap_lap, p_fastest_lap_rank, p_fastest_lap_in_seconds, p_fastest_lap_display_time, p_fastest_lap_average_speed_unit, p_fastest_lap_average_speed);
+      insert into fastest_laps (lap_achieved, lap_rank, time_in_seconds, display_time, speed_unit, speed) values (
+        p_fastest_lap_lap,
+        p_fastest_lap_rank,
+        p_fastest_lap_in_seconds,
+        p_fastest_lap_display_time,
+        p_fastest_lap_average_speed_unit,
+        p_fastest_lap_average_speed
+      );
       set v_fastest_lap_id := (select last_insert_id());
     end if;
 
