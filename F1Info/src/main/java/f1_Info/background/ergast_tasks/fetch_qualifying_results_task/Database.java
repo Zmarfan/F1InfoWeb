@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_QUALIFYING_RESULTS_DATA;
 import static f1_Info.wrappers.ThrowingFunction.wrapper;
 
 @Component(value = "FetchQualifyingResultsTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int NO_MORE_DATA_CAN_BE_FETCHED = -1;
 
     @Autowired
     public Database(
@@ -27,9 +25,8 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public Optional<Integer> getNextSeasonToFetchQualifyingResultsFor() throws SQLException {
-        final int fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchQualifyingResultsForQueryData(FIRST_SEASON_WITH_QUALIFYING_RESULTS_DATA));
-        return Optional.of(fetchedSeason).filter(season -> season != NO_MORE_DATA_CAN_BE_FETCHED);
+    public int getNextSeasonToFetchQualifyingResultsFor() throws SQLException {
+        return executeBasicQuery(new GetNextSeasonToFetchQualifyingResultsForQueryData(FIRST_SEASON_WITH_QUALIFYING_RESULTS_DATA));
     }
 
     public void mergeIntoQualifyingResultsData(final List<ResultDataHolder> resultDataHolders) throws SQLException {

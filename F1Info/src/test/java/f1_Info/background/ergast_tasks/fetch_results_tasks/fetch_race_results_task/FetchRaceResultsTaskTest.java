@@ -20,15 +20,10 @@ import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,17 +43,8 @@ class FetchRaceResultsTaskTest {
     FetchRaceResultsTask mFetchRaceResultsTask;
 
     @Test
-    void should_not_call_ergast_for_race_results_if_there_is_no_next_season_to_fetch_for() throws SQLException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.empty());
-
-        mFetchRaceResultsTask.run();
-
-        verify(mErgastProxy, never()).fetchRaceResultsForSeason(anyInt());
-    }
-
-    @Test
     void should_not_attempt_to_merge_in_race_results_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.of(1998));
+        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(1998);
         when(mErgastProxy.fetchRaceResultsForSeason(anyInt())).thenReturn(emptyList());
 
         mFetchRaceResultsTask.run();
@@ -68,7 +54,7 @@ class FetchRaceResultsTaskTest {
 
     @Test
     void should_merge_in_race_results_sent_from_ergast_to_database() throws SQLException, MalformedURLException, ParseException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.of(1998));
+        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(1998);
         when(mErgastProxy.fetchRaceResultsForSeason(1998)).thenReturn(getRaceResultData());
 
         mFetchRaceResultsTask.run();
@@ -78,7 +64,7 @@ class FetchRaceResultsTaskTest {
 
     @Test
     void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException, ParseException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.of(1998));
+        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(1998);
         when(mErgastProxy.fetchRaceResultsForSeason(1998)).thenReturn(getRaceResultData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoRaceResultsData(anyList());
 
@@ -89,7 +75,7 @@ class FetchRaceResultsTaskTest {
 
     @Test
     void should_set_last_fetched_season_after_merging_race_results() throws SQLException, MalformedURLException, ParseException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.of(1998));
+        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(1998);
         when(mErgastProxy.fetchRaceResultsForSeason(1998)).thenReturn(getRaceResultData());
 
         mFetchRaceResultsTask.run();
@@ -100,7 +86,7 @@ class FetchRaceResultsTaskTest {
 
     @Test
     void should_not_set_last_fetched_season_after_merging_race_results_if_it_throws() throws SQLException, MalformedURLException, ParseException {
-        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(Optional.of(1998));
+        when(mDatabase.getNextSeasonToFetchRaceResultsFor()).thenReturn(1998);
         when(mErgastProxy.fetchRaceResultsForSeason(1998)).thenReturn(getRaceResultData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoRaceResultsData(anyList());
 
@@ -132,7 +118,7 @@ class FetchRaceResultsTaskTest {
                 FinishStatus.FINISHED.getStringCode(),
                 new TimeData(1000000L, "50:00.00"),
                 new FastestLapData(1, 33, new TimeData(null, "1:01:321"), new AverageSpeedData(SpeedUnit.KPH.getStringCode(), BigDecimal.valueOf(324)))
-            )))
+            )), null)
         );
     }
 }

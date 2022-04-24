@@ -992,7 +992,7 @@ class ParserTest {
                 null,
                 null
             )
-        ), null));
+        ), null, null));
         final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_SPRINT_RESULTS_JSON);
         assertEquals(expectedData, parsedData.getData());
     }
@@ -1049,7 +1049,7 @@ class ParserTest {
                 new TimeData(5859182L, "+5.598"),
                 new FastestLapData(3, 52, new TimeData(null, "1:35.740"), new AverageSpeedData("kph", BigDecimal.valueOf(203.501)))
             )
-        )));
+        ), null));
         final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_RACE_RESULTS_JSON);
         assertEquals(expectedData, parsedData.getData());
     }

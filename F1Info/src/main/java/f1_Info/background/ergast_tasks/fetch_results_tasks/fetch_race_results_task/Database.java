@@ -12,14 +12,12 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_FORMULA_1_SEASON;
 import static f1_Info.wrappers.ThrowingFunction.wrapper;
 
 @Component(value = "FetchRaceResultsTaskDatabase")
 public class Database extends TaskDatabase {
-    private static final int NO_MORE_DATA_CAN_BE_FETCHED = -1;
 
     @Autowired
     public Database(
@@ -29,9 +27,8 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public Optional<Integer> getNextSeasonToFetchRaceResultsFor() throws SQLException {
-        final int fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchRaceResultsForQueryData(FIRST_FORMULA_1_SEASON));
-        return Optional.of(fetchedSeason).filter(season -> season != NO_MORE_DATA_CAN_BE_FETCHED);
+    public int getNextSeasonToFetchRaceResultsFor() throws SQLException {
+        return executeBasicQuery(new GetNextSeasonToFetchRaceResultsForQueryData(FIRST_FORMULA_1_SEASON));
     }
 
     public void mergeIntoRaceResultsData(final List<ResultDataHolder> resultDatumHolders) throws SQLException {

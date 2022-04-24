@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class FetchSprintResultsTask extends TaskWrapper {
@@ -36,15 +35,12 @@ public class FetchSprintResultsTask extends TaskWrapper {
 
     @Override
     protected void runTask() throws SQLException {
-        final Optional<Integer> nextSeasonToFetch = mDatabase.getNextSeasonToFetchSprintResultsFor();
-        if (nextSeasonToFetch.isEmpty()) {
-            return;
-        }
+        final int nextSeasonToFetch = mDatabase.getNextSeasonToFetchSprintResultsFor();
 
-        final List<ResultDataHolder> sprintResults = mErgastProxy.fetchSprintResultsForSeason(nextSeasonToFetch.get());
+        final List<ResultDataHolder> sprintResults = mErgastProxy.fetchSprintResultsForSeason(nextSeasonToFetch);
         if (!sprintResults.isEmpty()) {
-            mergeIntoDatabase(sprintResults, nextSeasonToFetch.get());
-            mDatabase.setLastFetchedSeason(nextSeasonToFetch.get());
+            mergeIntoDatabase(sprintResults, nextSeasonToFetch);
+            mDatabase.setLastFetchedSeason(nextSeasonToFetch);
         }
     }
 

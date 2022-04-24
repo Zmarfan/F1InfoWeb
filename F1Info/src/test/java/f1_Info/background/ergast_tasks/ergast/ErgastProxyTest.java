@@ -671,7 +671,7 @@ class ErgastProxyTest {
                 FinishStatus.FINISHED.getStringCode(),
                 new TimeData(1000000L, "50:00.00"),
                 new FastestLapData(1, 33, new TimeData(null, "1:01:321"), new AverageSpeedData(SpeedUnit.KPH.getStringCode(), BigDecimal.valueOf(324)))
-            )), null)
+            )), null, null)
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
@@ -737,7 +737,7 @@ class ErgastProxyTest {
                 FinishStatus.FINISHED.getStringCode(),
                 new TimeData(1000000L, "50:00.00"),
                 new FastestLapData(1, 33, new TimeData(null, "1:01:321"), new AverageSpeedData(SpeedUnit.KPH.getStringCode(), BigDecimal.valueOf(324)))
-            )))
+            )), null)
         );
 
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);

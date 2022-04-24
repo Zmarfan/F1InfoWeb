@@ -2,7 +2,7 @@ drop procedure if exists tasks_get_next_season_to_fetch_sprint_results_for;
 create procedure tasks_get_next_season_to_fetch_sprint_results_for(in p_first_season_with_data int)
 begin
   select ifnull((
-    select if(seasons.year is not null, history.season + 1, -1) as next_season_to_fetch
+    select if(seasons.year is not null, history.season + 1, history.season) as next_season_to_fetch
     from
       sprint_results_fetching_history history
       left join seasons on seasons.year = history.season + 1
