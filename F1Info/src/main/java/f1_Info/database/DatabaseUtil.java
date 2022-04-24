@@ -20,10 +20,13 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toSet;
 
 @UtilityClass
 public class DatabaseUtil {
-    private static final Set<String> I_DATABASE_QUERY_DATA_METHOD_NAMES = Set.of("getStoredProcedureName", "getRecordClass");
+    private static final Set<String> I_DATABASE_QUERY_DATA_METHOD_NAMES = Arrays.stream(IQueryData.class.getDeclaredMethods())
+        .map(Method::getName)
+        .collect(toSet());
 
     public static <T> List<T> executeQuery(
         final Connection connection,
