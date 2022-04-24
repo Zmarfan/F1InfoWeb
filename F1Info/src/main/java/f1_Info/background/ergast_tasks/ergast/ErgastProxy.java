@@ -180,41 +180,35 @@ public class ErgastProxy {
 
     public List<ResultDataHolder> fetchSprintResultsForSeason(final int season) {
         try {
-            if (isProduction()) {
-                return getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects));
-            }
+            return isProduction() ? getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchSprintResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch sprint result data from ergast for season: %d", season
             ), e);
+            return emptyList();
         }
-        return emptyList();
     }
 
     public List<ResultDataHolder> fetchRaceResultsForSeason(final int season) {
         try {
-            if (isProduction()) {
-                return getData(String.format(FETCH_RACE_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects));
-            }
+            return isProduction() ? getData(String.format(FETCH_RACE_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchRaceResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch race result data from ergast for season: %d", season
             ), e);
+            return emptyList();
         }
-        return emptyList();
     }
 
     public List<ResultDataHolder> fetchQualifyingResultsForSeason(final int season) {
         try {
-            if (!isProduction()) {
-                return getData(String.format(FETCH_QUALIFYING_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects));
-            }
+            return isProduction() ? getData(String.format(FETCH_QUALIFYING_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchQualifyingResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch qualifying result data from ergast for season: %d", season
             ), e);
+            return emptyList();
         }
-        return emptyList();
     }
 
     private <T> List<T> getData(final String uri, final Function<String, ErgastResponse<T>> parserFunction) throws IOException {
