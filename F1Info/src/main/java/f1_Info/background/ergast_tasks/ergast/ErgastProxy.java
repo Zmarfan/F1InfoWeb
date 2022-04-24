@@ -26,22 +26,22 @@ import static java.util.Collections.emptyList;
 @Service
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class ErgastProxy {
-    static final String QUERY_PARAMETERS = "?limit=%d&offset=%d";
+    static final String REQUEST_FORMAT = "https://ergast.com/api/f1/%s.json?limit=%d&offset=%d";
     static final int MAX_LIMIT = 1000;
 
-    static final String FETCH_ALL_CONSTRUCTORS_URI = "http://ergast.com/api/f1/constructors.json";
-    static final String FETCH_ALL_DRIVERS_URI = "http://ergast.com/api/f1/drivers.json";
-    static final String FETCH_ALL_SEASONS_URI = "https://ergast.com/api/f1/seasons.json";
-    static final String FETCH_ALL_CIRCUITS_URI = "http://ergast.com/api/f1/circuits.json";
-    static final String FETCH_RACES_URI = "https://ergast.com/api/f1/%d.json";
-    static final String FETCH_FINISH_STATUS_URI = "https://ergast.com/api/f1/status.json";
-    static final String FETCH_PIT_STOPS_URI = "https://ergast.com/api/f1/%d/%d/pitstops.json";
-    static final String FETCH_LAP_TIMES_URI = "https://ergast.com/api/f1/%d/%d/laps.json";
-    static final String FETCH_DRIVER_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/driverStandings.json";
-    static final String FETCH_CONSTRUCTOR_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/constructorStandings.json";
-    static final String FETCH_SPRINT_RESULTS_URI = "https://ergast.com/api/f1/%d/sprint.json";
-    static final String FETCH_RACE_RESULTS_URI = "https://ergast.com/api/f1/%d/results.json";
-    static final String FETCH_QUALIFYING_RESULTS_URI = "http://ergast.com/api/f1/%d/qualifying.json";
+    static final String FETCH_CONSTRUCTORS_PART = "constructors";
+    static final String FETCH_DRIVERS_PART = "drivers";
+    static final String FETCH_SEASONS_PART = "seasons";
+    static final String FETCH_CIRCUITS_PART = "circuits";
+    static final String FETCH_RACES_PART = "%d";
+    static final String FETCH_FINISH_STATUS_PART = "status";
+    static final String FETCH_PIT_STOPS_PART = "%d/%d/pitstops";
+    static final String FETCH_LAP_TIMES_PART = "%d/%d/laps";
+    static final String FETCH_DRIVER_STANDINGS_PART = "%d/%d/driverStandings";
+    static final String FETCH_CONSTRUCTOR_STANDINGS_PART = "%d/%d/constructorStandings";
+    static final String FETCH_SPRINT_RESULTS_PART = "%d/sprint";
+    static final String FETCH_RACE_RESULTS_PART = "%d/results";
+    static final String FETCH_QUALIFYING_RESULTS_PART = "%d/qualifying";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -50,7 +50,7 @@ public class ErgastProxy {
 
     public List<ConstructorData> fetchAllConstructors() {
         try {
-            return isProduction() ? getData(FETCH_ALL_CONSTRUCTORS_URI, wrapper(mParser::parseConstructorsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(FETCH_CONSTRUCTORS_PART, wrapper(mParser::parseConstructorsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchAllConstructors", ErgastProxy.class, "Unable to fetch constructor data from ergast", e);
             return emptyList();
@@ -59,7 +59,7 @@ public class ErgastProxy {
 
     public List<DriverData> fetchAllDrivers() {
         try {
-            return isProduction() ? getData(FETCH_ALL_DRIVERS_URI, wrapper(mParser::parseDriversResponseToObjects)) : emptyList();
+            return isProduction() ? getData(FETCH_DRIVERS_PART, wrapper(mParser::parseDriversResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchAllDrivers", ErgastProxy.class, "Unable to fetch driver data from ergast", e);
             return emptyList();
@@ -68,7 +68,7 @@ public class ErgastProxy {
 
     public List<SeasonData> fetchAllSeasons() {
         try {
-            return isProduction() ? getData(FETCH_ALL_SEASONS_URI, wrapper(mParser::parseSeasonsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(FETCH_SEASONS_PART, wrapper(mParser::parseSeasonsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchAllSeasons", ErgastProxy.class, "Unable to fetch season data from ergast", e);
             return emptyList();
@@ -77,7 +77,7 @@ public class ErgastProxy {
 
     public List<CircuitData> fetchAllCircuits() {
         try {
-            return isProduction() ? getData(FETCH_ALL_CIRCUITS_URI, wrapper(mParser::parseCircuitsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(FETCH_CIRCUITS_PART, wrapper(mParser::parseCircuitsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchAllCircuits", ErgastProxy.class, "Unable to fetch circuit data from ergast", e);
             return emptyList();
@@ -86,7 +86,7 @@ public class ErgastProxy {
 
     public List<RaceData> fetchRacesFromYear(final int fetchYear) {
         try {
-            return isProduction() ? getData(String.format(FETCH_RACES_URI, fetchYear), wrapper(mParser::parseRacesResponseToObjects)) : emptyList();
+            return isProduction() ? getData(String.format(FETCH_RACES_PART, fetchYear), wrapper(mParser::parseRacesResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchRacesFromYear", ErgastProxy.class, "Unable to fetch race data from ergast for the year: " + fetchYear, e);
             return emptyList();
@@ -95,7 +95,7 @@ public class ErgastProxy {
 
     public List<FinishStatusData> fetchAllFinishStatuses() {
         try {
-            return isProduction() ? getData(FETCH_FINISH_STATUS_URI, wrapper(mParser::parseFinishStatusResponseToObjects)) : emptyList();
+            return isProduction() ? getData(FETCH_FINISH_STATUS_PART, wrapper(mParser::parseFinishStatusResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchRacesFromYear", ErgastProxy.class, "Unable to fetch finish status data from ergast", e);
             return emptyList();
@@ -106,7 +106,7 @@ public class ErgastProxy {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_PIT_STOPS_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    String.format(FETCH_PIT_STOPS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parsePitStopResponseToObjects)
                 ).get(0).getPitStopData();
             }
@@ -125,7 +125,7 @@ public class ErgastProxy {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_LAP_TIMES_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    String.format(FETCH_LAP_TIMES_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseLapTimesResponseToObjects)
                 ).get(0).getLapTimeData();
             }
@@ -144,7 +144,7 @@ public class ErgastProxy {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_DRIVER_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    String.format(FETCH_DRIVER_STANDINGS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseStandingsResponseToObjects)
                 ).get(0).getDriverStandingsData();
             }
@@ -163,7 +163,7 @@ public class ErgastProxy {
         try {
             if (isProduction()) {
                 return getData(
-                    String.format(FETCH_CONSTRUCTOR_STANDINGS_URI, raceRecord.getSeason(), raceRecord.getRound()),
+                    String.format(FETCH_CONSTRUCTOR_STANDINGS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseStandingsResponseToObjects)
                 ).get(0).getConstructorStandingsData();
             }
@@ -180,7 +180,7 @@ public class ErgastProxy {
 
     public List<ResultDataHolder> fetchSprintResultsForSeason(final int season) {
         try {
-            return isProduction() ? getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(String.format(FETCH_SPRINT_RESULTS_PART, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchSprintResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch sprint result data from ergast for season: %d", season
@@ -191,7 +191,7 @@ public class ErgastProxy {
 
     public List<ResultDataHolder> fetchRaceResultsForSeason(final int season) {
         try {
-            return isProduction() ? getData(String.format(FETCH_RACE_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
+            return isProduction() ? getData(String.format(FETCH_RACE_RESULTS_PART, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchRaceResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch race result data from ergast for season: %d", season
@@ -202,7 +202,7 @@ public class ErgastProxy {
 
     public List<ResultDataHolder> fetchQualifyingResultsForSeason(final int season) {
         try {
-            return isProduction() ? getData(String.format(FETCH_QUALIFYING_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
+            return !isProduction() ? getData(String.format(FETCH_QUALIFYING_RESULTS_PART, season), wrapper(mParser::parseResultsResponseToObjects)) : emptyList();
         } catch (final Exception e) {
             mLogger.severe("fetchQualifyingResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch qualifying result data from ergast for season: %d", season
@@ -217,7 +217,7 @@ public class ErgastProxy {
 
     private <T> List<T> readErgastData(final String uri, final int offset, final Function<String, ErgastResponse<T>> parserFunction) throws IOException {
         try {
-            final String url = uri + String.format(QUERY_PARAMETERS, MAX_LIMIT, offset);
+            final String url = String.format(REQUEST_FORMAT, uri, MAX_LIMIT, offset);
             final ErgastResponse<T> ergastResponse = parserFunction.apply(mFetcher.readDataAsJsonStringFromUri(url));
             final List<T> responseData = new ArrayList<>(ergastResponse.getData());
             if (canFetchMoreData(ergastResponse, offset)) {

@@ -61,6 +61,19 @@ class ErgastProxyTest {
     ErgastProxy mErgastProxy;
 
     @Test
+    void should_call_fetcher_in_correct_format() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
+        when(mParser.parseSeasonsResponseToObjects(anyString())).thenReturn(
+            new ErgastResponse<>(new ResponseHeader(5, 0, 7), emptyList())
+        );
+
+        mErgastProxy.fetchAllSeasons();
+
+        verify(mFetcher).readDataAsJsonStringFromUri(String.format(ErgastProxy.REQUEST_FORMAT, ErgastProxy.FETCH_SEASONS_PART, ErgastProxy.MAX_LIMIT, 0));
+    }
+
+    @Test
     void should_only_make_one_call_to_fetcher_if_first_response_contains_a_total_lesser_than_limit() throws IOException {
         when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
@@ -104,10 +117,10 @@ class ErgastProxyTest {
 
         mErgastProxy.fetchAllSeasons();
 
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, 0));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2));
-        verify(mFetcher).readDataAsJsonStringFromUri(ErgastProxy.FETCH_ALL_SEASONS_URI + String.format(ErgastProxy.QUERY_PARAMETERS, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3));
+        verify(mFetcher).readDataAsJsonStringFromUri(String.format(ErgastProxy.REQUEST_FORMAT, ErgastProxy.FETCH_SEASONS_PART, ErgastProxy.MAX_LIMIT, 0));
+        verify(mFetcher).readDataAsJsonStringFromUri(String.format(ErgastProxy.REQUEST_FORMAT, ErgastProxy.FETCH_SEASONS_PART, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT));
+        verify(mFetcher).readDataAsJsonStringFromUri(String.format(ErgastProxy.REQUEST_FORMAT, ErgastProxy.FETCH_SEASONS_PART, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 2));
+        verify(mFetcher).readDataAsJsonStringFromUri(String.format(ErgastProxy.REQUEST_FORMAT, ErgastProxy.FETCH_SEASONS_PART, ErgastProxy.MAX_LIMIT, ErgastProxy.MAX_LIMIT * 3));
     }
 
     @Test
