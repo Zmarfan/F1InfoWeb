@@ -10,10 +10,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.race.ErgastSessionTimes;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
-import f1_Info.background.ergast_tasks.ergast.responses.results.FastestLapData;
-import f1_Info.background.ergast_tasks.ergast.responses.results.ResultData;
-import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
-import f1_Info.background.ergast_tasks.ergast.responses.results.TimeData;
+import f1_Info.background.ergast_tasks.ergast.responses.results.*;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
@@ -563,6 +560,122 @@ class ParserTest {
             }
         }
         """;
+
+    private static final String TEST_RACE_RESULTS_JSON = """
+        {
+            "MRData": {
+                "limit": "2",
+                "offset": "0",
+                "total": "60",
+                "RaceTable": {
+                    "season": "2022",
+                    "Races": [
+                        {
+                            "season": "2022",
+                            "round": "1",
+                            "url": "http://en.wikipedia.org/wiki/2022_Bahrain_Grand_Prix",
+                            "raceName": "Bahrain Grand Prix",
+                            "Circuit": {
+                                "circuitId": "bahrain",
+                                "url": "http://en.wikipedia.org/wiki/Bahrain_International_Circuit",
+                                "circuitName": "Bahrain International Circuit",
+                                "Location": {
+                                    "lat": "26.0325",
+                                    "long": "50.5106",
+                                    "locality": "Sakhir",
+                                    "country": "Bahrain"
+                                }
+                            },
+                            "date": "2022-03-20",
+                            "time": "15:00:00Z",
+                            "Results": [
+                                {
+                                    "number": "16",
+                                    "position": "1",
+                                    "positionText": "1",
+                                    "points": "26",
+                                    "Driver": {
+                                        "driverId": "leclerc",
+                                        "permanentNumber": "16",
+                                        "code": "LEC",
+                                        "url": "http://en.wikipedia.org/wiki/Charles_Leclerc",
+                                        "givenName": "Charles",
+                                        "familyName": "Leclerc",
+                                        "dateOfBirth": "1997-10-16",
+                                        "nationality": "Monegasque"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "ferrari",
+                                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                        "name": "Ferrari",
+                                        "nationality": "Italian"
+                                    },
+                                    "grid": "1",
+                                    "laps": "57",
+                                    "status": "Finished",
+                                    "Time": {
+                                        "millis": "5853584",
+                                        "time": "1:37:33.584"
+                                    },
+                                    "FastestLap": {
+                                        "rank": "1",
+                                        "lap": "51",
+                                        "Time": {
+                                            "time": "1:34.570"
+                                        },
+                                        "AverageSpeed": {
+                                            "units": "kph",
+                                            "speed": "206.018"
+                                        }
+                                    }
+                                },
+                                {
+                                    "number": "55",
+                                    "position": "2",
+                                    "positionText": "2",
+                                    "points": "18",
+                                    "Driver": {
+                                        "driverId": "sainz",
+                                        "permanentNumber": "55",
+                                        "code": "SAI",
+                                        "url": "http://en.wikipedia.org/wiki/Carlos_Sainz_Jr.",
+                                        "givenName": "Carlos",
+                                        "familyName": "Sainz",
+                                        "dateOfBirth": "1994-09-01",
+                                        "nationality": "Spanish"
+                                    },
+                                    "Constructor": {
+                                        "constructorId": "ferrari",
+                                        "url": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+                                        "name": "Ferrari",
+                                        "nationality": "Italian"
+                                    },
+                                    "grid": "3",
+                                    "laps": "57",
+                                    "status": "Finished",
+                                    "Time": {
+                                        "millis": "5859182",
+                                        "time": "+5.598"
+                                    },
+                                    "FastestLap": {
+                                        "rank": "3",
+                                        "lap": "52",
+                                        "Time": {
+                                            "time": "1:35.740"
+                                        },
+                                        "AverageSpeed": {
+                                            "units": "kph",
+                                            "speed": "203.501"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        """;
     // endregion
 
     @Test
@@ -828,8 +941,8 @@ class ParserTest {
     }
 
     @Test
-    void should_throw_ioexception_if_unable_to_parse_json_to_sprint_results() {
-        assertThrows(IOException.class, () -> new Parser().parseResultsResponseToObjects(BAD_JSON_FORMAT));
+    void should_throw_ioexception_if_unable_to_parse_json_to_constructor_standings() {
+        assertThrows(IOException.class, () -> new Parser().parseStandingsResponseToObjects(BAD_JSON_FORMAT));
     }
 
     @Test
@@ -885,7 +998,59 @@ class ParserTest {
     }
 
     @Test
-    void should_throw_ioexception_if_unable_to_parse_json_to_constructor_standings() {
-        assertThrows(IOException.class, () -> new Parser().parseStandingsResponseToObjects(BAD_JSON_FORMAT));
+    void should_throw_ioexception_if_unable_to_parse_json_to_results() {
+        assertThrows(IOException.class, () -> new Parser().parseResultsResponseToObjects(BAD_JSON_FORMAT));
+    }
+
+    @Test
+    void should_parse_valid_race_results_json_to_correct_sprint_results_object_list() throws IOException, ParseException {
+        final List<ResultDataHolder> expectedData = singletonList(new ResultDataHolder(2022, 1, null, List.of(
+            new ResultData(
+                16,
+                1,
+                "1",
+                BigDecimal.valueOf(26),
+                new DriverData(
+                    "leclerc",
+                    "http://en.wikipedia.org/wiki/Charles_Leclerc",
+                    "Charles",
+                    "Leclerc",
+                    "1997-10-16",
+                    "Monegasque",
+                    16,
+                    "LEC"
+                ),
+                new ConstructorData("ferrari", "http://en.wikipedia.org/wiki/Scuderia_Ferrari", "Ferrari", "Italian"),
+                1,
+                57,
+                "Finished",
+                new TimeData(5853584L, "1:37:33.584"),
+                new FastestLapData(1, 51, new TimeData(null, "1:34.570"), new AverageSpeedData("kph", BigDecimal.valueOf(206.018)))
+            ),
+            new ResultData(
+                55,
+                2,
+                "2",
+                BigDecimal.valueOf(18),
+                new DriverData(
+                    "sainz",
+                    "http://en.wikipedia.org/wiki/Carlos_Sainz_Jr.",
+                    "Carlos",
+                    "Sainz",
+                    "1994-09-01",
+                    "Spanish",
+                    55,
+                    "SAI"
+                ),
+                new ConstructorData("ferrari", "http://en.wikipedia.org/wiki/Scuderia_Ferrari", "Ferrari", "Italian"),
+                3,
+                57,
+                "Finished",
+                new TimeData(5859182L, "+5.598"),
+                new FastestLapData(3, 52, new TimeData(null, "1:35.740"), new AverageSpeedData("kph", BigDecimal.valueOf(203.501)))
+            )
+        )));
+        final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_RACE_RESULTS_JSON);
+        assertEquals(expectedData, parsedData.getData());
     }
 }
