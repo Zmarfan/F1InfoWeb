@@ -2,6 +2,7 @@ package f1_Info.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import f1_Info.logger.Logger;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,16 +16,13 @@ public class Configuration {
 
     private final Logger mLogger;
     private final ObjectMapper mObjectMapper;
+    @Getter
     private ConfigurationRules mRules;
 
     @Autowired
     public Configuration(Logger logger) {
         mLogger = logger;
         mObjectMapper = new ObjectMapper();
-    }
-
-    public ConfigurationRules getRules() {
-        return mRules;
     }
 
     @PostConstruct
