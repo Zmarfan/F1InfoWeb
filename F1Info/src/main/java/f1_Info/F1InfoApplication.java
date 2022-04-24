@@ -9,6 +9,7 @@ import f1_Info.background.ergast_tasks.fetch_finish_status_task.FetchFinishStatu
 import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
 import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
 import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
+import f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_race_results_task.FetchRaceResultsTask;
 import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
 import f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_sprint_results_task.FetchSprintResultsTask;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private final FetchDriverStandingsTask mFetchDriverStandingsTask;
 	private final FetchConstructorStandingsTask mFetchConstructorStandingsTask;
 	private final FetchSprintResultsTask mFetchSprintResultsTask;
+	private final FetchRaceResultsTask mFetchRaceResultsTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -96,5 +98,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchSprintResultsTask() {
 		mFetchSprintResultsTask.run();
+	}
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void runFetchRaceResultsTask() {
+		mFetchRaceResultsTask.run();
 	}
 }

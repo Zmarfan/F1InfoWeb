@@ -9,3 +9,4 @@ insert into background_tasks (id, name) values (8, 'Fetch Lap Times Task');
 insert into background_tasks (id, name) values (9, 'Fetch Driver Standings Task');
 insert into background_tasks (id, name) values (10, 'Fetch Constructor Standings Task');
 insert into background_tasks (id, name) values (11, 'Fetch Sprint Results Task');
+insert into background_tasks (id, name) values (12, 'Fetch Race Results Task');

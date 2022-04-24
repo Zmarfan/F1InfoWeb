@@ -40,6 +40,7 @@ public class ErgastProxy {
     static final String FETCH_DRIVER_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/driverStandings.json";
     static final String FETCH_CONSTRUCTOR_STANDINGS_URI = "https://ergast.com/api/f1/%d/%d/constructorStandings.json";
     static final String FETCH_SPRINT_RESULTS_URI = "https://ergast.com/api/f1/%d/sprint.json";
+    static final String FETCH_RACE_RESULTS_URI = "https://ergast.com/api/f1/%d/results.json";
 
     private final Parser mParser;
     private final Fetcher mFetcher;
@@ -179,11 +180,24 @@ public class ErgastProxy {
     public List<ResultDataHolder> fetchSprintResultsForSeason(final int season) {
         try {
             if (isProduction()) {
-                return getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseSprintResultsResponseToObjects));
+                return getData(String.format(FETCH_SPRINT_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects));
             }
         } catch (final Exception e) {
             mLogger.severe("fetchSprintResultsForSeason", ErgastProxy.class, String.format(
                 "Unable to fetch sprint result data from ergast for season: %d", season
+            ), e);
+        }
+        return emptyList();
+    }
+
+    public List<ResultDataHolder> fetchRaceResultsForSeason(final int season) {
+        try {
+            if (isProduction()) {
+                return getData(String.format(FETCH_RACE_RESULTS_URI, season), wrapper(mParser::parseResultsResponseToObjects));
+            }
+        } catch (final Exception e) {
+            mLogger.severe("fetchRaceResultsForSeason", ErgastProxy.class, String.format(
+                "Unable to fetch race result data from ergast for season: %d", season
             ), e);
         }
         return emptyList();

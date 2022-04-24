@@ -1,4 +1,4 @@
-package f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_sprint_results_task;
+package f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_race_results_task;
 
 import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
@@ -14,10 +14,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_SPRINT_RESULTS_DATA;
+import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_FORMULA_1_SEASON;
 import static f1_Info.wrappers.ThrowingFunction.wrapper;
 
-@Component(value = "FetchSprintResultsTaskDatabase")
+@Component(value = "FetchRaceResultsTaskDatabase")
 public class Database extends TaskDatabase {
     private static final int NO_MORE_DATA_CAN_BE_FETCHED = -1;
 
@@ -29,21 +29,21 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public Optional<Integer> getNextSeasonToFetchSprintResultsFor() throws SQLException {
-        final int fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchSprintResultsForQueryData(FIRST_SEASON_WITH_SPRINT_RESULTS_DATA));
+    public Optional<Integer> getNextSeasonToFetchRaceResultsFor() throws SQLException {
+        final int fetchedSeason = executeBasicQuery(new GetNextSeasonToFetchRaceResultsForQueryData(FIRST_FORMULA_1_SEASON));
         return Optional.of(fetchedSeason).filter(season -> season != NO_MORE_DATA_CAN_BE_FETCHED);
     }
 
-    public void mergeIntoSprintResultsData(final List<ResultDataHolder> resultDataHolders) throws SQLException {
+    public void mergeIntoRaceResultsData(final List<ResultDataHolder> resultDatumHolders) throws SQLException {
         try {
-            executeBulkOfWork(new BulkOfWork(createMergeQueryDatasFromHolders(resultDataHolders)));
+            executeBulkOfWork(new BulkOfWork(createMergeQueryDatasFromHolders(resultDatumHolders)));
         } catch (final Exception e) {
             throw new SQLException(e);
         }
     }
 
     public void setLastFetchedSeason(final int lastFetchedSeason) throws SQLException {
-        executeVoidQuery(new SetLastFetchedSeasonForSprintResultsFetchingQueryData(lastFetchedSeason));
+        executeVoidQuery(new SetLastFetchedSeasonForRaceResultsFetchingQueryData(lastFetchedSeason));
     }
 
     private List<MergeIntoResultsQueryData> createMergeQueryDatasFromHolders(final List<ResultDataHolder> resultDatumHolders) {
@@ -55,9 +55,9 @@ public class Database extends TaskDatabase {
     }
 
     private List<MergeIntoResultsQueryData> createMergeQueryDatasFromHolder(final ResultDataHolder holder) {
-        return holder.getSprintResultData()
+        return holder.getRaceResultData()
             .stream()
-            .map(wrapper(resultData -> new MergeIntoResultsQueryData(ResultType.SPRINT, resultData, holder.getSeason(), holder.getRound())))
+            .map(wrapper(resultData -> new MergeIntoResultsQueryData(ResultType.RACE, resultData, holder.getSeason(), holder.getRound())))
             .toList();
     }
 }

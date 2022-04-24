@@ -829,7 +829,7 @@ class ParserTest {
 
     @Test
     void should_throw_ioexception_if_unable_to_parse_json_to_sprint_results() {
-        assertThrows(IOException.class, () -> new Parser().parseSprintResultsResponseToObjects(BAD_JSON_FORMAT));
+        assertThrows(IOException.class, () -> new Parser().parseResultsResponseToObjects(BAD_JSON_FORMAT));
     }
 
     @Test
@@ -879,8 +879,8 @@ class ParserTest {
                 null,
                 null
             )
-        )));
-        final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseSprintResultsResponseToObjects(TEST_SPRINT_RESULTS_JSON);
+        ), null));
+        final ErgastResponse<ResultDataHolder> parsedData = new Parser().parseResultsResponseToObjects(TEST_SPRINT_RESULTS_JSON);
         assertEquals(expectedData, parsedData.getData());
     }
 

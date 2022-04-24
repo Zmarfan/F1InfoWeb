@@ -81,7 +81,7 @@ public class Parser {
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), StandingsDataHolder[].class)));
     }
 
-    public ErgastResponse<ResultDataHolder> parseSprintResultsResponseToObjects(final String json) throws IOException {
+    public ErgastResponse<ResultDataHolder> parseResultsResponseToObjects(final String json) throws IOException {
         final TopResponseData data = parseToErgastResponse(json, mainNode -> dataExtractor(mainNode, RACE_DATA_PARENTS));
         return new ErgastResponse<>(data.getHeader(), Arrays.asList(mObjectMapper.readValue(data.getDataString(), ResultDataHolder[].class)));
     }
