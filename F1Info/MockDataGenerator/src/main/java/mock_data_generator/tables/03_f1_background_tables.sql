@@ -57,3 +57,11 @@ create table race_results_fetching_history(
   constraint race_results_fetching_history_pk primary key (season),
   constraint race_results_fetching_history_season foreign key (season) references seasons(year)
 );
+
+create table qualifying_results_fetching_history(
+  season int not null,
+  is_active char not null,
+
+  constraint qualifying_results_fetching_history_pk primary key (season),
+  constraint qualifying_results_fetching_history_season foreign key (season) references seasons(year)
+);

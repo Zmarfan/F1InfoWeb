@@ -9,4 +9,5 @@ public class ErgastFetchingInformation {
     public static final int FIRST_SEASON_WITH_PIT_STOP_DATA = 2011;
     public static final int FIRST_SEASON_WITH_CONSTRUCTOR_STANDINGS_DATA = 1958;
     public static final int FIRST_SEASON_WITH_SPRINT_RESULTS_DATA = 2021;
+    public static final int FIRST_SEASON_WITH_QUALIFYING_RESULTS_DATA = 2003;
 }

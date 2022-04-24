@@ -8,10 +8,11 @@ import f1_Info.background.ergast_tasks.fetch_drivers_task.FetchDriversTask;
 import f1_Info.background.ergast_tasks.fetch_finish_status_task.FetchFinishStatusTask;
 import f1_Info.background.ergast_tasks.fetch_lap_times_task.FetchLapTimesTask;
 import f1_Info.background.ergast_tasks.fetch_pitstops_task.FetchPitStopsTask;
+import f1_Info.background.ergast_tasks.fetch_qualifying_results_task.FetchQualifyingResultsTask;
 import f1_Info.background.ergast_tasks.fetch_races_task.FetchRacesTask;
 import f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_race_results_task.FetchRaceResultsTask;
-import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
 import f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_sprint_results_task.FetchSprintResultsTask;
+import f1_Info.background.ergast_tasks.fetch_seasons_task.FetchSeasonsTask;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -39,6 +40,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	private final FetchConstructorStandingsTask mFetchConstructorStandingsTask;
 	private final FetchSprintResultsTask mFetchSprintResultsTask;
 	private final FetchRaceResultsTask mFetchRaceResultsTask;
+	private final FetchQualifyingResultsTask mFetchQualifyingResultsTask;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -103,5 +105,10 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 	@Scheduled(cron = "*/5 * * * * *")
 	public void runFetchRaceResultsTask() {
 		mFetchRaceResultsTask.run();
+	}
+
+	@Scheduled(cron = "*/5 * * * * *")
+	public void runFetchQualifyingResultsTask() {
+		mFetchQualifyingResultsTask.run();
 	}
 }

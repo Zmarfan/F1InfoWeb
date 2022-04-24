@@ -13,16 +13,19 @@ public class ResultDataHolder {
     int mRound;
     List<ResultData> mSprintResultData;
     List<ResultData> mRaceResultData;
+    List<QualifyingResultData> mQualifyingResultData;
 
     public ResultDataHolder(
         @JsonProperty("season") int season,
         @JsonProperty("round") int round,
         @JsonProperty("SprintResults") List<ResultData> sprintResults,
-        @JsonProperty("Results") List<ResultData> raceResults
+        @JsonProperty("Results") List<ResultData> raceResults,
+        @JsonProperty("QualifyingResults") List<QualifyingResultData> qualifyingResults
     ) {
         mSeason = season;
         mRound = round;
         mSprintResultData = sprintResults;
         mRaceResultData = raceResults;
+        mQualifyingResultData = qualifyingResults;
     }
 }
