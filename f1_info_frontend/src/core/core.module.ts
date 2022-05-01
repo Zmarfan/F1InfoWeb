@@ -14,6 +14,7 @@ import { MainHeaderComponent } from './navigation/main-header/main-header.compon
         CommonModule,
     ],
     exports: [
+        MainHeaderComponent,
         LoadingElementComponent,
     ],
 })
