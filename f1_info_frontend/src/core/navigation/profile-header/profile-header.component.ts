@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./profile-header.component.scss'],
 })
 export class ProfileHeaderComponent {
+    public userName: string = 'Lord_Zmarfan';
+    public displayName: string = 'Anonymous User';
 }

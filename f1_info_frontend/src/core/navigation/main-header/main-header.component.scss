@@ -2,16 +2,20 @@
   width: 100%;
   height: 4rem;
   background: #6d5da2;
-  padding: 20px;
-  box-sizing: border-box;
   box-shadow: #606060 0 0 5px;
   color: #d5d5d5;
 }
 
 .content {
-  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+app-profile-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }
