@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {faCoffee} from '@fortawesome/free-solid-svg-icons';
+import {faAddressBook} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -8,6 +8,5 @@ import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public title = 'f1_info_frontend';
-    public icon: IconDefinition = faCoffee;
+    public icon: IconDefinition = faAddressBook;
 }
