@@ -4,5 +4,13 @@
 <fa-icon icon="address-book"></fa-icon>
 <fa-icon [icon]="['far', 'address-book']"></fa-icon>
 
-<app-loading-element></app-loading-element>
+<div style="padding: 10rem">
+    <app-loading-element [loading]="true">
+        <div>
+            <h2>Min header</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, asperiores assumenda, blanditiis cupiditate dolores esse minus molestias perspiciatis quas quibusdam ratione, rem repellendus reprehenderit sed voluptate voluptatibus voluptatum! Nemo, optio.</p>
+        </div>
+    </app-loading-element>
+</div>
+
 <router-outlet></router-outlet>

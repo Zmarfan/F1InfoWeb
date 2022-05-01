@@ -1,1 +1,8 @@
-<app-loading-spinner></app-loading-spinner>
+<div *ngIf="loading; else displayContent" class="loading">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<ng-template #displayContent>
+    <ng-content></ng-content>
+</ng-template>
+
