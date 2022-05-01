@@ -1,0 +1,32 @@
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.regular-icon {
+  font-size: 1.5rem;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &:hover {
+    background: red;
+  }
+
+  &__icon {
+    font-size: 2.75rem;
+  }
+
+  &__names {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__arrow {
+    margin-left: 3rem;
+  }
+}
