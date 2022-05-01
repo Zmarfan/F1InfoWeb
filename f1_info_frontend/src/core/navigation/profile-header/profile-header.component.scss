@@ -1,12 +1,23 @@
+$temp-color: #7866b2;
+
 .profile-header {
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 2rem;
 }
 
 .regular-icon {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: 1.5rem;
+  padding: 0 1rem;
+
+  &:hover {
+    cursor: pointer;
+    background: $temp-color;
+  }
 }
 
 .user-section {
@@ -17,7 +28,7 @@
 
   &:hover {
     cursor: pointer;
-    background: #534579;
+    background: $temp-color;
   }
 
   &__icon {
