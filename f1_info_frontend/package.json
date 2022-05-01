@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "lint:watch": "nodemon --exec \"npm run lint || exit 1\" --ext ts,html"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "nodemon": "^2.0.16",
     "typescript": "~4.6.2"
   }
 }
