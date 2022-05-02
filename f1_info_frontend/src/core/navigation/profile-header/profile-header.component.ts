@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, HostBinding, HostListener} from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCalculator, faEarthAfrica, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,6 @@ import {faCalculator, faEarthAfrica, faSailboat, faUserGraduate} from '@fortawes
 interface MenuItem {
     icon: IconDefinition;
     translationKey: string;
-    lineBefore?: boolean;
 }
 
 @Component({
@@ -40,6 +39,16 @@ export class ProfileHeaderComponent {
     ];
 
     private mLastTimeStamp: number = 0;
+
+    public constructor(private mElement: ElementRef) {
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    public mouseClick(target: EventTarget) {
+        if (!this.mElement.nativeElement.contains(target)) {
+            this.menuOpen = false;
+        }
+    }
 
     public menuToggle(event: MouseEvent) {
         if (this.mLastTimeStamp + ProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {

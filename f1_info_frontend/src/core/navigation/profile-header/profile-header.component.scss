@@ -66,18 +66,56 @@ $temp-color: #7866b2;
   border-radius: 0.25rem;
   color: #313131;
   margin-top: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   background: white;
   box-shadow: #838383 0 0 5px;
 
-  &__routes {
+  &__route {
+    position: relative;
     display: flex;
     justify-content: left;
-    gap: 10px;
     padding: 0.6rem 0;
+    font-size: 1rem;
+
+    &::after {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: "";
+      background: #6c5ca1ff;
+      height: 1px;
+      width: 0;
+      transition: width 0.2s ease-in-out;
+    }
+
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: "";
+      background: #6c5ca1;
+      height: 1px;
+      width: 0;
+      transition: width 0.2s ease-in-out;
+    }
+
+    &:hover {
+      box-sizing: border-box;
+      background: #e9e6ef;
+      cursor: pointer;
+
+      &::after {
+        width: 50%;
+      }
+
+      &::before {
+        width: 50%;
+      }
+    }
 
     fa-icon {
       font-size: 1.15rem;
+      padding: 0 1rem;
     }
   }
 }
