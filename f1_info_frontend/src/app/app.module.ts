@@ -7,6 +7,7 @@ import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-f
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {CoreModule} from '../core/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import {CoreModule} from '../core/core.module';
         AppRoutingModule,
         FontAwesomeModule,
         CoreModule,
+        BrowserAnimationsModule,
     ],
     declarations: [
         AppComponent,

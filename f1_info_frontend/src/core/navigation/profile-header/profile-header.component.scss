@@ -1,6 +1,8 @@
+@import "src/styles/colors";
 $temp-color: #7866b2;
 
 .profile-header {
+  user-select: none;
   height: 100%;
   display: flex;
   align-items: center;
@@ -22,13 +24,17 @@ $temp-color: #7866b2;
 
 .user-section {
   height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 
-  &:hover {
-    cursor: pointer;
-    background: $temp-color;
+  &__menu {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &:hover {
+      cursor: pointer;
+      background: $temp-color;
+    }
   }
 
   &__icon {
@@ -51,6 +57,27 @@ $temp-color: #7866b2;
   }
 
   &__arrow {
-    padding: 0 1rem 0 3rem;
+    padding: 0 1rem 0 1rem;
+  }
+}
+
+.display-menu {
+  transform-origin: top;
+  border-radius: 0.25rem;
+  color: #313131;
+  margin-top: 5px;
+  padding: 0.5rem 1rem;
+  background: white;
+  box-shadow: #838383 0 0 5px;
+
+  &__routes {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    padding: 0.6rem 0;
+
+    fa-icon {
+      font-size: 1.15rem;
+    }
   }
 }
