@@ -43,10 +43,11 @@ export class ProfileHeaderComponent {
     public constructor(private mElement: ElementRef) {
     }
 
-    @HostListener('document:click', ['$event.target'])
-    public mouseClick(target: EventTarget) {
-        if (!this.mElement.nativeElement.contains(target)) {
+    @HostListener('document:click', ['$event'])
+    public mouseClick(event: MouseEvent) {
+        if (!this.mElement.nativeElement.contains(event.target)) {
             this.menuOpen = false;
+            this.mLastTimeStamp = event.timeStamp;
         }
     }
 
