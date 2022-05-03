@@ -1,11 +1,12 @@
 import {Component, ElementRef, HostBinding, HostListener} from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCalculator, faEarthAfrica, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
+import {faCalculator, faEarthAfrica, faRightToBracket, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
 
 interface MenuItem {
     icon: IconDefinition;
     translationKey: string;
+    cssClass?: string;
 }
 
 @Component({
@@ -32,10 +33,10 @@ export class ProfileHeaderComponent {
     public userName: string = 'Lord_Zmarfan';
     public displayName: string = 'Anonymous User';
     public menuItems: MenuItem[] = [
-        { icon: faUserGraduate, translationKey: 'this.key.cool' },
-        { icon: faEarthAfrica, translationKey: 'this.key.cool2' },
+        { icon: faEarthAfrica, translationKey: 'this.key.cool2', cssClass: 'display-menu__wide' },
         { icon: faCalculator, translationKey: 'this.key.cool3' },
         { icon: faSailboat, translationKey: 'this.key.cool4' },
+        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide' },
     ];
 
     private mLastTimeStamp: number = 0;

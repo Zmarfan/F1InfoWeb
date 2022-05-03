@@ -1,3 +1,8 @@
 {
-  "test": "Test text för att testa översättningar"
+  "test": "Test text för att testa översättningar",
+  "navigation": {
+    "profile": {
+      "login": "Logga in"
+    }
+  }
 }

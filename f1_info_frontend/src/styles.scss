@@ -1,9 +1,27 @@
-@import "src/styles/colors";
+body {
+  --primary-color: #6c5ca1;
+  --secondary-color: #7866b2;
+  --text-color: #080808;
+  --text-color-light: #dadada;
+  --bkg-color: #fff;
+  --bkg-color-shade: #e9e9ef;
+  --bkg-shadow-color: #838383;
+}
+body.dark-theme {
+  --primary-color: #534180;
+  --secondary-color: #66539f;
+  --text-color: #dadada;
+  --text-color-light: #080808;
+  --bkg-color: #2c2c2c;
+  --bkg-color-shade: #262626;
+  --bkg-shadow-color: #1a1a1a;
+}
 
 html, body {
   height: 100%;
   margin: 0;
-  color: $default-color-text;
+  color: var(--text-color);
+  background: var(--bkg-color-shade);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
 }

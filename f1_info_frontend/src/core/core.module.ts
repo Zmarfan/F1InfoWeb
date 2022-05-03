@@ -8,6 +8,7 @@ import { ProfileHeaderComponent } from './navigation/profile-header/profile-head
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import {MatListModule} from '@angular/material/list';
         MatMenuModule,
         MatExpansionModule,
         MatListModule,
+        TranslateModule,
     ],
     exports: [
         MainHeaderComponent,

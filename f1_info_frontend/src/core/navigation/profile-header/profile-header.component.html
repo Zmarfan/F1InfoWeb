@@ -13,9 +13,9 @@
         </div>
 
         <div *ngIf="menuOpen" @inOutAnimation class="display-menu">
-            <div *ngFor="let menuItem of menuItems" class="display-menu__route">
+            <div *ngFor="let menuItem of menuItems" class="display-menu__route {{menuItem.cssClass}}">
                 <fa-icon class="fa-fw" [icon]="menuItem.icon"></fa-icon>
-                <span>{{menuItem.translationKey}}</span>
+                <span>{{menuItem.translationKey | translate}}</span>
             </div>
         </div>
     </div>
