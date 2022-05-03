@@ -8,11 +8,27 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {CoreModule} from '../core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     imports: [
         BrowserModule,
         AppRoutingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'en',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
         FontAwesomeModule,
         CoreModule,
         BrowserAnimationsModule,
@@ -24,7 +40,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    public constructor(fontAwesomeConfig: FaConfig, fontAwesomeLibrary: FaIconLibrary) {
+    public constructor(
+        translateService: TranslateService,
+        fontAwesomeConfig: FaConfig,
+        fontAwesomeLibrary: FaIconLibrary
+    ) {
+        translateService.setDefaultLang('en');
+        translateService.use('en');
+
         fontAwesomeLibrary.addIconPacks(fas, far);
         fontAwesomeConfig.defaultPrefix = 'fas';
     }

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import {faAddressBook} from '@fortawesome/free-solid-svg-icons';
-import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 
 @Component({
     selector: 'app-root',
@@ -8,5 +6,4 @@ import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public icon: IconDefinition = faAddressBook;
 }

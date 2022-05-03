@@ -148,6 +148,9 @@
         "no-constructor-return": [
           "error"
         ],
+        "no-undef": [
+          "off"
+        ],
         "no-duplicate-imports": [
           "error"
         ],
