@@ -1,11 +1,12 @@
 import {Component, ElementRef, HostBinding, HostListener} from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCalculator, faEarthAfrica, faRightToBracket, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
+import {faCalculator, faCircleHalfStroke, faEarthAfrica, faRightToBracket, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
 
 interface MenuItem {
     icon: IconDefinition;
     translationKey: string;
+    clickCallback: () => void;
     cssClass?: string;
 }
 
@@ -33,10 +34,10 @@ export class ProfileHeaderComponent {
     public userName: string = 'Lord_Zmarfan';
     public displayName: string = 'Anonymous User';
     public menuItems: MenuItem[] = [
-        { icon: faEarthAfrica, translationKey: 'this.key.cool2', cssClass: 'display-menu__wide' },
-        { icon: faCalculator, translationKey: 'this.key.cool3' },
-        { icon: faSailboat, translationKey: 'this.key.cool4' },
-        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide' },
+        { icon: faEarthAfrica, translationKey: 'this.key.cool2', cssClass: 'display-menu__wide', clickCallback: () => console.log(1) },
+        { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => this.toggleDarkMode() },
+        { icon: faSailboat, translationKey: 'this.key.cool4', clickCallback: () => console.log(2) },
+        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide', clickCallback: () => console.log(4) },
     ];
 
     private mLastTimeStamp: number = 0;
@@ -57,5 +58,9 @@ export class ProfileHeaderComponent {
             this.menuOpen = !this.menuOpen;
             this.mLastTimeStamp = event.timeStamp;
         }
+    }
+
+    private toggleDarkMode() {
+        document.body.classList.toggle('dark-theme');
     }
 }

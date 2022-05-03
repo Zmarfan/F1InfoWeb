@@ -13,7 +13,7 @@
         </div>
 
         <div *ngIf="menuOpen" @inOutAnimation class="display-menu">
-            <div *ngFor="let menuItem of menuItems" class="display-menu__route {{menuItem.cssClass}}">
+            <div *ngFor="let menuItem of menuItems" (click)="menuItem.clickCallback()" class="display-menu__route {{menuItem.cssClass}}">
                 <fa-icon class="fa-fw" [icon]="menuItem.icon"></fa-icon>
                 <span>{{menuItem.translationKey | translate}}</span>
             </div>

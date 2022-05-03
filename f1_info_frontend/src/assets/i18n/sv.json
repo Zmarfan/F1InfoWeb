@@ -2,7 +2,8 @@
   "test": "Test text för att testa översättningar",
   "navigation": {
     "profile": {
-      "login": "Logga in"
+      "login": "Logga in",
+      "darkMode": "Växla mörkt tema"
     }
   }
 }

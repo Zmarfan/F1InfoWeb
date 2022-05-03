@@ -46,7 +46,7 @@ export class AppModule {
         fontAwesomeLibrary: FaIconLibrary
     ) {
         translateService.setDefaultLang('en');
-        translateService.use('en');
+        translateService.use('sv');
 
         fontAwesomeLibrary.addIconPacks(fas, far);
         fontAwesomeConfig.defaultPrefix = 'fas';

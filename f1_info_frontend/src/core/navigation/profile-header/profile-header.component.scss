@@ -98,7 +98,7 @@
 
     &:hover {
       box-sizing: border-box;
-      background: #e9e6ef;
+      background: var(--bkg-color-light-accent);
       cursor: pointer;
 
       &::after {

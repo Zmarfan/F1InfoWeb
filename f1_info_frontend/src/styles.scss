@@ -4,6 +4,7 @@ body {
   --text-color: #080808;
   --text-color-light: #dadada;
   --bkg-color: #fff;
+  --bkg-color-light-accent: #e9e6ef;
   --bkg-color-shade: #e9e9ef;
   --bkg-shadow-color: #838383;
 }
@@ -13,6 +14,7 @@ body.dark-theme {
   --text-color: #dadada;
   --text-color-light: #080808;
   --bkg-color: #2c2c2c;
+  --bkg-color-light-accent: #403d41;
   --bkg-color-shade: #262626;
   --bkg-shadow-color: #1a1a1a;
 }
