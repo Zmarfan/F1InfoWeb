@@ -1,9 +1,14 @@
 {
   "test": "Test text to test translations",
+  "language": {
+    "english": "English",
+    "swedish": "Swedish"
+  },
   "navigation": {
     "profile": {
       "login": "Log in",
-      "darkMode": "Toggle dark mode"
+      "darkMode": "Toggle dark mode",
+      "language": "Select language"
     }
   }
 }

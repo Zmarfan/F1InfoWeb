@@ -8,7 +8,11 @@ import { ProfileHeaderComponent } from './navigation/profile-header/profile-head
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { LanguageSelectorComponent } from './navigation/profile-header/language-selector/language-selector.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {HttpClient} from '@angular/common/http';
+import {HttpLoaderFactory} from '../app/app.module';
 
 @NgModule({
     declarations: [
@@ -16,6 +20,7 @@ import {TranslateModule} from '@ngx-translate/core';
         LoadingElementComponent,
         MainHeaderComponent,
         ProfileHeaderComponent,
+        LanguageSelectorComponent,
     ],
     imports: [
         CommonModule,
@@ -23,6 +28,7 @@ import {TranslateModule} from '@ngx-translate/core';
         MatMenuModule,
         MatExpansionModule,
         MatListModule,
+        MatRadioModule,
         TranslateModule,
     ],
     exports: [

@@ -117,6 +117,7 @@
   }
 
   &__wide {
-    padding: 0.9rem 0;
+    border-top: 1px var(--bkg-color-shade) solid;
+    padding: 1.1rem 0;
   }
 }

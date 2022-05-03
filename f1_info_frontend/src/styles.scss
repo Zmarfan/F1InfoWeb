@@ -1,16 +1,18 @@
 body {
   --primary-color: #6c5ca1;
   --secondary-color: #7866b2;
+  --selected-color: #b4aed0;
   --text-color: #080808;
   --text-color-light: #dadada;
   --bkg-color: #fff;
   --bkg-color-light-accent: #e9e6ef;
-  --bkg-color-shade: #e9e9ef;
+  --bkg-color-shade: #e2e2ea;
   --bkg-shadow-color: #838383;
 }
 body.dark-theme {
   --primary-color: #534180;
   --secondary-color: #66539f;
+  --selected-color: #373642;
   --text-color: #dadada;
   --text-color-light: #080808;
   --bkg-color: #2c2c2c;
@@ -26,4 +28,23 @@ html, body {
   background: var(--bkg-color-shade);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
+}
+
+div .mat-dialog-container {
+  background: var(--bkg-color);
+  color: var(--text-color);
+  padding: 0;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  opacity: 0 !important;
+  background-color: var(--primary-color);
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: var(--primary-color);
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: var(--primary-color);
 }

@@ -2,6 +2,8 @@ import {Component, ElementRef, HostBinding, HostListener} from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCalculator, faCircleHalfStroke, faEarthAfrica, faRightToBracket, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
+import {MatDialog} from '@angular/material/dialog';
+import {LanguageSelectorComponent} from './language-selector/language-selector.component';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -34,15 +36,17 @@ export class ProfileHeaderComponent {
     public userName: string = 'Lord_Zmarfan';
     public displayName: string = 'Anonymous User';
     public menuItems: MenuItem[] = [
-        { icon: faEarthAfrica, translationKey: 'this.key.cool2', cssClass: 'display-menu__wide', clickCallback: () => console.log(1) },
+        { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
         { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => this.toggleDarkMode() },
-        { icon: faSailboat, translationKey: 'this.key.cool4', clickCallback: () => console.log(2) },
-        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide', clickCallback: () => console.log(4) },
+        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide', clickCallback: () => console.log(3) },
     ];
 
     private mLastTimeStamp: number = 0;
 
-    public constructor(private mElement: ElementRef) {
+    public constructor(
+        private mDialog: MatDialog,
+        private mElement: ElementRef
+    ) {
     }
 
     @HostListener('document:click', ['$event'])
@@ -58,6 +62,10 @@ export class ProfileHeaderComponent {
             this.menuOpen = !this.menuOpen;
             this.mLastTimeStamp = event.timeStamp;
         }
+    }
+
+    private openLanguageDialog() {
+        this.mDialog.open(LanguageSelectorComponent);
     }
 
     private toggleDarkMode() {

@@ -1,9 +1,14 @@
 {
   "test": "Test text för att testa översättningar",
+  "language": {
+    "english": "Engelska",
+    "swedish": "Svenska"
+  },
   "navigation": {
     "profile": {
       "login": "Logga in",
-      "darkMode": "Växla mörkt tema"
+      "darkMode": "Växla mörkt tema",
+      "language": "Välj språk"
     }
   }
 }
