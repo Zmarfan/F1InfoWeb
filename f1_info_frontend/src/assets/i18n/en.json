@@ -1,5 +1,9 @@
 {
   "test": "Test text to test translations",
+  "buttons": {
+    "cancel": "Cancel",
+    "apply": "Apply"
+  },
   "language": {
     "english": "English",
     "swedish": "Swedish"

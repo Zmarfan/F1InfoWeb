@@ -13,6 +13,8 @@ import { LanguageSelectorComponent } from './navigation/profile-header/language-
 import {MatRadioModule} from '@angular/material/radio';
 import {HttpClient} from '@angular/common/http';
 import {HttpLoaderFactory} from '../app/app.module';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import {HttpLoaderFactory} from '../app/app.module';
         MatListModule,
         MatRadioModule,
         TranslateModule,
+        MatButtonModule,
+        MatDialogModule,
     ],
     exports: [
         MainHeaderComponent,

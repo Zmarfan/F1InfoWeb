@@ -1,9 +1,27 @@
+.language-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  &__text {
+    padding-left: 1rem;
+    font-size: 1rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
 .language-entry {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
   padding: 2rem;
+  border-bottom: 1px solid var(--secondary-color);
 
   @media(min-width: 500px) {
     gap: 6rem;
@@ -21,10 +39,6 @@
       background: var(--selected-color);
     }
   }
-
-  &--border {
-    border-bottom: 1px solid var(--secondary-color);
-  }
 }
 
 .flag-entry {
@@ -35,5 +49,9 @@
   img {
     width: 2.5rem;
     box-shadow: var(--bkg-shadow-color) 0 0 10px;
+
+    @media(max-width: 500px) {
+      width: 2rem;
+    }
   }
 }

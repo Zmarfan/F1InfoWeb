@@ -1,5 +1,9 @@
 {
   "test": "Test text för att testa översättningar",
+  "buttons": {
+    "cancel": "Avbryt",
+    "apply": "Välj"
+  },
   "language": {
     "english": "Engelska",
     "swedish": "Svenska"

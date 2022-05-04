@@ -5,7 +5,6 @@
             (click)="selectLanguage(languageOption.language)"
             class="language-entry"
             [ngClass]="{
-                'language-entry--border': !isLast,
                 'language-entry--selected': languageIsSelected(languageOption.language)
             }"
         >
@@ -13,6 +12,14 @@
             <div class="flag-entry">
                 <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
                 <mat-radio-button [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language"></mat-radio-button>
+            </div>
+        </div>
+
+        <div class="language-header">
+            <span class="language-header__text">{{'navigation.profile.language' | translate}}</span>
+            <div class="language-header__buttons">
+                <button mat-raised-button (click)="cancel()">{{'buttons.cancel' | translate}}</button>
+                <button mat-raised-button color="primary" mat-dialog-close="true">{{'buttons.apply' | translate}}</button>
             </div>
         </div>
     </mat-radio-group>

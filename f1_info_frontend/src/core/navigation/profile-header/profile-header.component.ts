@@ -30,6 +30,7 @@ interface MenuItem {
     ],
 })
 export class ProfileHeaderComponent {
+    private static readonly DARK_THEME_CLASS = 'dark-theme';
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
 
     public menuOpen: boolean = false;
@@ -37,7 +38,7 @@ export class ProfileHeaderComponent {
     public displayName: string = 'Anonymous User';
     public menuItems: MenuItem[] = [
         { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-        { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => this.toggleDarkMode() },
+        { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
         { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide', clickCallback: () => console.log(3) },
     ];
 
@@ -47,6 +48,10 @@ export class ProfileHeaderComponent {
         private mDialog: MatDialog,
         private mElement: ElementRef
     ) {
+    }
+
+    private static toggleDarkMode() {
+        document.body.classList.toggle(ProfileHeaderComponent.DARK_THEME_CLASS);
     }
 
     @HostListener('document:click', ['$event'])
@@ -65,10 +70,7 @@ export class ProfileHeaderComponent {
     }
 
     private openLanguageDialog() {
-        this.mDialog.open(LanguageSelectorComponent);
-    }
-
-    private toggleDarkMode() {
-        document.body.classList.toggle('dark-theme');
+        this.menuOpen = false;
+        this.mDialog.open(LanguageSelectorComponent, { disableClose: true }).afterClosed();
     }
 }

@@ -8,6 +8,7 @@ body {
   --bkg-color-light-accent: #e9e6ef;
   --bkg-color-shade: #e2e2ea;
   --bkg-shadow-color: #838383;
+  --button-color: #d4d4dc;
 }
 body.dark-theme {
   --primary-color: #534180;
@@ -19,6 +20,7 @@ body.dark-theme {
   --bkg-color-light-accent: #403d41;
   --bkg-color-shade: #262626;
   --bkg-shadow-color: #1a1a1a;
+  --button-color: #403d41;
 }
 
 html, body {
@@ -47,4 +49,9 @@ div .mat-dialog-container {
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: var(--primary-color);
+}
+
+.mat-raised-button {
+  background: var(--button-color);
+  color: var(--text-color);
 }
