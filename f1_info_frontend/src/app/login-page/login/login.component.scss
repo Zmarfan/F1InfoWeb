@@ -1,0 +1,30 @@
+.holder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 0.75rem;
+  padding: 2.25rem;
+  box-shadow: var(--bkg-shadow-color) 0 0 10px;
+  box-sizing: border-box;
+  transform: translate(-50%,-50%);
+  width: 23rem;
+  height: 30rem;
+  background: var(--bkg-color);
+
+  @media(max-width: 500px) {
+    width: 90%;
+  }
+
+  &__header {
+    font-weight: 500;
+  }
+}
+
+.input-form {
+  width: 100%;
+  font-size: 1rem;
+
+  &__email {
+    margin-bottom: 1rem;
+  }
+}

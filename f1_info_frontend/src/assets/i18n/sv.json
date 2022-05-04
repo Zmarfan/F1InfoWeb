@@ -14,5 +14,16 @@
       "darkMode": "Växla mörkt tema",
       "language": "Välj språk"
     }
+  },
+  "loginPage": {
+    "signUp": "BLI MEDLEM",
+    "email": "E-post",
+    "emailTip": "Ange den e-postadress du vill registrera dig med",
+    "emailValidFormat": "Ange en giltig e-postaddress",
+    "requiredEmail": "E-post <strong>krävs</strong>",
+    "password": "Lösenord",
+    "passwordTip": "Kom ihåg att inte återanvända lösenord",
+    "passwordLength": "Lösenord måste vara minst <strong>8 karaktärer</strong>",
+    "requiredPassword": "Lösenord <strong>krävs</strong>"
   }
 }

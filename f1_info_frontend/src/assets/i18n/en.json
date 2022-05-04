@@ -14,5 +14,16 @@
       "darkMode": "Toggle dark mode",
       "language": "Select language"
     }
+  },
+  "loginPage": {
+    "signUp": "SIGN UP",
+    "email": "Email",
+    "emailTip": "Enter the email you want to register with",
+    "emailValidFormat": "Please enter a valid email address",
+    "requiredEmail": "Email is <strong>required</strong>",
+    "password": "Password",
+    "passwordTip": "Remember to not re use the same passwords",
+    "passwordLength": "Password must be at least <strong>8 characters</strong>",
+    "requiredPassword": "Password is <strong>required</strong>"
   }
 }

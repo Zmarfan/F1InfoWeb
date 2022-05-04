@@ -16,6 +16,9 @@ import {HttpLoaderFactory} from '../app/app.module';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import { LoginComponent } from '../app/login-page/login/login.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
     declarations: [
@@ -36,6 +39,9 @@ import { LoginComponent } from '../app/login-page/login/login.component';
         TranslateModule,
         MatButtonModule,
         MatDialogModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
     ],
     exports: [
         MainHeaderComponent,

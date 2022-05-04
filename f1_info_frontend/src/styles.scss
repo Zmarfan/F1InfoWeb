@@ -3,6 +3,7 @@ body {
   --secondary-color: #7866b2;
   --selected-color: #b4aed0;
   --text-color: #080808;
+  --text-color-faded: #8f8f8f;
   --text-color-light: #dadada;
   --bkg-color: #fff;
   --bkg-color-light-accent: #e9e6ef;
@@ -15,6 +16,7 @@ body.dark-theme {
   --secondary-color: #66539f;
   --selected-color: #373642;
   --text-color: #dadada;
+  --text-color-faded: #545454;
   --text-color-light: #080808;
   --bkg-color: #2c2c2c;
   --bkg-color-light-accent: #403d41;
@@ -54,4 +56,30 @@ div .mat-dialog-container {
 .mat-raised-button {
   background: var(--button-color);
   color: var(--text-color);
+}
+
+.mat-form-field-label {
+  color: var(--text-color);
+}
+
+.mat-hint {
+  color: var(--text-color);
+}
+
+.mat-focused .mat-form-field-label {
+  color: var(--secondary-color) !important;
+}
+
+.mat-form-field-underline {
+  background-color: var(--secondary-color) !important;
+}
+
+.mat-form-field-ripple {
+  background-color: var(--secondary-color) !important;
+}
+
+.mat-form-field-infix input {
+  &::placeholder {
+    color: var(--text-color-faded);
+  }
 }
