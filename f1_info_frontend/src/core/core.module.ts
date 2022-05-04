@@ -15,6 +15,7 @@ import {HttpClient} from '@angular/common/http';
 import {HttpLoaderFactory} from '../app/app.module';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import { LoginComponent } from '../app/login-page/login/login.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         MainHeaderComponent,
         ProfileHeaderComponent,
         LanguageSelectorComponent,
+        LoginComponent,
     ],
     imports: [
         CommonModule,

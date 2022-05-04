@@ -1,9 +1,11 @@
-import {Component, ElementRef, HostBinding, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener} from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCalculator, faCircleHalfStroke, faEarthAfrica, faRightToBracket, faSailboat, faUserGraduate} from '@fortawesome/free-solid-svg-icons';
+import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from './language-selector/language-selector.component';
+import {Router} from '@angular/router';
+import {RouteHolder} from '../../../app/routing/routeHolder';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -39,12 +41,13 @@ export class ProfileHeaderComponent {
     public menuItems: MenuItem[] = [
         { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
         { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
-        { icon: faRightToBracket, translationKey: 'navigation.profile.login', cssClass: 'display-menu__wide', clickCallback: () => console.log(3) },
+        { icon: faRightToBracket, translationKey: 'navigation.profile.login', clickCallback: () => this.routeToLogin() },
     ];
 
     private mLastTimeStamp: number = 0;
 
     public constructor(
+        private mRouter: Router,
         private mDialog: MatDialog,
         private mElement: ElementRef
     ) {
@@ -72,5 +75,9 @@ export class ProfileHeaderComponent {
     private openLanguageDialog() {
         this.menuOpen = false;
         this.mDialog.open(LanguageSelectorComponent, { disableClose: true }).afterClosed();
+    }
+
+    private routeToLogin() {
+        this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
     }
 }
