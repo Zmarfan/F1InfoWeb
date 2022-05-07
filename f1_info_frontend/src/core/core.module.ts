@@ -30,10 +30,9 @@ import {MatDialogModule} from '@angular/material/dialog';
         CommonModule,
         FontAwesomeModule,
         TranslateModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        MatInputModule,
         MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
     ],
     exports: [
         MainHeaderComponent,
