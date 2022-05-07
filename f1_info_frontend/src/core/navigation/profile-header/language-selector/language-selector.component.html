@@ -1,28 +1,26 @@
-<section>
-    <mat-radio-group>
-        <div
-            *ngFor="let languageOption of languageOptions; let isLast = last"
-            (click)="selectLanguage(languageOption.language)"
-            class="language-entry"
-            [ngClass]="{
-                'language-entry--selected': languageIsSelected(languageOption.language)
-            }"
-        >
-            <span>{{languageOption.key | translate}}</span>
-            <div class="flag-entry">
-                <div class="flag-entry__flags">
-                    <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
-                </div>
-                <mat-radio-button [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language"></mat-radio-button>
+<mat-radio-group>
+    <div
+        *ngFor="let languageOption of languageOptions; let isLast = last"
+        (click)="selectLanguage(languageOption.language)"
+        class="language-entry"
+        [ngClass]="{
+            'language-entry--selected': languageIsSelected(languageOption.language)
+        }"
+    >
+        <span>{{languageOption.key | translate}}</span>
+        <div class="flag-entry">
+            <div class="flag-entry__flags">
+                <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
             </div>
+            <mat-radio-button [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language"></mat-radio-button>
         </div>
+    </div>
+</mat-radio-group>
 
-        <div class="language-header">
-            <span class="language-header__text">{{'navigation.profile.language' | translate}}</span>
-            <div class="language-header__buttons">
-                <button mat-raised-button (click)="cancel()">{{'buttons.cancel' | translate}}</button>
-                <button mat-raised-button color="primary" mat-dialog-close="true">{{'buttons.apply' | translate}}</button>
-            </div>
-        </div>
-    </mat-radio-group>
-</section>
+<div class="language-header">
+    <span class="language-header__text">{{'navigation.profile.language' | translate}}</span>
+    <div class="language-header__buttons">
+        <button appButton (click)="cancel()">{{'buttons.cancel' | translate}}</button>
+        <button appPrimaryButton mat-dialog-close="true">{{'buttons.apply' | translate}}</button>
+    </div>
+</div>

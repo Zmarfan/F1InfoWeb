@@ -19,6 +19,8 @@ import { LoginComponent } from '../app/login-page/login/login.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import { PrimaryButtonDirective } from './input/buttons/primary-button.directive';
+import { ButtonDirective } from './input/buttons/button.directive';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,8 @@ import {MatInputModule} from '@angular/material/input';
         ProfileHeaderComponent,
         LanguageSelectorComponent,
         LoginComponent,
+        PrimaryButtonDirective,
+        ButtonDirective,
     ],
     imports: [
         CommonModule,

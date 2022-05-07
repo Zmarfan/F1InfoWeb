@@ -1,28 +1,42 @@
 body {
   --primary-color: #6c5ca1;
+  --dark-primary-color: #695c91;
   --secondary-color: #7866b2;
-  --selected-color: #b4aed0;
+
   --text-color: #080808;
   --text-color-faded: #8f8f8f;
   --text-color-light: #dadada;
+
   --bkg-color: #fff;
   --bkg-color-light-accent: #e9e6ef;
   --bkg-color-shade: #e2e2ea;
   --bkg-shadow-color: #838383;
-  --button-color: #d4d4dc;
+
+  --button-color: #c4c4cc;
+  --button-hover: #c0bbd9;
+  --button-shadow: #958ea6;
+
+  --selected-color: #b4aed0;
 }
 body.dark-theme {
   --primary-color: #534180;
+  --dark-primary-color: #403464;
   --secondary-color: #66539f;
-  --selected-color: #373642;
+
   --text-color: #dadada;
   --text-color-faded: #545454;
   --text-color-light: #080808;
+
   --bkg-color: #2c2c2c;
   --bkg-color-light-accent: #403d41;
   --bkg-color-shade: #262626;
   --bkg-shadow-color: #1a1a1a;
+
   --button-color: #403d41;
+  --button-hover: #363438;
+  --button-shadow: #232225;
+
+  --selected-color: #373642;
 }
 
 html, body {
@@ -32,6 +46,37 @@ html, body {
   background: var(--bkg-color-shade);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
+}
+
+button {
+  color: var(--text-color);
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.my-button {
+  background: var(--button-color);
+  box-shadow: var(--button-shadow) 0 2px;
+  border-radius: 100rem;
+  padding: 0.75rem 1.2rem;
+  font-weight: bold;
+  transition: background ease-in-out 0.2s, transform ease-in-out 0.1s;
+
+  &:hover {
+    background: var(--button-hover);
+    transform: scale(1.025);
+  }
+
+  &__primary {
+    color: white;
+    background: var(--secondary-color);
+    box-shadow: var(--dark-primary-color) 0 2px;
+
+    &:hover {
+      background: var(--primary-color);
+    }
+  }
 }
 
 div .mat-dialog-container {
@@ -51,11 +96,6 @@ div .mat-dialog-container {
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: var(--primary-color);
-}
-
-.mat-raised-button {
-  background: var(--button-color);
-  color: var(--text-color);
 }
 
 .mat-form-field-label {
