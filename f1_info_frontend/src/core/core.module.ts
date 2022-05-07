@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import { PrimaryButtonDirective } from './input/buttons/primary-button.directive';
 import { ButtonDirective } from './input/buttons/button.directive';
 import {MatDialogModule} from '@angular/material/dialog';
+import { TextInputComponent } from './input/fields/text-input/text-input.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         LoginComponent,
         PrimaryButtonDirective,
         ButtonDirective,
+        TextInputComponent,
     ],
     imports: [
         CommonModule,
@@ -36,6 +38,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     ],
     exports: [
         MainHeaderComponent,
+        TextInputComponent,
         LoadingElementComponent,
     ],
 })
