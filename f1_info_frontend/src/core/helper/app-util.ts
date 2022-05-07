@@ -1,3 +1,3 @@
 export function exists<T>(data: T): boolean {
-    return data != undefined;
+    return data !== undefined && data !== null;
 }
