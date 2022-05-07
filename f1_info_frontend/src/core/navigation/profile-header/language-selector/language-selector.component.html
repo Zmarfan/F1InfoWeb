@@ -1,21 +1,19 @@
-<mat-radio-group>
-    <div
-        *ngFor="let languageOption of languageOptions; let isLast = last"
-        (click)="selectLanguage(languageOption.language)"
-        class="language-entry"
-        [ngClass]="{
-            'language-entry--selected': languageIsSelected(languageOption.language)
-        }"
-    >
-        <span>{{languageOption.key | translate}}</span>
-        <div class="flag-entry">
-            <div class="flag-entry__flags">
-                <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
-            </div>
-            <mat-radio-button [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language"></mat-radio-button>
+<div
+    *ngFor="let languageOption of languageOptions; let isLast = last"
+    (click)="selectLanguage(languageOption.language)"
+    class="language-entry"
+    [ngClass]="{
+        'language-entry--selected': languageIsSelected(languageOption.language)
+    }"
+>
+    <span>{{languageOption.key | translate}}</span>
+    <form class="flag-entry">
+        <div class="flag-entry__flags">
+            <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
         </div>
-    </div>
-</mat-radio-group>
+        <input type="radio" [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language">
+    </form>
+</div>
 
 <div class="language-header">
     <span class="language-header__text">{{'navigation.profile.language' | translate}}</span>

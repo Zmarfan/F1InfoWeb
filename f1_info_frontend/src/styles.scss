@@ -16,19 +16,6 @@ div .mat-dialog-container {
   padding: 0;
 }
 
-.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-  opacity: 0 !important;
-  background-color: var(--primary-color);
-}
-
-.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: var(--primary-color);
-}
-
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: var(--primary-color);
-}
-
 .mat-form-field-label {
   color: var(--text-color);
 }
