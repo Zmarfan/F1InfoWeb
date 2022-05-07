@@ -20,7 +20,7 @@ input[type="radio"] {
     border-radius: 50%;
     transform: translateX(-50%) scale(0);
     content: "";
-    background: var(--dark-primary-color);
+    background: var(--secondary-color);
     height: 2px;
     width: 80%;
   }
@@ -67,7 +67,7 @@ button {
     border-radius: 50%;
     transform: translateX(-50%) scale(0);
     content: "";
-    background: var(--dark-primary-color);
+    background: var(--secondary-color);
     height: 2px;
     width: 80%;
   }

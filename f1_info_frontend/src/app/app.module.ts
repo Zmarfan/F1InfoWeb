@@ -13,6 +13,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
+import {Language} from '../common/constants/language';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -24,7 +25,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         HttpClientModule,
         TranslateModule.forRoot({
-            defaultLanguage: 'en',
+            defaultLanguage: Language.ENGLISH,
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
@@ -49,8 +50,8 @@ export class AppModule {
         fontAwesomeConfig: FaConfig,
         fontAwesomeLibrary: FaIconLibrary
     ) {
-        translateService.setDefaultLang('en');
-        translateService.use('sv');
+        translateService.setDefaultLang(Language.ENGLISH);
+        translateService.use(Language.ENGLISH);
 
         fontAwesomeLibrary.addIconPacks(fas, far);
         fontAwesomeConfig.defaultPrefix = 'fas';
