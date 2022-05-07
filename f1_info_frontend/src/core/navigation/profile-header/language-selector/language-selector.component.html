@@ -10,7 +10,9 @@
         >
             <span>{{languageOption.key | translate}}</span>
             <div class="flag-entry">
-                <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
+                <div class="flag-entry__flags">
+                    <img *ngFor="let flagPath of languageOption.flagPaths" [src]="flagPath">
+                </div>
                 <mat-radio-button [checked]="languageIsSelected(languageOption.language)" [value]="languageOption.language"></mat-radio-button>
             </div>
         </div>
