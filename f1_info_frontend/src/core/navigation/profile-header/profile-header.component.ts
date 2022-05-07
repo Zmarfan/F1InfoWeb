@@ -89,5 +89,6 @@ export class ProfileHeaderComponent {
 
     private routeToLogin() {
         this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
+        this.menuOpen = false;
     }
 }
