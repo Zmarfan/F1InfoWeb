@@ -253,9 +253,6 @@
         "no-sequences": [
           "error"
         ],
-        "no-undefined": [
-          "error"
-        ],
         "no-unneeded-ternary": [
           "error"
         ],

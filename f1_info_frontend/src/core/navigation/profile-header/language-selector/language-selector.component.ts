@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {Language, LanguageUtil} from '../../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {cancelDialog, closeDialog, DialogResult} from '../../../dialog/dialog';
 
 interface LanguageOption {
     language: Language;
@@ -23,13 +24,11 @@ export class LanguageSelectorComponent {
         },
         { language: Language.SWEDISH, key: LanguageUtil.getLanguageTranslationKey(Language.SWEDISH), flagPaths: ['/assets/images/flags/se.svg'] },
     ];
-    private readonly mOpenedSelectedLanguage: Language;
 
     public constructor(
         private dialogRef: MatDialogRef<LanguageSelectorComponent>,
         private mTranslateService: TranslateService
     ) {
-        this.mOpenedSelectedLanguage = mTranslateService.currentLang as Language;
     }
 
     public languageIsSelected(language: Language): boolean {
@@ -41,7 +40,10 @@ export class LanguageSelectorComponent {
     }
 
     public cancel() {
-        this.selectLanguage(this.mOpenedSelectedLanguage);
-        this.dialogRef.close();
+        cancelDialog(this.dialogRef);
+    }
+
+    public apply() {
+        closeDialog(this.dialogRef);
     }
 }

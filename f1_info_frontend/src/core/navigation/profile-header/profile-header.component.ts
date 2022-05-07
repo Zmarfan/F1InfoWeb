@@ -6,6 +6,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from './language-selector/language-selector.component';
 import {Router} from '@angular/router';
 import {RouteHolder} from '../../../app/routing/routeHolder';
+import {DialogResult} from '../../dialog/dialog';
+import {Language} from '../../../common/constants/language';
+import {TranslateService} from '@ngx-translate/core';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -49,7 +52,8 @@ export class ProfileHeaderComponent {
     public constructor(
         private mRouter: Router,
         private mDialog: MatDialog,
-        private mElement: ElementRef
+        private mElement: ElementRef,
+        private mTranslateService: TranslateService
     ) {
     }
 
@@ -74,7 +78,13 @@ export class ProfileHeaderComponent {
 
     private openLanguageDialog() {
         this.menuOpen = false;
-        this.mDialog.open(LanguageSelectorComponent, { disableClose: true }).afterClosed();
+
+        const openedSelectedLanguage = this.mTranslateService.currentLang as Language;
+        this.mDialog.open(LanguageSelectorComponent).afterClosed().subscribe((result: DialogResult) => {
+            if (!result?.wasApplied) {
+                this.mTranslateService.use(openedSelectedLanguage);
+            }
+        });
     }
 
     private routeToLogin() {
