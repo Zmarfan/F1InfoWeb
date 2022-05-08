@@ -4,7 +4,7 @@ import {exists} from '../../../helper/app-util';
 import {pushIfTrue} from '../../../utils/list-util';
 
 export enum InputType {
-    TEXT = 'text',
+    EMAIL = 'email',
     PASSWORD = 'password',
 }
 
@@ -41,19 +41,27 @@ interface ValidationError {
 export class TextInputComponent implements ControlValueAccessor, Validator {
     @Input() public formControl!: FormControl;
     @Input() public value: string = '';
-    @Input() public inputType: InputType | string = InputType.TEXT;
+    @Input() public inputType: InputType | string = InputType.EMAIL;
     @Input() public idAttribute: string = 'textInputId';
     @Input() public label!: string;
     @Input() public inputPlaceholder: string = '';
     @Input() public isRequired: boolean = false;
 
-    @ViewChild('input') private mInputRef!: ElementRef;
+    @ViewChild('input') private mInputRef!: ElementRef<HTMLInputElement>;
 
+    public isSelected: boolean = false;
     public isDisabled: boolean = false;
-    public errors: string[] = [];
 
     public changed!: (value: any) => void;
     public touched!: () => void;
+
+    public get hasError(): boolean {
+        return this.showErrors && this.errorKeys.length > 0;
+    }
+
+    public get getPlaceholder(): string {
+        return this.isSelected ? this.inputPlaceholder : '';
+    }
 
     public get showErrors(): boolean {
         return this.formControl.invalid && (this.formControl.dirty || this.formControl.touched);
@@ -63,7 +71,7 @@ export class TextInputComponent implements ControlValueAccessor, Validator {
         const errors: ValidationError[] = [];
         const errorObject = this.formControl.errors as ValidationErrorParameters;
 
-        if (this.inputType === InputType.TEXT) {
+        if (this.inputType === InputType.EMAIL) {
             pushIfTrue(errors, errorObject.required, { key: 'input.requiredEmail' });
             pushIfTrue(errors, errorObject.email, { key: 'input.emailFormat' });
         } else if (this.inputType === InputType.PASSWORD) {
@@ -74,8 +82,21 @@ export class TextInputComponent implements ControlValueAccessor, Validator {
         return errors;
     }
 
+    public selectInput() {
+        this.mInputRef.nativeElement.select();
+    }
+
     public onChange(value: string) {
         this.changed(value);
+    }
+
+    public onFocus() {
+        this.isSelected = true;
+    }
+
+    public onTouch() {
+        this.isSelected = false;
+        this.touched();
     }
 
     public writeValue(value: any) {

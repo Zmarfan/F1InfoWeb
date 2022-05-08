@@ -9,7 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import { LanguageSelectorComponent } from './navigation/profile-header/language-selector/language-selector.component';
 import { LoginComponent } from '../app/login-page/login/login.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { PrimaryButtonDirective } from './input/buttons/primary-button.directive';
 import { ButtonDirective } from './input/buttons/button.directive';
@@ -35,6 +35,7 @@ import { TextInputComponent } from './input/fields/text-input/text-input.compone
         MatDialogModule,
         MatInputModule,
         ReactiveFormsModule,
+        FormsModule,
     ],
     exports: [
         MainHeaderComponent,

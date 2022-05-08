@@ -1,0 +1,85 @@
+.text-form {
+  position: relative;
+  background: var(--bkg-input);
+  border-radius: 0.25rem 0.25rem 0 0;
+  padding: 1.9rem 0.75rem 0.4rem 0.75rem;
+  border-bottom: solid 2px var(--button-color);
+  transition: ease-in-out border 0.15s;
+
+  &:hover {
+    border-color: var(--button-hover);
+  }
+
+  &--selected {
+    border-bottom: solid 2px var(--primary-color);
+
+    &:hover {
+      border-color: var(--primary-color);
+    }
+  }
+
+  &--error {
+    border-bottom: solid 2px var(--error);
+
+    &:hover {
+      border-color: var(--error);
+    }
+  }
+
+  &__label {
+    cursor: text;
+    font-size: 1rem;
+    position: absolute;
+    transform-origin: left;
+    top: 35%;
+    left: 0.75rem;
+    color: var(--text-color-faded);
+    transition: transform ease-in-out 0.2s;
+
+    &--selected {
+      transform: translateY(-50%) scale(0.8);
+    }
+
+    &--error {
+      color: var(--error);
+    }
+
+    &--valid {
+      color: var(--secondary-color);
+    }
+  }
+
+  input {
+    caret-color: var(--text-color);
+    color: var(--text-color);
+    background: var(--bkg-input);
+    padding: 0;
+    width: 100%;
+    font-size: 0.9rem;
+    border: none;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--bkg-input) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+  }
+}
+
+.input-messages {
+  font-size: 0.75rem;
+
+  &__hint {
+    color: var(--text-color-faded);
+  }
+
+  &__error {
+    color: var(--error);
+  }
+}

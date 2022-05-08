@@ -1,16 +1,33 @@
-<div>
-    <label [attr.for]="idAttribute">{{label}}<sup *ngIf="isRequired">*</sup></label>
+<div (click)="selectInput()" class="text-form" [class.text-form--error]="hasError" [class.text-form--selected]="isSelected">
+    <label
+        [attr.for]="idAttribute"
+        class="text-form__label"
+        [ngClass]="{
+            'text-form__label--selected': isSelected || value,
+            'text-form__label--valid': !hasError,
+            'text-form__label--error': hasError
+        }"
+    >
+        {{label}}
+    </label>
     <input #input
        [type]="inputType"
-       [value]="value"
+       [(ngModel)]="value"
        [id]="idAttribute"
-       [placeholder]="inputPlaceholder"
+       [placeholder]="getPlaceholder"
        [disabled]="isDisabled"
+       (focus)="onFocus()"
        (input)="onChange(input.value)"
-       (blur)="touched()"
+       (blur)="onTouch()"
     >
+</div>
 
-    <div *ngIf="showErrors">
+<section class="input-messages">
+    <div *ngIf="showErrors; else hint" class="input-messages__error">
         <div *ngFor="let error of errorKeys" [innerHTML]="error.key | translate:error.parameters"></div>
     </div>
-</div>
+
+    <ng-template #hint>
+        <span class="input-messages__hint">Detta är en hint</span>
+    </ng-template>
+</section>

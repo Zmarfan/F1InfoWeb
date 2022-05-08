@@ -1,13 +1,16 @@
 body {
+  --error: #ce564f;
+
   --primary-color: #6c5ca1;
   --dark-primary-color: #695c91;
   --secondary-color: #7866b2;
 
   --text-color: #080808;
-  --text-color-faded: #8f8f8f;
+  --text-color-faded: #737373;
   --text-color-light: #dadada;
 
   --bkg-color: #fff;
+  --bkg-input: #eee;
   --bkg-color-light-accent: #e9e6ef;
   --bkg-color-shade: #e2e2ea;
   --bkg-shadow-color: #838383;
@@ -19,12 +22,15 @@ body {
   --selected-color: #b4aed0;
 }
 body.dark-theme {
-  --primary-color: #534180;
+  --error: #de6a61;
+
+  --primary-color: #6c5ca1;
   --dark-primary-color: #403464;
-  --secondary-color: #66539f;
+  --secondary-color: #8171bb;
 
   --text-color: #dadada;
-  --text-color-faded: #545454;
+  --bkg-input: #262626;
+  --text-color-faded: #7e7e7e;
   --text-color-light: #080808;
 
   --bkg-color: #2c2c2c;

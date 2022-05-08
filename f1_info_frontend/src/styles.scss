@@ -15,29 +15,3 @@ div .mat-dialog-container {
   color: var(--text-color);
   padding: 0;
 }
-
-.mat-form-field-label {
-  color: var(--text-color);
-}
-
-.mat-hint {
-  color: var(--text-color);
-}
-
-.mat-focused .mat-form-field-label {
-  color: var(--secondary-color) !important;
-}
-
-.mat-form-field-underline {
-  background-color: var(--secondary-color) !important;
-}
-
-.mat-form-field-ripple {
-  background-color: var(--secondary-color) !important;
-}
-
-.mat-form-field-infix input {
-  &::placeholder {
-    color: var(--text-color-faded);
-  }
-}

@@ -1,7 +1,7 @@
 <section class="holder">
     <h3 class="holder__header">{{'loginPage.signUp' | translate}}</h3>
 
-    <form [formGroup]="registrationForm">
+    <form [formGroup]="registrationForm" class="holder__form">
         <app-text-input
             formControlName="email"
             [formControl]="email"
