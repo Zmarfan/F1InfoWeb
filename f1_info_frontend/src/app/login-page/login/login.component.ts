@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-import {ShowOnDirtyErrorStateMatcher} from '@angular/material/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-login',
@@ -8,11 +7,11 @@ import {ShowOnDirtyErrorStateMatcher} from '@angular/material/core';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-    public emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-    public passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    public matcher = new ShowOnDirtyErrorStateMatcher();
+    public email: FormControl = new FormControl('', [Validators.required, Validators.email]);
+    public password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
 
-    public get emailFormatError(): boolean {
-        return this.emailFormControl.hasError('email') && !this.emailFormControl.hasError('required');
-    }
+    public registrationForm: FormGroup = new FormGroup({
+        email: this.email,
+        password: this.password,
+    });
 }

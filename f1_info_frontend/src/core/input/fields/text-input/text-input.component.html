@@ -1,1 +1,16 @@
-<p>text-input works!</p>
+<div>
+    <label [attr.for]="idAttribute">{{label}}<sup *ngIf="isRequired">*</sup></label>
+    <input #input
+       [type]="inputType"
+       [value]="value"
+       [id]="idAttribute"
+       [placeholder]="inputPlaceholder"
+       [disabled]="isDisabled"
+       (input)="onChange(input.value)"
+       (blur)="touched()"
+    >
+
+    <div *ngIf="showErrors">
+        <div *ngFor="let error of errorKeys" [innerHTML]="error.key | translate:error.parameters"></div>
+    </div>
+</div>

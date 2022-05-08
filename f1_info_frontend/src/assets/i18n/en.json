@@ -4,6 +4,14 @@
     "cancel": "Cancel",
     "apply": "Apply"
   },
+  "input": {
+    "email": "Email",
+    "password": "Password",
+    "requiredEmail": "Email is <strong>required</strong>",
+    "emailFormat": "Please enter a valid email address",
+    "requiredPassword": "Password is <strong>required</strong>",
+    "passwordMinLength": "Password must be at least <strong>{{length}} characters</strong>"
+  },
   "language": {
     "english": "English",
     "swedish": "Swedish"
@@ -17,13 +25,7 @@
   },
   "loginPage": {
     "signUp": "SIGN UP",
-    "email": "Email",
     "emailTip": "Enter the email you want to register with",
-    "emailValidFormat": "Please enter a valid email address",
-    "requiredEmail": "Email is <strong>required</strong>",
-    "password": "Password",
-    "passwordTip": "Remember to not re use the same passwords",
-    "passwordLength": "Password must be at least <strong>8 characters</strong>",
-    "requiredPassword": "Password is <strong>required</strong>"
+    "passwordTip": "Remember to not re use the same passwords"
   }
 }

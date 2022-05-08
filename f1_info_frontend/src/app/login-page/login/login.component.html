@@ -1,25 +1,26 @@
 <section class="holder">
     <h3 class="holder__header">{{'loginPage.signUp' | translate}}</h3>
 
-    <form>
-        <mat-form-field appearance="standard" class="input-form input-form__email">
-            <mat-label>{{'loginPage.email' | translate}}</mat-label>
-            <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" placeholder="Ex. richard@example.com">
-            <mat-hint>{{'loginPage.emailTip' | translate}}</mat-hint>
-            <mat-error *ngIf="emailFormatError">{{'loginPage.emailValidFormat' | translate}}</mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('required')" [innerHTML]="'loginPage.requiredEmail' | translate"></mat-error>
-        </mat-form-field>
+    <form [formGroup]="registrationForm">
+        <app-text-input
+            formControlName="email"
+            [formControl]="email"
+            inputType="email"
+            [label]="'input.email' | translate"
+            inputPlaceholder="Ex. richard@example.com"
+            [isRequired]="true"
+            idAttribute="emailId"
+        ></app-text-input>
 
-        <mat-form-field appearance="standard" class="input-form">
-            <mat-label>{{'loginPage.password' | translate}}</mat-label>
-            <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
-            <mat-hint>{{'loginPage.passwordTip' | translate}}</mat-hint>
-            <mat-error *ngIf="passwordFormControl.hasError('minlength')" [innerHTML]="'loginPage.passwordLength' | translate"></mat-error>
-            <mat-error *ngIf="passwordFormControl.hasError('required')" [innerHTML]="'loginPage.requiredPassword' | translate"></mat-error>
-        </mat-form-field>
-    </form>
+        <app-text-input
+            formControlName="password"
+            [formControl]="password"
+            inputType="password"
+            [label]="'input.password' | translate"
+            [isRequired]="true"
+            idAttribute="passwordId"
+        ></app-text-input>
 
-    <form>
-        <app-text-input></app-text-input>
+        <div>form is valid = {{registrationForm.valid}}</div>
     </form>
 </section>
