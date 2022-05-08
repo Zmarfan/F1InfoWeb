@@ -70,7 +70,7 @@
     position: relative;
     display: flex;
     justify-content: left;
-    padding: 0.6rem 0.45rem 0.6rem 0;
+    padding: 0.6rem 0;
     font-size: 1rem;
     transition: background 0.2s ease-in-out;
 
@@ -118,6 +118,6 @@
 
   &__wide {
     border-top: 1px var(--bkg-color-shade) solid;
-    padding: 1.1rem 0.45rem 1.1rem 0;
+    padding: 1.1rem 0;
   }
 }

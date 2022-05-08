@@ -18,7 +18,7 @@
   },
   "navigation": {
     "profile": {
-      "loginOrSignUp": "Logga in/Registrera konto",
+      "loginOrSignUp": "Logga in/Bli medlem",
       "darkMode": "Växla mörkt tema",
       "language": "Välj språk"
     }
