@@ -26,6 +26,8 @@
   "signUpPage": {
     "signUp": "SIGN UP",
     "emailTip": "Enter the email you want to register with",
-    "passwordTip": "Remember to not re use the same passwords"
+    "passwordTip": "Remember to not re use the same passwords",
+    "alreadyAUser": "Already a user?",
+    "loginHere": "LOGIN HERE"
   }
 }

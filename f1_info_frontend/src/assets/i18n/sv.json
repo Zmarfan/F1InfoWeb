@@ -26,6 +26,8 @@
   "signUpPage": {
     "signUp": "BLI MEDLEM",
     "emailTip": "Ange den e-postadress du vill registrera dig med",
-    "passwordTip": "Kom ihåg att inte återanvända lösenord"
+    "passwordTip": "Kom ihåg att inte återanvända lösenord",
+    "alreadyAUser": "Har du redan ett konto?",
+    "loginHere": "LOGGA IN HÄR"
   }
 }
