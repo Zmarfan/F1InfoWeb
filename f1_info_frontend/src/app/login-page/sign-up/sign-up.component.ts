@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RouteHolder} from '../../routing/routeHolder';
+import {Router} from '@angular/router';
 
 interface RegistrationData {
     email: string;
@@ -20,7 +22,17 @@ export class SignUpComponent {
         password: this.password,
     });
 
+    public constructor(
+        private mRouter: Router
+    ) {
+    }
+
     public submitRegistrationForm(formData: RegistrationData) {
         console.log(formData);
+    }
+
+    public routeToLogin() {
+        console.log("asd");
+        this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
     }
 }

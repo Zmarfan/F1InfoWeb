@@ -15,6 +15,7 @@ import { PrimaryButtonDirective } from './input/buttons/primary-button.directive
 import { ButtonDirective } from './input/buttons/button.directive';
 import {MatDialogModule} from '@angular/material/dialog';
 import { TextInputComponent } from './input/fields/text-input/text-input.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { TextInputComponent } from './input/fields/text-input/text-input.compone
         MatInputModule,
         ReactiveFormsModule,
         FormsModule,
+        RouterModule,
     ],
     exports: [
         MainHeaderComponent,

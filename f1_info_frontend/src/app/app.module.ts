@@ -13,6 +13,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import {Language} from '../common/constants/language';
+import { LoginComponent } from './login-page/login/login.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
         AppComponent,
         HomepageComponent,
+        LoginComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
