@@ -43,6 +43,7 @@ import {RouterModule} from '@angular/router';
         MainHeaderComponent,
         TextInputComponent,
         LoadingElementComponent,
+        LoginSignUpComponent,
     ],
 })
 export class CoreModule {

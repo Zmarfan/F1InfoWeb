@@ -29,5 +29,12 @@
     "passwordTip": "Remember to not re use the same passwords",
     "alreadyAUser": "Already a user?",
     "loginHere": "LOGIN HERE"
+  },
+  "loginPage": {
+    "login": "LOGIN",
+    "emailTip": "Enter the email you registered your account with",
+    "passwordTip": "A password manager can store complicated passwords ",
+    "needAnAccount": "Need an account?",
+    "signUpHere": "SIGN UP HERE"
   }
 }

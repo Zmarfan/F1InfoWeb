@@ -1,13 +1,13 @@
 <section class="holder">
-    <h3 class="holder__header">{{'signUpPage.signUp' | translate}}</h3>
+    <h3 class="holder__header">{{titleKey | translate}}</h3>
 
-    <form [formGroup]="registrationForm" (ngSubmit)="submitRegistrationForm(registrationForm.value)" class="holder__form">
+    <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="holder__form">
         <app-text-input
             [inputConfig]="{
                 formControl: email,
                 labelKey: 'input.email',
                 placeholder: 'Ex. richard@example.com',
-                hintKey: 'signUpPage.emailTip',
+                hintKey: emailHintKey,
                 inputType: 'email',
                 idAttribute: 'emailId',
                 isRequired: true
@@ -19,7 +19,7 @@
             [inputConfig]="{
                 formControl: password,
                 labelKey: 'input.password',
-                hintKey: 'signUpPage.passwordTip',
+                hintKey: passwordHintKey,
                 inputType: 'password',
                 idAttribute: 'passwordId',
                 isRequired: true
@@ -27,11 +27,11 @@
             formControlName="password"
         ></app-text-input>
 
-        <button [disabled]="!registrationForm.valid" type="submit" appPrimaryButton class="holder__button">{{'signUpPage.signUp' | translate}}</button>
+        <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{submitKey | translate}}</button>
     </form>
 
     <div class="end-part">
-        <span>{{'signUpPage.alreadyAUser' | translate}}</span>
-        <a (click)="routeToLogin()">{{'signUpPage.loginHere' | translate}}</a>
+        <span>{{endText | translate}}</span>
+        <a (click)="route()">{{routeText | translate}}</a>
     </div>
 </section>

@@ -14,6 +14,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import {Language} from '../common/constants/language';
 import { LoginComponent } from './login-page/login/login.component';
+import { SignUpComponent } from './login-page/sign-up/sign-up.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -40,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         HomepageComponent,
         LoginComponent,
+        SignUpComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
