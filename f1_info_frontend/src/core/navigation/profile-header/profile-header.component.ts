@@ -44,7 +44,7 @@ export class ProfileHeaderComponent {
     public menuItems: MenuItem[] = [
         { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
         { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
-        { icon: faRightToBracket, translationKey: 'navigation.profile.login', clickCallback: () => this.routeToLogin() },
+        { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() },
     ];
 
     private mLastTimeStamp: number = 0;
@@ -88,7 +88,7 @@ export class ProfileHeaderComponent {
     }
 
     private routeToLogin() {
-        this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
+        this.mRouter.navigateByUrl(RouteHolder.SIGN_UP_PAGE).then();
         this.menuOpen = false;
     }
 }

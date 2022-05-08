@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
+interface RegistrationData {
+    email: string;
+    password: string;
+}
+
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    selector: 'app-registration',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.scss'],
 })
-export class LoginComponent {
+export class SignUpComponent {
     public email: FormControl = new FormControl('', [Validators.required, Validators.email]);
     public password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
 
@@ -14,4 +19,8 @@ export class LoginComponent {
         email: this.email,
         password: this.password,
     });
+
+    public submitRegistrationForm(formData: RegistrationData) {
+        console.log(formData);
+    }
 }

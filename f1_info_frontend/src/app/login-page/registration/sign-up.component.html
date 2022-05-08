@@ -1,7 +1,7 @@
 <section class="holder">
     <h3 class="holder__header">{{'loginPage.signUp' | translate}}</h3>
 
-    <form [formGroup]="registrationForm" class="holder__form">
+    <form [formGroup]="registrationForm" (ngSubmit)="submitRegistrationForm(registrationForm.value)" class="holder__form">
         <app-text-input
             [inputConfig]="{
                 formControl: email,
@@ -27,6 +27,6 @@
             formControlName="password"
         ></app-text-input>
 
-        <div>form is valid = {{registrationForm.valid}}</div>
+        <button [disabled]="!registrationForm.valid" type="submit" appPrimaryButton class="holder__button">{{'loginPage.signUp' | translate}}</button>
     </form>
 </section>
