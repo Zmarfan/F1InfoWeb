@@ -1,4 +1,5 @@
 .text-form {
+  user-select: none;
   position: relative;
   background: var(--bkg-input);
   border-radius: 0.25rem 0.25rem 0 0;
@@ -26,6 +27,10 @@
     }
   }
 
+  &--disabled {
+    opacity: 0.6;
+  }
+
   &__label {
     cursor: text;
     font-size: 1rem;
@@ -38,15 +43,16 @@
 
     &--selected {
       transform: translateY(-50%) scale(0.8);
+      color: var(--light-primary-color);
     }
 
     &--error {
       color: var(--error);
     }
+  }
 
-    &--valid {
-      color: var(--secondary-color);
-    }
+  &__required {
+    color: var(--secondary-color);
   }
 
   input {

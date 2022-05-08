@@ -20,7 +20,7 @@ input[type="radio"] {
     border-radius: 50%;
     transform: translateX(-50%) scale(0);
     content: "";
-    background: var(--secondary-color);
+    background: var(--light-primary-color);
     height: 2px;
     width: 80%;
   }
@@ -40,7 +40,7 @@ input[type="radio"] {
     border-radius: 50%;
     transform: translate(-50%,-50%) scale(0);
     content: "";
-    background: var(--secondary-color);
+    background: var(--light-primary-color);
     height: 8px;
     width: 8px;
   }
@@ -67,7 +67,7 @@ button {
     border-radius: 50%;
     transform: translateX(-50%) scale(0);
     content: "";
-    background: var(--secondary-color);
+    background: var(--light-primary-color);
     height: 2px;
     width: 80%;
   }
@@ -95,7 +95,7 @@ button {
 
   &__primary {
     color: white;
-    background: var(--secondary-color);
+    background: var(--light-primary-color);
     box-shadow: var(--dark-primary-color) 0 2px;
 
     &:hover {

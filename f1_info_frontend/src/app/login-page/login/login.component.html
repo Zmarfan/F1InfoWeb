@@ -3,22 +3,28 @@
 
     <form [formGroup]="registrationForm" class="holder__form">
         <app-text-input
+            [inputConfig]="{
+                formControl: email,
+                labelKey: 'input.email',
+                placeholder: 'Ex. richard@example.com',
+                hintKey: 'hint.key',
+                inputType: 'email',
+                idAttribute: 'emailId',
+                isRequired: true
+            }"
             formControlName="email"
-            [formControl]="email"
-            inputType="email"
-            [label]="'input.email' | translate"
-            inputPlaceholder="Ex. richard@example.com"
-            [isRequired]="true"
-            idAttribute="emailId"
         ></app-text-input>
 
         <app-text-input
+            [inputConfig]="{
+                formControl: password,
+                labelKey: 'input.password',
+                hintKey: 'hint.key',
+                inputType: 'password',
+                idAttribute: 'passwordId',
+                isRequired: true
+            }"
             formControlName="password"
-            [formControl]="password"
-            inputType="password"
-            [label]="'input.password' | translate"
-            [isRequired]="true"
-            idAttribute="passwordId"
         ></app-text-input>
 
         <div>form is valid = {{registrationForm.valid}}</div>

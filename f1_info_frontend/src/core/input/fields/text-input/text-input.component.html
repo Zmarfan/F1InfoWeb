@@ -1,19 +1,24 @@
-<div (click)="selectInput()" class="text-form" [class.text-form--error]="hasError" [class.text-form--selected]="isSelected">
+<div
+    (click)="selectInput()"
+    class="text-form" [class.text-form--error]="hasError"
+    [class.text-form--selected]="isSelected"
+    [class.text-form--disabled]="isDisabled"
+>
     <label
-        [attr.for]="idAttribute"
+        [attr.for]="config.idAttribute"
         class="text-form__label"
         [ngClass]="{
-            'text-form__label--selected': isSelected || value,
-            'text-form__label--valid': !hasError,
+            'text-form__label--selected': isSelected || config.value,
             'text-form__label--error': hasError
         }"
     >
-        {{label}}
+        {{config.labelKey | translate}}
+        <span *ngIf="config.isRequired" class="text-form__required">*</span>
     </label>
     <input #input
-       [type]="inputType"
-       [(ngModel)]="value"
-       [id]="idAttribute"
+       [type]="config.inputType"
+       [(ngModel)]="config.value"
+       [id]="config.idAttribute"
        [placeholder]="getPlaceholder"
        [disabled]="isDisabled"
        (focus)="onFocus()"

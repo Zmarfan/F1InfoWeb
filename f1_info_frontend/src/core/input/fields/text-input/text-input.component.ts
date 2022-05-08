@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators} from '@angular/forms';
 import {exists} from '../../../helper/app-util';
 import {pushIfTrue} from '../../../utils/list-util';
@@ -6,6 +6,17 @@ import {pushIfTrue} from '../../../utils/list-util';
 export enum InputType {
     EMAIL = 'email',
     PASSWORD = 'password',
+}
+
+export interface TextInputConfig {
+    formControl: FormControl;
+    labelKey: string;
+    placeholder?: string;
+    hintKey?: string;
+    value?: string;
+    inputType?: InputType | string;
+    idAttribute?: string;
+    isRequired?: boolean;
 }
 
 interface ValidationErrorParameters {
@@ -38,17 +49,11 @@ interface ValidationError {
         },
     ],
 })
-export class TextInputComponent implements ControlValueAccessor, Validator {
-    @Input() public formControl!: FormControl;
-    @Input() public value: string = '';
-    @Input() public inputType: InputType | string = InputType.EMAIL;
-    @Input() public idAttribute: string = 'textInputId';
-    @Input() public label!: string;
-    @Input() public inputPlaceholder: string = '';
-    @Input() public isRequired: boolean = false;
-
+export class TextInputComponent implements OnInit, ControlValueAccessor, Validator {
+    @Input() public inputConfig!: TextInputConfig;
     @ViewChild('input') private mInputRef!: ElementRef<HTMLInputElement>;
 
+    public config!: Required<TextInputConfig>;
     public isSelected: boolean = false;
     public isDisabled: boolean = false;
 
@@ -60,26 +65,30 @@ export class TextInputComponent implements ControlValueAccessor, Validator {
     }
 
     public get getPlaceholder(): string {
-        return this.isSelected ? this.inputPlaceholder : '';
+        return this.isSelected ? this.config.placeholder : '';
     }
 
     public get showErrors(): boolean {
-        return this.formControl.invalid && (this.formControl.dirty || this.formControl.touched);
+        return this.config.formControl.invalid && (this.config.formControl.dirty || this.config.formControl.touched);
     }
 
     public get errorKeys(): ValidationError[] {
         const errors: ValidationError[] = [];
-        const errorObject = this.formControl.errors as ValidationErrorParameters;
+        const errorObject = this.config.formControl.errors as ValidationErrorParameters;
 
-        if (this.inputType === InputType.EMAIL) {
+        if (this.config.inputType === InputType.EMAIL) {
             pushIfTrue(errors, errorObject.required, { key: 'input.requiredEmail' });
             pushIfTrue(errors, errorObject.email, { key: 'input.emailFormat' });
-        } else if (this.inputType === InputType.PASSWORD) {
+        } else if (this.config.inputType === InputType.PASSWORD) {
             pushIfTrue(errors, errorObject.required, { key: 'input.requiredPassword' });
             pushIfTrue(errors, errorObject.minlength, { key: 'input.passwordMinLength', parameters: { length: errorObject.minlength?.requiredLength }});
         }
 
         return errors;
+    }
+
+    public ngOnInit() {
+        this.config = this.initConfigWithDefaultValues(this.inputConfig);
     }
 
     public selectInput() {
@@ -100,7 +109,7 @@ export class TextInputComponent implements ControlValueAccessor, Validator {
     }
 
     public writeValue(value: any) {
-        this.value = value;
+        this.config.value = value;
     }
 
     public registerOnChange(callbackFunction: any) {
@@ -117,6 +126,19 @@ export class TextInputComponent implements ControlValueAccessor, Validator {
 
     public validate(control: AbstractControl): ValidationErrors | null {
         return null;
+    }
+
+    private initConfigWithDefaultValues(config: TextInputConfig): Required<TextInputConfig> {
+        return {
+            formControl: config.formControl,
+            labelKey: config.labelKey,
+            placeholder: config.placeholder ?? '',
+            hintKey: config.placeholder ?? '',
+            value: config.value ?? '',
+            inputType: config.inputType ?? InputType.EMAIL,
+            idAttribute: config.inputType ?? 'textInputLabel',
+            isRequired: config.isRequired ?? false,
+        };
     }
 }
 

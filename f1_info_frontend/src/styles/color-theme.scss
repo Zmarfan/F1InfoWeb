@@ -3,7 +3,9 @@ body {
 
   --primary-color: #6c5ca1;
   --dark-primary-color: #695c91;
-  --secondary-color: #7866b2;
+  --light-primary-color: #7866b2;
+
+  --secondary-color: #b99863;
 
   --text-color: #080808;
   --text-color-faded: #737373;
@@ -26,7 +28,9 @@ body.dark-theme {
 
   --primary-color: #6c5ca1;
   --dark-primary-color: #403464;
-  --secondary-color: #8171bb;
+  --light-primary-color: #8171bb;
+
+  --secondary-color: #c2a277;
 
   --text-color: #dadada;
   --bkg-input: #262626;
