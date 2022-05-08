@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener} from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
