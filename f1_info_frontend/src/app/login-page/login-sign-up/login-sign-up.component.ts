@@ -9,11 +9,11 @@ interface RegistrationData {
 }
 
 @Component({
-    selector: 'app-sign-up',
-    templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.scss'],
+    selector: 'app-login-sign-up',
+    templateUrl: './login-sign-up.component.html',
+    styleUrls: ['./login-sign-up.component.scss'],
 })
-export class SignUpComponent {
+export class LoginSignUpComponent {
     public email: FormControl = new FormControl('', [Validators.required, Validators.email]);
     public password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
 
