@@ -1,9 +1,11 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators} from '@angular/forms';
-import {exists} from '../../../helper/app-util';
 import {pushIfTrue} from '../../../utils/list-util';
+import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 export enum InputType {
+    TEXT = 'text',
     EMAIL = 'email',
     PASSWORD = 'password',
 }
@@ -60,12 +62,22 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
     public changed!: (value: any) => void;
     public touched!: () => void;
 
-    public get hasError(): boolean {
-        return this.showErrors && this.errorKeys.length > 0;
+    private mShowPassword: boolean = false;
+
+    public get showPasswordEye(): boolean {
+        return this.config.inputType === InputType.PASSWORD;
+    }
+
+    public get passwordIcon(): IconDefinition {
+        return this.mShowPassword ? faEyeSlash : faEye;
     }
 
     public get getPlaceholder(): string {
         return this.isSelected ? this.config.placeholder : '';
+    }
+
+    public get hasError(): boolean {
+        return this.showErrors && this.errorKeys.length > 0;
     }
 
     public get showErrors(): boolean {
@@ -91,8 +103,9 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
         this.config = this.initConfigWithDefaultValues(this.inputConfig);
     }
 
-    public selectInput() {
-        this.mInputRef.nativeElement.select();
+    public togglePasswordShowing() {
+        this.mShowPassword = !this.mShowPassword;
+        this.mInputRef.nativeElement.type = this.mShowPassword ? InputType.TEXT : InputType.PASSWORD;
     }
 
     public onChange(value: string) {
@@ -133,9 +146,9 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
             formControl: config.formControl,
             labelKey: config.labelKey,
             placeholder: config.placeholder ?? '',
-            hintKey: config.placeholder ?? '',
+            hintKey: config.hintKey ?? '',
             value: config.value ?? '',
-            inputType: config.inputType ?? InputType.EMAIL,
+            inputType: config.inputType ?? InputType.TEXT,
             idAttribute: config.inputType ?? 'textInputLabel',
             isRequired: config.isRequired ?? false,
         };

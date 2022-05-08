@@ -1,4 +1,5 @@
 .text-form {
+  display: flex;
   user-select: none;
   position: relative;
   background: var(--bkg-input);
@@ -88,4 +89,9 @@
   &__error {
     color: var(--error);
   }
+}
+
+.password-eye {
+  cursor: pointer;
+  color: var(--primary-color);
 }

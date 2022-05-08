@@ -4,6 +4,14 @@
     "cancel": "Avbryt",
     "apply": "Välj"
   },
+  "input": {
+    "email": "E-post",
+    "password": "Lösenord",
+    "requiredEmail": "E-post <strong>krävs</strong>",
+    "emailFormat": "Ange en giltig e-postaddress",
+    "requiredPassword": "Lösenord <strong>krävs</strong>",
+    "passwordMinLength": "Lösenord måste vara minst <strong>{{length}} karaktärer</strong>"
+  },
   "language": {
     "english": "Engelska",
     "swedish": "Svenska"
@@ -17,13 +25,7 @@
   },
   "loginPage": {
     "signUp": "BLI MEDLEM",
-    "email": "E-post",
     "emailTip": "Ange den e-postadress du vill registrera dig med",
-    "emailValidFormat": "Ange en giltig e-postaddress",
-    "requiredEmail": "E-post <strong>krävs</strong>",
-    "password": "Lösenord",
-    "passwordTip": "Kom ihåg att inte återanvända lösenord",
-    "passwordLength": "Lösenord måste vara minst <strong>8 karaktärer</strong>",
-    "requiredPassword": "Lösenord <strong>krävs</strong>"
+    "passwordTip": "Kom ihåg att inte återanvända lösenord"
   }
 }

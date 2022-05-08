@@ -1,5 +1,4 @@
 <div
-    (click)="selectInput()"
     class="text-form" [class.text-form--error]="hasError"
     [class.text-form--selected]="isSelected"
     [class.text-form--disabled]="isDisabled"
@@ -25,6 +24,7 @@
        (input)="onChange(input.value)"
        (blur)="onTouch()"
     >
+    <fa-icon *ngIf="showPasswordEye" (click)="togglePasswordShowing()" class="password-eye" [icon]="passwordIcon"></fa-icon>
 </div>
 
 <section class="input-messages">
@@ -33,6 +33,6 @@
     </div>
 
     <ng-template #hint>
-        <span class="input-messages__hint">Detta är en hint</span>
+        <span class="input-messages__hint">{{config.hintKey | translate}}</span>
     </ng-template>
 </section>
