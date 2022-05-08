@@ -23,7 +23,7 @@
       "language": "Select language"
     }
   },
-  "loginPage": {
+  "signUpPage": {
     "signUp": "SIGN UP",
     "emailTip": "Enter the email you want to register with",
     "passwordTip": "Remember to not re use the same passwords"

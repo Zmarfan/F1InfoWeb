@@ -1,5 +1,5 @@
 <section class="holder">
-    <h3 class="holder__header">{{'loginPage.signUp' | translate}}</h3>
+    <h3 class="holder__header">{{'signUpPage.signUp' | translate}}</h3>
 
     <form [formGroup]="registrationForm" (ngSubmit)="submitRegistrationForm(registrationForm.value)" class="holder__form">
         <app-text-input
@@ -7,7 +7,7 @@
                 formControl: email,
                 labelKey: 'input.email',
                 placeholder: 'Ex. richard@example.com',
-                hintKey: 'loginPage.emailTip',
+                hintKey: 'signUpPage.emailTip',
                 inputType: 'email',
                 idAttribute: 'emailId',
                 isRequired: true
@@ -19,7 +19,7 @@
             [inputConfig]="{
                 formControl: password,
                 labelKey: 'input.password',
-                hintKey: 'loginPage.passwordTip',
+                hintKey: 'signUpPage.passwordTip',
                 inputType: 'password',
                 idAttribute: 'passwordId',
                 isRequired: true
@@ -27,6 +27,6 @@
             formControlName="password"
         ></app-text-input>
 
-        <button [disabled]="!registrationForm.valid" type="submit" appPrimaryButton class="holder__button">{{'loginPage.signUp' | translate}}</button>
+        <button [disabled]="!registrationForm.valid" type="submit" appPrimaryButton class="holder__button">{{'signUpPage.signUp' | translate}}</button>
     </form>
 </section>

@@ -23,7 +23,7 @@
       "language": "Välj språk"
     }
   },
-  "loginPage": {
+  "signUpPage": {
     "signUp": "BLI MEDLEM",
     "emailTip": "Ange den e-postadress du vill registrera dig med",
     "passwordTip": "Kom ihåg att inte återanvända lösenord"
