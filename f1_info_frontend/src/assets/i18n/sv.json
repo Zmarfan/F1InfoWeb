@@ -28,13 +28,13 @@
     "emailTip": "Ange den e-postadress du vill registrera dig med",
     "passwordTip": "Kom ihåg att inte återanvända lösenord",
     "alreadyAUser": "Har du redan ett konto?",
-    "loginHere": "LOGGA IN HÄR"
+    "loginHere": "Logga in här"
   },
   "loginPage": {
     "login": "LOGGA IN",
     "emailTip": "Ange den e-postadress du registrerade ditt konto med",
     "passwordTip": "En lösenordshanterare kan lagra komplicerade lösenord",
     "needAnAccount": "Behöver du ett konto?",
-    "signUpHere": "REGISTRERA HÄR"
+    "signUpHere": "Registrera här"
   }
 }

@@ -28,13 +28,13 @@
     "emailTip": "Enter the email you want to register with",
     "passwordTip": "Remember to not re use the same passwords",
     "alreadyAUser": "Already a user?",
-    "loginHere": "LOGIN HERE"
+    "loginHere": "Login here"
   },
   "loginPage": {
     "login": "LOGIN",
     "emailTip": "Enter the email you registered your account with",
     "passwordTip": "A password manager can store complicated passwords ",
     "needAnAccount": "Need an account?",
-    "signUpHere": "SIGN UP HERE"
+    "signUpHere": "Sign up here"
   }
 }
