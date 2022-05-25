@@ -2,7 +2,6 @@ package f1_Info.entry_points.authentication;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static f1_Info.utils.ResponseUtil.forbidden;
+import static f1_Info.utils.ResponseUtil.ok;
+
 @RestController
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class AuthenticationEndpoint {
@@ -24,7 +26,7 @@ public class AuthenticationEndpoint {
 
     @GetMapping("/")
     public ResponseEntity<TestResponse> all() {
-        return new ResponseEntity<>(new TestResponse("Detta funkar"), HttpStatus.OK);
+        return ok(new TestResponse("Detta funkar"));
     }
 
     @PostMapping("/login")
@@ -39,10 +41,10 @@ public class AuthenticationEndpoint {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             request.getSession(true);
         } catch (final AuthenticationException e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return forbidden();
         }
 
-        return ResponseEntity.ok().build();
+        return ok();
     }
 
     @GetMapping("/user")
