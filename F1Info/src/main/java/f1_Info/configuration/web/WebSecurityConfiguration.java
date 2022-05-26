@@ -1,5 +1,6 @@
 package f1_Info.configuration.web;
 
+import f1_Info.constants.Authority;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .authorizeRequests()
             .antMatchers("/Authentication/login").permitAll()
+            .antMatchers("/Authentication/user").hasAuthority(Authority.USER.getAuthority())
+            .antMatchers("/Authentication/admin").hasAnyAuthority(Authority.ADMIN.getAuthority(), Authority.USER.getAuthority())
             .and()
             .logout().logoutUrl("/Authentication/logout").permitAll()
             .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))

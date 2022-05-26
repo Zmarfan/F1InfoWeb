@@ -39,6 +39,6 @@ public class EndpointHelper {
     }
 
     private long getUserIdFromSession(final HttpServletRequest request) {
-        return (long) request.getSession().getAttribute(SessionAttributes.USER_ID);
+        return (long) request.getSession(false).getAttribute(SessionAttributes.USER_ID);
     }
 }

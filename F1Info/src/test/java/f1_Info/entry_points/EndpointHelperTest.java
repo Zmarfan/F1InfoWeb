@@ -41,7 +41,7 @@ class EndpointHelperTest {
 
     @BeforeEach
     void init() {
-        when(mRequest.getSession()).thenReturn(mHttpSession);
+        when(mRequest.getSession(false)).thenReturn(mHttpSession);
         when(mHttpSession.getAttribute(SessionAttributes.USER_ID)).thenReturn(USER_ID);
     }
 

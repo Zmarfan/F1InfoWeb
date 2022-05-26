@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,5 +20,15 @@ public class AuthenticationEndpoint {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody final LoginRequestBody loginBody) {
         return new UserLoginCommand(loginBody, mHttpServletRequest, mAuthenticationManager).execute();
+    }
+
+    @GetMapping("/user")
+    public String user(@RequestParam("test") final long test) {
+        return "<h1>I AM USER OR ADMIN</h1>" + test;
+    }
+
+    @GetMapping("/admin")
+    public String home() {
+        return "<h1>I AM ADMIN</h1>";
     }
 }
