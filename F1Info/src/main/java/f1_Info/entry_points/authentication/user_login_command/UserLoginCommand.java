@@ -1,6 +1,6 @@
 package f1_Info.entry_points.authentication.user_login_command;
 
-import f1_Info.configuration.web.F1UserDetails;
+import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.entry_points.authentication.SessionAttributes;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
