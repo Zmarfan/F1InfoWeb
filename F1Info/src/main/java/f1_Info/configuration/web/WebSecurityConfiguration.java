@@ -1,8 +1,10 @@
 package f1_Info.configuration.web;
 
+import f1_Info.constants.Authority;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity
@@ -33,10 +36,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-            .antMatchers("/admin").hasRole("ADMIN")
+            .antMatchers("/user").hasAnyAuthority(Authority.ADMIN.getAuthority(), Authority.USER.getAuthority())
+            .antMatchers("/admin").hasAuthority(Authority.ADMIN.getAuthority())
             .antMatchers("/login").permitAll()
-            .antMatchers("/").permitAll()
+            .and()
+            .logout()
+            .permitAll()
+            .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.NEVER);

@@ -1,14 +1,11 @@
 package f1_Info.entry_points.authentication;
 
+import f1_Info.entry_points.authentication.user_login_command.LoginRequestBody;
+import f1_Info.entry_points.authentication.user_login_command.UserLoginCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,40 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static f1_Info.utils.ResponseUtil.forbidden;
-import static f1_Info.utils.ResponseUtil.ok;
-
 @RestController
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class AuthenticationEndpoint {
+    private final HttpServletRequest mHttpServletRequest;
     private final AuthenticationManager mAuthenticationManager;
 
-    @GetMapping("/")
-    public ResponseEntity<TestResponse> all() {
-        return ok(new TestResponse("Detta funkar"));
-    }
-
     @PostMapping("/login")
-    public ResponseEntity<Void> login(
-        final HttpServletRequest request,
-        @RequestBody final LoginRequestBody loginBody
-    ) {
-        try {
-            final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginBody.getUsername(), loginBody.getPassword());
-            token.setDetails(new WebAuthenticationDetails(request));
-            final Authentication authentication = mAuthenticationManager.authenticate(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            request.getSession(true);
-        } catch (final AuthenticationException e) {
-            return forbidden();
-        }
-
-        return ok();
+    public ResponseEntity<?> login(@RequestBody final LoginRequestBody loginBody) {
+        return new UserLoginCommand(loginBody, mHttpServletRequest, mAuthenticationManager).execute();
     }
 
     @GetMapping("/user")
     public String user() {
-        return "<h1>I AM USER OR ADMIN</h1>";
+        return "<h1>I AM USER!</h1>";
     }
 
     @GetMapping("/admin")

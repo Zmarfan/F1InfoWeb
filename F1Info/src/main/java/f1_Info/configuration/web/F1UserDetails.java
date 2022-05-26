@@ -1,46 +1,56 @@
 package f1_Info.configuration.web;
 
+import f1_Info.constants.Authority;
+import f1_Info.constants.Email;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
-import static java.util.Collections.singletonList;
-
+@AllArgsConstructor
 public class F1UserDetails implements UserDetails {
+    @Getter
+    private final long mUserId;
+    private final Email mEmail;
+    private final String mHashedPassword;
+    private final List<Authority> mAuthorities;
+    private final boolean mEnabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return singletonList(new SimpleGrantedAuthority("USER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
+        return mAuthorities;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return mEmail.getEmail();
+    }
+
+    @Override
+    public String getPassword() {
+        return mHashedPassword;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return mEnabled;
     }
 }
