@@ -37,4 +37,8 @@ public class ResponseUtil {
     public static <T> ResponseEntity<T> conflict(final T response) {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
+
+    public static ResponseEntity<Void> internalServerError() {
+        return ResponseEntity.internalServerError().build();
+    }
 }
