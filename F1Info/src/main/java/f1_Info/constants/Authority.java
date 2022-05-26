@@ -1,11 +1,9 @@
 package f1_Info.constants;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
 @AllArgsConstructor
-@Getter
 public class Authority implements GrantedAuthority {
     public static final Authority USER = new Authority("user");
     public static final Authority ADMIN = new Authority("admin");
