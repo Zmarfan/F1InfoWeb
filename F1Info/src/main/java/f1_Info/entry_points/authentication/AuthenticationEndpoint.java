@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,11 @@ public class AuthenticationEndpoint {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody final LoginRequestBody loginBody) {
         return new UserLoginCommand(loginBody, mHttpServletRequest, mAuthenticationManager).execute();
+    }
+
+    @GetMapping("/")
+    public String test() {
+        return "<h1>ANYONE</h1>";
     }
 
     @GetMapping("/user")

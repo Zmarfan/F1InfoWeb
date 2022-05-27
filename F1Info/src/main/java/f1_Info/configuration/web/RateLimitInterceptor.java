@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class RateLimitInterceptor implements HandlerInterceptor {
-    private static final int MAX_REQUESTS_PER_MINUTE = 90;
+    private static final int MAX_REQUESTS_PER_MINUTE = 60;
     private final Map<String, Bucket> cache = new ConcurrentHashMap<>();
 
     @Override

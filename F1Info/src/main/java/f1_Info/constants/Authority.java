@@ -2,9 +2,11 @@ package f1_Info.constants;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @AllArgsConstructor
 public class Authority implements GrantedAuthority {
+    public static final SimpleGrantedAuthority ROLE_ANONYMOUS = new SimpleGrantedAuthority("ROLE_ANONYMOUS");
     public static final Authority USER = new Authority("user");
     public static final Authority ADMIN = new Authority("admin");
 

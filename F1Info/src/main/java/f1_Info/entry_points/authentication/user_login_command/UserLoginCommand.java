@@ -1,6 +1,7 @@
 package f1_Info.entry_points.authentication.user_login_command;
 
 import f1_Info.configuration.web.users.F1UserDetails;
+import f1_Info.constants.Authority;
 import f1_Info.entry_points.authentication.SessionAttributes;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,10 @@ public class UserLoginCommand {
     private final AuthenticationManager mAuthenticationManager;
 
     public ResponseEntity<?> execute() {
+        if (isAlreadyLoggedIn()) {
+            return forbidden();
+        }
+
         try {
             final Authentication authentication = createAuthentication();
             initSession(authentication);
@@ -31,6 +36,11 @@ public class UserLoginCommand {
         }
 
         return ok();
+    }
+
+    private boolean isAlreadyLoggedIn() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !authentication.getAuthorities().contains(Authority.ROLE_ANONYMOUS) && authentication.isAuthenticated();
     }
 
     private Authentication createAuthentication() {

@@ -13,12 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class WebMvcConfig implements WebMvcConfigurer {
     private final RateLimitInterceptor mRateLimitInterceptor;
-    private final LoggerInterceptor mLoggerInterceptor;
+    private final EndpointResponseLoggerInterceptor mEndpointResponseLoggerInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(mLoggerInterceptor);
         registry.addInterceptor(mRateLimitInterceptor);
+        registry.addInterceptor(mEndpointResponseLoggerInterceptor);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package f1_Info.configuration.web;
 
+import f1_Info.entry_points.authentication.SessionAttributes;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @UtilityClass
@@ -29,5 +31,13 @@ public class InterceptorUtil {
             }
         }
         return request.getRemoteAddr();
+    }
+
+    public static String getUser(final HttpServletRequest request) {
+        final HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute(SessionAttributes.USER_ID) == null) {
+            return "Unauthenticated user";
+        }
+        return session.getAttribute(SessionAttributes.USER_ID).toString();
     }
 }
