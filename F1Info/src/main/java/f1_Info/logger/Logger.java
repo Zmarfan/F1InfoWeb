@@ -1,34 +1,30 @@
 package f1_Info.logger;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class Logger {
-    private static final String INFO_TEMPLATE = "%s: %s in method: %s in class: %s";
-    private static final String ERROR_TEMPLATE = "%s: %s in method: %s in class: %s with exception: %s with the stacktrace: ";
+    private static final String INFO_TEMPLATE = "%s in method: %s in class: %s";
+    private static final String ERROR_TEMPLATE = "%s in method: %s in class: %s with exception: %s with the stacktrace: ";
 
-    // TODO: Make proper logging
+    private static final org.slf4j.Logger F_1_LOGGER = LoggerFactory.getLogger("f1Logger");
+
     public <T> void info(final String methodName, final Class<T> classType, final String message) {
-        System.out.println(String.format(INFO_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName()));
+        if (F_1_LOGGER.isInfoEnabled()) {
+            F_1_LOGGER.info(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
+        }
     }
 
-    // TODO: Make proper logging
     public <T> void warning(final String methodName, final Class<T> classType, final String message) {
-        System.out.println(String.format(INFO_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName()));
+        if (F_1_LOGGER.isWarnEnabled()) {
+            F_1_LOGGER.warn(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
+        }
     }
 
-    // TODO: Make proper logging
     public <T> void severe(final String methodName, final Class<T> classType, final String message, final Exception exception) {
-        System.out.println(String.format(ERROR_TEMPLATE, getFormattedTimestamp(), message, methodName, classType.getName(), exception));
-        exception.printStackTrace();
-    }
-
-    private String getFormattedTimestamp() {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        final LocalDateTime now = LocalDateTime.now();
-        return dateTimeFormatter.format(now);
+        if (F_1_LOGGER.isErrorEnabled()) {
+            F_1_LOGGER.error(String.format(ERROR_TEMPLATE, message, methodName, classType.getName(), exception), exception);
+        }
     }
 }

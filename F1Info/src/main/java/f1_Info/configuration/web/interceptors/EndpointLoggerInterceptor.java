@@ -22,7 +22,7 @@ public class EndpointLoggerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
         mLogger.info(request.getRequestURL().toString(), this.getClass(), String.format(
-            "%nEndpoint called: %s%s%nType: %s%nBy user: %s%nRequest ip: %s%nRequest Body: %s%nResponse status: %s%nException: %s%n",
+            "Endpoint called: %s%s, Type: %s, By user: %s, Request ip: %s, Request Body: %s, Response status: %s, Exception: %s",
             request.getRequestURI(),
             getParameters(request),
             request.getMethod(),
