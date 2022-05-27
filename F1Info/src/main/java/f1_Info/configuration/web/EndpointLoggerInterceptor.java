@@ -3,38 +3,34 @@ package f1_Info.configuration.web;
 import f1_Info.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
-@Order(1)
 @Component
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
-public class RequestLoggingFilter implements Filter {
+public class EndpointLoggerInterceptor implements HandlerInterceptor {
     private static final String HIDDEN = "*****";
     private static final String PASSWORD_PARAMETER = "password";
 
     private final Logger mLogger;
 
     @Override
-    public void doFilter(ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        final MyRequestWrapper requestWrapper = new MyRequestWrapper((HttpServletRequest) request);
-
-        mLogger.info(requestWrapper.getRequestURL().toString(), this.getClass(), String.format(
-            "%nEndpoint called: %s%s%nType: %s%nBy user: %s%nRequest ip: %s%nRequest body: %s%n",
-            requestWrapper.getRequestURI(),
-            getParameters(requestWrapper),
-            requestWrapper.getMethod(),
-            InterceptorUtil.getUser(requestWrapper),
-            InterceptorUtil.getIp(requestWrapper),
-            getRequestBody(requestWrapper)
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
+        mLogger.info(request.getRequestURL().toString(), this.getClass(), String.format(
+            "%nEndpoint called: %s%s%nType: %s%nBy user: %s%nRequest ip: %s%nRequest Body: %s%nResponse status: %s%nException: %s%n",
+            request.getRequestURI(),
+            getParameters(request),
+            request.getMethod(),
+            InterceptorUtil.getUser(request),
+            InterceptorUtil.getIp(request),
+            getRequestBody((MyRequestWrapper) request),
+            response.getStatus(),
+            exception != null ? exception.getMessage() : "-"
         ));
-
-        chain.doFilter(requestWrapper, response);
     }
 
     private String getParameters(final HttpServletRequest request) {
