@@ -1,4 +1,4 @@
-package f1_Info.configuration.web;
+package f1_Info.configuration.web.filters;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

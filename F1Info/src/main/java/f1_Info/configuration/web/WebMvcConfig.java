@@ -1,5 +1,7 @@
 package f1_Info.configuration.web;
 
+import f1_Info.configuration.web.interceptors.EndpointLoggerInterceptor;
+import f1_Info.configuration.web.interceptors.RateLimitInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

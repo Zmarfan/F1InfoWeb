@@ -1,4 +1,4 @@
-package f1_Info.configuration.web;
+package f1_Info.configuration.web.interceptors;
 
 import io.github.bucket4j.*;
 import lombok.AllArgsConstructor;

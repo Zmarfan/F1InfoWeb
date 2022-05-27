@@ -4,6 +4,7 @@ import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.constants.Authority;
 import f1_Info.entry_points.authentication.SessionAttributes;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class UserLoginCommand {
             final Authentication authentication = createAuthentication();
             initSession(authentication);
         } catch (final AuthenticationException e) {
-            return forbidden();
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
         return ok();

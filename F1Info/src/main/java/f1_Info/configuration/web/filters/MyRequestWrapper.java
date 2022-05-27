@@ -1,4 +1,4 @@
-package f1_Info.configuration.web;
+package f1_Info.configuration.web.filters;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package f1_Info.configuration.web;
+package f1_Info.configuration.web.interceptors;
 
 import f1_Info.entry_points.authentication.SessionAttributes;
 import lombok.experimental.UtilityClass;
