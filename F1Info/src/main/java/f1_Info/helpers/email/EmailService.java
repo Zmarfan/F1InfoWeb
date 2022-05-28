@@ -12,14 +12,14 @@ import java.util.Optional;
 import java.util.Properties;
 
 @Component
-public class EmailDispatcher {
+public class EmailService {
     private final Logger mLogger;
     private final Configuration mConfiguration;
 
     private final Session mSession;
 
     @Autowired
-    public EmailDispatcher(
+    public EmailService(
         final Configuration configuration,
         final Logger logger
     ) {
@@ -29,8 +29,12 @@ public class EmailDispatcher {
         mSession = createSession(configuration);
     }
 
-    public void sendEmail(final EmailDispatchParameters parameters) {
-        createMessage(parameters).ifPresent(message -> dispatch(message, parameters));
+    public boolean sendEmail(final EmailSendOutParameters parameters) {
+        Optional<Message> message = createMessage(parameters);
+        if (message.isEmpty()) {
+            return false;
+        }
+        return dispatch(message.get(), parameters);
     }
 
     private Properties createProperties() {
@@ -52,7 +56,7 @@ public class EmailDispatcher {
         });
     }
 
-    private Optional<Message> createMessage(final EmailDispatchParameters parameters) {
+    private Optional<Message> createMessage(final EmailSendOutParameters parameters) {
         final Message message;
         try {
             message = new MimeMessage(mSession);
@@ -73,7 +77,7 @@ public class EmailDispatcher {
         return Optional.of(message);
     }
 
-    private void dispatch(final Message message, final EmailDispatchParameters parameters) {
+    private boolean dispatch(final Message message, final EmailSendOutParameters parameters) {
         try {
             Transport.send(message);
             mLogger.info("dispatch", this.getClass(), String.format(
@@ -82,6 +86,7 @@ public class EmailDispatcher {
                 parameters.getSubject(),
                 parameters.getType().getId()
             ));
+            return true;
         } catch (final MessagingException e) {
             mLogger.severe("dispatch", this.getClass(), String.format(
                 "Failed to send email to %s with subject: %s for email type: %d",
@@ -89,6 +94,7 @@ public class EmailDispatcher {
                 parameters.getSubject(),
                 parameters.getType().getId()
             ), e);
+            return false;
         }
     }
 }

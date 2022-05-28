@@ -4,7 +4,7 @@ import f1_Info.constants.Email;
 import lombok.Value;
 
 @Value
-public class EmailDispatchParameters {
+public class EmailSendOutParameters {
     Email mRecipient;
     String mSubject;
     String mHtmlMessage;
