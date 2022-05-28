@@ -10,7 +10,7 @@ class EmailTest {
     void should_return_same_email_as_provided_if_valid() {
         final String emailString = "coolboi@wow.com";
         final Email email = new Email(emailString);
-        assertEquals(emailString, email.getEmail());
+        assertEquals(emailString, email.read());
     }
 
     @Test

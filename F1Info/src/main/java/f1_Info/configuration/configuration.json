@@ -2,5 +2,7 @@
   "databaseUrl": "jdbc:mysql://localhost:3306/f1database",
   "databaseName": "f1User",
   "databasePassword": "0Vw7LIMZ7K17",
-  "isMock": true
+  "isMock": true,
+  "email": "noreplyF1info@gmail.com",
+  "emailPassword": "nwingyleliyquest"
 }

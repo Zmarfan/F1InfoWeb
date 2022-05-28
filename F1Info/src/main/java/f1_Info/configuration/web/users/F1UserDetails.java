@@ -26,7 +26,7 @@ public class F1UserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return mEmail.getEmail();
+        return mEmail.read();
     }
 
     @Override

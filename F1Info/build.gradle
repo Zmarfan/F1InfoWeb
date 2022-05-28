@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.5.0'
+	implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 }
 
 tasks.named('test') {

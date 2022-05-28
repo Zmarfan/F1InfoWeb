@@ -1,9 +1,9 @@
 package f1_Info.constants;
 
-import lombok.Getter;
+import lombok.ToString;
 import org.apache.commons.validator.routines.EmailValidator;
 
-@Getter
+@ToString
 public class Email {
     private final String mEmail;
 
@@ -12,5 +12,9 @@ public class Email {
             throw new IllegalArgumentException(String.format("Provided email is not valid: %s", email));
         }
         mEmail = email;
+    }
+
+    public String read() {
+        return mEmail;
     }
 }
