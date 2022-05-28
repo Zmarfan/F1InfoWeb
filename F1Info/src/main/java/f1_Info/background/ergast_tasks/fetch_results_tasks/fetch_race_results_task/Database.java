@@ -4,7 +4,7 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
 import f1_Info.background.ergast_tasks.fetch_results_tasks.MergeIntoResultsQueryData;
 import f1_Info.configuration.Configuration;
-import f1_Info.constants.ResultType;
+import f1_Info.constants.f1.ResultType;
 import f1_Info.database.BulkOfWork;
 import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

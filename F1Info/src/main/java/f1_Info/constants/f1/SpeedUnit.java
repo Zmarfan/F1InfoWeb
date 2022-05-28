@@ -1,4 +1,4 @@
-package f1_Info.constants;
+package f1_Info.constants.f1;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

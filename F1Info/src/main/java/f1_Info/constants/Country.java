@@ -261,21 +261,21 @@ public enum Country{
 
     public static Country fromCountryCode(final String countryCode) {
         return Arrays.stream(values())
-            .filter(country -> Objects.equals(country.mCode, countryCode.toLowerCase()))
+            .filter(country -> countryCode != null && Objects.equals(country.mCode, countryCode.toLowerCase()))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the countryCode: %s to a valid country", countryCode)));
     }
 
     public static Country fromName(final String name) {
         return Arrays.stream(values())
-            .filter(country -> country.mNames.contains(name.toLowerCase()))
+            .filter(country -> name != null && country.mNames.contains(name.toLowerCase()))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the name: %s to a valid country", name)));
     }
 
     public static Country fromNationality(final String nationality) {
          return Arrays.stream(values())
-             .filter(country -> country.mNationalityKeywords.contains(nationality.toLowerCase()))
+             .filter(country -> nationality != null && country.mNationalityKeywords.contains(nationality.toLowerCase()))
              .findFirst()
              .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the nationality: %s to a valid country", nationality)));
     }

@@ -3,7 +3,7 @@ package f1_Info.background.ergast_tasks.fetch_finish_status_task;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.FinishStatusData;
-import f1_Info.constants.FinishStatus;
+import f1_Info.constants.f1.FinishStatus;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

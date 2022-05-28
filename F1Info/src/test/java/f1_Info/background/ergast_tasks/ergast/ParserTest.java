@@ -15,7 +15,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorSta
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.constants.Country;
-import f1_Info.constants.FinishStatus;
+import f1_Info.constants.f1.FinishStatus;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

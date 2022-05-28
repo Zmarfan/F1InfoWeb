@@ -4,7 +4,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.results.AverageSpeedData
 import f1_Info.background.ergast_tasks.ergast.responses.results.FastestLapData;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultData;
 import f1_Info.background.ergast_tasks.ergast.responses.results.TimeData;
-import f1_Info.constants.ResultType;
+import f1_Info.constants.f1.ResultType;
 import f1_Info.database.IQueryData;
 import f1_Info.utils.DateUtils;
 import lombok.Value;

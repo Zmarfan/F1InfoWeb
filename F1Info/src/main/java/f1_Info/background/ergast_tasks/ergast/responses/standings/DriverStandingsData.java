@@ -3,7 +3,7 @@ package f1_Info.background.ergast_tasks.ergast.responses.standings;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
-import f1_Info.constants.PositionType;
+import f1_Info.constants.f1.PositionType;
 import lombok.Value;
 
 import java.math.BigDecimal;

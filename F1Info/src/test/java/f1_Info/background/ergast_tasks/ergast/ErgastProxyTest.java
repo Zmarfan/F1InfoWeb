@@ -17,8 +17,8 @@ import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataH
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
 import f1_Info.constants.Country;
-import f1_Info.constants.FinishStatus;
-import f1_Info.constants.SpeedUnit;
+import f1_Info.constants.f1.FinishStatus;
+import f1_Info.constants.f1.SpeedUnit;
 import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
