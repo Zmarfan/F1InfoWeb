@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
@@ -16,7 +15,7 @@ public enum SpeedUnit {
 
     public static SpeedUnit fromStringCode(final String stringCode) {
         return Arrays.stream(values())
-            .filter(speedUnit -> Objects.equals(speedUnit.mStringCode, stringCode))
+            .filter(speedUnit -> speedUnit.mStringCode.equals(stringCode))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the stringCode: %s to a valid speed unit", stringCode)));
     }

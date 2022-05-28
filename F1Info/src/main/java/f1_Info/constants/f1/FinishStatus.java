@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
@@ -149,12 +148,12 @@ public enum FinishStatus {
 
     public static FinishStatus fromStringCode(final String stringCode) {
         return Arrays.stream(values())
-            .filter(finishStatus -> Objects.equals(finishStatus.mStringCode, stringCode))
+            .filter(finishStatus -> finishStatus.mStringCode.equals(stringCode))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the string code: %s to a valid finish status", stringCode)));
     }
 
     public static boolean exists(final String stringCode) {
-        return Arrays.stream(values()).anyMatch(finishStatus -> Objects.equals(finishStatus.mStringCode, stringCode));
+        return Arrays.stream(values()).anyMatch(finishStatus -> finishStatus.mStringCode.equals(stringCode));
     }
 }

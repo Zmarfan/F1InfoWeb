@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
+@Getter
 public enum PositionType {
     FINISHED("finished", null),
     RETIRED("retired", "R"),
@@ -17,11 +18,14 @@ public enum PositionType {
     FAILED_TO_QUALIFY("failed to qualify", "F"),
     NOT_CLASSIFIED("not classified", "N");
 
-    @Getter
     private final String mValue;
     private final String mErgastCode;
 
     public static PositionType fromString(final String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Unable to parse null to a position type");
+        }
+
         final Optional<PositionType> positionType = Arrays.stream(values()).filter(positionType1 -> Objects.equals(positionType1.mErgastCode, string)).findFirst();
         if (positionType.isPresent()) {
             return positionType.get();

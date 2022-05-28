@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
@@ -16,7 +15,7 @@ public enum ResultType {
 
     public static ResultType fromStringCode(final String stringCode) {
         return Arrays.stream(values())
-            .filter(resultType -> Objects.equals(resultType.mStringCode, stringCode))
+            .filter(resultType -> resultType.mStringCode.equals(stringCode))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("Unable to parse the string code: %s to a valid result type", stringCode)));
     }
