@@ -39,9 +39,10 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ErgastProxyTest {
+    private static final String MOCK_EMAIL = "asd@asd.com";
     private static final ResponseHeader RESPONSE_HEADER = new ResponseHeader(1000, 0, 500);
-    private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true, "asd@asd.com", "");
-    private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false, "asd@asd.com", "");
+    private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true, MOCK_EMAIL, "", MOCK_EMAIL);
+    private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false, MOCK_EMAIL, "", MOCK_EMAIL);
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
     private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 

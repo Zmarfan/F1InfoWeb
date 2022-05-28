@@ -12,6 +12,7 @@ public class ConfigurationRules {
     boolean mIsMock;
     Email mEmail;
     String mEmailPassword;
+    Email mLoggingEmail;
 
     public ConfigurationRules(
         @JsonProperty("databaseUrl") final String databaseUrl,
@@ -19,7 +20,8 @@ public class ConfigurationRules {
         @JsonProperty("databasePassword") final String databasePassword,
         @JsonProperty("isMock") final boolean isMock,
         @JsonProperty("email") final String email,
-        @JsonProperty("emailPassword") final String emailPassword
+        @JsonProperty("emailPassword") final String emailPassword,
+        @JsonProperty("loggingEmail") final String loggingEmail
     ) {
         mDatabaseUrl = databaseUrl;
         mDatabaseName = databaseName;
@@ -27,5 +29,6 @@ public class ConfigurationRules {
         mIsMock = isMock;
         mEmail = new Email(email);
         mEmailPassword = emailPassword;
+        mLoggingEmail = new Email(loggingEmail);
     }
 }
