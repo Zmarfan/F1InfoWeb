@@ -16,6 +16,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStanding
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import f1_Info.configuration.Configuration;
 import f1_Info.configuration.ConfigurationRules;
+import f1_Info.configuration.ConfigurationRulesBuilder;
 import f1_Info.constants.Country;
 import f1_Info.constants.f1.FinishStatus;
 import f1_Info.constants.f1.SpeedUnit;
@@ -39,10 +40,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ErgastProxyTest {
-    private static final String MOCK_EMAIL = "asd@asd.com";
     private static final ResponseHeader RESPONSE_HEADER = new ResponseHeader(1000, 0, 500);
-    private static final ConfigurationRules MOCK_CONFIGURATION = new ConfigurationRules("", "", "", true, MOCK_EMAIL, "", MOCK_EMAIL);
-    private static final ConfigurationRules LIVE_CONFIGURATION = new ConfigurationRules("", "", "", false, MOCK_EMAIL, "", MOCK_EMAIL);
+    private static final ConfigurationRules MOCK_CONFIGURATION = ConfigurationRulesBuilder.builder(true).build();
+    private static final ConfigurationRules LIVE_CONFIGURATION = ConfigurationRulesBuilder.builder(false).build();
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
     private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 

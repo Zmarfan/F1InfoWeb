@@ -2,6 +2,7 @@ package f1_Info.wrappers;
 
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,7 @@ public class ThreadScheduler {
         mExecutorService.scheduleAtFixedRate(runnable, period, period, timeUnit);
     }
 
+    @PreDestroy
     public void terminate() {
         mExecutorService.shutdown();
     }

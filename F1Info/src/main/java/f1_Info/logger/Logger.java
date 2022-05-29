@@ -5,7 +5,6 @@ import f1_Info.helpers.email.EmailSendOutParameters;
 import f1_Info.helpers.email.EmailService;
 import f1_Info.helpers.email.EmailType;
 import f1_Info.wrappers.ThreadScheduler;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -25,19 +24,21 @@ public class Logger implements Runnable {
     private static final String INFO_TEMPLATE = "%s in method: %s in class: %s";
     private static final String ERROR_TEMPLATE = "%s in method: %s in class: %s with exception: %s with the stacktrace: ";
 
+    private final org.slf4j.Logger mLogger;
     private final EmailService mEmailService;
     private final Configuration mConfiguration;
     private final ThreadScheduler mThreadScheduler;
 
-    private static final List<String> EMAIL_LOGGING_LIST = Collections.synchronizedList(new LinkedList<>());
-    private static final org.slf4j.Logger F_1_LOGGER = LoggerFactory.getLogger("f1Logger");
+    static final List<String> EMAIL_LOGGING_LIST = Collections.synchronizedList(new LinkedList<>());
 
     @Autowired
     public Logger(
+        final LoggerFactory mLoggerFactory,
         @Lazy final EmailService emailService,
         final Configuration configuration,
         final ThreadScheduler threadScheduler
     ) {
+        mLogger = mLoggerFactory.getLogger();
         mEmailService = emailService;
         mConfiguration = configuration;
         mThreadScheduler = threadScheduler;
@@ -46,20 +47,20 @@ public class Logger implements Runnable {
     }
 
     public <T> void info(final String methodName, final Class<T> classType, final String message) {
-        if (F_1_LOGGER.isInfoEnabled()) {
-            F_1_LOGGER.info(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
+        if (mLogger.isInfoEnabled()) {
+            mLogger.info(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
         }
     }
 
     public <T> void warning(final String methodName, final Class<T> classType, final String message) {
-        if (F_1_LOGGER.isWarnEnabled()) {
-            F_1_LOGGER.warn(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
+        if (mLogger.isWarnEnabled()) {
+            mLogger.warn(String.format(INFO_TEMPLATE, message, methodName, classType.getName()));
         }
     }
 
     public <T> void severe(final String methodName, final Class<T> classType, final String message, final Exception exception) {
-        if (F_1_LOGGER.isErrorEnabled()) {
-            F_1_LOGGER.error(String.format(ERROR_TEMPLATE, message, methodName, classType.getName(), exception), exception);
+        if (mLogger.isErrorEnabled()) {
+            mLogger.error(String.format(ERROR_TEMPLATE, message, methodName, classType.getName(), exception), exception);
 
             if (!mConfiguration.getRules().getIsMock()) {
                 EMAIL_LOGGING_LIST.add(formatSevereEmailLog(methodName, classType, message, exception));
@@ -73,7 +74,7 @@ public class Logger implements Runnable {
     }
 
     @PreDestroy
-    private void terminate() {
+    void terminate() {
         mThreadScheduler.terminate();
     }
 
