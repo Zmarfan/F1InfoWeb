@@ -1,13 +1,13 @@
 package f1_Info.background.ergast_tasks.fetch_qualifying_results_task;
 
+import common.constants.Country;
+import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
 import f1_Info.background.ergast_tasks.ergast.responses.results.QualifyingResultData;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
-import f1_Info.constants.Country;
-import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

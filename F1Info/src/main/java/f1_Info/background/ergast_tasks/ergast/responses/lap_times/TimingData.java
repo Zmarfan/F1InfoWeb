@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.ergast.responses.lap_times;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import f1_Info.utils.DateUtils;
+import common.utils.DateUtils;
 import lombok.Value;
 
 import java.math.BigDecimal;

@@ -1,11 +1,11 @@
 package f1_Info.background.ergast_tasks.fetch_circuits_task;
 
+import common.logger.Logger;
+import common.utils.ListUtils;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
-import f1_Info.logger.Logger;
-import f1_Info.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

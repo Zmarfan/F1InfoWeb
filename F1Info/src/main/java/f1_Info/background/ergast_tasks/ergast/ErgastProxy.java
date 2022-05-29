@@ -9,8 +9,8 @@ import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
 import f1_Info.background.ergast_tasks.RaceRecord;
-import f1_Info.configuration.Configuration;
-import f1_Info.logger.Logger;
+import common.configuration.Configuration;
+import common.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static f1_Info.wrappers.ThrowingFunction.wrapper;
+import static common.wrappers.ThrowingFunction.wrapper;
 import static java.util.Collections.emptyList;
 
 @Service

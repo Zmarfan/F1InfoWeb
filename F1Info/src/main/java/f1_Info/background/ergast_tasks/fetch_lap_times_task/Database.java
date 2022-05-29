@@ -1,11 +1,11 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
+import common.configuration.Configuration;
+import database.BulkOfWork;
 import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.RaceRecord;
-import f1_Info.configuration.Configuration;
-import f1_Info.database.BulkOfWork;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
-import f1_Info.logger.Logger;
+import common.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

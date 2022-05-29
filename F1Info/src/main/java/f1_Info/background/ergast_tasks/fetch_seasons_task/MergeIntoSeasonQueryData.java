@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.fetch_seasons_task;
 
-import f1_Info.constants.Url;
-import f1_Info.database.IQueryData;
+import common.constants.Url;
+import database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.SeasonData;
 import lombok.Value;
 

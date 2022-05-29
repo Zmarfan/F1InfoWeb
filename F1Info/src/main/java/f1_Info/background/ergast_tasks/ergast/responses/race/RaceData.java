@@ -1,9 +1,9 @@
 package f1_Info.background.ergast_tasks.ergast.responses.race;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import f1_Info.constants.Url;
+import common.constants.Url;
+import common.utils.DateUtils;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
-import f1_Info.utils.DateUtils;
 import lombok.Value;
 
 import java.net.MalformedURLException;

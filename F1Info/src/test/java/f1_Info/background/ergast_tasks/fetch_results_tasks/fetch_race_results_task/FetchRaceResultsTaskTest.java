@@ -1,14 +1,14 @@
 package f1_Info.background.ergast_tasks.fetch_results_tasks.fetch_race_results_task;
 
+import common.constants.Country;
+import common.constants.f1.FinishStatus;
+import common.constants.f1.SpeedUnit;
+import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
 import f1_Info.background.ergast_tasks.ergast.responses.results.*;
-import f1_Info.constants.Country;
-import f1_Info.constants.f1.FinishStatus;
-import f1_Info.constants.f1.SpeedUnit;
-import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.fetch_driver_standings_task;
 
+import database.IQueryData;
 import f1_Info.background.ergast_tasks.RaceRecord;
-import f1_Info.database.IQueryData;
 import lombok.Value;
 
 @Value

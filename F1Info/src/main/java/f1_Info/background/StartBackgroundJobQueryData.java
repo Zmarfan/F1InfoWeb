@@ -1,6 +1,6 @@
 package f1_Info.background;
 
-import f1_Info.database.IQueryData;
+import database.IQueryData;
 import lombok.Value;
 
 @Value

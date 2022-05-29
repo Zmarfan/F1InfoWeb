@@ -1,7 +1,7 @@
 package f1_Info.entry_points;
 
 import f1_Info.entry_points.authentication.SessionAttributes;
-import f1_Info.logger.Logger;
+import common.logger.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static f1_Info.utils.ResponseUtil.*;
+import static f1_Info.configuration.web.ResponseUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;

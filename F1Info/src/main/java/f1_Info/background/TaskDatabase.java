@@ -1,8 +1,8 @@
 package f1_Info.background;
 
-import f1_Info.configuration.Configuration;
-import f1_Info.database.DatabaseBase;
-import f1_Info.logger.Logger;
+import common.configuration.Configuration;
+import common.logger.Logger;
+import database.DatabaseBase;
 
 import java.sql.SQLException;
 

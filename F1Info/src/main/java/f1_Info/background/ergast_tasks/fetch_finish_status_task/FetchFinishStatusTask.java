@@ -1,14 +1,14 @@
 package f1_Info.background.ergast_tasks.fetch_finish_status_task;
 
+import common.constants.f1.FinishStatus;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
-import f1_Info.constants.f1.FinishStatus;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.FinishStatusData;
-import f1_Info.logger.Logger;
-import f1_Info.utils.ListUtils;
+import common.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import common.utils.ListUtils;
 
 import java.sql.SQLException;
 import java.util.List;

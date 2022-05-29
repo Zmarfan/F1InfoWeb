@@ -1,6 +1,6 @@
 package f1_Info.background;
 
-import f1_Info.logger.Logger;
+import common.logger.Logger;
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;

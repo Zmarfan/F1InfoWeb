@@ -21,7 +21,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.scheduling.annotation.Scheduled;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = { "f1_Info", "common", "database" })
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class F1InfoApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {

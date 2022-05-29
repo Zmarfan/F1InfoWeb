@@ -1,7 +1,7 @@
 package f1_Info.entry_points;
 
 import f1_Info.entry_points.authentication.SessionAttributes;
-import f1_Info.logger.Logger;
+import common.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.function.LongFunction;
 
-import static f1_Info.utils.ResponseUtil.badRequest;
-import static f1_Info.utils.ResponseUtil.internalServerError;
+import static f1_Info.configuration.web.ResponseUtil.badRequest;
+import static f1_Info.configuration.web.ResponseUtil.internalServerError;
 
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 @Component

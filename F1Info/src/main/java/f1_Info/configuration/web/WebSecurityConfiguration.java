@@ -1,7 +1,7 @@
 package f1_Info.configuration.web;
 
+import f1_Info.configuration.web.users.Authority;
 import f1_Info.configuration.web.users.UserManager;
-import f1_Info.constants.Authority;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

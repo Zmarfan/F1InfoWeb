@@ -1,18 +1,18 @@
 package f1_Info.background.ergast_tasks.fetch_qualifying_results_task;
 
+import common.configuration.Configuration;
+import common.logger.Logger;
+import database.BulkOfWork;
 import f1_Info.background.TaskDatabase;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
-import f1_Info.configuration.Configuration;
-import f1_Info.database.BulkOfWork;
-import f1_Info.logger.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import static common.wrappers.ThrowingFunction.wrapper;
 import static f1_Info.background.ergast_tasks.ErgastFetchingInformation.FIRST_SEASON_WITH_QUALIFYING_RESULTS_DATA;
-import static f1_Info.wrappers.ThrowingFunction.wrapper;
 
 @Component(value = "FetchQualifyingResultsTaskDatabase")
 public class Database extends TaskDatabase {

@@ -1,12 +1,12 @@
 package f1_Info.background.ergast_tasks.fetch_constructor_standings_task;
 
+import common.constants.Country;
+import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
-import f1_Info.constants.Country;
-import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

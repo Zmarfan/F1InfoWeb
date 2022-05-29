@@ -1,8 +1,8 @@
 package f1_Info.background.ergast_tasks.fetch_constructors_task;
 
-import f1_Info.constants.Country;
-import f1_Info.constants.Url;
-import f1_Info.database.IQueryData;
+import common.constants.Country;
+import common.constants.Url;
+import database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import lombok.Value;
 

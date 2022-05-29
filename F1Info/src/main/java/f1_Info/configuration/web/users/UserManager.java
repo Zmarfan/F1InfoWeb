@@ -1,7 +1,6 @@
 package f1_Info.configuration.web.users;
 
-import f1_Info.constants.Authority;
-import f1_Info.constants.Email;
+import common.constants.Email;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

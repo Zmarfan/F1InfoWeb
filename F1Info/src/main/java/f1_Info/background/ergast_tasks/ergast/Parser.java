@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static f1_Info.utils.ListUtils.stringListToString;
+import static common.utils.ListUtils.stringListToString;
 
 @Component
 public class Parser {

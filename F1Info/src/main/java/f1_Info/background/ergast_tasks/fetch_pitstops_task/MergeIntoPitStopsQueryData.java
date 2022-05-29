@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
 import f1_Info.background.ergast_tasks.RaceRecord;
-import f1_Info.database.IQueryData;
+import database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import lombok.Value;
 

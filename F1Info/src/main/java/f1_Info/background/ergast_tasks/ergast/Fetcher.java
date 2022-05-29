@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.ergast;
 
 import com.google.common.util.concurrent.RateLimiter;
-import f1_Info.utils.DateUtils;
+import common.utils.DateUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;

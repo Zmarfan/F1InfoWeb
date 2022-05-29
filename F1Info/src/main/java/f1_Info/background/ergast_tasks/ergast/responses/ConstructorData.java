@@ -1,8 +1,8 @@
 package f1_Info.background.ergast_tasks.ergast.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import f1_Info.constants.Country;
-import f1_Info.constants.Url;
+import common.constants.Country;
+import common.constants.Url;
 import lombok.Value;
 
 import java.net.MalformedURLException;

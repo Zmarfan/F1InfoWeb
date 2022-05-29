@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
+import database.IQueryData;
 import f1_Info.background.ergast_tasks.RaceRecord;
-import f1_Info.database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import lombok.Value;
 

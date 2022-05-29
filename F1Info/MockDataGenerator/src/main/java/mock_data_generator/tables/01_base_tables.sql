@@ -10,19 +10,18 @@ create table users(
 create unique index index_users_email_id on users (id, email);
 
 create table authorities(
-  id int not null,
   name varchar(50) not null,
 
-  constraint authorities_pk primary key (id)
+  constraint authorities_pk primary key (name)
 );
 
 create table user_authorities(
   user_id int not null,
-  authority_id varchar(50) not null,
+  authority_name varchar(50) not null,
 
   constraint user_authorities_pk primary key (user_id),
   constraint user_authorities_user_id_fk foreign key (user_id) references users(id),
-  constraint user_authorities_authority_id_fk foreign key (authority_id) references authorities(id)
+  constraint user_authorities_authority_name_fk foreign key (authority_name) references authorities(name)
 );
 
 create table background_tasks(

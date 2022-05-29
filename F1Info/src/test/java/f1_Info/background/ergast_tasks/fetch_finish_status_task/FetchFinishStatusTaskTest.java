@@ -1,10 +1,10 @@
 package f1_Info.background.ergast_tasks.fetch_finish_status_task;
 
+import common.constants.f1.FinishStatus;
+import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.FinishStatusData;
-import f1_Info.constants.f1.FinishStatus;
-import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

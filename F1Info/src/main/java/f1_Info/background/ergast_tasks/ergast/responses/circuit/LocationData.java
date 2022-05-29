@@ -1,7 +1,7 @@
 package f1_Info.background.ergast_tasks.ergast.responses.circuit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import f1_Info.constants.Country;
+import common.constants.Country;
 import lombok.Value;
 
 import java.math.BigDecimal;

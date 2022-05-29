@@ -1,5 +1,7 @@
 package f1_Info.background.ergast_tasks.ergast;
 
+import common.constants.Country;
+import common.constants.f1.FinishStatus;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.LocationData;
@@ -14,8 +16,6 @@ import f1_Info.background.ergast_tasks.ergast.responses.results.*;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
-import f1_Info.constants.Country;
-import f1_Info.constants.f1.FinishStatus;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

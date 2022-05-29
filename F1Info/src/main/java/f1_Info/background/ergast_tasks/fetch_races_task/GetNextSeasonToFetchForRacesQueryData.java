@@ -1,6 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_races_task;
 
-import f1_Info.database.IQueryData;
+import database.IQueryData;
 import lombok.Value;
 
 @Value

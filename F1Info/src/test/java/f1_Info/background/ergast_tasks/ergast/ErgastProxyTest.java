@@ -1,5 +1,12 @@
 package f1_Info.background.ergast_tasks.ergast;
 
+import common.configuration.Configuration;
+import common.configuration.ConfigurationRules;
+import common.configuration.ConfigurationRulesTestBuilder;
+import common.constants.Country;
+import common.constants.f1.FinishStatus;
+import common.constants.f1.SpeedUnit;
+import common.logger.Logger;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
@@ -14,13 +21,6 @@ import f1_Info.background.ergast_tasks.ergast.responses.results.*;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
-import f1_Info.configuration.Configuration;
-import f1_Info.configuration.ConfigurationRules;
-import f1_Info.configuration.ConfigurationRulesBuilder;
-import f1_Info.constants.Country;
-import f1_Info.constants.f1.FinishStatus;
-import f1_Info.constants.f1.SpeedUnit;
-import f1_Info.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,8 +41,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ErgastProxyTest {
     private static final ResponseHeader RESPONSE_HEADER = new ResponseHeader(1000, 0, 500);
-    private static final ConfigurationRules MOCK_CONFIGURATION = ConfigurationRulesBuilder.builder(true).build();
-    private static final ConfigurationRules LIVE_CONFIGURATION = ConfigurationRulesBuilder.builder(false).build();
+    private static final ConfigurationRules MOCK_CONFIGURATION = ConfigurationRulesTestBuilder.builder(true).build();
+    private static final ConfigurationRules LIVE_CONFIGURATION = ConfigurationRulesTestBuilder.builder(false).build();
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
     private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 

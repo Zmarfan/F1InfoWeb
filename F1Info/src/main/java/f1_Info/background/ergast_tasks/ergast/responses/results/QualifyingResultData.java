@@ -1,9 +1,9 @@
 package f1_Info.background.ergast_tasks.ergast.responses.results;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import common.utils.DateUtils;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
-import f1_Info.utils.DateUtils;
 import lombok.Value;
 
 import java.math.BigDecimal;
