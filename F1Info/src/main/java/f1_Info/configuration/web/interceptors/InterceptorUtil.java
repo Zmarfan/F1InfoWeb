@@ -1,6 +1,6 @@
 package f1_Info.configuration.web.interceptors;
 
-import f1_Info.entry_points.authentication.SessionAttributes;
+import f1_Info.configuration.web.users.SessionAttributes;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;

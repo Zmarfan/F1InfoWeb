@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication;
+package f1_Info.configuration.web.users;
 
 import lombok.experimental.UtilityClass;
 

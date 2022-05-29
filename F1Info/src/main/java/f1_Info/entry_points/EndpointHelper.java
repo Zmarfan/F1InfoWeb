@@ -1,6 +1,6 @@
 package f1_Info.entry_points;
 
-import f1_Info.entry_points.authentication.SessionAttributes;
+import f1_Info.configuration.web.users.SessionAttributes;
 import common.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
