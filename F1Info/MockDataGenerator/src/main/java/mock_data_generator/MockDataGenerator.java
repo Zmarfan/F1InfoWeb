@@ -1,6 +1,8 @@
 package mock_data_generator;
 
+import database.DatabaseUtil;
 import lombok.experimental.UtilityClass;
+import mock_data_generator.database.CreateUsersQueryData;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class MockDataGenerator {
             createHelperFunctions();
             createData();
             createProcedures();
+            createMockData();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
             logError("Unable to finish the mock data generation!");
@@ -69,6 +72,12 @@ public class MockDataGenerator {
         executeSqlProcedureFiles();
     }
 
+    private static void createMockData() throws SQLException {
+        logInfo("Creating mock data...");
+
+        DatabaseUtil.executeQuery(getConnection(), new CreateUsersQueryData(), null, null);
+    }
+
     private static void executeSqlFilesInDirectory(final String directoryPath) throws SQLException, IOException {
         final File tablesFolder = new File(directoryPath);
         final List<Path> paths = stream(requireNonNull(tablesFolder.listFiles())).map(file -> Path.of(file.getPath())).toList();
@@ -79,7 +88,7 @@ public class MockDataGenerator {
     }
 
     private static void executeSqlProcedureFiles() throws SQLException, IOException {
-        Path start = Paths.get("./src/main/java/f1_Info");
+        Path start = Paths.get(".");
         try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
             List<File> proceduresSqlFiles = stream
                 .map(Path::toFile)

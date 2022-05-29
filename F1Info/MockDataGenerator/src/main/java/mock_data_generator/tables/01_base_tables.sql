@@ -7,8 +7,6 @@ create table users(
   constraint users_pk primary key (id)
 );
 
-create unique index index_users_email_id on users (id, email);
-
 create table authorities(
   name varchar(50) not null,
 
