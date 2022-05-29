@@ -13,6 +13,7 @@ import java.util.Properties;
 
 @Component
 public class EmailService {
+    private final EmailDispatcher mEmailDispatcher;
     private final Logger mLogger;
     private final Configuration mConfiguration;
 
@@ -20,9 +21,11 @@ public class EmailService {
 
     @Autowired
     public EmailService(
+        final EmailDispatcher emailDispatcher,
         final Configuration configuration,
         final Logger logger
     ) {
+        mEmailDispatcher = emailDispatcher;
         mLogger = logger;
         mConfiguration = configuration;
 
@@ -37,6 +40,15 @@ public class EmailService {
         return dispatch(message.get(), parameters);
     }
 
+    private Session createSession(Configuration configuration) {
+        return Session.getInstance(createProperties(), new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(configuration.getRules().getEmail().read(), configuration.getRules().getEmailPassword());
+            }
+        });
+    }
+
     private Properties createProperties() {
         final Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -45,15 +57,6 @@ public class EmailService {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         return properties;
-    }
-
-    private Session createSession(Configuration configuration) {
-        return Session.getInstance(createProperties(), new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(configuration.getRules().getEmail().read(), configuration.getRules().getEmailPassword());
-            }
-        });
     }
 
     private Optional<Message> createMessage(final EmailSendOutParameters parameters) {
@@ -78,23 +81,24 @@ public class EmailService {
     }
 
     private boolean dispatch(final Message message, final EmailSendOutParameters parameters) {
-        try {
-            Transport.send(message);
+        final Optional<MessagingException> exception = mEmailDispatcher.dispatch(message);
+
+        if (exception.isPresent()) {
+            mLogger.severe("dispatch", this.getClass(), String.format(
+                "Failed to send email to %s with subject: %s for email type: %d",
+                parameters.getRecipient().read(),
+                parameters.getSubject(),
+                parameters.getType().getId()
+            ), exception.get());
+        } else {
             mLogger.info("dispatch", this.getClass(), String.format(
                 "Successfully sent email to %s with subject: %s for email type: %d",
                 parameters.getRecipient().read(),
                 parameters.getSubject(),
                 parameters.getType().getId()
             ));
-            return true;
-        } catch (final MessagingException e) {
-            mLogger.severe("dispatch", this.getClass(), String.format(
-                "Failed to send email to %s with subject: %s for email type: %d",
-                parameters.getRecipient().read(),
-                parameters.getSubject(),
-                parameters.getType().getId()
-            ), e);
-            return false;
         }
+
+       return exception.isEmpty();
     }
 }
