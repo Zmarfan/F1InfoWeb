@@ -42,8 +42,7 @@ public class Logger implements Runnable {
         mEmailService = emailService;
         mConfiguration = configuration;
         mThreadScheduler = threadScheduler;
-
-        mThreadScheduler.start(this, 1, TimeUnit.MINUTES);
+        sendOutStashedSevereEmailsEveryMinute();
     }
 
     public <T> void info(final String methodName, final Class<T> classType, final String message) {
@@ -76,6 +75,10 @@ public class Logger implements Runnable {
     @PreDestroy
     void terminate() {
         mThreadScheduler.terminate();
+    }
+
+    private void sendOutStashedSevereEmailsEveryMinute() {
+        mThreadScheduler.start(this, 1, TimeUnit.MINUTES);
     }
 
     private <T> String formatSevereEmailLog(final String methodName, final Class<T> classType, final String message, final Exception exception) {
