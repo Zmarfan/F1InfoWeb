@@ -1,8 +1,9 @@
 package database.sql_parsing;
 
 import common.constants.Country;
-import common.constants.Email;
+import common.constants.email.Email;
 import common.constants.Url;
+import common.constants.email.MalformedEmailException;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -98,6 +99,10 @@ public class SqlParserFunctions {
     }
 
     public static Email readEmail(final SqlParserInstance instance) {
-        return new Email(readString(instance));
+        try {
+            return new Email(readString(instance));
+        } catch (final MalformedEmailException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

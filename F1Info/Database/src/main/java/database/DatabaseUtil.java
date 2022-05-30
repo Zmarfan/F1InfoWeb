@@ -1,7 +1,7 @@
 package database;
 
 import common.constants.Country;
-import common.constants.Email;
+import common.constants.email.Email;
 import common.constants.Url;
 import common.logger.Logger;
 import common.utils.ListUtils;

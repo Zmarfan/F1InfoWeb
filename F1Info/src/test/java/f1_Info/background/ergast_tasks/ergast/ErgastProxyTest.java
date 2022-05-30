@@ -4,6 +4,7 @@ import common.configuration.Configuration;
 import common.configuration.ConfigurationRules;
 import common.configuration.ConfigurationRulesTestBuilder;
 import common.constants.Country;
+import common.constants.email.MalformedEmailException;
 import common.constants.f1.FinishStatus;
 import common.constants.f1.SpeedUnit;
 import common.logger.Logger;
@@ -41,8 +42,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ErgastProxyTest {
     private static final ResponseHeader RESPONSE_HEADER = new ResponseHeader(1000, 0, 500);
-    private static final ConfigurationRules MOCK_CONFIGURATION = ConfigurationRulesTestBuilder.builder(true).build();
-    private static final ConfigurationRules LIVE_CONFIGURATION = ConfigurationRulesTestBuilder.builder(false).build();
     private static final String WIKIPEDIA_URL = "http://coolUrl.com/very-wow/12";
     private static final RaceRecord RACE_RECORD = new RaceRecord(1998, 2, 1);
 
@@ -63,7 +62,7 @@ class ErgastProxyTest {
 
     @Test
     void should_call_fetcher_in_correct_format() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString())).thenReturn(
             new ErgastResponse<>(new ResponseHeader(5, 0, 7), emptyList())
@@ -76,7 +75,7 @@ class ErgastProxyTest {
 
     @Test
     void should_only_make_one_call_to_fetcher_if_first_response_contains_a_total_lesser_than_limit() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString())).thenReturn(
             new ErgastResponse<>(new ResponseHeader(5, 0, 7), emptyList())
@@ -91,7 +90,7 @@ class ErgastProxyTest {
     void should_make_one_call_to_fetcher_for_every_limit_partition_needed_to_get_full_response() throws IOException {
         final int total = (int)Math.round(ErgastProxy.MAX_LIMIT * 3.5);
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
             .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), emptyList()))
@@ -108,7 +107,7 @@ class ErgastProxyTest {
     void should_make_one_call_to_fetcher_containing_growing_offset_for_every_limit_partition_needed_to_get_full_response() throws IOException {
         final int total = (int)Math.round(ErgastProxy.MAX_LIMIT * 3.5);
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
             .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), emptyList()))
@@ -133,7 +132,7 @@ class ErgastProxyTest {
         final SeasonData seasonData3 = new SeasonData(2000, WIKIPEDIA_URL);
         final SeasonData seasonData4 = new SeasonData(2001, WIKIPEDIA_URL);
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenReturn("");
         when(mParser.parseSeasonsResponseToObjects(anyString()))
             .thenReturn(new ErgastResponse<>(new ResponseHeader(ErgastProxy.MAX_LIMIT, 0, total), singletonList(seasonData1)))
@@ -148,7 +147,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_constructor_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchAllConstructors();
 
@@ -157,13 +156,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_constructors_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchAllConstructors());
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllConstructors());
@@ -171,7 +170,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_constructors() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllConstructors();
@@ -185,7 +184,7 @@ class ErgastProxyTest {
             new ConstructorData("", WIKIPEDIA_URL, "", Country.GERMANY.getNationalityKeywords().get(0))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseConstructorsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllConstructors());
@@ -193,7 +192,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_driver_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchAllDrivers();
 
@@ -202,13 +201,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_drivers_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchAllDrivers());
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllDrivers());
@@ -216,7 +215,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_drivers() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllDrivers();
@@ -237,7 +236,7 @@ class ErgastProxyTest {
             ""
         ));
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseDriversResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllDrivers());
@@ -245,7 +244,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_season_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchAllSeasons();
 
@@ -254,13 +253,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_seasons_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchAllSeasons());
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllSeasons());
@@ -268,7 +267,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_seasons() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllSeasons();
@@ -280,7 +279,7 @@ class ErgastProxyTest {
     void should_return_formatted_data_from_parser_when_fetching_seasons() throws IOException {
         final List<SeasonData> expectedReturnData = List.of(new SeasonData(1950, WIKIPEDIA_URL));
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseSeasonsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllSeasons());
@@ -288,7 +287,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_circuit_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchAllCircuits();
 
@@ -297,13 +296,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_circuits_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchAllCircuits());
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllCircuits());
@@ -311,7 +310,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_circuits() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllCircuits();
@@ -325,7 +324,7 @@ class ErgastProxyTest {
             new CircuitData("", WIKIPEDIA_URL, "", new LocationData(BigDecimal.ZERO, BigDecimal.ZERO, "", Country.GERMANY.getNames().get(0)))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseCircuitsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllCircuits());
@@ -333,7 +332,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_race_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchRacesFromYear(1998);
 
@@ -342,13 +341,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_races_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchRacesFromYear(1998));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_races() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchRacesFromYear(1998));
@@ -356,7 +355,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_races() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchRacesFromYear(1998);
@@ -375,7 +374,7 @@ class ErgastProxyTest {
             ))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseRacesResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchRacesFromYear(1998));
@@ -383,7 +382,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_finish_status_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchAllFinishStatuses();
 
@@ -392,13 +391,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_finish_status_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchAllFinishStatuses());
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_finish_status() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchAllFinishStatuses());
@@ -406,7 +405,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_finish_status() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchAllFinishStatuses();
@@ -418,7 +417,7 @@ class ErgastProxyTest {
     void should_return_formatted_data_from_parser_when_fetching_finish_status() throws IOException {
         final List<FinishStatusData> expectedReturnData = List.of(new FinishStatusData(FinishStatus.ACCIDENT.getStringCode()));
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseFinishStatusResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchAllFinishStatuses());
@@ -426,7 +425,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchPitStopsForRace(RACE_RECORD);
 
@@ -435,13 +434,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
@@ -449,7 +448,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchPitStopsForRace(RACE_RECORD);
@@ -461,7 +460,7 @@ class ErgastProxyTest {
     void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException, ParseException {
         final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", BigDecimal.TEN));
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parsePitStopResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new PitStopDataHolder(expectedReturnData)))
@@ -472,7 +471,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_lap_time_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchLapTimesForRace(RACE_RECORD);
 
@@ -481,13 +480,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_lap_times_data_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_lap_times() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchLapTimesForRace(RACE_RECORD));
@@ -495,7 +494,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_lap_times() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchLapTimesForRace(RACE_RECORD);
@@ -509,7 +508,7 @@ class ErgastProxyTest {
             new LapTimeData(1, singletonList(new TimingData("as", 1, "0:59:123")))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseLapTimesResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new LapTimesDataHolder(expectedReturnData)))
@@ -520,7 +519,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_driver_standings_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD);
 
@@ -529,13 +528,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_driver_standings_data_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
@@ -543,7 +542,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD);
@@ -566,7 +565,7 @@ class ErgastProxyTest {
             ), singletonList(new ConstructorData("constId", WIKIPEDIA_URL, "vroom", Country.SWEDEN.getNationalityKeywords().get(0))))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new StandingsDataHolder(expectedReturnData, null)))
@@ -577,7 +576,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_constructor_standings_data_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD);
 
@@ -586,13 +585,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_constructor_standings_data_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_constructor_standings() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD));
@@ -600,7 +599,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_constructor_standings() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD);
@@ -619,7 +618,7 @@ class ErgastProxyTest {
             ))
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(
             RESPONSE_HEADER,
             singletonList(new StandingsDataHolder(null, expectedReturnData)))
@@ -630,7 +629,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_sprint_results_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchSprintResultsForSeason(2000);
 
@@ -639,13 +638,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_sprint_results_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchSprintResultsForSeason(2000));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_sprint_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchSprintResultsForSeason(2000));
@@ -653,7 +652,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_sprint_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchSprintResultsForSeason(2000);
@@ -688,7 +687,7 @@ class ErgastProxyTest {
             )), null, null)
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseResultsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchSprintResultsForSeason(2000));
@@ -696,7 +695,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_race_results_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchRaceResultsForSeason(2000);
 
@@ -705,13 +704,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_race_results_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchRaceResultsForSeason(2000));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_race_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchRaceResultsForSeason(2000));
@@ -719,7 +718,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_race_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchRaceResultsForSeason(2000);
@@ -754,7 +753,7 @@ class ErgastProxyTest {
             )), null)
         );
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseResultsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchRaceResultsForSeason(2000));
@@ -762,7 +761,7 @@ class ErgastProxyTest {
 
     @Test
     void should_not_fetch_qualifying_results_from_ergast_if_running_mock_configuration() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchQualifyingResultsForSeason(2000);
 
@@ -771,13 +770,13 @@ class ErgastProxyTest {
 
     @Test
     void should_return_empty_list_of_qualifying_results_if_running_mock_configuration() {
-        when(mConfiguration.getRules()).thenReturn(MOCK_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchQualifyingResultsForSeason(2000));
     }
 
     @Test
     void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_qualifying_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         assertEquals(emptyList(), mErgastProxy.fetchQualifyingResultsForSeason(2000));
@@ -785,7 +784,7 @@ class ErgastProxyTest {
 
     @Test
     void should_log_severe_if_ioexception_gets_thrown_while_fetching_qualifying_results() throws IOException {
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
         mErgastProxy.fetchQualifyingResultsForSeason(2000);
@@ -814,9 +813,25 @@ class ErgastProxyTest {
             "1:29.321"
         ))));
 
-        when(mConfiguration.getRules()).thenReturn(LIVE_CONFIGURATION);
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parseResultsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, expectedReturnData));
 
         assertEquals(expectedReturnData, mErgastProxy.fetchQualifyingResultsForSeason(2000));
+    }
+
+    private ConfigurationRules createMockConfiguration() {
+        try {
+            return ConfigurationRulesTestBuilder.builder(true).build();
+        } catch (final MalformedEmailException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+    
+    private ConfigurationRules createLiveConfiguration() {
+        try {
+            return ConfigurationRulesTestBuilder.builder(false).build();
+        } catch (final MalformedEmailException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

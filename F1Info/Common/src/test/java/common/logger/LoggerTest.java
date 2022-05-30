@@ -2,6 +2,7 @@ package common.logger;
 
 import common.configuration.Configuration;
 import common.configuration.ConfigurationRulesTestBuilder;
+import common.constants.email.MalformedEmailException;
 import common.email.EmailSendOutParameters;
 import common.email.EmailService;
 import org.junit.jupiter.api.Test;
@@ -88,7 +89,7 @@ class LoggerTest {
     }
 
     @Test
-    void should_log_severe_if_it_is_enabled() {
+    void should_log_severe_if_it_is_enabled() throws MalformedEmailException {
         when(mLoggerFactory.getLogger()).thenReturn(mF1Logger);
         when(mConfiguration.getRules()).thenReturn(ConfigurationRulesTestBuilder.builder(true).build());
         when(mF1Logger.isErrorEnabled()).thenReturn(true);
@@ -109,7 +110,7 @@ class LoggerTest {
     }
 
     @Test
-    void should_not_add_log_entry_in_email_list_if_running_mock_configuration_when_logging_severe() {
+    void should_not_add_log_entry_in_email_list_if_running_mock_configuration_when_logging_severe() throws MalformedEmailException {
         when(mLoggerFactory.getLogger()).thenReturn(mF1Logger);
         when(mConfiguration.getRules()).thenReturn(ConfigurationRulesTestBuilder.builder(true).build());
         when(mF1Logger.isErrorEnabled()).thenReturn(true);
@@ -120,7 +121,7 @@ class LoggerTest {
     }
 
     @Test
-    void should_add_log_entry_in_email_list_if_running_production_configuration_when_logging_severe() {
+    void should_add_log_entry_in_email_list_if_running_production_configuration_when_logging_severe() throws MalformedEmailException {
         when(mLoggerFactory.getLogger()).thenReturn(mF1Logger);
         when(mConfiguration.getRules()).thenReturn(ConfigurationRulesTestBuilder.builder(false).build());
         when(mF1Logger.isErrorEnabled()).thenReturn(true);
@@ -131,7 +132,7 @@ class LoggerTest {
     }
 
     @Test
-    void should_clear_email_logging_list_when_sending_out_emails_list_is_non_empty() {
+    void should_clear_email_logging_list_when_sending_out_emails_list_is_non_empty() throws MalformedEmailException {
         when(mLoggerFactory.getLogger()).thenReturn(mF1Logger);
         when(mConfiguration.getRules()).thenReturn(ConfigurationRulesTestBuilder.builder(false).build());
         when(mF1Logger.isErrorEnabled()).thenReturn(true);
@@ -151,7 +152,7 @@ class LoggerTest {
     }
 
     @Test
-    void should_send_out_severe_email_if_logging_list_is_non_empty() {
+    void should_send_out_severe_email_if_logging_list_is_non_empty() throws MalformedEmailException {
         when(mLoggerFactory.getLogger()).thenReturn(mF1Logger);
         when(mConfiguration.getRules()).thenReturn(ConfigurationRulesTestBuilder.builder(false).build());
         when(mF1Logger.isErrorEnabled()).thenReturn(true);

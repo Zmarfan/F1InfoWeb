@@ -1,5 +1,7 @@
 package common.configuration;
 
+import common.constants.email.MalformedEmailException;
+
 public class ConfigurationRulesTestBuilder {
     String mDatabaseUrl = null;
     String mDatabaseName = null;
@@ -17,7 +19,7 @@ public class ConfigurationRulesTestBuilder {
         return new ConfigurationRulesTestBuilder(isMock);
     }
 
-    public ConfigurationRules build() {
+    public ConfigurationRules build() throws MalformedEmailException {
         return new ConfigurationRules(mDatabaseUrl, mDatabaseName, mDatabasePassword, mIsMock, mEmail, mEmailPassword, mLoggingEmail);
     }
 }

@@ -1,6 +1,7 @@
 package f1_Info.configuration.web.users;
 
-import common.constants.Email;
+import common.constants.email.Email;
+import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class UserManager implements UserDetailsManager {
             }
 
             return createUserDetailsFromRecord(userDetailsRecord.get());
-        } catch (final SQLException e) {
+        } catch (final SQLException | MalformedEmailException e) {
             final String errorMessage = String.format("Unable to fetch user details for email: %s", email);
             mLogger.severe("loadUserByUsername", this.getClass(), errorMessage, e);
             throw new UsernameNotFoundException(errorMessage);

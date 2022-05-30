@@ -18,5 +18,5 @@ public class ObjectNames {
     public static final String NULLABLE_DOUBLE = "java.lang.Double";
     public static final String COUNTRY = "common.constants.Country";
     public static final String URL = "common.constants.Url";
-    public static final String EMAIL = "common.constants.Email";
+    public static final String EMAIL = "common.constants.email.Email";
 }

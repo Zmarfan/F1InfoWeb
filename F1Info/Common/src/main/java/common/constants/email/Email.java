@@ -1,4 +1,4 @@
-package common.constants;
+package common.constants.email;
 
 import lombok.ToString;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -7,9 +7,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class Email {
     private final String mEmail;
 
-    public Email(final String email) {
+    public Email(final String email) throws MalformedEmailException {
         if (!EmailValidator.getInstance().isValid(email)) {
-            throw new IllegalArgumentException(String.format("Provided email is not valid: %s", email));
+            throw new MalformedEmailException(String.format("Provided email is not valid: %s", email));
         }
         mEmail = email;
     }

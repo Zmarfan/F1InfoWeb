@@ -1,6 +1,6 @@
 package f1_Info.configuration.web.users;
 
-import common.constants.Email;
+import common.constants.email.Email;
 import database.IQueryData;
 import lombok.Value;
 

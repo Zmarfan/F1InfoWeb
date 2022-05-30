@@ -1,7 +1,7 @@
 package f1_Info.configuration.web.users;
 
 import common.configuration.Configuration;
-import common.constants.Email;
+import common.constants.email.Email;
 import common.logger.Logger;
 import database.DatabaseBase;
 import org.springframework.beans.factory.annotation.Autowired;

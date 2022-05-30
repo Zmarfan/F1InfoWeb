@@ -1,6 +1,6 @@
 package common.email;
 
-import common.constants.Email;
+import common.constants.email.Email;
 import lombok.Value;
 
 @Value
