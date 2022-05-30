@@ -6,15 +6,15 @@ import lombok.Value;
 
 @Value
 public class LoginRequestBody {
-    String mUsername;
+    String mEmail;
     String mPassword;
 
     @JsonCreator
     public LoginRequestBody(
-        @JsonProperty("username") String username,
+        @JsonProperty("email") String email,
         @JsonProperty("password") String password
     ) {
-        mUsername = username;
+        mEmail = email;
         mPassword = password;
     }
 }

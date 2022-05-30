@@ -6,7 +6,7 @@ import lombok.Value;
 @Value
 public class CreateUsersQueryData implements IQueryData<Void> {
     String m01Email = "user@f1.com";
-    String m02Password = "$2a$10$GkvxeNddrfc3R8NRrdZdZ.xMK/.Q6vSQ.U3n9Te.rholzQjbA5m1i";
+    String m02Password = "$2a$10$Wb1YibD19Az73ldC2n7TaOx0ftHNaggo3oXTHlN0Yy5sAR4d5p6q2";
 
     @Override
     public String getStoredProcedureName() {

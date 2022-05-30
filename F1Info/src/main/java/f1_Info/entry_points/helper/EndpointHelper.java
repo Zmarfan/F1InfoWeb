@@ -1,14 +1,15 @@
-package f1_Info.entry_points;
+package f1_Info.entry_points.helper;
 
-import f1_Info.configuration.web.users.SessionAttributes;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.SessionAttributes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.function.LongFunction;
+import javax.servlet.http.HttpSession;
+import java.util.function.Function;
 
 import static f1_Info.configuration.web.ResponseUtil.badRequest;
 import static f1_Info.configuration.web.ResponseUtil.internalServerError;
@@ -18,12 +19,14 @@ import static f1_Info.configuration.web.ResponseUtil.internalServerError;
 public class EndpointHelper {
     private final Logger mLogger;
 
-    public ResponseEntity<?> runCommand(final HttpServletRequest request, final LongFunction<Command> createCommand) {
+    public ResponseEntity<?> runCommand(final HttpServletRequest request, final Function<Long, Command> createCommand) {
         final Command command;
         try {
             command = createCommand.apply(getUserIdFromSession(request));
-        } catch (final IllegalArgumentException e) {
-            return badRequest();
+        } catch (final BadRequestException e) {
+            return badRequest(e.getMessage());
+        } catch (final Exception e) {
+            return internalServerError();
         }
 
         return executeCommand(command);
@@ -38,7 +41,8 @@ public class EndpointHelper {
         }
     }
 
-    private long getUserIdFromSession(final HttpServletRequest request) {
-        return (long) request.getSession(false).getAttribute(SessionAttributes.USER_ID);
+    private Long getUserIdFromSession(final HttpServletRequest request) {
+        final HttpSession session = request.getSession(false);
+        return session != null ? (Long) session.getAttribute(SessionAttributes.USER_ID) : null;
     }
 }
