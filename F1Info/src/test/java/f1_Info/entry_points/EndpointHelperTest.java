@@ -2,6 +2,7 @@ package f1_Info.entry_points;
 
 import f1_Info.configuration.web.users.SessionAttributes;
 import common.logger.Logger;
+import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.helper.EndpointHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,9 +63,9 @@ class EndpointHelperTest {
     }
 
     @Test
-    void should_return_bad_request_if_creation_of_the_command_produces_illegal_argument_exception() {
+    void should_return_bad_request_if_creation_of_the_command_produces_bad_request_exception() {
         assertEquals(badRequest(), mEndpointHelper.runCommand(mRequest, (userId) -> {
-            throw new IllegalArgumentException();
+            throw new BadRequestException();
         }));
     }
 

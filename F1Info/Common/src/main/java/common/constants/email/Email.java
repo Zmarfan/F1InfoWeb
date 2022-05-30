@@ -1,9 +1,11 @@
 package common.constants.email;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.validator.routines.EmailValidator;
 
 @ToString
+@EqualsAndHashCode
 public class Email {
     private final String mEmail;
 

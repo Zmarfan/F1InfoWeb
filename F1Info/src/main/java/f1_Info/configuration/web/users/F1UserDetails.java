@@ -2,6 +2,7 @@ package f1_Info.configuration.web.users;
 
 import common.constants.email.Email;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 public class F1UserDetails implements UserDetails {
     @Getter
     private final long mUserId;
