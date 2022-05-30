@@ -1,11 +1,12 @@
 package database;
 
 import common.constants.Country;
+import common.constants.Email;
 import common.constants.Url;
-import database.sql_parsing.SqlParser;
 import common.logger.Logger;
-import lombok.experimental.UtilityClass;
 import common.utils.ListUtils;
+import database.sql_parsing.SqlParser;
+import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -125,6 +126,7 @@ public class DatabaseUtil {
                 case DOUBLE, NULLABLE_DOUBLE -> StatementHelper.setDouble(statement, columnIndex, (Double) value);
                 case COUNTRY -> StatementHelper.setString(statement, columnIndex, ((Country)value).getCode());
                 case URL -> StatementHelper.setString(statement, columnIndex, ((Url)value).getUrl());
+                case EMAIL -> StatementHelper.setString(statement, columnIndex, ((Email)value).read());
                 default -> throw new SQLException(String.format("No parser exists to set column %s of type %s", columnIndex, typeName));
             }
         } catch (final SQLException e) {

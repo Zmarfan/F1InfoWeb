@@ -1,6 +1,7 @@
 package database.sql_parsing;
 
 import common.constants.Country;
+import common.constants.Email;
 import common.constants.Url;
 import lombok.experimental.UtilityClass;
 
@@ -94,5 +95,9 @@ public class SqlParserFunctions {
         } catch (final MalformedURLException e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    public static Email readEmail(final SqlParserInstance instance) {
+        return new Email(readString(instance));
     }
 }

@@ -14,13 +14,13 @@ public class F1UserDetails implements UserDetails {
     @Getter
     private final long mUserId;
     private final Email mEmail;
-    private final String mHashedPassword;
-    private final List<Authority> mAuthorities;
+    private final String mPassword;
+    private final Authority mAuthority;
     private final boolean mEnabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return mAuthorities;
+        return List.of(mAuthority);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class F1UserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return mHashedPassword;
+        return mPassword;
     }
 
     @Override

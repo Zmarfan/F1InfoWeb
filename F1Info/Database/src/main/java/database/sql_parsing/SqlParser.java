@@ -1,6 +1,5 @@
 package database.sql_parsing;
 
-import database.ObjectNames;
 import common.logger.Logger;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static database.ObjectNames.*;
 import static java.util.Map.entry;
 
 @Getter
@@ -24,20 +24,21 @@ import static java.util.Map.entry;
 @EqualsAndHashCode
 public class SqlParser<T> {
     private static final Map<String, Function<SqlParserInstance, Object>> SQL_MAPPING = Map.ofEntries(
-        entry(ObjectNames.INT, SqlParserFunctions::readInteger),
-        entry(ObjectNames.NULLABLE_INT, SqlParserFunctions::readInteger),
-        entry(ObjectNames.LONG, SqlParserFunctions::readLong),
-        entry(ObjectNames.NULLABLE_LONG, SqlParserFunctions::readLong),
-        entry(ObjectNames.STRING, SqlParserFunctions::readString),
-        entry(ObjectNames.DATE, SqlParserFunctions::readDate),
-        entry(ObjectNames.TIME, SqlParserFunctions::readTime),
-        entry(ObjectNames.BOOLEAN, SqlParserFunctions::readBoolean),
-        entry(ObjectNames.NULLABLE_BOOLEAN, SqlParserFunctions::readBoolean),
-        entry(ObjectNames.BIG_DECIMAL, SqlParserFunctions::readBigDecimal),
-        entry(ObjectNames.DOUBLE, SqlParserFunctions::readDouble),
-        entry(ObjectNames.NULLABLE_DOUBLE, SqlParserFunctions::readDouble),
-        entry(ObjectNames.COUNTRY, SqlParserFunctions::readCountry),
-        entry(ObjectNames.URL, SqlParserFunctions::readUrl)
+        entry(INT, SqlParserFunctions::readInteger),
+        entry(NULLABLE_INT, SqlParserFunctions::readInteger),
+        entry(LONG, SqlParserFunctions::readLong),
+        entry(NULLABLE_LONG, SqlParserFunctions::readLong),
+        entry(STRING, SqlParserFunctions::readString),
+        entry(DATE, SqlParserFunctions::readDate),
+        entry(TIME, SqlParserFunctions::readTime),
+        entry(BOOLEAN, SqlParserFunctions::readBoolean),
+        entry(NULLABLE_BOOLEAN, SqlParserFunctions::readBoolean),
+        entry(BIG_DECIMAL, SqlParserFunctions::readBigDecimal),
+        entry(DOUBLE, SqlParserFunctions::readDouble),
+        entry(NULLABLE_DOUBLE, SqlParserFunctions::readDouble),
+        entry(COUNTRY, SqlParserFunctions::readCountry),
+        entry(URL, SqlParserFunctions::readUrl),
+        entry(EMAIL, SqlParserFunctions::readEmail)
     );
 
     private final Class<T> mRecordClass;
