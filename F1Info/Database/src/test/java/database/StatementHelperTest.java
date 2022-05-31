@@ -62,16 +62,23 @@ class StatementHelperTest {
     }
 
     @Test
-    void should_set_boolean_if_defined() throws SQLException {
+    void should_set_true_boolean_to_Y() throws SQLException {
         final boolean value = true;
         StatementHelper.setBoolean(mPreparedStatement, PARAMETER_INDEX, value);
-        verify(mPreparedStatement).setBoolean(PARAMETER_INDEX, value);
+        verify(mPreparedStatement).setString(PARAMETER_INDEX, "Y");
+    }
+
+    @Test
+    void should_set_false_boolean_to_N() throws SQLException {
+        final boolean value = false;
+        StatementHelper.setBoolean(mPreparedStatement, PARAMETER_INDEX, value);
+        verify(mPreparedStatement).setString(PARAMETER_INDEX, "N");
     }
 
     @Test
     void should_set_null_boolean_if_not_defined() throws SQLException {
         StatementHelper.setBoolean(mPreparedStatement, PARAMETER_INDEX, null);
-        verify(mPreparedStatement).setNull(PARAMETER_INDEX, Types.BOOLEAN);
+        verify(mPreparedStatement).setNull(PARAMETER_INDEX, Types.CHAR);
     }
 
     @Test

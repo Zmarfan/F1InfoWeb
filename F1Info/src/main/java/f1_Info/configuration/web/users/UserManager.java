@@ -3,6 +3,9 @@ package f1_Info.configuration.web.users;
 import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.database.Database;
+import f1_Info.configuration.web.users.database.UserDetailsRecord;
+import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,8 +39,18 @@ public class UserManager implements UserDetailsManager {
     }
 
     @Override
-    public void createUser(final UserDetails user) {
+    public void createUser(final UserDetails userDetails) throws UnableToRegisterUserException {
+        if (userExists(userDetails.getUsername())) {
+            throw new UnableToRegisterUserException();
+        }
 
+        try {
+            final long userId = mDatabase.createUser(userDetails);
+            mLogger.info("createUser", this.getClass(), String.format("Created new user: %d, with details: %s", userId, userDetails));
+        } catch (final SQLException e) {
+            mLogger.severe("createUser", this.getClass(), String.format("Unable to create user for the user details: %s", userDetails), e);
+            throw new UnableToRegisterUserException();
+        }
     }
 
     @Override
@@ -57,7 +70,13 @@ public class UserManager implements UserDetailsManager {
 
     @Override
     public boolean userExists(final String username) {
-        return false;
+        UserDetails existentUserDetails = null;
+        try {
+            existentUserDetails = loadUserByUsername(username);
+        } catch (final UsernameNotFoundException ignore) {
+        }
+
+        return existentUserDetails != null;
     }
 
     private UserDetails createUserDetailsFromRecord(final UserDetailsRecord userDetailsRecord) {

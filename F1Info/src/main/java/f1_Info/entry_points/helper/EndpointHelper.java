@@ -1,18 +1,22 @@
 package f1_Info.entry_points.helper;
 
+import common.constants.email.Email;
+import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.Authority;
 import f1_Info.configuration.web.users.SessionAttributes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.function.Function;
 
-import static f1_Info.configuration.web.ResponseUtil.badRequest;
-import static f1_Info.configuration.web.ResponseUtil.internalServerError;
+import static f1_Info.configuration.web.ResponseUtil.*;
 
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 @Component
@@ -23,6 +27,8 @@ public class EndpointHelper {
         final Command command;
         try {
             command = createCommand.apply(getUserIdFromSession(request));
+        } catch (final ForbiddenException e) {
+            return forbidden(e.getMessage());
         } catch (final BadRequestException e) {
             return badRequest(e.getMessage());
         } catch (final Exception e) {
@@ -30,6 +36,19 @@ public class EndpointHelper {
         }
 
         return executeCommand(command);
+    }
+
+    public boolean isLoggedIn() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !authentication.getAuthorities().contains(Authority.ROLE_ANONYMOUS) && authentication.isAuthenticated();
+    }
+
+    public Email convertEmail(final String email) {
+        try {
+            return new Email(email);
+        } catch (final MalformedEmailException e) {
+            throw new BadRequestException("The provided email is not a valid email address");
+        }
     }
 
     private ResponseEntity<?> executeCommand(Command command) {

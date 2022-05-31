@@ -36,9 +36,9 @@ public class StatementHelper {
 
     public static void setBoolean(final PreparedStatement preparedStatement, final int parameterIndex, final Boolean value) throws SQLException {
         if (value != null) {
-            preparedStatement.setBoolean(parameterIndex, value);
+            preparedStatement.setString(parameterIndex, value ? "Y" : "N");
         } else {
-            preparedStatement.setNull(parameterIndex, Types.BOOLEAN);
+            preparedStatement.setNull(parameterIndex, Types.CHAR);
         }
     }
 

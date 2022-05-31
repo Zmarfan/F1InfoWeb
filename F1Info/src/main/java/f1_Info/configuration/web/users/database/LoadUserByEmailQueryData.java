@@ -1,4 +1,4 @@
-package f1_Info.configuration.web.users;
+package f1_Info.configuration.web.users.database;
 
 import common.constants.email.Email;
 import database.IQueryData;

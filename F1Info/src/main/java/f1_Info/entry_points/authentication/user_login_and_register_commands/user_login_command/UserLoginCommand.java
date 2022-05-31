@@ -1,7 +1,6 @@
-package f1_Info.entry_points.authentication.user_login_command;
+package f1_Info.entry_points.authentication.user_login_and_register_commands.user_login_command;
 
 import common.constants.email.Email;
-import f1_Info.configuration.web.users.Authority;
 import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.SessionAttributes;
 import f1_Info.entry_points.helper.Command;
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static f1_Info.configuration.web.ResponseUtil.forbidden;
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
@@ -34,10 +32,6 @@ public class UserLoginCommand implements Command {
 
     @Override
     public ResponseEntity<?> execute() {
-        if (isAlreadyLoggedIn()) {
-            return forbidden("Unable to login as this user is already logged in");
-        }
-
         try {
             final Authentication authentication = createAuthentication();
             initSession(authentication);
@@ -46,11 +40,6 @@ public class UserLoginCommand implements Command {
         }
 
         return ok();
-    }
-
-    private boolean isAlreadyLoggedIn() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return !authentication.getAuthorities().contains(Authority.ROLE_ANONYMOUS) && authentication.isAuthenticated();
     }
 
     private Authentication createAuthentication() {

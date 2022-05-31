@@ -5,6 +5,7 @@ import common.logger.Logger;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.helper.EndpointHelper;
+import f1_Info.entry_points.helper.ForbiddenException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,6 +61,13 @@ class EndpointHelperTest {
         when(mTestCommand.execute()).thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         assertEquals(ok(), mEndpointHelper.runCommand(mRequest, (userId) -> mTestCommand));
+    }
+
+    @Test
+    void should_return_forbidden_if_creation_of_the_command_produces_forbidden_exception() {
+        assertEquals(forbidden(), mEndpointHelper.runCommand(mRequest, (userId) -> {
+            throw new ForbiddenException();
+        }));
     }
 
     @Test

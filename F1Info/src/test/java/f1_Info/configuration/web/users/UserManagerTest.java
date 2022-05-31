@@ -3,6 +3,8 @@ package f1_Info.configuration.web.users;
 import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.database.Database;
+import f1_Info.configuration.web.users.database.UserDetailsRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

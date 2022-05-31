@@ -1,15 +1,17 @@
 package f1_Info.entry_points.authentication;
 
-import common.constants.email.Email;
-import common.constants.email.MalformedEmailException;
+import f1_Info.configuration.web.users.UserManager;
+import f1_Info.entry_points.authentication.user_login_and_register_commands.UserDetailsRequestBody;
+import f1_Info.entry_points.authentication.user_login_and_register_commands.user_login_command.UserLoginCommand;
+import f1_Info.entry_points.authentication.user_login_and_register_commands.user_register_command.UserRegisterCommand;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
-import f1_Info.entry_points.authentication.user_login_command.LoginRequestBody;
-import f1_Info.entry_points.authentication.user_login_command.UserLoginCommand;
+import f1_Info.entry_points.helper.ForbiddenException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,22 +25,37 @@ public class AuthenticationEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
     private final AuthenticationManager mAuthenticationManager;
+    private final PasswordEncoder mPasswordEncoder;
+    private final UserManager mUserManager;
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody final UserDetailsRequestBody registerBody) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (mEndpointHelper.isLoggedIn()) {
+                throw new ForbiddenException("Unable to register as this user is already logged in");
+            }
+
+            validatePassword(registerBody.getPassword());
+
+            return new UserRegisterCommand(mEndpointHelper.convertEmail(registerBody.getEmail()), registerBody.getPassword(), mPasswordEncoder, mUserManager);
+        });
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody final LoginRequestBody loginBody) {
+    public ResponseEntity<?> login(@RequestBody final UserDetailsRequestBody loginBody) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
-            if (loginBody.getPassword() == null || loginBody.getPassword().length() < MIN_PASSWORD_LENGTH) {
-                throw new BadRequestException(String.format("The provided password is not at least %s characters long", MIN_PASSWORD_LENGTH));
+            if (mEndpointHelper.isLoggedIn()) {
+                throw new ForbiddenException("Unable to login as this user is already logged in");
             }
 
-            final Email email;
-            try {
-                email = new Email(loginBody.getEmail());
-            } catch (final MalformedEmailException e) {
-                throw new BadRequestException("The provided email is not a valid email address");
-            }
+            validatePassword(loginBody.getPassword());
 
-            return new UserLoginCommand(email, loginBody.getPassword(), mHttpServletRequest, mAuthenticationManager);
+            return new UserLoginCommand(
+                mEndpointHelper.convertEmail(loginBody.getEmail()),
+                loginBody.getPassword(),
+                mHttpServletRequest,
+                mAuthenticationManager
+            );
         });
     }
 
@@ -55,5 +72,11 @@ public class AuthenticationEndpoint {
     @GetMapping("/admin")
     public String home() {
         return "<h1>I AM ADMIN</h1>";
+    }
+
+    private void validatePassword(final String password) {
+        if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
+            throw new BadRequestException(String.format("The provided password is not at least %s characters long", MIN_PASSWORD_LENGTH));
+        }
     }
 }
