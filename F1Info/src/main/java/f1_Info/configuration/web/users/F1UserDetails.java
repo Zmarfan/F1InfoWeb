@@ -10,18 +10,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class F1UserDetails implements UserDetails {
+    private final Long mUserId;
     @Getter
-    private final long mUserId;
     private final Email mEmail;
     @ToString.Exclude
     private final String mPassword;
     private final Authority mAuthority;
     private final boolean mEnabled;
+
+    public static F1UserDetails createNewUser(final Email email, final String password) {
+        return new F1UserDetails(null, email, password, Authority.USER, false);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,5 +61,9 @@ public class F1UserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return mEnabled;
+    }
+
+    public Optional<Long> getUserId() {
+        return Optional.ofNullable(mUserId);
     }
 }

@@ -1,13 +1,12 @@
 package f1_Info.entry_points.authentication.user_login_and_register_commands.user_register_command;
 
 import common.constants.email.Email;
-import f1_Info.configuration.web.users.Authority;
+import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static f1_Info.configuration.web.ResponseUtil.conflict;
@@ -21,22 +20,17 @@ public class UserRegisterCommand implements Command {
     private final UserManager mUserManager;
 
     @Override
+    public String getAction() {
+        return String.format("Register email: %s with password: *****", mEmail);
+    }
+
+    @Override
     public ResponseEntity<?> execute() {
         try {
-            mUserManager.createUser(User
-                .withUsername(mEmail.read())
-                .password(mPasswordEncoder.encode(mPassword))
-                .authorities(Authority.USER)
-                .disabled(true)
-                .build());
+            mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPassword));
             return ok();
         } catch (final UnableToRegisterUserException e) {
             return conflict("Unable to register this user, try again later!");
         }
-    }
-
-    @Override
-    public String getAction() {
-        return String.format("Register email: %s with password: *****", mEmail);
     }
 }

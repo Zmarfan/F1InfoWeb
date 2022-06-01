@@ -8,9 +8,8 @@ import f1_Info.configuration.web.users.database.UserDetailsRecord;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -18,12 +17,12 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
-public class UserManager implements UserDetailsManager {
+public class UserManager implements UserDetailsService {
     private final Database mDatabase;
     private final Logger mLogger;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public F1UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
             final Optional<UserDetailsRecord> userDetailsRecord = mDatabase.getUserDetailsFromEmail(new Email(email));
             if (userDetailsRecord.isEmpty()) {
@@ -38,9 +37,8 @@ public class UserManager implements UserDetailsManager {
         }
     }
 
-    @Override
-    public void createUser(final UserDetails userDetails) throws UnableToRegisterUserException {
-        if (userExists(userDetails.getUsername())) {
+    public void registerUser(final F1UserDetails userDetails) throws UnableToRegisterUserException {
+        if (userExists(userDetails.getEmail())) {
             throw new UnableToRegisterUserException();
         }
 
@@ -53,33 +51,20 @@ public class UserManager implements UserDetailsManager {
         }
     }
 
-    @Override
-    public void updateUser(final UserDetails user) {
+    public void updateUser(final F1UserDetails user) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void deleteUser(final String username) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void changePassword(final String oldPassword, final String newPassword) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean userExists(final String username) {
-        UserDetails existentUserDetails = null;
+    public boolean userExists(final Email email) {
         try {
-            existentUserDetails = loadUserByUsername(username);
-        } catch (final UsernameNotFoundException ignore) {
+            return mDatabase.getUserDetailsFromEmail(email).isPresent();
+        } catch (final SQLException e) {
+            mLogger.severe("userExists", this.getClass(), String.format("Unable to check if email: %s is connected with a user", email), e);
+            return false;
         }
-
-        return existentUserDetails != null;
     }
 
-    private UserDetails createUserDetailsFromRecord(final UserDetailsRecord userDetailsRecord) {
+    private F1UserDetails createUserDetailsFromRecord(final UserDetailsRecord userDetailsRecord) {
         return new F1UserDetails(
             userDetailsRecord.getUserId(),
             userDetailsRecord.getEmail(),
