@@ -112,13 +112,13 @@ class UserManagerTest {
     }
 
     @Test
-    void should_create_user_when_registering_new_user() throws MalformedEmailException, SQLException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.empty());
-
+    void should_return_id_of_created_user_when_registering_new_user() throws MalformedEmailException, SQLException {
         final F1UserDetails userDetails = createRegisterUserDetails();
-        mUserManager.registerUser(userDetails);
 
-        verify(mDatabase).createUser(userDetails);
+        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.empty());
+        when(mDatabase.createUser(userDetails)).thenReturn(1L);
+
+        assertEquals(1, mUserManager.registerUser(userDetails));
     }
 
     @Test

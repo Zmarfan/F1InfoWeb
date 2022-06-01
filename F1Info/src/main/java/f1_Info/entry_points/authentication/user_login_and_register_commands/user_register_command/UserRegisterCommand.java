@@ -27,7 +27,7 @@ public class UserRegisterCommand implements Command {
     @Override
     public ResponseEntity<?> execute() {
         try {
-            mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPassword));
+            final long userId = mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPassword));
             return ok();
         } catch (final UnableToRegisterUserException e) {
             return conflict("Unable to register this user, try again later!");
