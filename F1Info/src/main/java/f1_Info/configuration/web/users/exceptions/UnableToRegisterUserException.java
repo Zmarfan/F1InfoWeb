@@ -7,4 +7,8 @@ public class UnableToRegisterUserException extends RuntimeException {
     public UnableToRegisterUserException(final String message) {
         super(message);
     }
+
+    public UnableToRegisterUserException(final Throwable cause) {
+        super(cause);
+    }
 }

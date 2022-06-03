@@ -25,4 +25,8 @@ public class Database extends DatabaseBase {
     public long createUser(final UserDetails userDetails) throws SQLException {
         return executeBasicQuery(new CreateUserQueryData(userDetails));
     }
+
+    public void enableUser(final long userId) throws SQLException {
+        executeVoidQuery(new EnableUserQueryData(userId));
+    }
 }

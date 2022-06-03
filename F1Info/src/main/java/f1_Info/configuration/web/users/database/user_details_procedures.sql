@@ -25,3 +25,9 @@ begin
 
     select v_user_id;
 end;
+
+drop procedure if exists user_details_enable_user;
+create procedure user_details_enable_user(in p_user_id int)
+begin
+    update users set enabled = 'Y' where id = p_user_id;
+end;

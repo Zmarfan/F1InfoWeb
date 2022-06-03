@@ -52,8 +52,13 @@ public class UserManager implements UserDetailsService {
         }
     }
 
-    public void updateUser(final F1UserDetails user) {
-        throw new UnsupportedOperationException();
+    public void enableUser(final long userId) throws UnableToRegisterUserException {
+        try {
+            mDatabase.enableUser(userId);
+        } catch (final SQLException e) {
+            mLogger.severe("enableUser", this.getClass(), String.format("Unable to enable user: %d", userId), e);
+            throw new UnableToRegisterUserException(e);
+        }
     }
 
     public boolean userExists(final Email email) {
