@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static org.mockito.Mockito.verify;
@@ -46,6 +47,19 @@ class StatementHelperTest {
     void should_set_null_time_if_not_defined() throws SQLException {
         StatementHelper.setTime(mPreparedStatement, PARAMETER_INDEX, null);
         verify(mPreparedStatement).setNull(PARAMETER_INDEX, Types.TIME);
+    }
+
+    @Test
+    void should_set_date_time_if_defined() throws SQLException {
+        final LocalDateTime time = LocalDateTime.now();
+        StatementHelper.setDateTime(mPreparedStatement, PARAMETER_INDEX, time);
+        verify(mPreparedStatement).setObject(PARAMETER_INDEX, time);
+    }
+
+    @Test
+    void should_set_null_date_time_if_not_defined() throws SQLException {
+        StatementHelper.setDateTime(mPreparedStatement, PARAMETER_INDEX, null);
+        verify(mPreparedStatement).setNull(PARAMETER_INDEX, Types.TIMESTAMP);
     }
 
     @Test
