@@ -1,17 +1,17 @@
 package database;
 
+import common.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import common.utils.DateUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.mockito.Mockito.verify;
 
@@ -24,9 +24,9 @@ class StatementHelperTest {
 
     @Test
     void should_set_date_if_defined() throws SQLException {
-        final Date date = new Date();
+        final LocalDate date = LocalDate.now();
         StatementHelper.setDate(mPreparedStatement, PARAMETER_INDEX, date);
-        verify(mPreparedStatement).setDate(PARAMETER_INDEX, new java.sql.Date(date.getTime()));
+        verify(mPreparedStatement).setDate(PARAMETER_INDEX, java.sql.Date.valueOf(date));
     }
 
     @Test
@@ -36,10 +36,10 @@ class StatementHelperTest {
     }
 
     @Test
-    void should_set_time_if_defined() throws SQLException, ParseException {
-        final Time time = DateUtils.parseTime("10:25:15Z");
+    void should_set_time_if_defined() throws SQLException {
+        final LocalTime time = DateUtils.parseTime("10:25:15Z");
         StatementHelper.setTime(mPreparedStatement, PARAMETER_INDEX, time);
-        verify(mPreparedStatement).setTime(PARAMETER_INDEX, time);
+        verify(mPreparedStatement).setTime(PARAMETER_INDEX, Time.valueOf(time));
     }
 
     @Test

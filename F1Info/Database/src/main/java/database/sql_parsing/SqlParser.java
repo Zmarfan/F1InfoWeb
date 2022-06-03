@@ -31,6 +31,7 @@ public class SqlParser<T> {
         entry(STRING, SqlParserFunctions::readString),
         entry(DATE, SqlParserFunctions::readDate),
         entry(TIME, SqlParserFunctions::readTime),
+        entry(DATE_TIME, SqlParserFunctions::readDateTime),
         entry(BOOLEAN, SqlParserFunctions::readBoolean),
         entry(NULLABLE_BOOLEAN, SqlParserFunctions::readBoolean),
         entry(BIG_DECIMAL, SqlParserFunctions::readBigDecimal),

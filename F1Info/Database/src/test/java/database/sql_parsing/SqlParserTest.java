@@ -3,19 +3,19 @@ package database.sql_parsing;
 import common.constants.Country;
 import common.constants.Url;
 import common.logger.Logger;
+import common.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import common.utils.DateUtils;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -101,22 +101,22 @@ class SqlParserTest {
 
     @Test
     void should_parse_date() throws SQLException {
-        final Date date = new Date();
+        final LocalDate date = LocalDate.now();
 
         when(mResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mResultSet.getDate(1)).thenReturn(new java.sql.Date(date.getTime()));
+        when(mResultSet.getDate(1)).thenReturn(java.sql.Date.valueOf(date));
 
-        assertEquals(date, new SqlParser<>(Date.class, mResultSet, mLogger).parseBasicList().get(0));
+        assertEquals(date, new SqlParser<>(LocalDate.class, mResultSet, mLogger).parseBasicList().get(0));
     }
 
     @Test
-    void should_parse_time() throws SQLException, ParseException {
-        final Time time = DateUtils.parseTime("10:25:15Z");
+    void should_parse_time() throws SQLException {
+        final LocalTime time = DateUtils.parseTime("10:25:15Z");
 
         when(mResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mResultSet.getTime(1)).thenReturn(time);
+        when(mResultSet.getTime(1)).thenReturn(Time.valueOf(time));
 
-        assertEquals(time, new SqlParser<>(Time.class, mResultSet, mLogger).parseBasicList().get(0));
+        assertEquals(time, new SqlParser<>(LocalTime.class, mResultSet, mLogger).parseBasicList().get(0));
     }
 
     @Test

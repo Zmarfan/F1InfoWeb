@@ -1,12 +1,12 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
-import f1_Info.background.ergast_tasks.RaceRecord;
 import database.IQueryData;
+import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import lombok.Value;
 
 import java.math.BigDecimal;
-import java.sql.Time;
+import java.time.LocalTime;
 
 @Value
 public class MergeIntoPitStopsQueryData implements IQueryData<Void> {
@@ -14,7 +14,7 @@ public class MergeIntoPitStopsQueryData implements IQueryData<Void> {
     String m2DriverIdentification;
     int m3Lap;
     int m4Stop;
-    Time m5Time;
+    LocalTime m5Time;
     BigDecimal m6DurationInSeconds;
 
     public MergeIntoPitStopsQueryData(final PitStopData pitStopData, final RaceRecord raceRecord) {

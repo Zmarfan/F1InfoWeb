@@ -9,8 +9,9 @@ public class ObjectNames {
     public static final String LONG = "long";
     public static final String NULLABLE_LONG = "java.lang.Long";
     public static final String STRING = "java.lang.String";
-    public static final String DATE = "java.util.Date";
-    public static final String TIME = "java.sql.Time";
+    public static final String DATE = "java.time.LocalDate";
+    public static final String TIME = "java.time.LocalTime";
+    public static final String DATE_TIME = "java.time.LocalDateTime";
     public static final String BOOLEAN = "boolean";
     public static final String NULLABLE_BOOLEAN = "java.lang.Boolean";
     public static final String BIG_DECIMAL = "java.math.BigDecimal";

@@ -5,15 +5,14 @@ import common.utils.DateUtils;
 import lombok.Value;
 
 import java.math.BigDecimal;
-import java.sql.Time;
-import java.text.ParseException;
+import java.time.LocalTime;
 
 @Value
 public class PitStopData {
     String mDriverIdentification;
     int mLap;
     int mStop;
-    Time mTime;
+    LocalTime mTime;
     BigDecimal mDurationInSeconds;
 
     public PitStopData(
@@ -22,7 +21,7 @@ public class PitStopData {
         @JsonProperty("stop") int stop,
         @JsonProperty("time") String time,
         @JsonProperty("duration") BigDecimal durationInSeconds
-    ) throws ParseException {
+    ) {
         mDriverIdentification = driverIdentification;
         mLap = lap;
         mStop = stop;

@@ -1,8 +1,8 @@
 package database;
 
 import common.constants.Country;
-import common.constants.email.Email;
 import common.constants.Url;
+import common.constants.email.Email;
 import common.logger.Logger;
 import common.utils.ListUtils;
 import database.sql_parsing.SqlParser;
@@ -11,8 +11,13 @@ import lombok.experimental.UtilityClass;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Date;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -119,8 +124,9 @@ public class DatabaseUtil {
                 case LONG, NULLABLE_LONG -> StatementHelper.setLong(statement, columnIndex, (Long) value);
                 case STRING -> StatementHelper.setString(statement, columnIndex, (String) value);
                 case INT, NULLABLE_INT -> StatementHelper.setInt(statement, columnIndex, (Integer) value);
-                case DATE -> StatementHelper.setDate(statement, columnIndex, (Date) value);
-                case TIME -> StatementHelper.setTime(statement, columnIndex, (Time) value);
+                case DATE -> StatementHelper.setDate(statement, columnIndex, (LocalDate) value);
+                case TIME -> StatementHelper.setTime(statement, columnIndex, (LocalTime) value);
+                case DATE_TIME -> StatementHelper.setDateTime(statement, columnIndex, (LocalDateTime) value);
                 case BOOLEAN, NULLABLE_BOOLEAN -> StatementHelper.setBoolean(statement, columnIndex, (Boolean) value);
                 case BIG_DECIMAL -> statement.setBigDecimal(columnIndex, (BigDecimal) value);
                 case DOUBLE, NULLABLE_DOUBLE -> StatementHelper.setDouble(statement, columnIndex, (Double) value);

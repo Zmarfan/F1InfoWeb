@@ -8,7 +8,7 @@ import lombok.Value;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Value
@@ -17,7 +17,7 @@ public class DriverData {
     Url mWikipediaUrl;
     String mFirstName;
     String mLastName;
-    Date mDateOfBirth;
+    LocalDate mDateOfBirth;
     Country mCountry;
     Integer mPermanentNumber;
     String mCode;

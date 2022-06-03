@@ -7,9 +7,8 @@ import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import lombok.Value;
 
 import java.net.MalformedURLException;
-import java.sql.Time;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Value
 public class RaceData {
@@ -17,18 +16,18 @@ public class RaceData {
     int mRound;
     Url mWikipediaUrl;
     String mRaceName;
-    Time mRaceTime;
-    Date mRaceDate;
-    Time mQualifyingTime;
-    Date mQualifyingDate;
-    Time mSprintTime;
-    Date mSprintDate;
-    Time mFirstPracticeTime;
-    Date mFirstPracticeDate;
-    Time mSecondPracticeTime;
-    Date mSecondPracticeDate;
-    Time mThirdPracticeTime;
-    Date mThirdPracticeDate;
+    LocalTime mRaceTime;
+    LocalDate mRaceDate;
+    LocalTime mQualifyingTime;
+    LocalDate mQualifyingDate;
+    LocalTime mSprintTime;
+    LocalDate mSprintDate;
+    LocalTime mFirstPracticeTime;
+    LocalDate mFirstPracticeDate;
+    LocalTime mSecondPracticeTime;
+    LocalDate mSecondPracticeDate;
+    LocalTime mThirdPracticeTime;
+    LocalDate mThirdPracticeDate;
     CircuitData mCircuitData;
 
     public RaceData(
@@ -44,7 +43,7 @@ public class RaceData {
         @JsonProperty("SecondPractice") ErgastSessionTimes secondPracticeDateAndTime,
         @JsonProperty("ThirdPractice") ErgastSessionTimes thirdPracticeDateAndTime,
         @JsonProperty("Circuit") CircuitData circuitData
-    ) throws MalformedURLException, ParseException {
+    ) throws MalformedURLException {
         mYear = year;
         mRound = round;
         mWikipediaUrl = new Url(wikipediaUrl);

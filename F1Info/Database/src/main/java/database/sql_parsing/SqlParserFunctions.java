@@ -1,16 +1,18 @@
 package database.sql_parsing;
 
 import common.constants.Country;
-import common.constants.email.Email;
 import common.constants.Url;
+import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @UtilityClass
 public class SqlParserFunctions {
@@ -41,19 +43,28 @@ public class SqlParserFunctions {
         }
     }
 
-    public static Date readDate(final SqlParserInstance instance) {
+    public static LocalDate readDate(final SqlParserInstance instance) {
         try {
-            final Date readDate = new Date(instance.getResultSet().getDate(instance.getColumnIndex()).getTime());
+            final LocalDate readDate = instance.getResultSet().getDate(instance.getColumnIndex()).toLocalDate();
             return instance.getResultSet().wasNull() ? null : readDate;
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static Time readTime(final SqlParserInstance instance) {
+    public static LocalTime readTime(final SqlParserInstance instance) {
         try {
-            final Time readTime = instance.getResultSet().getTime(instance.getColumnIndex());
+            final LocalTime readTime = instance.getResultSet().getTime(instance.getColumnIndex()).toLocalTime();
             return instance.getResultSet().wasNull() ? null : readTime;
+        } catch (final SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static LocalDateTime readDateTime(final SqlParserInstance instance) {
+        try {
+            final Timestamp readTime = instance.getResultSet().getTimestamp(instance.getColumnIndex());
+            return instance.getResultSet().wasNull() ? null : readTime.toLocalDateTime();
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e);
         }

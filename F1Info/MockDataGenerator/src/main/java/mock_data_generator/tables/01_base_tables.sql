@@ -22,6 +22,14 @@ create table user_authorities(
   constraint user_authorities_authority_name_fk foreign key (authority_name) references authorities(name)
 );
 
+create table user_registration_tokens(
+    user_id int not null,
+    token varchar(255) not null,
+    creation_time timestamp not null,
+
+    constraint user_registration_tokens_pk primary key (user_id, token)
+);
+
 create table background_tasks(
   id int not null unique,
   name varchar(255) not null unique,

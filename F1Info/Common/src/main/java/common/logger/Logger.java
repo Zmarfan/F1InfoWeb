@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -102,7 +102,7 @@ public class Logger implements Runnable {
 
         mEmailService.sendEmail(new EmailSendOutParameters(
             mConfiguration.getRules().getLoggingEmail(),
-            String.format(EMAIL_LOGGING_SUBJECT, Timestamp.from(Instant.now())),
+            String.format(EMAIL_LOGGING_SUBJECT, LocalTime.from(Instant.now())),
             String.format(LoggerEmailTemplates.BASE, logContent.size(), String.join("", logContent)),
             EmailType.SEVERE_LOGGING
         ));

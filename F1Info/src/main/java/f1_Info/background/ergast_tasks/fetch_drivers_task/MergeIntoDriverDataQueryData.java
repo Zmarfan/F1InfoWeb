@@ -6,7 +6,7 @@ import database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
 import lombok.Value;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Value
 public class MergeIntoDriverDataQueryData implements IQueryData<Void> {
@@ -15,7 +15,7 @@ public class MergeIntoDriverDataQueryData implements IQueryData<Void> {
     String m3DriverCode;
     String m4FirstName;
     String m5LastName;
-    Date m6DateOfBirth;
+    LocalDate m6DateOfBirth;
     Country m7Country;
     Url m8Url;
 

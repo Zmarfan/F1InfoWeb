@@ -5,8 +5,8 @@ import database.IQueryData;
 import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
 import lombok.Value;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Value
 public class MergeIntoRacesQueryData  implements IQueryData<Void> {
@@ -14,18 +14,18 @@ public class MergeIntoRacesQueryData  implements IQueryData<Void> {
     int m02Round;
     Url m03Url;
     String m04RaceName;
-    Time m05RaceTime;
-    Date m06RaceDate;
-    Time m07QualifyingTime;
-    Date m08QualifyingDate;
-    Time m09SprintTime;
-    Date m10SprintDate;
-    Time m11FirstPracticeTime;
-    Date m12FirstPracticeDate;
-    Time m13SecondPracticeTime;
-    Date m14SecondPracticeDate;
-    Time m15ThirdPracticeTime;
-    Date m16ThirdPracticeDate;
+    LocalTime m05RaceTime;
+    LocalDate m06RaceDate;
+    LocalTime m07QualifyingTime;
+    LocalDate m08QualifyingDate;
+    LocalTime m09SprintTime;
+    LocalDate m10SprintDate;
+    LocalTime m11FirstPracticeTime;
+    LocalDate m12FirstPracticeDate;
+    LocalTime m13SecondPracticeTime;
+    LocalDate m14SecondPracticeDate;
+    LocalTime m15ThirdPracticeTime;
+    LocalDate m16ThirdPracticeDate;
     String m17CircuitIdentifier;
 
     public MergeIntoRacesQueryData(final RaceData raceData) {

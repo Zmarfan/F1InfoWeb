@@ -6,23 +6,33 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @UtilityClass
 public class StatementHelper {
-    public static void setDate(final PreparedStatement preparedStatement, final int parameterIndex, final Date date) throws SQLException {
+    public static void setDate(final PreparedStatement preparedStatement, final int parameterIndex, final LocalDate date) throws SQLException {
         if (date != null) {
-            preparedStatement.setDate(parameterIndex, new java.sql.Date(date.getTime()));
+            preparedStatement.setDate(parameterIndex, java.sql.Date.valueOf(date));
         } else {
             preparedStatement.setNull(parameterIndex, Types.DATE);
         }
     }
 
-    public static void setTime(final PreparedStatement preparedStatement, final int parameterIndex, final Time time) throws SQLException {
+    public static void setTime(final PreparedStatement preparedStatement, final int parameterIndex, final LocalTime time) throws SQLException {
         if (time != null) {
-            preparedStatement.setTime(parameterIndex, time);
+            preparedStatement.setTime(parameterIndex, Time.valueOf(time));
         } else {
             preparedStatement.setNull(parameterIndex, Types.TIME);
+        }
+    }
+
+    public static void setDateTime(final PreparedStatement preparedStatement, final int parameterIndex, final LocalDateTime localDateTime) throws SQLException {
+        if (localDateTime != null) {
+            preparedStatement.setObject(parameterIndex, localDateTime);
+        } else {
+            preparedStatement.setNull(parameterIndex, Types.TIMESTAMP);
         }
     }
 
