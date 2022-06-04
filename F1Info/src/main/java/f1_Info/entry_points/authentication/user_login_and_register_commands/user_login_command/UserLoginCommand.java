@@ -30,9 +30,9 @@ public class UserLoginCommand implements Command {
         try {
             mAuthenticationService.login(mEmail, mPassword, mRequest);
         } catch (final DisabledException e) {
-            return new ResponseEntity<>("Account is disabled", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new UserLoginResponse(UserLoginResponseType.DISABLED), HttpStatus.NOT_ACCEPTABLE);
         } catch (final AuthenticationException e) {
-            return new ResponseEntity<>("Invalid credentials", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new UserLoginResponse(UserLoginResponseType.INVALID_CREDENTIALS), HttpStatus.NOT_ACCEPTABLE);
         }
 
         return ok();
