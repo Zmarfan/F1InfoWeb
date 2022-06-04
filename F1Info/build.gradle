@@ -1,8 +1,21 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'cz.habarta.typescript-generator:typescript-generator-gradle-plugin:2.36.1070'
+    }
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+apply plugin: 'cz.habarta.typescript-generator'
 
 group = 'com.f1Info'
 version = '0.0.1-SNAPSHOT'
@@ -28,6 +41,17 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.5.0'
 }
+
+generateTypeScript {
+    classPatterns  = [
+        'f1_Info.entry_points.**.**Response'
+    ]
+    jsonLibrary = 'jackson2'
+    outputKind = 'module'
+    outputFile = '../f1_info_frontend/src/generated/server-responses.d.ts'
+}
+
+build.dependsOn generateTypeScript
 
 tasks.named('test') {
 	useJUnitPlatform()

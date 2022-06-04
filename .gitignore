@@ -30,6 +30,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Client ###
+/f1_info_frontend/src/generated/
+
 ### STS ###
 .apt_generated
 .classpath
