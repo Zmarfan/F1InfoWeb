@@ -3,6 +3,8 @@ package f1_Info.entry_points;
 import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.Authority;
+import f1_Info.configuration.web.users.SecurityContextWrapper;
 import f1_Info.configuration.web.users.SessionAttributes;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.Command;
@@ -17,13 +19,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static f1_Info.configuration.web.ResponseUtil.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -43,6 +48,12 @@ class EndpointHelperTest {
 
     @Mock
     Logger mLogger;
+
+    @Mock
+    Authentication mAuthentication;
+
+    @Mock
+    SecurityContextWrapper mSecurityContextWrapper;
 
     @InjectMocks
     EndpointHelper mEndpointHelper;
@@ -123,5 +134,23 @@ class EndpointHelperTest {
     void should_return_email_if_possible_to_parse_from_string() throws MalformedEmailException {
         final String validEmail = "valid@email.com";
         assertEquals(new Email(validEmail), mEndpointHelper.convertEmail(validEmail));
+    }
+
+    @Test
+    void should_return_true_when_checking_if_user_is_logged_in_if_current_user_is_authenticated_and_has_a_none_anonymous_role() {
+        when(mSecurityContextWrapper.getAuthentication()).thenReturn(mAuthentication);
+        when(mAuthentication.isAuthenticated()).thenReturn(true);
+        when(mAuthentication.getAuthorities()).thenReturn((Collection)List.of(Authority.USER));
+
+        assertTrue(mEndpointHelper.isLoggedIn());
+    }
+
+    @Test
+    void should_return_false_when_checking_if_user_is_logged_in_if_current_user_is_not_authenticated() {
+        when(mSecurityContextWrapper.getAuthentication()).thenReturn(mAuthentication);
+        when(mAuthentication.isAuthenticated()).thenReturn(false);
+        when(mAuthentication.getAuthorities()).thenReturn(new ArrayList<>());
+
+        assertFalse(mEndpointHelper.isLoggedIn());
     }
 }

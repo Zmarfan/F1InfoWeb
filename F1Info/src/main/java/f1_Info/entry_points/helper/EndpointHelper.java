@@ -4,12 +4,12 @@ import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import common.logger.Logger;
 import f1_Info.configuration.web.users.Authority;
+import f1_Info.configuration.web.users.SecurityContextWrapper;
 import f1_Info.configuration.web.users.SessionAttributes;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +21,7 @@ import static f1_Info.configuration.web.ResponseUtil.*;
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 @Component
 public class EndpointHelper {
+    private final SecurityContextWrapper mSecurityContextWrapper;
     private final Logger mLogger;
 
     public ResponseEntity<?> runCommand(final HttpServletRequest request, final Function<Long, Command> createCommand) {
@@ -39,7 +40,7 @@ public class EndpointHelper {
     }
 
     public boolean isLoggedIn() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = mSecurityContextWrapper.getAuthentication();
         return !authentication.getAuthorities().contains(Authority.ROLE_ANONYMOUS) && authentication.isAuthenticated();
     }
 
