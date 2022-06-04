@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static f1_Info.configuration.web.ResponseUtil.notAcceptable;
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
@@ -30,9 +31,9 @@ public class UserLoginCommand implements Command {
         try {
             mAuthenticationService.login(mEmail, mPassword, mRequest);
         } catch (final DisabledException e) {
-            return new ResponseEntity<>(new UserLoginResponse(UserLoginResponseType.DISABLED), HttpStatus.NOT_ACCEPTABLE);
+            return notAcceptable(new UserLoginResponse(UserLoginResponseType.DISABLED));
         } catch (final AuthenticationException e) {
-            return new ResponseEntity<>(new UserLoginResponse(UserLoginResponseType.INVALID_CREDENTIALS), HttpStatus.NOT_ACCEPTABLE);
+            return notAcceptable(new UserLoginResponse(UserLoginResponseType.INVALID_CREDENTIALS));
         }
 
         return ok();

@@ -38,6 +38,14 @@ public class ResponseUtil {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+    public static ResponseEntity<Void> notAcceptable() {
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    public static <T> ResponseEntity<T> notAcceptable(final T response) {
+        return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+    }
+
     public static ResponseEntity<Void> internalServerError() {
         return ResponseEntity.internalServerError().build();
     }
