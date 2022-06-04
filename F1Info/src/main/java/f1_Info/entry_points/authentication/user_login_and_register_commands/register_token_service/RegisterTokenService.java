@@ -19,11 +19,9 @@ public class RegisterTokenService {
     private final DateFactory mDateFactory;
     private final Logger mLogger;
 
-    public Optional<Long> findDisabledUserFromToken(final UUID token) {
+    public Optional<RegistrationTokenRecord> findDisabledUserFromToken(final UUID token) {
         try {
-            return mDatabase.findDisabledUserFromToken(token)
-                .filter(this::tokenIsNotExpired)
-                .map(RegistrationTokenRecord::getUserId);
+            return mDatabase.findDisabledUserFromToken(token).filter(this::tokenIsNotExpired);
         } catch (final SQLException e) {
             mLogger.severe("findDisabledUserFromToken", this.getClass(), String.format("Unable to find user from token: %s", token), e);
             return Optional.empty();

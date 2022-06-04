@@ -1,6 +1,7 @@
 package f1_Info.entry_points.authentication;
 
 import f1_Info.configuration.web.users.UserManager;
+import f1_Info.entry_points.authentication.user_login_and_register_commands.AuthenticationService;
 import f1_Info.entry_points.authentication.user_login_and_register_commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.user_login_and_register_commands.enable_user_command.EnableUserCommand;
 import f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service.RegisterTokenService;
@@ -12,7 +13,6 @@ import f1_Info.entry_points.helper.ForbiddenException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class AuthenticationEndpoint {
 
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
-    private final AuthenticationManager mAuthenticationManager;
+    private final AuthenticationService mAuthenticationService;
     private final RegisterTokenService mRegisterTokenService;
     private final UserManager mUserManager;
 
@@ -57,7 +57,7 @@ public class AuthenticationEndpoint {
                 throw new BadRequestException();
             }
 
-            return new EnableUserCommand(token, mRegisterTokenService, mUserManager);
+            return new EnableUserCommand(token, mHttpServletRequest, mRegisterTokenService, mUserManager, mAuthenticationService);
         });
     }
 
@@ -74,24 +74,9 @@ public class AuthenticationEndpoint {
                 mEndpointHelper.convertEmail(loginBody.getEmail()),
                 loginBody.getPassword(),
                 mHttpServletRequest,
-                mAuthenticationManager
+                mAuthenticationService
             );
         });
-    }
-
-    @GetMapping("/")
-    public String test() {
-        return "<h1>ANYONE</h1>";
-    }
-
-    @GetMapping("/user")
-    public String user(@RequestParam("test") final long test) {
-        return "<h1>I AM USER OR ADMIN</h1>" + test;
-    }
-
-    @GetMapping("/admin")
-    public String home() {
-        return "<h1>I AM ADMIN</h1>";
     }
 
     private void validatePassword(final String password) {

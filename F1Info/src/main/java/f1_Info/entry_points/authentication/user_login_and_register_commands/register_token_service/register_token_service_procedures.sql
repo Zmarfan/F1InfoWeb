@@ -2,7 +2,8 @@ drop procedure if exists register_token_service_find_user_from_token;
 create procedure register_token_service_find_user_from_token(in p_token varchar(255))
 begin
   select
-    user_id,
+    users.id as user_id,
+    users.email,
     tokens.creation_time
   from
     users
