@@ -6,6 +6,7 @@ import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class UserLoginCommand implements Command {
     public ResponseEntity<?> execute() {
         try {
             mAuthenticationService.login(mEmail, mPassword, mRequest);
+        } catch (final DisabledException e) {
+            return new ResponseEntity<>("Account is disabled", HttpStatus.NOT_ACCEPTABLE);
         } catch (final AuthenticationException e) {
             return new ResponseEntity<>("Invalid credentials", HttpStatus.NOT_ACCEPTABLE);
         }
