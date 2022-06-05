@@ -1,5 +1,5 @@
 {
-  "test": "Test text för att testa översättningar",
+  "unexpectedError": "Ett oväntat fel har inträffats",
   "buttons": {
     "cancel": "Avbryt",
     "apply": "Välj"
@@ -35,6 +35,8 @@
     "emailTip": "Ange den e-postadress du registrerade ditt konto med",
     "passwordTip": "En lösenordshanterare kan lagra komplicerade lösenord",
     "needAnAccount": "Behöver du ett konto?",
-    "signUpHere": "Registrera här"
+    "signUpHere": "Registrera här",
+    "invalidCredentials": "Dina inloggningsuppgifter matchar inte ett konto i vårt system",
+    "disabledAccount": "Var god verifiera din e-post för att låsa upp ditt konto"
   }
 }

@@ -1,5 +1,5 @@
 <section class="holder">
-    <h3 class="holder__header">{{titleKey | translate}}</h3>
+    <h3 class="holder__header">{{config.titleKey | translate}}</h3>
 
     <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="holder__form">
         <app-text-input
@@ -7,10 +7,11 @@
                 formControl: email,
                 labelKey: 'input.email',
                 placeholder: 'Ex. richard@example.com',
-                hintKey: emailHintKey,
+                hintKey: config.emailHintKey,
                 inputType: 'email',
                 idAttribute: 'emailId',
-                isRequired: true
+                isRequired: true,
+                errorKeys
             }"
             formControlName="email"
         ></app-text-input>
@@ -19,7 +20,7 @@
             [inputConfig]="{
                 formControl: password,
                 labelKey: 'input.password',
-                hintKey: passwordHintKey,
+                hintKey: config.passwordHintKey,
                 inputType: 'password',
                 idAttribute: 'passwordId',
                 isRequired: true
@@ -27,11 +28,11 @@
             formControlName="password"
         ></app-text-input>
 
-        <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{submitKey | translate}}</button>
+        <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{config.submitKey | translate}}</button>
     </form>
 
     <div class="end-part">
-        <span>{{endText | translate}}</span>
-        <a (click)="route()">{{routeText | translate}}</a>
+        <span>{{config.endTextKey | translate}}</span>
+        <a (click)="route()">{{config.routeTextKey | translate}}</a>
     </div>
 </section>

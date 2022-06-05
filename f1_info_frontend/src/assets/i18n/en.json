@@ -1,5 +1,5 @@
 {
-  "test": "Test text to test translations",
+  "unexpectedError": "An unexpected error has occurred",
   "buttons": {
     "cancel": "Cancel",
     "apply": "Apply"
@@ -35,6 +35,8 @@
     "emailTip": "Enter the email you registered your account with",
     "passwordTip": "A password manager can store complicated passwords ",
     "needAnAccount": "Need an account?",
-    "signUpHere": "Sign up here"
+    "signUpHere": "Sign up here",
+    "invalidCredentials": "Your login credentials don't match an account in our system",
+    "disabledAccount": "Please verify your email as to enable this account"
   }
 }

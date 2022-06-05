@@ -99,6 +99,10 @@ button {
     }
   }
 
+  &:active:enabled {
+    transform: scale(1.035);
+  }
+
   &__primary {
     color: white;
     background: var(--light-primary-color);

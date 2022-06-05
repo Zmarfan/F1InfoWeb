@@ -1,7 +1,20 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RouteHolder} from '../../routing/routeHolder';
 import {Router} from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Endpoints} from '../../configuration/endpoints';
+import {UserLoginResponse} from '../../../generated/server-responses';
+import {catchError, Observable, tap, throwError} from 'rxjs';
+
+interface LoginSignUpConfig {
+    titleKey: string;
+    emailHintKey: string;
+    passwordHintKey: string;
+    submitKey: string;
+    endTextKey: string;
+    routeTextKey: string;
+}
 
 interface RegistrationData {
     email: string;
@@ -13,7 +26,24 @@ interface RegistrationData {
     templateUrl: './login-sign-up.component.html',
     styleUrls: ['./login-sign-up.component.scss'],
 })
-export class LoginSignUpComponent {
+export class LoginSignUpComponent implements OnInit {
+    private static readonly LOGIN_CONFIG: LoginSignUpConfig = {
+        titleKey: 'loginPage.login',
+        emailHintKey: 'loginPage.emailTip',
+        passwordHintKey: 'loginPage.passwordTip',
+        submitKey: 'loginPage.login',
+        endTextKey: 'loginPage.needAnAccount',
+        routeTextKey: 'loginPage.signUpHere',
+    };
+    private static readonly SIGN_UP_CONFIG: LoginSignUpConfig = {
+        titleKey: 'signUpPage.signUp',
+        emailHintKey: 'signUpPage.emailTip',
+        passwordHintKey: 'signUpPage.passwordTip',
+        submitKey: 'signUpPage.signUp',
+        endTextKey: 'signUpPage.alreadyAUser',
+        routeTextKey: 'signUpPage.loginHere',
+    };
+
     @Input() public isSignUp: boolean = true;
 
     public email: FormControl = new FormControl('', [Validators.required, Validators.email]);
@@ -21,40 +51,44 @@ export class LoginSignUpComponent {
 
     public formData: FormGroup = new FormGroup({ email: this.email, password: this.password });
 
+    public errorKeys = {
+        invalidCredentials: 'loginPage.invalidCredentials',
+        disabledAccount: 'loginPage.disabledAccount',
+        unexpectedError: 'unexpectedError',
+    };
+    public config: LoginSignUpConfig = LoginSignUpComponent.SIGN_UP_CONFIG;
+
     public constructor(
-        private mRouter: Router
+        private mRouter: Router,
+        private mHttpClient: HttpClient
     ) {
     }
 
-    public get titleKey(): string {
-        return this.isSignUp ? 'signUpPage.signUp' : 'loginPage.login';
-    }
-
-    public get emailHintKey(): string {
-        return this.isSignUp ? 'signUpPage.emailTip' : 'loginPage.emailTip';
-    }
-
-    public get passwordHintKey(): string {
-        return this.isSignUp ? 'signUpPage.passwordTip' : 'loginPage.passwordTip';
-    }
-
-    public get submitKey(): string {
-        return this.isSignUp ? 'signUpPage.signUp' : 'loginPage.login';
-    }
-
-    public get endText(): string {
-        return this.isSignUp ? 'signUpPage.alreadyAUser' : 'loginPage.needAnAccount';
-    }
-
-    public get routeText(): string {
-        return this.isSignUp ? 'signUpPage.loginHere' : 'loginPage.signUpHere';
+    public ngOnInit() {
+        this.config = this.isSignUp ? LoginSignUpComponent.SIGN_UP_CONFIG : LoginSignUpComponent.LOGIN_CONFIG;
     }
 
     public submitForm(formData: RegistrationData) {
-        console.log(formData);
+        if (!this.isSignUp) {
+            this.mHttpClient.post(Endpoints.AUTHENTICATION.login, formData)
+                .subscribe({
+                    next: (_) => console.log('YES'),
+                    error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
+                });
+        }
     }
 
     public route() {
         this.mRouter.navigateByUrl(this.isSignUp ? RouteHolder.LOGIN_PAGE : RouteHolder.SIGN_UP_PAGE).then();
+    }
+
+    private handleFailedLogin(response: UserLoginResponse) {
+        if (response.responseType === 'INVALID_CREDENTIALS') {
+            this.email.setErrors({ invalidCredentials: true });
+        } else if (response.responseType === 'DISABLED') {
+            this.email.setErrors({ disabledAccount: true });
+        } else {
+            this.email.setErrors({ unexpectedError: true });
+        }
     }
 }

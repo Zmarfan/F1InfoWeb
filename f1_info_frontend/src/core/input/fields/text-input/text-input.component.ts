@@ -3,6 +3,7 @@ import {AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VA
 import {pushIfTrue} from '../../../utils/list-util';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {exists} from '../../../helper/app-util';
 
 export enum InputType {
     TEXT = 'text',
@@ -19,6 +20,7 @@ export interface TextInputConfig {
     inputType?: InputType | string;
     idAttribute?: string;
     isRequired?: boolean;
+    errorKeys?: any | undefined;
 }
 
 interface ValidationErrorParameters {
@@ -96,6 +98,12 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
             pushIfTrue(errors, errorObject.minlength, { key: 'input.passwordMinLength', parameters: { length: errorObject.minlength?.requiredLength }});
         }
 
+        if (exists(this.config.errorKeys)) {
+            Object.keys(this.config.errorKeys).forEach((key) => {
+                pushIfTrue(errors, (errorObject as any)[key], { key: (this.config.errorKeys as any)[key] });
+            });
+        }
+
         return errors;
     }
 
@@ -151,6 +159,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
             inputType: config.inputType ?? InputType.TEXT,
             idAttribute: config.inputType ?? 'textInputLabel',
             isRequired: config.isRequired ?? false,
+            errorKeys: config.errorKeys ?? undefined,
         };
     }
 }
