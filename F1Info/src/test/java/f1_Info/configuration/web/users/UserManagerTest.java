@@ -19,11 +19,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserManagerTest {
+    private static final long USER_ID = 23L;
     private static final String EMAIL = "test@email.com";
     private static final String INVALID_EMAIL = "test@emailcom";
 
@@ -148,6 +148,27 @@ class UserManagerTest {
         final F1UserDetails userDetails = createRegisterUserDetails();
 
         assertThrows(UnableToRegisterUserException.class, () -> mUserManager.registerUser(userDetails));
+        verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
+    }
+
+    @Test
+    void should_enable_user() throws SQLException {
+        mUserManager.enableUser(USER_ID);
+        verify(mDatabase).enableUser(USER_ID);
+    }
+
+    @Test
+    void should_throw_unable_to_register_user_exception_if_throwing_sql_exception_when_enabling_user() throws SQLException {
+        doThrow(new SQLException()).when(mDatabase).enableUser(USER_ID);
+
+        assertThrows(UnableToRegisterUserException.class, () -> mUserManager.enableUser(USER_ID));
+    }
+
+    @Test
+    void should_log_severe_when_enabling_user_if_unable_to() throws SQLException {
+        doThrow(new SQLException()).when(mDatabase).enableUser(USER_ID);
+
+        assertThrows(UnableToRegisterUserException.class, () -> mUserManager.enableUser(USER_ID));
         verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
     }
 
