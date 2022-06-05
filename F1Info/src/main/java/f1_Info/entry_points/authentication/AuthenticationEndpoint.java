@@ -16,8 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
+
+import static f1_Info.configuration.web.ResponseUtil.conflict;
+import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @RestController
 @RequestMapping("/Authentication")
@@ -31,6 +35,11 @@ public class AuthenticationEndpoint {
     private final RegisterTokenService mRegisterTokenService;
     private final UserManager mUserManager;
     private final EmailService mEmailService;
+
+    @GetMapping("/isLoggedIn")
+    public ResponseEntity<Boolean> isUserLoggedIn() {
+        return ok(mEndpointHelper.isLoggedIn());
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody final UserDetailsRequestBody registerBody) {
@@ -86,6 +95,17 @@ public class AuthenticationEndpoint {
             );
         });
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        try {
+            mHttpServletRequest.logout();
+        } catch (final ServletException e) {
+            return conflict();
+        }
+        return ok();
+    }
+
 
     private void validatePassword(final String password) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {

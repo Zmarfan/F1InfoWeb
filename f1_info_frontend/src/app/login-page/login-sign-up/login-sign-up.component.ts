@@ -7,6 +7,8 @@ import {Endpoints} from '../../configuration/endpoints';
 import {UserLoginResponse} from '../../../generated/server-responses';
 import {catchError, Observable, tap, throwError} from 'rxjs';
 import {LoginSignUpService} from '../login-sign-up.service';
+import {AppRoutingModule} from '../../routing/app-routing.module';
+import {Session} from '../../configuration/session';
 
 interface LoginSignUpConfig {
     titleKey: string;
@@ -62,6 +64,7 @@ export class LoginSignUpComponent implements OnInit {
 
     public constructor(
         private mRouter: Router,
+        private mSession: Session,
         private mLoginSignUpService: LoginSignUpService
     ) {
     }
@@ -84,7 +87,7 @@ export class LoginSignUpComponent implements OnInit {
 
     private login(formData: UserDetails) {
         this.mLoginSignUpService.login(formData).subscribe({
-            next: (_) => console.log('YES'),
+            next: (_) => this.mSession.login(),
             error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
         });
     }

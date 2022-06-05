@@ -4,7 +4,6 @@ import f1_Info.configuration.web.users.UserManager;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @EnableWebSecurity
@@ -37,11 +35,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().disable().csrf().disable()
             .authorizeRequests()
             .antMatchers("/Authentication/**").permitAll()
-            .and()
-            .logout().logoutUrl("/Authentication/logout").permitAll()
-            .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.NEVER);

@@ -9,6 +9,8 @@ import {RouteHolder} from '../../../app/routing/routeHolder';
 import {DialogResult} from '../../dialog/dialog';
 import {Language} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
+import {Session} from '../../../app/configuration/session';
+import {pushIfTrue} from '../../utils/list-util';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -41,20 +43,36 @@ export class ProfileHeaderComponent {
     public menuOpen: boolean = false;
     public userName: string = 'Lord_Zmarfan';
     public displayName: string = 'Anonymous User';
-    public menuItems: MenuItem[] = [
-        { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-        { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
-        { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() },
-    ];
 
     private mLastTimeStamp: number = 0;
 
     public constructor(
         private mRouter: Router,
+        private mSession: Session,
         private mDialog: MatDialog,
         private mElement: ElementRef,
         private mTranslateService: TranslateService
     ) {
+    }
+
+    public get menuItems(): MenuItem[] {
+        const items: MenuItem[] = [
+            { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
+            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
+        ];
+
+        pushIfTrue(
+            items,
+            !this.mSession.isLoggedIn,
+            { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() }
+        );
+        pushIfTrue(
+            items,
+            this.mSession.isLoggedIn,
+            { icon: faRightToBracket, translationKey: 'navigation.profile.logout', clickCallback: () => this.mSession.logout() }
+        );
+
+        return items;
     }
 
     private static toggleDarkMode() {
