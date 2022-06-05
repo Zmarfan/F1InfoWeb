@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service;
+package f1_Info.entry_points.authentication.services.register_token_service;
 
 import common.helpers.DateFactory;
 import common.logger.Logger;

@@ -2,12 +2,12 @@ package f1_Info.entry_points.authentication;
 
 import common.email.EmailService;
 import f1_Info.configuration.web.users.UserManager;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.AuthenticationService;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.UserDetailsRequestBody;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.enable_user_command.EnableUserCommand;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service.RegisterTokenService;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.user_login_command.UserLoginCommand;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.user_register_command.UserRegisterCommand;
+import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
+import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
+import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
+import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
+import f1_Info.entry_points.authentication.services.AuthenticationService;
+import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
 import f1_Info.entry_points.helper.ForbiddenException;

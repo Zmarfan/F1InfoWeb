@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service;
+package f1_Info.entry_points.authentication.commands.register_token_service;
 
 import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
@@ -6,6 +6,9 @@ import common.helpers.DateFactory;
 import common.logger.Logger;
 import common.utils.DateUtils;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
+import f1_Info.entry_points.authentication.services.register_token_service.Database;
+import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
+import f1_Info.entry_points.authentication.services.register_token_service.RegistrationTokenRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -102,7 +105,7 @@ class RegisterTokenServiceTest {
         when(mDatabase.findDisabledUserFromToken(TOKEN)).thenThrow(new SQLException());
 
         mRegisterTokenService.findDisabledUserFromToken(TOKEN);
-        
+
         verify(mLogger).severe(anyString(), eq(RegisterTokenService.class), anyString(), any(SQLException.class));
     }
 }

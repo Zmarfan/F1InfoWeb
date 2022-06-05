@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.user_register_command;
+package f1_Info.entry_points.authentication.commands.user_register_command;
 
 import common.constants.email.Email;
 import common.email.EmailSendOutParameters;
@@ -7,7 +7,7 @@ import common.email.EmailType;
 import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service.RegisterTokenService;
+import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

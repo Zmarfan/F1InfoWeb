@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands;
+package f1_Info.entry_points.authentication.commands;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

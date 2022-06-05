@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands;
+package f1_Info.entry_points.authentication.services;
 
 import common.constants.email.Email;
 import f1_Info.configuration.web.users.Authority;

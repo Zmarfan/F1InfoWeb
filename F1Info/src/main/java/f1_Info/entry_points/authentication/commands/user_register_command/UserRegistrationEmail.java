@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.user_register_command;
+package f1_Info.entry_points.authentication.commands.user_register_command;
 
 import lombok.experimental.UtilityClass;
 

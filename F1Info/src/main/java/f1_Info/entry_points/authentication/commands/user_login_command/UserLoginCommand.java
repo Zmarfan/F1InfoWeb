@@ -1,10 +1,9 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.user_login_command;
+package f1_Info.entry_points.authentication.commands.user_login_command;
 
 import common.constants.email.Email;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.AuthenticationService;
+import f1_Info.entry_points.authentication.services.AuthenticationService;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;

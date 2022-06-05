@@ -1,10 +1,10 @@
-package f1_Info.entry_points.authentication.user_login_and_register_commands.enable_user_command;
+package f1_Info.entry_points.authentication.commands.enable_user_command;
 
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.AuthenticationService;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service.RegisterTokenService;
-import f1_Info.entry_points.authentication.user_login_and_register_commands.register_token_service.RegistrationTokenRecord;
+import f1_Info.entry_points.authentication.services.AuthenticationService;
+import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
+import f1_Info.entry_points.authentication.services.register_token_service.RegistrationTokenRecord;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
