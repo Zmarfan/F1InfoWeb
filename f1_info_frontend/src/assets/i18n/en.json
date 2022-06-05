@@ -28,7 +28,8 @@
     "emailTip": "Enter the email you want to register with",
     "passwordTip": "Remember to not re use the same passwords",
     "alreadyAUser": "Already a user?",
-    "loginHere": "Login here"
+    "loginHere": "Login here",
+    "failedRegistration": "Unable to register an account with these credentials"
   },
   "loginPage": {
     "login": "LOGIN",

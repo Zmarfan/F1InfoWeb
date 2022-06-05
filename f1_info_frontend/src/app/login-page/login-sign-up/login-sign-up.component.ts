@@ -6,6 +6,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Endpoints} from '../../configuration/endpoints';
 import {UserLoginResponse} from '../../../generated/server-responses';
 import {catchError, Observable, tap, throwError} from 'rxjs';
+import {LoginSignUpService} from '../login-sign-up.service';
 
 interface LoginSignUpConfig {
     titleKey: string;
@@ -16,7 +17,7 @@ interface LoginSignUpConfig {
     routeTextKey: string;
 }
 
-interface RegistrationData {
+export interface UserDetails {
     email: string;
     password: string;
 }
@@ -54,13 +55,14 @@ export class LoginSignUpComponent implements OnInit {
     public errorKeys = {
         invalidCredentials: 'loginPage.invalidCredentials',
         disabledAccount: 'loginPage.disabledAccount',
+        failedRegistration: 'signUpPage.failedRegistration',
         unexpectedError: 'unexpectedError',
     };
     public config: LoginSignUpConfig = LoginSignUpComponent.SIGN_UP_CONFIG;
 
     public constructor(
         private mRouter: Router,
-        private mHttpClient: HttpClient
+        private mLoginSignUpService: LoginSignUpService
     ) {
     }
 
@@ -68,18 +70,30 @@ export class LoginSignUpComponent implements OnInit {
         this.config = this.isSignUp ? LoginSignUpComponent.SIGN_UP_CONFIG : LoginSignUpComponent.LOGIN_CONFIG;
     }
 
-    public submitForm(formData: RegistrationData) {
-        if (!this.isSignUp) {
-            this.mHttpClient.post(Endpoints.AUTHENTICATION.login, formData)
-                .subscribe({
-                    next: (_) => console.log('YES'),
-                    error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
-                });
+    public submitForm(formData: UserDetails) {
+        if (this.isSignUp) {
+            this.signUp(formData);
+        } else {
+            this.login(formData);
         }
     }
 
     public route() {
         this.mRouter.navigateByUrl(this.isSignUp ? RouteHolder.LOGIN_PAGE : RouteHolder.SIGN_UP_PAGE).then();
+    }
+
+    private login(formData: UserDetails) {
+        this.mLoginSignUpService.login(formData).subscribe({
+            next: (_) => console.log('YES'),
+            error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
+        });
+    }
+
+    private signUp(formData: UserDetails) {
+        this.mLoginSignUpService.register(formData).subscribe({
+            next: (_) => console.log('YES'),
+            error: (_) => this.handleFailedRegister(),
+        });
     }
 
     private handleFailedLogin(response: UserLoginResponse) {
@@ -90,5 +104,9 @@ export class LoginSignUpComponent implements OnInit {
         } else {
             this.email.setErrors({ unexpectedError: true });
         }
+    }
+
+    private handleFailedRegister() {
+        this.email.setErrors({ failedRegistration: true });
     }
 }

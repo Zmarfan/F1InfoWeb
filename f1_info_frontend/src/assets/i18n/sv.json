@@ -28,7 +28,8 @@
     "emailTip": "Ange den e-postadress du vill registrera dig med",
     "passwordTip": "Kom ihåg att inte återanvända lösenord",
     "alreadyAUser": "Har du redan ett konto?",
-    "loginHere": "Logga in här"
+    "loginHere": "Logga in här",
+    "failedRegistration": "Misslyckades med att skapa ett konto med angivna uppgifter"
   },
   "loginPage": {
     "login": "LOGGA IN",
