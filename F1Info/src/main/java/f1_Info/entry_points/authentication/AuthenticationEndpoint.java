@@ -1,5 +1,6 @@
 package f1_Info.entry_points.authentication;
 
+import common.email.EmailService;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.user_login_and_register_commands.AuthenticationService;
 import f1_Info.entry_points.authentication.user_login_and_register_commands.UserDetailsRequestBody;
@@ -29,6 +30,7 @@ public class AuthenticationEndpoint {
     private final AuthenticationService mAuthenticationService;
     private final RegisterTokenService mRegisterTokenService;
     private final UserManager mUserManager;
+    private final EmailService mEmailService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody final UserDetailsRequestBody registerBody) {
@@ -39,7 +41,13 @@ public class AuthenticationEndpoint {
 
             validatePassword(registerBody.getPassword());
 
-            return new UserRegisterCommand(mEndpointHelper.convertEmail(registerBody.getEmail()), registerBody.getPassword(), mUserManager);
+            return new UserRegisterCommand(
+                mEndpointHelper.convertEmail(registerBody.getEmail()),
+                registerBody.getPassword(),
+                mUserManager,
+                mRegisterTokenService,
+                mEmailService
+            );
         });
     }
 

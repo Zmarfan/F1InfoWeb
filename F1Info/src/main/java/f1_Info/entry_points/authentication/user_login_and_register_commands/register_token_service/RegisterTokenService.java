@@ -2,6 +2,7 @@ package f1_Info.entry_points.authentication.user_login_and_register_commands.reg
 
 import common.helpers.DateFactory;
 import common.logger.Logger;
+import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,15 @@ public class RegisterTokenService {
     private final Database mDatabase;
     private final DateFactory mDateFactory;
     private final Logger mLogger;
+
+    public void insertRegistrationTokenForUser(final long userId, final UUID token) {
+        try {
+            mDatabase.insertRegistrationTokenForUser(userId, token);
+        } catch (final SQLException e) {
+            mLogger.severe("insertRegistrationTokenForUser", this.getClass(), String.format("Unable to insert registration token for user: %d", userId), e);
+            throw new UnableToRegisterUserException();
+        }
+    }
 
     public Optional<RegistrationTokenRecord> findDisabledUserFromToken(final UUID token) {
         try {

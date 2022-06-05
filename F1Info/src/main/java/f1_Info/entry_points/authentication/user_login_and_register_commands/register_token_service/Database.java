@@ -20,6 +20,10 @@ public class Database extends DatabaseBase {
         super(configuration, logger);
     }
 
+    public void insertRegistrationTokenForUser(final long userId, final UUID token) throws SQLException {
+        executeVoidQuery(new InsertRegistrationTokenForUserQueryData(userId, token.toString()));
+    }
+
     public Optional<RegistrationTokenRecord> findDisabledUserFromToken(final UUID token) throws SQLException {
         return executeOptionalQuery(new FindDisabledUserFromTokenQueryData(token.toString()));
     }
