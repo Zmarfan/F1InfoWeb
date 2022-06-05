@@ -17,7 +17,7 @@ class ErgastSessionTimes {
         @JsonProperty("date") String dateString,
         @JsonProperty("time") String timeString
     ) {
-        mDate = dateString != null ? DateUtils.parse(dateString) : null;
+        mDate = dateString != null ? LocalDate.parse(dateString) : null;
         mTime = timeString != null ? DateUtils.parseTime(timeString) : null;
     }
 }

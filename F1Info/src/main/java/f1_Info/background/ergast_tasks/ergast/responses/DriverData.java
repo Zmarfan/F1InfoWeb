@@ -3,7 +3,6 @@ package f1_Info.background.ergast_tasks.ergast.responses;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import common.constants.Country;
 import common.constants.Url;
-import common.utils.DateUtils;
 import lombok.Value;
 
 import java.net.MalformedURLException;
@@ -36,7 +35,7 @@ public class DriverData {
         mWikipediaUrl = new Url(wikipediaUrl);
         mFirstName = firstName;
         mLastName = lastName;
-        mDateOfBirth = DateUtils.parse(dateOfBirthString);
+        mDateOfBirth = LocalDate.parse(dateOfBirthString);
         mCountry = Country.fromNationality(nationality);
         mPermanentNumber = permanentNumber;
         mCode = code;

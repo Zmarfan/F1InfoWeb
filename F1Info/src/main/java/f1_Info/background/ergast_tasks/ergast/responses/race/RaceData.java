@@ -49,7 +49,7 @@ public class RaceData {
         mWikipediaUrl = new Url(wikipediaUrl);
         mRaceName = raceName;
         mRaceTime = raceTimeStart != null ? DateUtils.parseTime(raceTimeStart) : null;
-        mRaceDate = DateUtils.parse(raceDate);
+        mRaceDate = LocalDate.parse(raceDate);
         mQualifyingTime = qualifyingDateAndTime != null ? qualifyingDateAndTime.getTime() : null;
         mQualifyingDate = qualifyingDateAndTime != null ? qualifyingDateAndTime.getDate() : null;
         mSprintTime = sprintDateAndTime != null ? sprintDateAndTime.getTime() : null;

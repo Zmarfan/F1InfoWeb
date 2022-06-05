@@ -6,21 +6,22 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
 @UtilityClass
 public class DateUtils {
-    public static LocalDate parse(final String dateString) {
-        return LocalDate.parse(dateString);
-    }
-
     public static LocalTime parseTime(final String isoTimestamp) {
         return LocalTime.parse(isoTimestamp.replace("Z", ""));
+    }
+
+    public static LocalDateTime parseDateTime(final String dateTime) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(dateTime, formatter);
     }
 
     public static BigDecimal parseTimeToSeconds(final String timeString) throws ParseException {
