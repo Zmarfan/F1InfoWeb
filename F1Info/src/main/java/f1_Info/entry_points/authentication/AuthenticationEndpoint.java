@@ -4,6 +4,7 @@ import common.email.EmailService;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
+import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
 import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
@@ -17,11 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
-import static f1_Info.configuration.web.ResponseUtil.conflict;
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @RestController
@@ -101,15 +100,9 @@ public class AuthenticationEndpoint {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
-        try {
-            mHttpServletRequest.logout();
-        } catch (final ServletException e) {
-            return conflict();
-        }
-        return ok();
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new LogoutUserCommand(userId, mHttpServletRequest));
     }
-
-
+    
     private void validatePassword(final String password) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
             throw new BadRequestException(String.format("The provided password is not at least %s characters long", MIN_PASSWORD_LENGTH));
