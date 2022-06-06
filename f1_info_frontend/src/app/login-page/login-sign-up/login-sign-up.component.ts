@@ -7,6 +7,7 @@ import {UserLoginResponse} from '../../../generated/server-responses';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
 import {SignUpComponentType} from '../sign-up/sign-up.component';
+import {finalize} from 'rxjs';
 
 interface LoginSignUpConfig {
     titleKey: string;
@@ -47,6 +48,7 @@ export class LoginSignUpComponent implements OnInit {
 
     @Input() public isSignUp: boolean = true;
 
+    public loading: boolean = false;
     public email: FormControl = new FormControl('', [Validators.required, Validators.email]);
     public password: FormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
 
@@ -72,6 +74,7 @@ export class LoginSignUpComponent implements OnInit {
     }
 
     public submitForm(formData: UserDetails) {
+        this.loading = true;
         if (this.isSignUp) {
             this.signUp(formData);
         } else {
@@ -84,17 +87,25 @@ export class LoginSignUpComponent implements OnInit {
     }
 
     private login(formData: UserDetails) {
-        this.mLoginSignUpService.login(formData).subscribe({
-            next: (_) => this.loginClient(),
-            error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
-        });
+        this.mLoginSignUpService.login(formData)
+            .pipe(finalize(() => {
+                this.loading = false;
+            }))
+            .subscribe({
+                next: (_) => this.loginClient(),
+                error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
+            });
     }
 
     private signUp(formData: UserDetails) {
-        this.mLoginSignUpService.register(formData).subscribe({
-            next: (_) => this.navigateToVerifyRegistrationMessage(formData.email),
-            error: (_) => this.handleFailedRegister(),
-        });
+        this.mLoginSignUpService.register(formData)
+            .pipe(finalize(() => {
+                this.loading = false;
+            }))
+            .subscribe({
+                next: (_) => this.navigateToVerifyRegistrationMessage(formData.email),
+                error: (_) => this.handleFailedRegister(),
+            });
     }
 
     private handleFailedLogin(response: UserLoginResponse) {

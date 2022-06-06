@@ -1,9 +1,10 @@
 <section class="holder">
     <h3 class="holder__header">{{config.titleKey | translate}}</h3>
 
-    <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="holder__form">
-        <app-text-input
-            [inputConfig]="{
+    <app-loading-element [loading]="loading">
+        <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="holder__form">
+            <app-text-input
+                    [inputConfig]="{
                 formControl: email,
                 labelKey: 'input.email',
                 placeholder: 'Ex. richard@example.com',
@@ -13,11 +14,11 @@
                 isRequired: true,
                 errorKeys
             }"
-            formControlName="email"
-        ></app-text-input>
+                    formControlName="email"
+            ></app-text-input>
 
-        <app-text-input
-            [inputConfig]="{
+            <app-text-input
+                    [inputConfig]="{
                 formControl: password,
                 labelKey: 'input.password',
                 hintKey: config.passwordHintKey,
@@ -25,14 +26,15 @@
                 idAttribute: 'passwordId',
                 isRequired: true
             }"
-            formControlName="password"
-        ></app-text-input>
+                    formControlName="password"
+            ></app-text-input>
 
-        <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{config.submitKey | translate}}</button>
-    </form>
+            <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{config.submitKey | translate}}</button>
+        </form>
 
-    <div class="end-part">
-        <span>{{config.endTextKey | translate}}</span>
-        <a (click)="route()">{{config.routeTextKey | translate}}</a>
-    </div>
+        <div class="end-part">
+            <span>{{config.endTextKey | translate}}</span>
+            <a (click)="route()">{{config.routeTextKey | translate}}</a>
+        </div>
+    </app-loading-element>
 </section>
