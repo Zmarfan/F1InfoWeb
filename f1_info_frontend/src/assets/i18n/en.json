@@ -20,7 +20,8 @@
     "profile": {
       "loginOrSignUp": "Log in/Sign up",
       "darkMode": "Toggle dark mode",
-      "language": "Select language"
+      "language": "Select language",
+      "logout": "Log out"
     }
   },
   "signUpPage": {
@@ -29,7 +30,19 @@
     "passwordTip": "Remember to not re use the same passwords",
     "alreadyAUser": "Already a user?",
     "loginHere": "Login here",
-    "failedRegistration": "Unable to register an account with these credentials"
+    "failedRegistration": "Unable to register an account with these credentials",
+    "verifyAccount": {
+      "title": "A registration email has been sent to {{email}}. Please open this email to finish the sign up process.",
+      "paragraph1": "If you don't see this email in your inbox within 15 minutes, look for it in your junk mail folder."
+    },
+    "verifiedAccount": {
+      "title": "That's it! Your account is now fully registered!",
+      "paragraph1": "Thank you for registering an account at F1Info!"
+    },
+    "errorEnabling": {
+      "title": "Oops! Something went wrong!",
+      "paragraph1": "Your account has not been enabled! You must enable your account within 30 minutes! Please try registering again! If this issue still persist, please try again later!"
+    }
   },
   "loginPage": {
     "login": "LOGIN",

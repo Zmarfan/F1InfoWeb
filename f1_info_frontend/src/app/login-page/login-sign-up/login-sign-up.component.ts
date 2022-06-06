@@ -2,13 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RouteHolder} from '../../routing/routeHolder';
 import {Router} from '@angular/router';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Endpoints} from '../../configuration/endpoints';
+import {HttpErrorResponse} from '@angular/common/http';
 import {UserLoginResponse} from '../../../generated/server-responses';
-import {catchError, Observable, tap, throwError} from 'rxjs';
 import {LoginSignUpService} from '../login-sign-up.service';
-import {AppRoutingModule} from '../../routing/app-routing.module';
 import {Session} from '../../configuration/session';
+import {SignUpComponentType} from '../sign-up/sign-up.component';
 
 interface LoginSignUpConfig {
     titleKey: string;
@@ -87,14 +85,14 @@ export class LoginSignUpComponent implements OnInit {
 
     private login(formData: UserDetails) {
         this.mLoginSignUpService.login(formData).subscribe({
-            next: (_) => this.mSession.login(),
+            next: (_) => this.loginClient(),
             error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
         });
     }
 
     private signUp(formData: UserDetails) {
         this.mLoginSignUpService.register(formData).subscribe({
-            next: (_) => console.log('YES'),
+            next: (_) => this.navigateToVerifyRegistrationMessage(formData.email),
             error: (_) => this.handleFailedRegister(),
         });
     }
@@ -109,7 +107,16 @@ export class LoginSignUpComponent implements OnInit {
         }
     }
 
+    private navigateToVerifyRegistrationMessage(email: string) {
+        this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.VERIFY, email } }).then();
+    }
+
     private handleFailedRegister() {
         this.email.setErrors({ failedRegistration: true });
+    }
+
+    private loginClient() {
+        this.mSession.login();
+        this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
     }
 }

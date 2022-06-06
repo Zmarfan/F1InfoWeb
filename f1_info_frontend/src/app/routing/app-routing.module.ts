@@ -14,6 +14,7 @@ const anonymousRoutes: Routes = [
 
 const loggedInRoutes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
+    { path: RouteHolder.SIGN_UP_PAGE, component: SignUpComponent },
     { path: '**', redirectTo: RouteHolder.HOMEPAGE },
 ];
 
@@ -29,7 +30,6 @@ export class AppRoutingModule {
     }
 
     public setupLoggedInRoutes() {
-        this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
         this.mRouter.resetConfig(loggedInRoutes);
     }
 

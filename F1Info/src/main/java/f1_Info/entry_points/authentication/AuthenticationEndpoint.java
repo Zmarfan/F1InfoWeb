@@ -14,6 +14,7 @@ import f1_Info.entry_points.helper.ForbiddenException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -31,6 +32,7 @@ public class AuthenticationEndpoint {
 
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
+    private final PasswordEncoder mPasswordEncoder;
     private final AuthenticationService mAuthenticationService;
     private final RegisterTokenService mRegisterTokenService;
     private final UserManager mUserManager;
@@ -53,6 +55,7 @@ public class AuthenticationEndpoint {
             return new UserRegisterCommand(
                 mEndpointHelper.convertEmail(registerBody.getEmail()),
                 registerBody.getPassword(),
+                mPasswordEncoder,
                 mUserManager,
                 mRegisterTokenService,
                 mEmailService

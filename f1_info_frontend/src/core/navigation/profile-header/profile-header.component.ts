@@ -11,6 +11,7 @@ import {Language} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
 import {Session} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
+import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -106,7 +107,7 @@ export class ProfileHeaderComponent {
     }
 
     private routeToLogin() {
-        this.mRouter.navigateByUrl(RouteHolder.SIGN_UP_PAGE).then();
+        this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.SIGN_UP } }).then();
         this.menuOpen = false;
     }
 }

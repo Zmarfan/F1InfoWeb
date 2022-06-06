@@ -11,6 +11,7 @@ import f1_Info.entry_points.authentication.services.register_token_service.Regis
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 public class UserRegisterCommand implements Command {
     private final Email mEmail;
     private final String mPassword;
+    private final PasswordEncoder mPasswordEncoder;
     private final UserManager mUserManager;
     private final RegisterTokenService mRegisterTokenService;
     private final EmailService mEmailService;
@@ -33,7 +35,7 @@ public class UserRegisterCommand implements Command {
     @Override
     public ResponseEntity<?> execute() {
         try {
-            final long userId = mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPassword));
+            final long userId = mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPasswordEncoder.encode(mPassword)));
             final UUID registerToken = UUID.randomUUID();
 
             mRegisterTokenService.insertRegistrationTokenForUser(userId, registerToken);
@@ -49,7 +51,7 @@ public class UserRegisterCommand implements Command {
         final boolean sentEmail = mEmailService.sendEmail(new EmailSendOutParameters(
             mEmail,
             "Verify Your Email Address for F1Info",
-            String.format(UserRegistrationEmail.HTML_MESSAGE, "http://localhost:8080/api/v1/Authentication/enable/" + registerToken.toString()),
+            String.format(UserRegistrationEmail.HTML_MESSAGE, "http://localhost:4200/sign-up?type=3&token=" + registerToken.toString()),
             EmailType.REGISTRATION_VERIFICATION
         ));
 

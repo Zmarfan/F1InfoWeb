@@ -38,11 +38,15 @@ public class UserManager implements UserDetailsService {
     }
 
     public long registerUser(final F1UserDetails userDetails) throws UnableToRegisterUserException {
-        if (userExists(userDetails.getEmail())) {
-            throw new UnableToRegisterUserException();
-        }
-
         try {
+            final Optional<UserDetailsRecord> existentUserDetails = mDatabase.getUserDetailsFromEmail(userDetails.getEmail());
+            if (existentUserDetails.isPresent() && !existentUserDetails.get().getEnabled()) {
+                return existentUserDetails.get().getUserId();
+            }
+            if (existentUserDetails.isPresent()) {
+                throw new UnableToRegisterUserException();
+            }
+
             final long userId = mDatabase.createUser(userDetails);
             mLogger.info("createUser", this.getClass(), String.format("Created new user: %d, with details: %s", userId, userDetails));
             return userId;

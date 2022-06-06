@@ -20,7 +20,8 @@
     "profile": {
       "loginOrSignUp": "Logga in/Bli medlem",
       "darkMode": "Växla mörkt tema",
-      "language": "Välj språk"
+      "language": "Välj språk",
+      "logout": "Logga ut"
     }
   },
   "signUpPage": {
@@ -29,7 +30,19 @@
     "passwordTip": "Kom ihåg att inte återanvända lösenord",
     "alreadyAUser": "Har du redan ett konto?",
     "loginHere": "Logga in här",
-    "failedRegistration": "Misslyckades med att skapa ett konto med angivna uppgifter"
+    "failedRegistration": "Misslyckades med att skapa ett konto med angivna uppgifter",
+    "verifyAccount": {
+      "title": "Ett mail har skickats till {{email}}. Öppna det här e-postmeddelandet för att avsluta registreringsprocessen.",
+      "paragraph1": "Om du inte ser det här e-postmeddelandet i din inkorg inom 15 minuter, leta efter det i skräppostmappen."
+    },
+    "verifiedAccount": {
+      "title": "Allt klart! Ditt konto är nu registrerat och redo för dig!",
+      "paragraph1": "Tack för att du har skapat ett konto hos F1Info!"
+    },
+    "errorEnabling": {
+      "title": "Ojdå! Någonting gick fel!",
+      "paragraph1": "Ditt konto har inte aktiverats! Du måste aktivera ditt konto inom 30 minuter! Försök att registrera dig igen! Om problemet kvarstår, försök igen senare!"
+    }
   },
   "loginPage": {
     "login": "LOGGA IN",

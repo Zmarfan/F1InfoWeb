@@ -38,9 +38,9 @@ class UserManagerTest {
 
     @Test
     void should_return_user_details_for_matching_user_in_database() throws MalformedEmailException, SQLException {
-        final F1UserDetails expectedUserDetails = new F1UserDetails(1L, new Email(EMAIL), "hashed", Authority.USER, true);
+        final F1UserDetails expectedUserDetails = new F1UserDetails(USER_ID, new Email(EMAIL), "hashed", Authority.USER, true);
 
-        when(mDatabase.getUserDetailsFromEmail(any(Email.class))).thenReturn(Optional.of(createUserRecord()));
+        when(mDatabase.getUserDetailsFromEmail(any(Email.class))).thenReturn(Optional.of(createUserRecord(true)));
 
         assertEquals(expectedUserDetails, mUserManager.loadUserByUsername(EMAIL));
     }
@@ -77,7 +77,7 @@ class UserManagerTest {
 
     @Test
     void should_return_true_if_user_exist() throws SQLException, MalformedEmailException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord()));
+        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord(true)));
         assertTrue(mUserManager.userExists(new Email(EMAIL)));
     }
 
@@ -103,12 +103,28 @@ class UserManagerTest {
     }
 
     @Test
-    void should_throw_unable_to_register_if_user_already_exists_when_trying_to_create_new() throws MalformedEmailException, SQLException {
+    void should_throw_unable_to_register_if_user_already_exists_and_is_enabled_when_trying_to_create_new() throws MalformedEmailException, SQLException {
         final F1UserDetails registerUserDetails = createRegisterUserDetails();
 
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord()));
+        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord(true)));
 
         assertThrows(UnableToRegisterUserException.class, () -> mUserManager.registerUser(registerUserDetails));
+    }
+
+    @Test
+    void should_return_existent_user_id_if_user_exists_but_is_not_enabled_when_registering_user() throws MalformedEmailException, SQLException {
+        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord(false)));
+
+        assertEquals(USER_ID, mUserManager.registerUser(createRegisterUserDetails()));
+    }
+
+    @Test
+    void should_not_create_new_user_if_existent_user_is_disabled() throws MalformedEmailException, SQLException {
+        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord(false)));
+
+        mUserManager.registerUser(createRegisterUserDetails());
+
+        verify(mDatabase, never()).createUser(any(F1UserDetails.class));
     }
 
     @Test
@@ -116,9 +132,9 @@ class UserManagerTest {
         final F1UserDetails userDetails = createRegisterUserDetails();
 
         when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.empty());
-        when(mDatabase.createUser(userDetails)).thenReturn(1L);
+        when(mDatabase.createUser(userDetails)).thenReturn(USER_ID);
 
-        assertEquals(1, mUserManager.registerUser(userDetails));
+        assertEquals(USER_ID, mUserManager.registerUser(userDetails));
     }
 
     @Test
@@ -172,8 +188,8 @@ class UserManagerTest {
         verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
     }
 
-    private UserDetailsRecord createUserRecord() throws MalformedEmailException {
-        return new UserDetailsRecord(1, new Email(EMAIL), "hashed", Authority.USER.getAuthority(), true);
+    private UserDetailsRecord createUserRecord(final boolean enabled) throws MalformedEmailException {
+        return new UserDetailsRecord(USER_ID, new Email(EMAIL), "hashed", Authority.USER.getAuthority(), enabled);
     }
 
     private F1UserDetails createRegisterUserDetails() throws MalformedEmailException {

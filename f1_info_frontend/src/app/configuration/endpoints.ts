@@ -10,6 +10,6 @@ export class Endpoints {
         login: `${Endpoints.AUTHENTICATION_BASE}login`,
         logout: `${Endpoints.AUTHENTICATION_BASE}logout`,
         register: `${Endpoints.AUTHENTICATION_BASE}register`,
-        enableAccount: `${Endpoints.AUTHENTICATION_BASE}login/{token}`,
+        enableAccount: `${Endpoints.AUTHENTICATION_BASE}enable/{token}`,
     };
 }
