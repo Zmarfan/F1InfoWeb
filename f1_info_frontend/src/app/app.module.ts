@@ -16,6 +16,8 @@ import {Language} from '../common/constants/language';
 import { LoginComponent } from './login-page/login/login.component';
 import { SignUpComponent } from './login-page/sign-up/sign-up.component';
 import {TokenInterceptor} from './configuration/http-interceptor';
+import { ForgotPasswordComponent } from './login-page/forgot-password/forgot-password.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -37,12 +39,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         FontAwesomeModule,
         CoreModule,
         BrowserAnimationsModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         AppComponent,
         HomepageComponent,
         LoginComponent,
         SignUpComponent,
+        ForgotPasswordComponent,
     ],
     providers: [
         {

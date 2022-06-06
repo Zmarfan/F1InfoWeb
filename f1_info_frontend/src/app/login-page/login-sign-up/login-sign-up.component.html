@@ -33,8 +33,11 @@
         </form>
 
         <div class="end-part">
-            <span>{{config.endTextKey | translate}}</span>
-            <a (click)="route()">{{config.routeTextKey | translate}}</a>
+            <div class="end-part__entry">
+                <span>{{config.endTextKey | translate}}</span>
+                <a (click)="route()">{{config.routeTextKey | translate}}</a>
+            </div>
+            <a *ngIf="!isSignUp" (click)="forgotPassword()">{{'loginPage.forgotYourPassword' | translate}}</a>
         </div>
     </app-loading-element>
 </section>

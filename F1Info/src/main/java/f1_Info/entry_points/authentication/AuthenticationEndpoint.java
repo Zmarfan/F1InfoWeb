@@ -102,7 +102,7 @@ public class AuthenticationEndpoint {
     public ResponseEntity<?> logout() {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new LogoutUserCommand(userId, mHttpServletRequest));
     }
-    
+
     private void validatePassword(final String password) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
             throw new BadRequestException(String.format("The provided password is not at least %s characters long", MIN_PASSWORD_LENGTH));

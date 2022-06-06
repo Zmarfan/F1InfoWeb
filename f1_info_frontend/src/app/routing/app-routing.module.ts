@@ -4,11 +4,13 @@ import {RouteHolder} from './routeHolder';
 import {HomepageComponent} from '../homepage/homepage/homepage.component';
 import {LoginComponent} from '../login-page/login/login.component';
 import {SignUpComponent} from '../login-page/sign-up/sign-up.component';
+import {ForgotPasswordComponent} from '../login-page/forgot-password/forgot-password.component';
 
 const anonymousRoutes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
     { path: RouteHolder.SIGN_UP_PAGE, component: SignUpComponent },
     { path: RouteHolder.LOGIN_PAGE, component: LoginComponent },
+    { path: RouteHolder.FORGOT_PASSWORD_PAGE, component: ForgotPasswordComponent },
     { path: '**', redirectTo: RouteHolder.HOMEPAGE },
 ];
 

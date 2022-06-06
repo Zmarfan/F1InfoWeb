@@ -44,6 +44,7 @@ import {RouterModule} from '@angular/router';
         TextInputComponent,
         LoadingElementComponent,
         LoginSignUpComponent,
+        PrimaryButtonDirective,
     ],
 })
 export class CoreModule {

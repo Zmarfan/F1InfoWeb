@@ -51,6 +51,13 @@
     "needAnAccount": "Behöver du ett konto?",
     "signUpHere": "Registrera här",
     "invalidCredentials": "Dina inloggningsuppgifter matchar inte ett konto i vårt system",
-    "disabledAccount": "Var god verifiera din e-post för att låsa upp ditt konto"
+    "disabledAccount": "Var god verifiera din e-post för att låsa upp ditt konto",
+    "forgotYourPassword": "Glömt bort ditt lösenord?"
+  },
+  "forgotPasswordPage": {
+    "title": "Återställ ditt lösenord",
+    "hint": "Ange e-postadressen för kontot du vill återställa ditt lösenord",
+    "apply": "Återställ lösenord",
+    "routeToLogin": "Kom du på det?"
   }
 }

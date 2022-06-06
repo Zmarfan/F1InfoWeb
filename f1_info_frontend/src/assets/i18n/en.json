@@ -51,6 +51,13 @@
     "needAnAccount": "Need an account?",
     "signUpHere": "Sign up here",
     "invalidCredentials": "Your login credentials don't match an account in our system",
-    "disabledAccount": "Please verify your email as to enable this account"
+    "disabledAccount": "Please verify your email as to enable this account",
+    "forgotYourPassword": "Forgot your password?"
+  },
+  "forgotPasswordPage": {
+    "title": "Reset your password",
+    "hint": "Enter the email for the account you want to reset your password",
+    "apply": "Reset Password",
+    "routeToLogin": "Did you remember it?"
   }
 }

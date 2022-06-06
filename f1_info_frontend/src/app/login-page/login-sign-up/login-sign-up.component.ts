@@ -86,6 +86,10 @@ export class LoginSignUpComponent implements OnInit {
         this.mRouter.navigateByUrl(this.isSignUp ? RouteHolder.LOGIN_PAGE : RouteHolder.SIGN_UP_PAGE).then();
     }
 
+    public forgotPassword() {
+        this.mRouter.navigateByUrl(RouteHolder.FORGOT_PASSWORD_PAGE).then();
+    }
+
     private login(formData: UserDetails) {
         this.mLoginSignUpService.login(formData)
             .pipe(finalize(() => {
