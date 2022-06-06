@@ -1,28 +1,29 @@
 <app-login-sign-up *ngIf="showSignUp; else message" [isSignUp]="true"></app-login-sign-up>
 
 <ng-template #message>
-    <section class="holder" [class.holder--error]="showError">
-        <fa-icon *ngIf="showError; else valid" icon="circle-exclamation"></fa-icon>
-        <ng-template #valid>
-            <fa-icon icon="circle-check"></fa-icon>
-        </ng-template>
+    <section class="container" [class.container--loading]="loading" [class.container--error]="showError">
+        <app-loading-element [loading]="loading" class="container__holder">
+            <fa-icon *ngIf="showError; else valid" icon="circle-exclamation"></fa-icon>
+            <ng-template #valid>
+                <fa-icon icon="circle-check"></fa-icon>
+            </ng-template>
 
+            <div>
+                <div *ngIf="showVerify">
+                    <h3>{{'signUpPage.verifyAccount.title' | translate : { email: registrationEmail } }}</h3>
+                    <p>{{'signUpPage.verifyAccount.paragraph1' | translate}}</p>
+                </div>
 
-        <div>
-            <div *ngIf="showVerify">
-                <h3>{{'signUpPage.verifyAccount.title' | translate : { email: registrationEmail } }}</h3>
-                <p>{{'signUpPage.verifyAccount.paragraph1' | translate}}</p>
+                <div *ngIf="showVerified">
+                    <h3>{{'signUpPage.verifiedAccount.title' | translate}}</h3>
+                    <p>{{'signUpPage.verifiedAccount.paragraph1' | translate}}</p>
+                </div>
+
+                <div *ngIf="showError">
+                    <h3>{{'signUpPage.errorEnabling.title' | translate}}</h3>
+                    <p>{{'signUpPage.errorEnabling.paragraph1' | translate}}</p>
+                </div>
             </div>
-
-            <div *ngIf="showVerified">
-                <h3>{{'signUpPage.verifiedAccount.title' | translate}}</h3>
-                <p>{{'signUpPage.verifiedAccount.paragraph1' | translate}}</p>
-            </div>
-
-            <div *ngIf="showError">
-                <h3>{{'signUpPage.errorEnabling.title' | translate}}</h3>
-                <p>{{'signUpPage.errorEnabling.paragraph1' | translate}}</p>
-            </div>
-        </div>
+        </app-loading-element>
     </section>
 </ng-template>

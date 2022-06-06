@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {finalize, Subscription, tap} from 'rxjs';
 import {exists} from '../../../core/helper/app-util';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
@@ -19,6 +19,7 @@ export enum SignUpComponentType {
 })
 export class SignUpComponent implements OnInit, OnDestroy {
     public registrationEmail: string = '';
+    public loading: boolean = false;
     private mType: SignUpComponentType = SignUpComponentType.SIGN_UP;
     private mToken: string = '';
     private mSubscription!: Subscription;
@@ -50,12 +51,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         this.mSubscription = this.mRoute.queryParams.subscribe((params: any) => {
             this.assignVariables(params);
             if (this.mType === SignUpComponentType.VERIFIED) {
-                this.mLoginSignUpService.enableAccount(this.mToken).subscribe({
-                    next: (_) => this.mSession.login(),
-                    error: (_) => {
-                        this.mType = SignUpComponentType.ERROR;
-                    },
-                });
+                this.enableAccount();
             }
         });
     }
@@ -68,5 +64,23 @@ export class SignUpComponent implements OnInit, OnDestroy {
         this.mType = exists(params.type) ? Number(params.type) : this.mType;
         this.registrationEmail = params.email ?? this.registrationEmail;
         this.mToken = params.token ?? this.mToken;
+    }
+
+    private enableAccount() {
+        this.loading = true;
+        this.mLoginSignUpService.enableAccount(this.mToken)
+            .pipe(finalize(() => {
+                this.loading = false;
+            }))
+            .subscribe({
+                next: (_) => this.login(),
+                error: (_) => {
+                    this.mType = SignUpComponentType.ERROR;
+                },
+            });
+    }
+
+    private login() {
+        this.mSession.login();
     }
 }

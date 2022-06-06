@@ -1,7 +1,4 @@
-.holder {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
+.container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,9 +9,19 @@
   transform: translate(-50%,-50%);
   background: #eaffeb;
 
+  &__holder {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
   fa-icon {
     font-size: 4rem;
     color: #5a9d5a;
+  }
+
+  &--loading {
+    background: var(--bkg-color);
   }
 
   &--error {
