@@ -1,4 +1,6 @@
 .container {
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,11 +15,20 @@
     display: flex;
     align-items: center;
     gap: 2.5rem;
+
+    @media(max-width: 700px) {
+      flex-direction: column;
+    }
   }
 
   fa-icon {
     font-size: 4rem;
     color: #5a9d5a;
+  }
+
+  @media(max-width: 700px) {
+    width: 90%;
+    flex-direction: column;
   }
 
   &--loading {
@@ -30,10 +41,5 @@
     fa-icon {
       color: var(--error);
     }
-  }
-
-  @media(max-width: 500px) {
-    width: 90%;
-    flex-direction: column;
   }
 }
