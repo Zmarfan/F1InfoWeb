@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {faCircleCheck, faCircleExclamation, faCircleQuestion} from '@fortawesome/free-solid-svg-icons';
+import {faCircleCheck, faCircleExclamation} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 export enum PageInformationType {
@@ -25,12 +25,7 @@ export class PageInformationComponent {
     @Input() public loading: boolean = false;
 
     public get icon(): IconDefinition {
-        if (this.config.type === PageInformationType.INFORMATION) {
-            return faCircleQuestion;
-        } else if (this.config.type === PageInformationType.ERROR) {
-            return faCircleExclamation;
-        }
-        return faCircleCheck;
+        return this.config.type === PageInformationType.SUCCESS ? faCircleCheck : faCircleExclamation;
     }
 
     public get cssStyleClass(): string {

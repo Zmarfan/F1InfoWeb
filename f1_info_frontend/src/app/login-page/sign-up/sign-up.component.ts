@@ -10,7 +10,9 @@ export enum SignUpComponentType {
     SIGN_UP = 1,
     VERIFY = 2,
     VERIFIED = 3,
-    ERROR = 4
+    TIMED_OUT_TOKEN = 4,
+    ALREADY_VERIFIED = 5,
+    UNEXPECTED_ERROR = 6
 }
 
 @Component({
@@ -18,6 +20,27 @@ export enum SignUpComponentType {
     templateUrl: './sign-up.component.html',
 })
 export class SignUpComponent implements OnInit, OnDestroy {
+    private static readonly VERIFIED_CONFIG: PageInformationConfig = {
+        type: PageInformationType.SUCCESS,
+        titleKey: 'signUpPage.verifiedAccount.title',
+        paragraphKeys: ['signUpPage.verifiedAccount.paragraph1'],
+    };
+    private static readonly TIMED_OUT_TOKEN_CONFIG: PageInformationConfig = {
+        type: PageInformationType.ERROR,
+        titleKey: 'signUpPage.timedOutToken.title',
+        paragraphKeys: ['signUpPage.timedOutToken.paragraph1'],
+    };
+    private static readonly ALREADY_VERIFIED_CONFIG: PageInformationConfig = {
+        type: PageInformationType.INFORMATION,
+        titleKey: 'signUpPage.alreadyVerified.title',
+        paragraphKeys: ['signUpPage.alreadyVerified.paragraph1'],
+    };
+    private static readonly UNEXPECTED_ERROR_CONFIG: PageInformationConfig = {
+        type: PageInformationType.ERROR,
+        titleKey: 'signUpPage.unExpectedError.title',
+        paragraphKeys: ['signUpPage.unExpectedError.paragraph1'],
+    };
+
     public loading: boolean = false;
     private mRegistrationEmail: string = '';
     private mType: SignUpComponentType = SignUpComponentType.SIGN_UP;
@@ -36,25 +59,21 @@ export class SignUpComponent implements OnInit, OnDestroy {
     }
 
     public get informationConfig(): PageInformationConfig {
-        if (this.mType === SignUpComponentType.VERIFY) {
-            return {
-                type: PageInformationType.SUCCESS,
-                titleKey: 'signUpPage.verifyAccount.title',
-                titleParameters: { email: this.mRegistrationEmail },
-                paragraphKeys: ['signUpPage.verifyAccount.paragraph1'],
-            };
+        switch (this.mType) {
+        case SignUpComponentType.VERIFY: return SignUpComponent.createVerifiedConfig(this.mRegistrationEmail);
+        case SignUpComponentType.VERIFIED: return SignUpComponent.VERIFIED_CONFIG;
+        case SignUpComponentType.ALREADY_VERIFIED: return SignUpComponent.ALREADY_VERIFIED_CONFIG;
+        case SignUpComponentType.TIMED_OUT_TOKEN: return SignUpComponent.TIMED_OUT_TOKEN_CONFIG;
+        default: return SignUpComponent.UNEXPECTED_ERROR_CONFIG;
         }
-        if (this.mType === SignUpComponentType.VERIFIED) {
-            return {
-                type: PageInformationType.SUCCESS,
-                titleKey: 'signUpPage.verifiedAccount.title',
-                paragraphKeys: ['signUpPage.verifiedAccount.paragraph1'],
-            };
-        }
+    }
+
+    private static createVerifiedConfig(email: string): PageInformationConfig {
         return {
-            type: PageInformationType.ERROR,
-            titleKey: 'signUpPage.errorEnabling.title',
-            paragraphKeys: ['signUpPage.errorEnabling.paragraph1'],
+            type: PageInformationType.SUCCESS,
+            titleKey: 'signUpPage.verifyAccount.title',
+            titleParameters: { email },
+            paragraphKeys: ['signUpPage.verifyAccount.paragraph1'],
         };
     }
 
@@ -86,7 +105,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (_) => this.login(),
                 error: (_) => {
-                    this.mType = SignUpComponentType.ERROR;
+                    this.mType = SignUpComponentType.UNEXPECTED_ERROR;
                 },
             });
     }

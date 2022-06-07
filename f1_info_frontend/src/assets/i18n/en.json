@@ -39,9 +39,17 @@
       "title": "That's it! Your account is now fully registered!",
       "paragraph1": "Thank you for registering an account at F1Info!"
     },
-    "errorEnabling": {
+    "unExpectedError": {
       "title": "Oops! Something went wrong!",
-      "paragraph1": "Your account has not been enabled! You must enable your account within 30 minutes! Please try registering again! If this issue still persist, please try again later!"
+      "paragraph1": "Your account registration state has not been altered! Please try registering again later!"
+    },
+    "timedOutToken": {
+      "title": "It took you too long!",
+      "paragraph1": "You need to verify your account within 30 minutes! Please register with the same email to try again!"
+    },
+    "alreadyVerified": {
+      "title": "No need!",
+      "paragraph1": "It appears you have already verified this account!"
     }
   },
   "loginPage": {

@@ -39,9 +39,17 @@
       "title": "Allt klart! Ditt konto är nu registrerat och redo för dig!",
       "paragraph1": "Tack för att du har skapat ett konto hos F1Info!"
     },
-    "errorEnabling": {
+    "unExpectedError": {
       "title": "Ojdå! Någonting gick fel!",
-      "paragraph1": "Ditt konto har inte aktiverats! Du måste aktivera ditt konto inom 30 minuter! Försök att registrera dig igen! Om problemet kvarstår, försök igen senare!"
+      "paragraph1": "Ditt konto har inte modifierats! Försök att registrera dig igen senare!"
+    },
+    "timedOutToken": {
+      "title": "Det tog dig för lång tid!",
+      "paragraph1": "Du måste verifiera ditt konto inom 30 minuter! Var god försök registrera dig med samma e-postaddress igen!"
+    },
+    "alreadyVerified": {
+      "title": "Det behövs int!",
+      "paragraph1": "Det verkar som du redan har verifierat ditt konto!"
     }
   },
   "loginPage": {
