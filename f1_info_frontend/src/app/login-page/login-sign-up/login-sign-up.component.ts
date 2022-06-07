@@ -26,7 +26,7 @@ export interface UserDetails {
 @Component({
     selector: 'app-login-sign-up',
     templateUrl: './login-sign-up.component.html',
-    styleUrls: ['./login-sign-up.component.scss'],
+    styleUrls: ['../login-form-block.scss'],
 })
 export class LoginSignUpComponent implements OnInit {
     private static readonly LOGIN_CONFIG: LoginSignUpConfig = {

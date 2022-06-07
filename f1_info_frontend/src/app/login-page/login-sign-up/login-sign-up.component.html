@@ -4,29 +4,29 @@
     <app-loading-element [loading]="loading">
         <form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="holder__form">
             <app-text-input
-                    [inputConfig]="{
-                formControl: email,
-                labelKey: 'input.email',
-                placeholder: 'Ex. richard@example.com',
-                hintKey: config.emailHintKey,
-                inputType: 'email',
-                idAttribute: 'emailId',
-                isRequired: true,
-                errorKeys
-            }"
-                    formControlName="email"
+                [inputConfig]="{
+                    formControl: email,
+                    labelKey: 'input.email',
+                    placeholder: 'Ex. richard@example.com',
+                    hintKey: config.emailHintKey,
+                    inputType: 'email',
+                    idAttribute: 'emailId',
+                    isRequired: true,
+                    errorKeys
+                }"
+                formControlName="email"
             ></app-text-input>
 
             <app-text-input
-                    [inputConfig]="{
-                formControl: password,
-                labelKey: 'input.password',
-                hintKey: config.passwordHintKey,
-                inputType: 'password',
-                idAttribute: 'passwordId',
-                isRequired: true
-            }"
-                    formControlName="password"
+                [inputConfig]="{
+                    formControl: password,
+                    labelKey: 'input.password',
+                    hintKey: config.passwordHintKey,
+                    inputType: 'password',
+                    idAttribute: 'passwordId',
+                    isRequired: true
+                 }"
+                formControlName="password"
             ></app-text-input>
 
             <button [disabled]="!formData.valid" type="submit" appPrimaryButton class="holder__button">{{config.submitKey | translate}}</button>

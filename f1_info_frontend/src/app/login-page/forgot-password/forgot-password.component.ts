@@ -8,7 +8,7 @@ import {RouteHolder} from '../../routing/routeHolder';
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['../login-sign-up/login-sign-up.component.scss'],
+    styleUrls: ['../login-form-block.scss'],
 })
 export class ForgotPasswordComponent {
     public loading: boolean = false;
