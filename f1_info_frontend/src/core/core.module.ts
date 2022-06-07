@@ -16,6 +16,7 @@ import { ButtonDirective } from './input/buttons/button.directive';
 import {MatDialogModule} from '@angular/material/dialog';
 import { TextInputComponent } from './input/fields/text-input/text-input.component';
 import {RouterModule} from '@angular/router';
+import { PageInformationComponent } from './information/page-information/page-information.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import {RouterModule} from '@angular/router';
         PrimaryButtonDirective,
         ButtonDirective,
         TextInputComponent,
+        PageInformationComponent,
     ],
     imports: [
         CommonModule,
@@ -45,6 +47,7 @@ import {RouterModule} from '@angular/router';
         LoadingElementComponent,
         LoginSignUpComponent,
         PrimaryButtonDirective,
+        PageInformationComponent,
     ],
 })
 export class CoreModule {

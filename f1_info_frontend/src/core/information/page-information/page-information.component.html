@@ -1,0 +1,10 @@
+<section class="container {{cssStyleClass}}" [class.container--loading]="loading">
+    <app-loading-element [loading]="loading" class="container__holder">
+        <fa-icon [icon]="icon"></fa-icon>
+
+        <div>
+            <h3>{{config.titleKey | translate : config.titleParameters }}</h3>
+            <p *ngFor="let paragraphKey of config.paragraphKeys">{{paragraphKey | translate}}</p>
+        </div>
+    </app-loading-element>
+</section>

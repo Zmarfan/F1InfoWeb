@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import {finalize, Subscription, tap} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {finalize, Subscription} from 'rxjs';
 import {exists} from '../../../core/helper/app-util';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
+import {PageInformationConfig, PageInformationType} from '../../../core/information/page-information/page-information.component';
 
 export enum SignUpComponentType {
     SIGN_UP = 1,
@@ -15,11 +16,10 @@ export enum SignUpComponentType {
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit, OnDestroy {
-    public registrationEmail: string = '';
     public loading: boolean = false;
+    private mRegistrationEmail: string = '';
     private mType: SignUpComponentType = SignUpComponentType.SIGN_UP;
     private mToken: string = '';
     private mSubscription!: Subscription;
@@ -35,16 +35,27 @@ export class SignUpComponent implements OnInit, OnDestroy {
         return this.mType === SignUpComponentType.SIGN_UP;
     }
 
-    public get showVerify(): boolean {
-        return this.mType === SignUpComponentType.VERIFY;
-    }
-
-    public get showVerified(): boolean {
-        return this.mType === SignUpComponentType.VERIFIED;
-    }
-
-    public get showError(): boolean {
-        return this.mType === SignUpComponentType.ERROR;
+    public get informationConfig(): PageInformationConfig {
+        if (this.mType === SignUpComponentType.VERIFY) {
+            return {
+                type: PageInformationType.SUCCESS,
+                titleKey: 'signUpPage.verifyAccount.title',
+                titleParameters: { email: this.mRegistrationEmail },
+                paragraphKeys: ['signUpPage.verifyAccount.paragraph1'],
+            };
+        }
+        if (this.mType === SignUpComponentType.VERIFIED) {
+            return {
+                type: PageInformationType.SUCCESS,
+                titleKey: 'signUpPage.verifiedAccount.title',
+                paragraphKeys: ['signUpPage.verifiedAccount.paragraph1'],
+            };
+        }
+        return {
+            type: PageInformationType.ERROR,
+            titleKey: 'signUpPage.errorEnabling.title',
+            paragraphKeys: ['signUpPage.errorEnabling.paragraph1'],
+        };
     }
 
     public ngOnInit() {
@@ -62,7 +73,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     private assignVariables(params: { type: string, email: string, token: string }) {
         this.mType = exists(params.type) ? Number(params.type) : this.mType;
-        this.registrationEmail = params.email ?? this.registrationEmail;
+        this.mRegistrationEmail = params.email ?? this.mRegistrationEmail;
         this.mToken = params.token ?? this.mToken;
     }
 

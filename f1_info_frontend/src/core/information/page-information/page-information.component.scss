@@ -9,7 +9,7 @@
   box-shadow: var(--bkg-shadow-color) 0 0 10px;
   box-sizing: border-box;
   transform: translate(-50%,-50%);
-  background: #eaffeb;
+  background: var(--bkg-color);
 
   &__holder {
     display: flex;
@@ -21,18 +21,31 @@
     }
   }
 
-  fa-icon {
-    font-size: 4rem;
-    color: #5a9d5a;
-  }
-
   @media(max-width: 700px) {
     width: 90%;
     flex-direction: column;
   }
 
-  &--loading {
-    background: var(--bkg-color);
+  fa-icon {
+    font-size: 4rem;
+  }
+
+  &--information {
+    background: #eaf6ff;
+
+    fa-icon {
+      font-size: 4rem;
+      color: #5a819d;
+    }
+  }
+
+  &--success {
+    background: #eaffeb;
+
+    fa-icon {
+      font-size: 4rem;
+      color: #5a9d5a;
+    }
   }
 
   &--error {
