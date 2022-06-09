@@ -24,7 +24,7 @@ public class Database extends DatabaseBase {
         executeVoidQuery(new InsertRegistrationTokenForUserQueryData(userId, token.toString()));
     }
 
-    public Optional<RegistrationTokenRecord> findDisabledUserFromToken(final UUID token) throws SQLException {
-        return executeOptionalQuery(new FindDisabledUserFromTokenQueryData(token.toString()));
+    public Optional<RegistrationTokenRecord> findUserFromToken(final UUID token) throws SQLException {
+        return executeOptionalQuery(new FindUserFromTokenQueryData(token.toString()));
     }
 }

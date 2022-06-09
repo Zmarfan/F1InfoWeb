@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {UserDetails} from './login-sign-up/login-sign-up.component';
 import {Endpoints} from '../configuration/endpoints';
 import {Observable} from 'rxjs';
-import {UserLoginResponse} from '../../generated/server-responses';
+import {EnableUserErrorResponse, UserLoginResponse} from '../../generated/server-responses';
 import {parseTemplate} from 'url-template';
 
 @Injectable({

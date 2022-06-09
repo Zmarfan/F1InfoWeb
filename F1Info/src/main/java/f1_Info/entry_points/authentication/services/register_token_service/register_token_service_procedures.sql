@@ -9,11 +9,12 @@ create procedure register_token_service_find_user_from_token(in p_token varchar(
 begin
   select
     users.id as user_id,
+    users.enabled,
     users.email,
     tokens.creation_time
   from
     users
     inner join user_registration_tokens tokens on tokens.user_id = users.id
   where
-    users.enabled = 'N' and tokens.token = p_token;
+    tokens.token = p_token;
 end;

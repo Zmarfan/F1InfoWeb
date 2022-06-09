@@ -4,7 +4,8 @@ import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
 import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
-import f1_Info.entry_points.authentication.services.register_token_service.RegistrationTokenRecord;
+import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenStatusType;
+import f1_Info.entry_points.authentication.services.register_token_service.UserInformation;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
 
-import static f1_Info.configuration.web.ResponseUtil.forbidden;
-import static f1_Info.configuration.web.ResponseUtil.ok;
+import static f1_Info.configuration.web.ResponseUtil.*;
 
 @AllArgsConstructor
 public class EnableUserCommand implements Command {
@@ -31,10 +31,14 @@ public class EnableUserCommand implements Command {
 
     @Override
     public ResponseEntity<?> execute() {
-        final Optional<RegistrationTokenRecord> user = mRegisterTokenService.findDisabledUserFromToken(mToken);
+        final Optional<UserInformation> user = mRegisterTokenService.findUserFromToken(mToken);
         if (user.isEmpty()) {
             return forbidden();
         }
+        if (user.get().getStatusType() != RegisterTokenStatusType.VALID) {
+            return forbidden(new EnableUserErrorResponse(user.get().getStatusType()));
+        }
+
         try {
             mUserManager.enableUser(user.get().getUserId());
         } catch (final UnableToRegisterUserException e) {

@@ -5,6 +5,8 @@ import {exists} from '../../../core/helper/app-util';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
 import {PageInformationConfig, PageInformationType} from '../../../core/information/page-information/page-information.component';
+import {EnableUserErrorResponse, RegisterTokenStatusType} from '../../../generated/server-responses';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export enum SignUpComponentType {
     SIGN_UP = 1,
@@ -77,6 +79,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
         };
     }
 
+    private static convertErrorResponseToMessageType(errorResponse: EnableUserErrorResponse): SignUpComponentType {
+        switch (errorResponse.errorType) {
+        case 'ALREADY_VERIFIED': return SignUpComponentType.ALREADY_VERIFIED;
+        case 'TIMED_OUT': return SignUpComponentType.TIMED_OUT_TOKEN;
+        default: return SignUpComponentType.UNEXPECTED_ERROR;
+        }
+    }
+
     public ngOnInit() {
         this.mSubscription = this.mRoute.queryParams.subscribe((params: any) => {
             this.assignVariables(params);
@@ -103,9 +113,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
                 this.loading = false;
             }))
             .subscribe({
-                next: (_) => this.login(),
-                error: (_) => {
-                    this.mType = SignUpComponentType.UNEXPECTED_ERROR;
+                next: () => this.login(),
+                error: (response: HttpErrorResponse) => {
+                    this.mType = SignUpComponent.convertErrorResponseToMessageType(response.error);
                 },
             });
     }

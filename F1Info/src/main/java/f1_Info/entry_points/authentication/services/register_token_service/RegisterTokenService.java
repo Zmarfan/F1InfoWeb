@@ -29,16 +29,30 @@ public class RegisterTokenService {
         }
     }
 
-    public Optional<RegistrationTokenRecord> findDisabledUserFromToken(final UUID token) {
+    public Optional<UserInformation> findUserFromToken(final UUID token) {
         try {
-            return mDatabase.findDisabledUserFromToken(token).filter(this::tokenIsNotExpired);
+            return mDatabase.findUserFromToken(token).map(tokenRecord -> new UserInformation(
+                tokenRecord.getUserId(),
+                tokenRecord.getEmail(),
+                calculateStatusType(tokenRecord)
+            ));
         } catch (final SQLException e) {
             mLogger.severe("findDisabledUserFromToken", this.getClass(), String.format("Unable to find user from token: %s", token), e);
             return Optional.empty();
         }
     }
 
-    private boolean tokenIsNotExpired(final RegistrationTokenRecord registrationTokenRecord) {
-        return mDateFactory.nowTime().minus(TIME_TO_ENABLE_ACCOUNT, ChronoUnit.MINUTES).isBefore(registrationTokenRecord.getCreationTime());
+    private RegisterTokenStatusType calculateStatusType(final RegistrationTokenRecord tokenRecord) {
+        if (tokenRecord.getEnabled()) {
+            return RegisterTokenStatusType.ALREADY_VERIFIED;
+        }
+        if (tokenIsExpired(tokenRecord)) {
+            return RegisterTokenStatusType.TIMED_OUT;
+        }
+        return RegisterTokenStatusType.VALID;
+    }
+
+    private boolean tokenIsExpired(final RegistrationTokenRecord registrationTokenRecord) {
+        return !mDateFactory.nowTime().minus(TIME_TO_ENABLE_ACCOUNT, ChronoUnit.MINUTES).isBefore(registrationTokenRecord.getCreationTime());
     }
 }

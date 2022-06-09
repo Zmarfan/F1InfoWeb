@@ -4,7 +4,7 @@ import database.IQueryData;
 import lombok.Value;
 
 @Value
-public class FindDisabledUserFromTokenQueryData implements IQueryData<RegistrationTokenRecord> {
+public class FindUserFromTokenQueryData implements IQueryData<RegistrationTokenRecord> {
     String mToken;
 
     @Override
