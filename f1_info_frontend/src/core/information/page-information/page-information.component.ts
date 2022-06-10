@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {faCircleCheck, faCircleExclamation} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
@@ -12,7 +12,7 @@ export interface PageInformationConfig {
     type: PageInformationType;
     titleKey: string;
     titleParameters?: object;
-    paragraphKeys: string[];
+    paragraphKeys?: string[];
 }
 
 @Component({
@@ -20,7 +20,7 @@ export interface PageInformationConfig {
     templateUrl: './page-information.component.html',
     styleUrls: ['./page-information.component.scss'],
 })
-export class PageInformationComponent {
+export class PageInformationComponent implements OnInit {
     @Input() public config!: PageInformationConfig;
     @Input() public loading: boolean = false;
 
@@ -40,5 +40,9 @@ export class PageInformationComponent {
             return 'container--error';
         }
         return 'container--success';
+    }
+
+    public ngOnInit() {
+        this.config.paragraphKeys = this.config.paragraphKeys ?? [];
     }
 }

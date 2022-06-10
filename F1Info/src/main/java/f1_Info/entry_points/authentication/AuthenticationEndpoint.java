@@ -4,6 +4,7 @@ import common.email.EmailService;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
+import f1_Info.entry_points.authentication.commands.forgot_password_command.ForgotPasswordCommand;
 import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
 import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
@@ -101,6 +102,17 @@ public class AuthenticationEndpoint {
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new LogoutUserCommand(userId, mHttpServletRequest));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody final UserDetailsRequestBody emailBody) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (mEndpointHelper.isLoggedIn()) {
+                throw new ForbiddenException("Unable to reset password as this user is already logged in");
+            }
+
+            return new ForgotPasswordCommand(mEndpointHelper.convertEmail(emailBody.getEmail()), mTokenService, mUserManager, mEmailService);
+        });
     }
 
     private void validatePassword(final String password) {

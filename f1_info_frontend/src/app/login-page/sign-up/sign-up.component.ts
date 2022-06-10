@@ -5,7 +5,7 @@ import {exists} from '../../../core/helper/app-util';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
 import {PageInformationConfig, PageInformationType} from '../../../core/information/page-information/page-information.component';
-import {EnableUserErrorResponse} from '../../../generated/server-responses';
+import {TokenUserErrorResponse} from '../../../generated/server-responses';
 import {HttpErrorResponse} from '@angular/common/http';
 
 export enum SignUpComponentType {
@@ -78,7 +78,7 @@ export class SignUpComponent implements OnInit {
         };
     }
 
-    private static convertErrorResponseToMessageType(errorResponse: EnableUserErrorResponse): SignUpComponentType {
+    private static convertErrorResponseToMessageType(errorResponse: TokenUserErrorResponse): SignUpComponentType {
         switch (errorResponse.errorType) {
         case 'ALREADY_VERIFIED': return SignUpComponentType.ALREADY_VERIFIED;
         case 'TIMED_OUT': return SignUpComponentType.TIMED_OUT_TOKEN;

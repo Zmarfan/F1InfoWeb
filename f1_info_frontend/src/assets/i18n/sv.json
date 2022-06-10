@@ -65,12 +65,18 @@
   "resetPasswordPage": {
     "title": "Återställ ditt lösenord",
     "hint": "Ange ett nytt lösenord för ditt konto",
-    "apply": "Spara Nytt Lösenord"
+    "apply": "Spara Nytt Lösenord",
+    "messageTitle": "Du har skapat ett nytt lösenord för ditt konto!"
   },
   "forgotPasswordPage": {
     "title": "Glömt ditt lösenord",
     "hint": "Ange e-postadressen för kontot du vill återställa ditt lösenord",
     "apply": "Återställ lösenord",
-    "routeToLogin": "Kom du på det?"
+    "routeToLogin": "Kom du på det?",
+    "unableToReset": "Det gick inte att återställa lösenordet för kontot med den här e-postadressen",
+    "message": {
+      "title": "Ett e-postmeddelande om lösenordsåterställning har skickats till {{email}}.",
+      "paragraph1": "Vänligen öppna detta e-postmeddelande för att skapa ett nytt lösenord för ditt konto."
+    }
   }
 }

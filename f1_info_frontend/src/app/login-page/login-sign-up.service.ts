@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {UserDetails} from './login-sign-up/login-sign-up.component';
 import {Endpoints} from '../configuration/endpoints';
 import {Observable} from 'rxjs';
-import {EnableUserErrorResponse, UserLoginResponse} from '../../generated/server-responses';
+import {UserLoginResponse} from '../../generated/server-responses';
 import {parseTemplate} from 'url-template';
 
 @Injectable({
@@ -26,5 +26,13 @@ export class LoginSignUpService {
 
     public enableAccount(token: string): Observable<Object> {
         return this.mHttpClient.post(parseTemplate(Endpoints.AUTHENTICATION.enableAccount).expand({ token }), {});
+    }
+
+    public forgotPassword(email: string): Observable<Object> {
+        return this.mHttpClient.post(Endpoints.AUTHENTICATION.forgotPassword, { email });
+    }
+
+    public resetPassword(password: string, token: string): Observable<Object> {
+        return this.mHttpClient.post(parseTemplate(Endpoints.AUTHENTICATION.resetPassword).expand({ token }), { password });
     }
 }

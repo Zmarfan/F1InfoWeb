@@ -65,12 +65,20 @@
   "resetPasswordPage": {
     "title": "Reset Password",
     "hint": "Enter a new password for your account",
-    "apply": "Set New Password"
+    "apply": "Set New Password",
+    "messageTitle": "You have successfully created a new password for your account!",
+    "timedOutToken": "You need to reset password within 30 minutes! Please make a new request!",
+    "unExpectedError": "Unable to set new password, please try again later!"
   },
   "forgotPasswordPage": {
     "title": "Reset your password",
     "hint": "Enter the email for the account you want to reset your password",
     "apply": "Reset Password",
-    "routeToLogin": "Did you remember it?"
+    "routeToLogin": "Did you remember it?",
+    "unableToReset": "Unable to reset password for account with this email",
+    "message": {
+      "title": "A password reset email has been sent to {{email}}.",
+      "paragraph1": "Please open this email as to be create a new password for your account."
+    }
   }
 }

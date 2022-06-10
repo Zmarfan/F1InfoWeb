@@ -5,6 +5,7 @@ import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
 import f1_Info.entry_points.authentication.services.token_service.TokenService;
 import f1_Info.entry_points.authentication.services.token_service.TokenStatusType;
+import f1_Info.entry_points.authentication.services.token_service.TokenUserErrorResponse;
 import f1_Info.entry_points.authentication.services.token_service.UserInformation;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class EnableUserCommand implements Command {
             return forbidden();
         }
         if (user.get().getStatusType() != TokenStatusType.VALID) {
-            return forbidden(new EnableUserErrorResponse(user.get().getStatusType()));
+            return forbidden(new TokenUserErrorResponse(user.get().getStatusType()));
         }
 
         try {
