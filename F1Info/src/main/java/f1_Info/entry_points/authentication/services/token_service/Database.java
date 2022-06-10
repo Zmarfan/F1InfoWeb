@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.services.register_token_service;
+package f1_Info.entry_points.authentication.services.token_service;
 
 import common.configuration.Configuration;
 import common.logger.Logger;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component("RegisterTokenServiceDatabase")
+@Component("TokenServiceDatabase")
 public class Database extends DatabaseBase {
     @Autowired
     public Database(
@@ -20,11 +20,11 @@ public class Database extends DatabaseBase {
         super(configuration, logger);
     }
 
-    public void insertRegistrationTokenForUser(final long userId, final UUID token) throws SQLException {
-        executeVoidQuery(new InsertRegistrationTokenForUserQueryData(userId, token.toString()));
+    public void insertTokenForUser(final long userId, final UUID token) throws SQLException {
+        executeVoidQuery(new InsertTokenForUserQueryData(userId, token.toString()));
     }
 
-    public Optional<RegistrationTokenRecord> findUserFromToken(final UUID token) throws SQLException {
+    public Optional<TokenRecord> findUserFromToken(final UUID token) throws SQLException {
         return executeOptionalQuery(new FindUserFromTokenQueryData(token.toString()));
     }
 }

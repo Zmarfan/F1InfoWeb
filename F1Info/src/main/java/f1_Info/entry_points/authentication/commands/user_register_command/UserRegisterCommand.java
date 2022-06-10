@@ -7,7 +7,7 @@ import common.email.EmailType;
 import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
-import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
+import f1_Info.entry_points.authentication.services.token_service.TokenService;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class UserRegisterCommand implements Command {
     private final String mPassword;
     private final PasswordEncoder mPasswordEncoder;
     private final UserManager mUserManager;
-    private final RegisterTokenService mRegisterTokenService;
+    private final TokenService mTokenService;
     private final EmailService mEmailService;
 
     @Override
@@ -38,7 +38,7 @@ public class UserRegisterCommand implements Command {
             final long userId = mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPasswordEncoder.encode(mPassword)));
             final UUID registerToken = UUID.randomUUID();
 
-            mRegisterTokenService.insertRegistrationTokenForUser(userId, registerToken);
+            mTokenService.insertTokenForUser(userId, registerToken);
             sendRegistrationEmail(registerToken);
             
             return ok();

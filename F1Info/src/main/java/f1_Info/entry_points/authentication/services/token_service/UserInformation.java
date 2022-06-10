@@ -1,4 +1,4 @@
-package f1_Info.entry_points.authentication.services.register_token_service;
+package f1_Info.entry_points.authentication.services.token_service;
 
 import common.constants.email.Email;
 import lombok.Value;
@@ -7,5 +7,5 @@ import lombok.Value;
 public class UserInformation {
     long mUserId;
     Email mEmail;
-    RegisterTokenStatusType mStatusType;
+    TokenStatusType mStatusType;
 }

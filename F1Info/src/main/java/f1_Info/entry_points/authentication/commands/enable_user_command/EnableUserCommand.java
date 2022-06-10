@@ -3,9 +3,9 @@ package f1_Info.entry_points.authentication.commands.enable_user_command;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
-import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
-import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenStatusType;
-import f1_Info.entry_points.authentication.services.register_token_service.UserInformation;
+import f1_Info.entry_points.authentication.services.token_service.TokenService;
+import f1_Info.entry_points.authentication.services.token_service.TokenStatusType;
+import f1_Info.entry_points.authentication.services.token_service.UserInformation;
 import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import static f1_Info.configuration.web.ResponseUtil.*;
 public class EnableUserCommand implements Command {
     private final UUID mToken;
     private final HttpServletRequest mRequest;
-    private final RegisterTokenService mRegisterTokenService;
+    private final TokenService mTokenService;
     private final UserManager mUserManager;
     private final AuthenticationService mAuthenticationService;
 
@@ -31,11 +31,11 @@ public class EnableUserCommand implements Command {
 
     @Override
     public ResponseEntity<?> execute() {
-        final Optional<UserInformation> user = mRegisterTokenService.findUserFromToken(mToken);
+        final Optional<UserInformation> user = mTokenService.findUserFromToken(mToken);
         if (user.isEmpty()) {
             return forbidden();
         }
-        if (user.get().getStatusType() != RegisterTokenStatusType.VALID) {
+        if (user.get().getStatusType() != TokenStatusType.VALID) {
             return forbidden(new EnableUserErrorResponse(user.get().getStatusType()));
         }
 

@@ -8,7 +8,7 @@ import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUs
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
 import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
-import f1_Info.entry_points.authentication.services.register_token_service.RegisterTokenService;
+import f1_Info.entry_points.authentication.services.token_service.TokenService;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
 import f1_Info.entry_points.helper.ForbiddenException;
@@ -33,7 +33,7 @@ public class AuthenticationEndpoint {
     private final HttpServletRequest mHttpServletRequest;
     private final PasswordEncoder mPasswordEncoder;
     private final AuthenticationService mAuthenticationService;
-    private final RegisterTokenService mRegisterTokenService;
+    private final TokenService mTokenService;
     private final UserManager mUserManager;
     private final EmailService mEmailService;
 
@@ -56,7 +56,7 @@ public class AuthenticationEndpoint {
                 registerBody.getPassword(),
                 mPasswordEncoder,
                 mUserManager,
-                mRegisterTokenService,
+                mTokenService,
                 mEmailService
             );
         });
@@ -76,7 +76,7 @@ public class AuthenticationEndpoint {
                 throw new BadRequestException();
             }
 
-            return new EnableUserCommand(token, mHttpServletRequest, mRegisterTokenService, mUserManager, mAuthenticationService);
+            return new EnableUserCommand(token, mHttpServletRequest, mTokenService, mUserManager, mAuthenticationService);
         });
     }
 
