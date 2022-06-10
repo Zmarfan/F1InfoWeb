@@ -62,8 +62,13 @@
     "disabledAccount": "Var god verifiera din e-post för att låsa upp ditt konto",
     "forgotYourPassword": "Glömt bort ditt lösenord?"
   },
-  "forgotPasswordPage": {
+  "resetPasswordPage": {
     "title": "Återställ ditt lösenord",
+    "hint": "Ange ett nytt lösenord för ditt konto",
+    "apply": "Spara Nytt Lösenord"
+  },
+  "forgotPasswordPage": {
+    "title": "Glömt ditt lösenord",
     "hint": "Ange e-postadressen för kontot du vill återställa ditt lösenord",
     "apply": "Återställ lösenord",
     "routeToLogin": "Kom du på det?"

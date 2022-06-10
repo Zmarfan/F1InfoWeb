@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {LoginSignUpService} from '../login-sign-up.service';
-import {UserDetails} from '../login-sign-up/login-sign-up.component';
-import {RouteHolder} from '../../routing/routeHolder';
+import {LoginSignUpService} from '../../login-sign-up.service';
+import {UserDetails} from '../../login-sign-up/login-sign-up.component';
+import {RouteHolder} from '../../../routing/routeHolder';
 
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['../login-form-block.scss'],
+    styleUrls: ['../../login-form-block.scss'],
 })
 export class ForgotPasswordComponent {
     public loading: boolean = false;

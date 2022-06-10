@@ -62,6 +62,11 @@
     "disabledAccount": "Please verify your email as to enable this account",
     "forgotYourPassword": "Forgot your password?"
   },
+  "resetPasswordPage": {
+    "title": "Reset Password",
+    "hint": "Enter a new password for your account",
+    "apply": "Set New Password"
+  },
   "forgotPasswordPage": {
     "title": "Reset your password",
     "hint": "Enter the email for the account you want to reset your password",
