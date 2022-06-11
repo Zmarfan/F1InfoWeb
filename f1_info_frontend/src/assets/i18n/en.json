@@ -72,7 +72,7 @@
     "unExpectedError": "Unable to set new password, please try again later!"
   },
   "forgotPasswordPage": {
-    "title": "Reset your password",
+    "title": "Forgot your password",
     "hint": "Enter the email for the account you want to reset your password",
     "apply": "Reset Password",
     "routeToLogin": "Did you remember it?",
