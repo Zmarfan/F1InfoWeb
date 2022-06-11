@@ -7,5 +7,6 @@ import lombok.Value;
 public class UserInformation {
     long mUserId;
     Email mEmail;
+    String mPassword;
     TokenStatusType mStatusType;
 }

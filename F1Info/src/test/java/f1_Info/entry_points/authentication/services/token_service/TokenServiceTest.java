@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 class TokenServiceTest {
     private static final long USER_ID = 23L;
     private static final String EMAIL = "email@test.com";
+    private static final String PASSWORD = "/SD(817sadasd1";
     private static final UUID TOKEN = UUID.randomUUID();
     private static final LocalDateTime TOKEN_CREATION_TIME = DateUtils.parseDateTime("2021-03-08 12:23");
     private static final LocalDateTime VALID_TOKEN_TIME = DateUtils.parseDateTime("2021-03-08 12:30");
@@ -66,12 +67,12 @@ class TokenServiceTest {
 
     @Test
     void should_return_token_record_from_token_when_token_is_not_expired() throws MalformedEmailException, SQLException {
-        final TokenRecord tokenRecord = new TokenRecord(USER_ID, false, new Email(EMAIL), TOKEN_CREATION_TIME);
+        final TokenRecord tokenRecord = new TokenRecord(USER_ID, false, new Email(EMAIL), PASSWORD, TOKEN_CREATION_TIME);
 
         when(mDatabase.findUserFromToken(TOKEN)).thenReturn(Optional.of(tokenRecord));
         when(mDateFactory.nowTime()).thenReturn(VALID_TOKEN_TIME);
 
-        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), TokenStatusType.VALID);
+        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), PASSWORD, TokenStatusType.VALID);
 
         assertEquals(userInformation, mTokenService.findUserFromToken(TOKEN).orElseThrow());
     }
@@ -85,23 +86,23 @@ class TokenServiceTest {
 
     @Test
     void should_return_user_information_marked_as_expired_if_retrieved_token_is_expired() throws MalformedEmailException, SQLException {
-        final TokenRecord tokenRecord = new TokenRecord(USER_ID, false, new Email(EMAIL), TOKEN_CREATION_TIME);
+        final TokenRecord tokenRecord = new TokenRecord(USER_ID, false, new Email(EMAIL), PASSWORD, TOKEN_CREATION_TIME);
 
         when(mDatabase.findUserFromToken(TOKEN)).thenReturn(Optional.of(tokenRecord));
         when(mDateFactory.nowTime()).thenReturn(INVALID_TOKEN_TIME);
 
-        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), TokenStatusType.TIMED_OUT);
+        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), PASSWORD, TokenStatusType.TIMED_OUT);
 
         assertEquals(userInformation, mTokenService.findUserFromToken(TOKEN).orElseThrow());
     }
 
     @Test
     void should_return_user_information_marked_as_already_verified_if_retrieved_user_is_enabled() throws MalformedEmailException, SQLException {
-        final TokenRecord tokenRecord = new TokenRecord(USER_ID, true, new Email(EMAIL), TOKEN_CREATION_TIME);
+        final TokenRecord tokenRecord = new TokenRecord(USER_ID, true, new Email(EMAIL), PASSWORD, TOKEN_CREATION_TIME);
 
         when(mDatabase.findUserFromToken(TOKEN)).thenReturn(Optional.of(tokenRecord));
 
-        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), TokenStatusType.ALREADY_VERIFIED);
+        final UserInformation userInformation = new UserInformation(USER_ID, new Email(EMAIL), PASSWORD, TokenStatusType.ALREADY_VERIFIED);
 
         assertEquals(userInformation, mTokenService.findUserFromToken(TOKEN).orElseThrow());
     }

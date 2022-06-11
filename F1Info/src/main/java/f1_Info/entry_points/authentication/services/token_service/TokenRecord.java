@@ -10,5 +10,6 @@ public class TokenRecord {
     long mUserId;
     boolean mEnabled;
     Email mEmail;
+    String mPassword;
     LocalDateTime mCreationTime;
 }

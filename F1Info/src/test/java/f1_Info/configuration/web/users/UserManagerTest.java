@@ -26,6 +26,7 @@ class UserManagerTest {
     private static final long USER_ID = 23L;
     private static final String EMAIL = "test@email.com";
     private static final String INVALID_EMAIL = "test@emailcom";
+    private static final String PASSWORD = "SA761!asd87812h!";
 
     @Mock
     Database mDatabase;
@@ -73,33 +74,6 @@ class UserManagerTest {
     void should_log_severe_if_unable_to_convert_username_to_email() {
         assertThrows(UsernameNotFoundException.class, () -> mUserManager.loadUserByUsername(INVALID_EMAIL));
         verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(MalformedEmailException.class));
-    }
-
-    @Test
-    void should_return_true_if_user_exist() throws SQLException, MalformedEmailException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.of(createUserRecord(true)));
-        assertTrue(mUserManager.userExists(new Email(EMAIL)));
-    }
-
-    @Test
-    void should_return_false_if_user_does_not_exist() throws SQLException, MalformedEmailException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenReturn(Optional.empty());
-        assertFalse(mUserManager.userExists(new Email(EMAIL)));
-    }
-
-    @Test
-    void should_return_false_if_sql_exception_occurs_when_checking_if_user_exist() throws SQLException, MalformedEmailException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenThrow(new SQLException());
-        assertFalse(mUserManager.userExists(new Email(EMAIL)));
-    }
-
-    @Test
-    void should_log_severe_if_sql_exception_occurs_when_checking_if_user_exists() throws SQLException, MalformedEmailException {
-        when(mDatabase.getUserDetailsFromEmail(new Email(EMAIL))).thenThrow(new SQLException());
-
-        mUserManager.userExists(new Email(EMAIL));
-
-        verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
     }
 
     @Test
@@ -185,6 +159,27 @@ class UserManagerTest {
         doThrow(new SQLException()).when(mDatabase).enableUser(USER_ID);
 
         assertThrows(UnableToRegisterUserException.class, () -> mUserManager.enableUser(USER_ID));
+        verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
+    }
+
+    @Test
+    void should_set_new_password_for_user() throws SQLException {
+        mUserManager.setNewPasswordForUser(USER_ID, PASSWORD);
+        verify(mDatabase).setNewPasswordForUser(USER_ID, PASSWORD);
+    }
+
+    @Test
+    void should_throw_unable_to_register_user_exception_if_throwing_sql_exception_when_setting_new_password_for_user() throws SQLException {
+        doThrow(new SQLException()).when(mDatabase).setNewPasswordForUser(USER_ID, PASSWORD);
+
+        assertThrows(UnableToRegisterUserException.class, () -> mUserManager.setNewPasswordForUser(USER_ID, PASSWORD));
+    }
+
+    @Test
+    void should_log_severe_when_setting_password_for_user_if_unable_to() throws SQLException {
+        doThrow(new SQLException()).when(mDatabase).setNewPasswordForUser(USER_ID, PASSWORD);
+
+        assertThrows(UnableToRegisterUserException.class, () -> mUserManager.setNewPasswordForUser(USER_ID, PASSWORD));
         verify(mLogger).severe(anyString(), eq(UserManager.class), anyString(), any(SQLException.class));
     }
 

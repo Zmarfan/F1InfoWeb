@@ -6,6 +6,7 @@ import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
 import f1_Info.entry_points.authentication.commands.forgot_password_command.ForgotPasswordCommand;
 import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
+import f1_Info.entry_points.authentication.commands.set_new_user_password_command.SetNewUserPasswordCommand;
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
 import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
@@ -64,20 +65,13 @@ public class AuthenticationEndpoint {
     }
 
     @PostMapping("/enable/{token}")
-    public ResponseEntity<?> enable(@PathVariable("token") final String tokenString) {
+    public ResponseEntity<?> enable(@PathVariable("token") final String token) {
         return mEndpointHelper.runCommand(mHttpServletRequest,userId -> {
             if (mEndpointHelper.isLoggedIn()) {
                 throw new ForbiddenException("Unable to enable account as this user is already logged in");
             }
 
-            final UUID token;
-            try {
-                token = UUID.fromString(tokenString);
-            } catch (final IllegalArgumentException e) {
-                throw new BadRequestException();
-            }
-
-            return new EnableUserCommand(token, mHttpServletRequest, mTokenService, mUserManager, mAuthenticationService);
+            return new EnableUserCommand(readToken(token), mHttpServletRequest, mTokenService, mUserManager, mAuthenticationService);
         });
     }
 
@@ -115,9 +109,41 @@ public class AuthenticationEndpoint {
         });
     }
 
+    @PostMapping("/reset-password/{token}")
+    public ResponseEntity<?> resetPassword(
+        @PathVariable("token") final String token,
+        @RequestBody final UserDetailsRequestBody passwordBody
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (mEndpointHelper.isLoggedIn()) {
+                throw new ForbiddenException("Unable to reset password as this user is already logged in");
+            }
+
+            validatePassword(passwordBody.getPassword());
+
+            return new SetNewUserPasswordCommand(
+                passwordBody.getPassword(),
+                readToken(token),
+                mHttpServletRequest,
+                mPasswordEncoder,
+                mTokenService,
+                mUserManager,
+                mAuthenticationService
+            );
+        });
+    }
+
     private void validatePassword(final String password) {
         if (password == null || password.length() < MIN_PASSWORD_LENGTH) {
             throw new BadRequestException(String.format("The provided password is not at least %s characters long", MIN_PASSWORD_LENGTH));
+        }
+    }
+
+    private UUID readToken(final String tokenString) throws BadRequestException {
+        try {
+            return UUID.fromString(tokenString);
+        } catch (final IllegalArgumentException e) {
+            throw new BadRequestException();
         }
     }
 }

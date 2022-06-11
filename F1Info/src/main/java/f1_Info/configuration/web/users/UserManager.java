@@ -65,12 +65,12 @@ public class UserManager implements UserDetailsService {
         }
     }
 
-    public boolean userExists(final Email email) {
+    public void setNewPasswordForUser(final long userId, final String newPassword) throws UnableToRegisterUserException {
         try {
-            return mDatabase.getUserDetailsFromEmail(email).isPresent();
+            mDatabase.setNewPasswordForUser(userId, newPassword);
         } catch (final SQLException e) {
-            mLogger.severe("userExists", this.getClass(), String.format("Unable to check if email: %s is connected with a user", email), e);
-            return false;
+            mLogger.severe("setNewPasswordForUser", this.getClass(), String.format("Unable to set new password for user %d", userId), e);
+            throw new UnableToRegisterUserException(e);
         }
     }
 

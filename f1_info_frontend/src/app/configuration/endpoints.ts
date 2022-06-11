@@ -12,6 +12,6 @@ export class Endpoints {
         register: `${Endpoints.AUTHENTICATION_BASE}register`,
         enableAccount: `${Endpoints.AUTHENTICATION_BASE}enable/{token}`,
         forgotPassword: `${Endpoints.AUTHENTICATION_BASE}forgot-password`,
-        resetPassword: `${Endpoints.AUTHENTICATION_BASE}reset-password`,
+        resetPassword: `${Endpoints.AUTHENTICATION_BASE}reset-password/{token}`,
     };
 }

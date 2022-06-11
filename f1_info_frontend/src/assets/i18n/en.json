@@ -68,6 +68,7 @@
     "apply": "Set New Password",
     "messageTitle": "You have successfully created a new password for your account!",
     "timedOutToken": "You need to reset password within 30 minutes! Please make a new request!",
+    "samePassword": "New password has to be different from old password!",
     "unExpectedError": "Unable to set new password, please try again later!"
   },
   "forgotPasswordPage": {

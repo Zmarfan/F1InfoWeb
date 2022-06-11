@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Session} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
+import {Subscription} from 'rxjs';
 
 interface MenuItem {
     icon: IconDefinition;
@@ -37,7 +38,7 @@ interface MenuItem {
         ]),
     ],
 })
-export class ProfileHeaderComponent {
+export class ProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
 
@@ -46,6 +47,8 @@ export class ProfileHeaderComponent {
     public displayName: string = 'Anonymous User';
 
     private mLastTimeStamp: number = 0;
+    private mLoggedIn: boolean = false;
+    private mSubscription: Subscription;
 
     public constructor(
         private mRouter: Router,
@@ -54,6 +57,9 @@ export class ProfileHeaderComponent {
         private mElement: ElementRef,
         private mTranslateService: TranslateService
     ) {
+        this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
+            this.mLoggedIn = loggedIn;
+        });
     }
 
     public get menuItems(): MenuItem[] {
@@ -64,12 +70,12 @@ export class ProfileHeaderComponent {
 
         pushIfTrue(
             items,
-            !this.mSession.isLoggedIn,
+            !this.mLoggedIn,
             { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() }
         );
         pushIfTrue(
             items,
-            this.mSession.isLoggedIn,
+            this.mLoggedIn,
             { icon: faRightToBracket, translationKey: 'navigation.profile.logout', clickCallback: () => this.mSession.logout() }
         );
 
@@ -86,6 +92,10 @@ export class ProfileHeaderComponent {
             this.menuOpen = false;
             this.mLastTimeStamp = event.timeStamp;
         }
+    }
+
+    public ngOnDestroy() {
+        this.mSubscription.unsubscribe();
     }
 
     public menuToggle(event: MouseEvent) {

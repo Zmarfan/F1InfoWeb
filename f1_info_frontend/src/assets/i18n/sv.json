@@ -66,7 +66,10 @@
     "title": "Återställ ditt lösenord",
     "hint": "Ange ett nytt lösenord för ditt konto",
     "apply": "Spara Nytt Lösenord",
-    "messageTitle": "Du har skapat ett nytt lösenord för ditt konto!"
+    "messageTitle": "Du har skapat ett nytt lösenord för ditt konto!",
+    "timedOutToken": "Du måste återställa lösenordet inom 30 minuter! Vänligen gör en ny förfrågan!",
+    "samePassword": "Det nya lösenordet måste skilja sig från det gamla!",
+    "unExpectedError": "Det gick inte att byta ditt lösenord, försök igen senare!"
   },
   "forgotPasswordPage": {
     "title": "Glömt ditt lösenord",

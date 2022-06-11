@@ -11,6 +11,7 @@ begin
     users.id as user_id,
     users.enabled,
     users.email,
+    users.password,
     tokens.creation_time
   from
     users

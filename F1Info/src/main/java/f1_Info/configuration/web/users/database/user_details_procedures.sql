@@ -31,3 +31,9 @@ create procedure user_details_enable_user(in p_user_id int)
 begin
     update users set enabled = 'Y' where id = p_user_id;
 end;
+
+drop procedure if exists user_details_set_new_password_for_user;
+create procedure user_details_set_new_password_for_user(in p_user_id int, in p_new_password varchar(100))
+begin
+  update users set password = p_new_password where id = p_user_id;
+end;

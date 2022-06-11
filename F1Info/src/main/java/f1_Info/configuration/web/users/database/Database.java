@@ -29,4 +29,8 @@ public class Database extends DatabaseBase {
     public void enableUser(final long userId) throws SQLException {
         executeVoidQuery(new EnableUserQueryData(userId));
     }
+
+    public void setNewPasswordForUser(final long userId, final String newPassword) throws SQLException {
+        executeVoidQuery(new SetNewPasswordForUserQueryData(userId, newPassword));
+    }
 }

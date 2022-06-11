@@ -34,6 +34,7 @@ public class TokenService {
             return mDatabase.findUserFromToken(token).map(tokenRecord -> new UserInformation(
                 tokenRecord.getUserId(),
                 tokenRecord.getEmail(),
+                tokenRecord.getPassword(),
                 calculateStatusType(tokenRecord)
             ));
         } catch (final SQLException e) {
