@@ -114,11 +114,11 @@ export class LoginSignUpComponent implements OnInit {
 
     private handleFailedLogin(response: UserLoginResponse) {
         if (response.responseType === 'INVALID_CREDENTIALS') {
-            this.email.setErrors({ invalidCredentials: true });
+            this.password.setErrors({ invalidCredentials: true });
         } else if (response.responseType === 'DISABLED') {
-            this.email.setErrors({ disabledAccount: true });
+            this.password.setErrors({ disabledAccount: true });
         } else {
-            this.email.setErrors({ unexpectedError: true });
+            this.password.setErrors({ unexpectedError: true });
         }
     }
 
