@@ -12,6 +12,14 @@
   background: var(--bkg-color);
   color: #101010;
 
+  h3 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0.75rem 0 0 0;
+  }
+
   &__holder {
     display: flex;
     align-items: center;
