@@ -17,7 +17,7 @@ public class Configuration {
     private ConfigurationRules mRules;
 
     @PostConstruct
-    private void readConfigurationJson() throws IOException {
+    public void readConfigurationJson() throws IOException {
         mRules = mObjectMapper.readValue(new File(RULES_LOCATION), ConfigurationRules.class);
     }
 }
