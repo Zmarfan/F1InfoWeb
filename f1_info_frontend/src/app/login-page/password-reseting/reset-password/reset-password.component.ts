@@ -15,7 +15,7 @@ import {Session} from '../../../configuration/session';
     templateUrl: './reset-password.component.html',
     styleUrls: ['../../login-form-block.scss'],
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
     public loading: boolean = false;
     public showSuccessMessage: boolean = false;
     public successMessageConfig: PageInformationConfig = { type: PageInformationType.SUCCESS, titleKey: 'resetPasswordPage.messageTitle' };
@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.mSession.isLoggedIn.pipe(take(1)).subscribe((loggedIn) => {
+        this.mSubscription = this.mSession.isLoggedIn.pipe(take(1)).subscribe((loggedIn) => {
             if (loggedIn) {
                 this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
             }
@@ -50,6 +50,10 @@ export class ResetPasswordComponent implements OnInit {
         this.mRoute.queryParams.subscribe((params: any) => {
             this.mToken = params.token;
         });
+    }
+
+    public ngOnDestroy() {
+        this.mSubscription.unsubscribe();
     }
 
     public submitForm(formData: UserDetails) {
