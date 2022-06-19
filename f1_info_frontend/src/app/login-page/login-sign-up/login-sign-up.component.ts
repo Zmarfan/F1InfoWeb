@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {RouteHolder} from '../../routing/routeHolder';
+import {RouteHolder} from '../../routing/route-holder';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserLoginResponse} from '../../../generated/server-responses';
@@ -103,9 +103,6 @@ export class LoginSignUpComponent implements OnInit {
 
     private signUp(formData: UserDetails) {
         this.mLoginSignUpService.register(formData)
-            .pipe(finalize(() => {
-                this.loading = false;
-            }))
             .subscribe({
                 next: (_) => this.navigateToVerifyRegistrationMessage(formData.email),
                 error: (_) => this.handleFailedRegister(),
@@ -123,6 +120,7 @@ export class LoginSignUpComponent implements OnInit {
     }
 
     private navigateToVerifyRegistrationMessage(email: string) {
+        this.loading = false;
         this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.VERIFY, email } }).then();
     }
 

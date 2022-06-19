@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoginSignUpService} from '../../login-sign-up.service';
 import {UserDetails} from '../../login-sign-up/login-sign-up.component';
-import {RouteHolder} from '../../../routing/routeHolder';
+import {RouteHolder} from '../../../routing/route-holder';
 import {PageInformationConfig, PageInformationType} from '../../../../core/information/page-information/page-information.component';
 import {finalize} from 'rxjs';
 

@@ -19,6 +19,10 @@ import {TokenInterceptor} from './configuration/http-interceptor';
 import { ForgotPasswordComponent } from './login-page/password-reseting/forgot-password/forgot-password.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ResetPasswordComponent } from './login-page/password-reseting/reset-password/reset-password.component';
+import { TestComponent } from './test/test.component';
+import {SessionGuard} from './routing/session-guard';
+import {Session} from './configuration/session';
+import {AnonymousGuard} from './routing/anonymous-guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -49,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SignUpComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent,
+        TestComponent,
     ],
     providers: [
         {
@@ -56,6 +61,9 @@ export function HttpLoaderFactory(http: HttpClient) {
             useClass: TokenInterceptor,
             multi: true,
         },
+        Session,
+        SessionGuard,
+        AnonymousGuard,
     ],
     bootstrap: [AppComponent],
 })

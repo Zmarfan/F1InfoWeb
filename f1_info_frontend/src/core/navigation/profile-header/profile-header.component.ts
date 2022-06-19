@@ -5,7 +5,7 @@ import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from './language-selector/language-selector.component';
 import {Router} from '@angular/router';
-import {RouteHolder} from '../../../app/routing/routeHolder';
+import {RouteHolder} from '../../../app/routing/route-holder';
 import {DialogResult} from '../../dialog/dialog';
 import {Language} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';

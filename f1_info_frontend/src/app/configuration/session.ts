@@ -2,24 +2,27 @@ import {Injectable, OnInit} from '@angular/core';
 import {AppRoutingModule} from '../routing/app-routing.module';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from './endpoints';
-import {Observable, startWith, Subject} from 'rxjs';
+import {Observable, startWith, Subject, tap} from 'rxjs';
+import {Router} from '@angular/router';
+import {RouteHolder} from '../routing/route-holder';
 
 @Injectable({
     providedIn: 'root',
 })
 export class Session {
     private mLoggedIn: Subject<boolean> = new Subject<boolean>();
-    private readonly mLoggedIn$;
+    private readonly mLoggedIn$: Observable<boolean>;
+    private mClientLoggedInStatus: boolean = false;
 
     public constructor(
-        private mRoutingModule: AppRoutingModule,
+        private mRouter: Router,
         private mHttpClient: HttpClient
     ) {
         this.mLoggedIn$ = this.mLoggedIn.asObservable();
-
         this.mHttpClient.get<boolean>(Endpoints.AUTHENTICATION.isLoggedIn)
             .pipe(startWith(false))
             .subscribe((loggedIn) => {
+                this.mClientLoggedInStatus = loggedIn;
                 this.mLoggedIn.next(loggedIn);
             });
     }
@@ -29,14 +32,14 @@ export class Session {
     }
 
     public login() {
-        this.mLoggedIn.next(true);
-        this.mRoutingModule.setupLoggedInRoutes();
+        if (!this.mClientLoggedInStatus) {
+            this.mLoggedIn.next(true);
+        }
     }
 
     public logout() {
         this.mHttpClient.post(Endpoints.AUTHENTICATION.logout, {}).subscribe((_) => {
             this.mLoggedIn.next(false);
-            this.mRoutingModule.setupAnonymousRoutes();
         });
     }
 }
