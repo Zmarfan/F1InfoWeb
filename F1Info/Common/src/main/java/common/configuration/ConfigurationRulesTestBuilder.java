@@ -3,6 +3,7 @@ package common.configuration;
 import common.constants.email.MalformedEmailException;
 
 public class ConfigurationRulesTestBuilder {
+    String mClientDomain = null;
     String mDatabaseUrl = null;
     String mDatabaseName = null;
     String mDatabasePassword = null;
@@ -20,6 +21,6 @@ public class ConfigurationRulesTestBuilder {
     }
 
     public ConfigurationRules build() throws MalformedEmailException {
-        return new ConfigurationRules(mDatabaseUrl, mDatabaseName, mDatabasePassword, mIsMock, mEmail, mEmailPassword, mLoggingEmail);
+        return new ConfigurationRules(mClientDomain, mDatabaseUrl, mDatabaseName, mDatabasePassword, mIsMock, mEmail, mEmailPassword, mLoggingEmail);
     }
 }

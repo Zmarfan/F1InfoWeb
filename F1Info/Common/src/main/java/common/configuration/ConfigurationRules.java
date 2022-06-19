@@ -7,6 +7,7 @@ import lombok.Value;
 
 @Value
 public class ConfigurationRules {
+    String mClientDomain;
     String mDatabaseUrl;
     String mDatabaseName;
     String mDatabasePassword;
@@ -16,6 +17,7 @@ public class ConfigurationRules {
     Email mLoggingEmail;
 
     public ConfigurationRules(
+        @JsonProperty("clientDomain") final String clientDomain,
         @JsonProperty("databaseUrl") final String databaseUrl,
         @JsonProperty("databaseName") final String databaseName,
         @JsonProperty("databasePassword") final String databasePassword,
@@ -24,6 +26,7 @@ public class ConfigurationRules {
         @JsonProperty("emailPassword") final String emailPassword,
         @JsonProperty("loggingEmail") final String loggingEmail
     ) throws MalformedEmailException {
+        mClientDomain = clientDomain;
         mDatabaseUrl = databaseUrl;
         mDatabaseName = databaseName;
         mDatabasePassword = databasePassword;

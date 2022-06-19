@@ -1,6 +1,7 @@
 package f1_Info.entry_points.authentication;
 
 import common.email.EmailService;
+import f1_Info.communication.ClientUriFactory;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
@@ -38,6 +39,7 @@ public class AuthenticationEndpoint {
     private final TokenService mTokenService;
     private final UserManager mUserManager;
     private final EmailService mEmailService;
+    private final ClientUriFactory mClientUriFactory;
 
     @GetMapping("/isLoggedIn")
     public ResponseEntity<Boolean> isUserLoggedIn() {
@@ -59,7 +61,8 @@ public class AuthenticationEndpoint {
                 mPasswordEncoder,
                 mUserManager,
                 mTokenService,
-                mEmailService
+                mEmailService,
+                mClientUriFactory
             );
         });
     }
@@ -105,7 +108,7 @@ public class AuthenticationEndpoint {
                 throw new ForbiddenException("Unable to reset password as this user is already logged in");
             }
 
-            return new ForgotPasswordCommand(mEndpointHelper.convertEmail(emailBody.getEmail()), mTokenService, mUserManager, mEmailService);
+            return new ForgotPasswordCommand(mEndpointHelper.convertEmail(emailBody.getEmail()), mTokenService, mUserManager, mEmailService, mClientUriFactory);
         });
     }
 

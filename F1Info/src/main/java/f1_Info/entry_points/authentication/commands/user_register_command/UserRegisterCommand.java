@@ -4,6 +4,7 @@ import common.constants.email.Email;
 import common.email.EmailSendOutParameters;
 import common.email.EmailService;
 import common.email.EmailType;
+import f1_Info.communication.ClientUriFactory;
 import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
@@ -26,6 +27,7 @@ public class UserRegisterCommand implements Command {
     private final UserManager mUserManager;
     private final TokenService mTokenService;
     private final EmailService mEmailService;
+    private final ClientUriFactory mClientUriFactory;
 
     @Override
     public String getAction() {
@@ -51,7 +53,7 @@ public class UserRegisterCommand implements Command {
         final boolean sentEmail = mEmailService.sendEmail(new EmailSendOutParameters(
             mEmail,
             "Verify Your Email Address for F1Info",
-            String.format(UserRegistrationEmail.HTML_MESSAGE, "http://localhost:4200/sign-up?type=3&token=" + registerToken.toString()),
+            String.format(UserRegistrationEmail.HTML_MESSAGE, mClientUriFactory.createSignUpUri(registerToken)),
             EmailType.REGISTRATION_VERIFICATION
         ));
 

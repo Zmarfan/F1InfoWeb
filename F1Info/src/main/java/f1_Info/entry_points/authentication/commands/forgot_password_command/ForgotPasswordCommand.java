@@ -4,6 +4,7 @@ import common.constants.email.Email;
 import common.email.EmailSendOutParameters;
 import common.email.EmailService;
 import common.email.EmailType;
+import f1_Info.communication.ClientUriFactory;
 import f1_Info.configuration.web.users.F1UserDetails;
 import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.services.token_service.TokenService;
@@ -23,6 +24,7 @@ public class ForgotPasswordCommand implements Command {
     private final TokenService mTokenService;
     private final UserManager mUserManager;
     private final EmailService mEmailService;
+    private final ClientUriFactory mClientUriFactory;
 
     @Override
     public String getAction() {
@@ -49,7 +51,7 @@ public class ForgotPasswordCommand implements Command {
         return mEmailService.sendEmail(new EmailSendOutParameters(
             mEmail,
             "Reset your password for F1Info",
-            String.format(ForgotPasswordEmail.HTML_MESSAGE, "http://localhost:4200/reset-password?token=" + token.toString()),
+            String.format(ForgotPasswordEmail.HTML_MESSAGE, mClientUriFactory.createResetPasswordUri(token)),
             EmailType.RESET_PASSWORD
         ));
     }

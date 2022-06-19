@@ -1,4 +1,5 @@
 {
+  "clientDomain": "http://localhost:4200",
   "databaseUrl": "jdbc:mysql://localhost:3306/f1database",
   "databaseName": "f1User",
   "databasePassword": "0Vw7LIMZ7K17",
