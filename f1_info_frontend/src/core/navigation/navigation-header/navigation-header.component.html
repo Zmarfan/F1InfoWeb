@@ -1,0 +1,15 @@
+<section class="top-header"></section>
+
+<section class="main-navigation-menu">
+    <div class="main-navigation-menu__content">
+        <div *ngFor="let item of routeItems" class="route-item">
+            <fa-icon [icon]="item.icon"></fa-icon>
+            <span class="route-item__text">
+            {{ item.key | translate }}
+        </span>
+        </div>
+    </div>
+    <div>
+        version info soon
+    </div>
+</section>

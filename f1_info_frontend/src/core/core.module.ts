@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { TextInputComponent } from './input/fields/text-input/text-input.component';
 import {RouterModule} from '@angular/router';
 import { PageInformationComponent } from './information/page-information/page-information.component';
+import { NavigationHeaderComponent } from './navigation/navigation-header/navigation-header.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { PageInformationComponent } from './information/page-information/page-in
         ButtonDirective,
         TextInputComponent,
         PageInformationComponent,
+        NavigationHeaderComponent,
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,49 @@
+.top-header {
+  height: 4rem;
+  width: 15rem;
+  background: var(--primary-color);
+  box-shadow: var(--bkg-shadow-color) 0 0 5px;
+  color: #d5d5d5;
+}
+
+.main-navigation-menu {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 15rem;
+  height: calc(100% - 6rem);
+  background: var(--bkg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 2rem;
+  box-shadow: var(--bkg-shadow-color) -0.5rem 0 20px;
+}
+
+.route-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0 0.75rem 1.25rem;
+  color: var(--text-color);
+  transition: 0.2s linear background-color, 0.2s linear color;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--light-primary-color);
+    color: var(--text-color-light);
+
+    fa-icon {
+      color: var(--button-hover);
+    }
+  }
+
+  fa-icon {
+    font-size: 1.2rem;
+    transition: 0.2s linear color;
+  }
+
+  &__text {
+    font-size: 1rem;
+  }
+}
