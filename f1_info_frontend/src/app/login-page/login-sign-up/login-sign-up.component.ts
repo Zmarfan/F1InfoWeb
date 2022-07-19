@@ -103,6 +103,9 @@ export class LoginSignUpComponent implements OnInit {
 
     private signUp(formData: UserDetails) {
         this.mLoginSignUpService.register(formData)
+            .pipe(finalize(() => {
+                this.loading = false;
+            }))
             .subscribe({
                 next: (_) => this.navigateToVerifyRegistrationMessage(formData.email),
                 error: (_) => this.handleFailedRegister(),
