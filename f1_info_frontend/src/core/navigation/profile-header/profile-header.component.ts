@@ -76,7 +76,7 @@ export class ProfileHeaderComponent implements OnDestroy {
         pushIfTrue(
             items,
             this.mLoggedIn,
-            { icon: faRightToBracket, translationKey: 'navigation.profile.logout', clickCallback: () => this.mSession.logout() }
+            { icon: faRightToBracket, translationKey: 'navigation.profile.logout', clickCallback: () => this.logout() }
         );
 
         return items;
@@ -118,6 +118,12 @@ export class ProfileHeaderComponent implements OnDestroy {
 
     private routeToLogin() {
         this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.SIGN_UP } }).then();
+        this.menuOpen = false;
+    }
+
+    private logout() {
+        this.mSession.logout();
+        this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
         this.menuOpen = false;
     }
 }
