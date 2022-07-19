@@ -1,11 +1,3 @@
-.top-header {
-  height: 4rem;
-  width: 15rem;
-  background: var(--primary-color);
-  box-shadow: var(--bkg-shadow-color) 0 0 5px;
-  color: #d5d5d5;
-}
-
 .main-navigation-menu {
   position: fixed;
   top: 4rem;
@@ -21,6 +13,7 @@
 }
 
 .route-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -28,13 +21,38 @@
   color: var(--text-color);
   transition: 0.2s linear background-color, 0.2s linear color;
 
+  &::after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: "";
+    background: var(--light-primary-color);
+    height: 1px;
+    width: 0;
+    transition: width 0.2s ease-in-out;
+  }
+
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    background: var(--light-primary-color);
+    height: 1px;
+    width: 0;
+    transition: width 0.2s ease-in-out;
+  }
+
   &:hover {
     cursor: pointer;
-    background: var(--light-primary-color);
-    color: var(--text-color-light);
+    background: var(--bkg-color-light-accent);
 
-    fa-icon {
-      color: var(--button-hover);
+    &::after {
+      width: 50%;
+    }
+
+    &::before {
+      width: 50%;
     }
   }
 

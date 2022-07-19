@@ -1,5 +1,7 @@
 .route-offset {
   position: absolute;
+  width: calc(100% - 15rem);
+  height: calc(100% - 4rem);
   top: 4rem;
   left: 15rem;
 }

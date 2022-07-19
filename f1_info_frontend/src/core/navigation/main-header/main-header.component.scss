@@ -1,26 +1,9 @@
-.group {
-  display: flex;
-  flex-direction: row;
-  box-shadow: var(--bkg-shadow-color) 0 0 5px;
-}
-
 .main-header {
   width: 100%;
   height: 4rem;
   background: var(--primary-color);
+  box-shadow: var(--bkg-shadow-color) 0 0 5px;
   color: #d5d5d5;
-}
-
-.content {
-  height: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-app-profile-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
+  justify-content: space-between;
 }
