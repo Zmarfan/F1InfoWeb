@@ -2,14 +2,20 @@
 
 <section class="main-navigation-menu">
     <div class="main-navigation-menu__content">
-        <div *ngFor="let item of routeItems" class="route-item">
-            <fa-icon [icon]="item.icon"></fa-icon>
-            <span class="route-item__text">
-            {{ item.key | translate }}
-        </span>
-        </div>
+        <ng-container *ngFor="let item of routeItems">
+            <div
+                *ngIf="shouldDisplayItem(item)"
+                class="route-item"
+                (click)="navigationItemClicked(item)"
+                [class.route-item--selectable]="!item.selected"
+                [class.route-item--selected]="item.selected"
+            >
+                <fa-icon [icon]="item.icon"></fa-icon>
+                <span class="route-item__text">
+                {{ item.key | translate }}
+            </span>
+            </div>
+        </ng-container>
     </div>
-    <div>
-        version info soon
-    </div>
+    <span class="main-navigation-menu__copyright">Copyright Filip Petersson</span>
 </section>

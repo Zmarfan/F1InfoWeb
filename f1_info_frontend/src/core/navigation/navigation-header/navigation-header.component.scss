@@ -2,6 +2,7 @@
   position: fixed;
   top: 4rem;
   left: 0;
+  user-select: none;
   width: 15rem;
   height: calc(100% - 6rem);
   background: var(--bkg-color);
@@ -10,9 +11,14 @@
   justify-content: space-between;
   padding-top: 2rem;
   box-shadow: var(--bkg-shadow-color) -0.5rem 0 20px;
+
+  &__copyright {
+    text-align: center;
+  }
 }
 
 .route-item {
+  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
@@ -43,22 +49,27 @@
     transition: width 0.2s ease-in-out;
   }
 
-  &:hover {
-    cursor: pointer;
-    background: var(--bkg-color-light-accent);
+  fa-icon {
+    font-size: 1.2rem;
+  }
 
-    &::after {
-      width: 50%;
-    }
+  &--selectable {
+    &:hover {
+      background: var(--bkg-color-light-accent);
 
-    &::before {
-      width: 50%;
+      &::after {
+        width: 50%;
+      }
+
+      &::before {
+        width: 50%;
+      }
     }
   }
 
-  fa-icon {
-    font-size: 1.2rem;
-    transition: 0.2s linear color;
+  &--selected {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
   }
 
   &__text {

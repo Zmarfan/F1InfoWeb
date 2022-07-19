@@ -33,12 +33,14 @@ export class Session {
 
     public login() {
         if (!this.mClientLoggedInStatus) {
+            this.mClientLoggedInStatus = true;
             this.mLoggedIn.next(true);
         }
     }
 
     public logout() {
         this.mHttpClient.post(Endpoints.AUTHENTICATION.logout, {}).subscribe((_) => {
+            this.mClientLoggedInStatus = false;
             this.mLoggedIn.next(false);
         });
     }
