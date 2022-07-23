@@ -22,9 +22,9 @@ interface MenuItem {
 }
 
 @Component({
-    selector: 'app-profile-header',
-    templateUrl: './profile-header.component.html',
-    styleUrls: ['./profile-header.component.scss'],
+    selector: 'app-desktop-profile-header',
+    templateUrl: './desktop-profile-header.component.html',
+    styleUrls: ['./desktop-profile-header.component.scss'],
     animations: [
         trigger('inOutAnimation', [
             transition(':enter', [
@@ -38,7 +38,7 @@ interface MenuItem {
         ]),
     ],
 })
-export class ProfileHeaderComponent implements OnDestroy {
+export class DesktopProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
 
@@ -65,7 +65,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     public get menuItems(): MenuItem[] {
         const items: MenuItem[] = [
             { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
+            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => DesktopProfileHeaderComponent.toggleDarkMode() },
         ];
 
         pushIfTrue(
@@ -83,7 +83,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     }
 
     private static toggleDarkMode() {
-        document.body.classList.toggle(ProfileHeaderComponent.DARK_THEME_CLASS);
+        document.body.classList.toggle(DesktopProfileHeaderComponent.DARK_THEME_CLASS);
     }
 
     @HostListener('document:click', ['$event'])
@@ -99,7 +99,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     }
 
     public menuToggle(event: MouseEvent) {
-        if (this.mLastTimeStamp + ProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {
+        if (this.mLastTimeStamp + DesktopProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {
             this.menuOpen = !this.menuOpen;
             this.mLastTimeStamp = event.timeStamp;
         }
