@@ -1,3 +1,17 @@
+.navigation-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15rem;
+  height: 4rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
 .main-navigation-menu {
   position: fixed;
   top: 4rem;
@@ -32,7 +46,7 @@
     bottom: 0;
     right: 0;
     content: "";
-    background: var(--light-primary-color);
+    background: var(--primary-color);
     height: 1px;
     width: 0;
     transition: width 0.2s ease-in-out;
@@ -43,7 +57,7 @@
     bottom: 0;
     left: 0;
     content: "";
-    background: var(--light-primary-color);
+    background: var(--primary-color);
     height: 1px;
     width: 0;
     transition: width 0.2s ease-in-out;
