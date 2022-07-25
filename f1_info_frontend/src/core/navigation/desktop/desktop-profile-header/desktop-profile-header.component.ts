@@ -3,15 +3,15 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
-import {LanguageSelectorComponent} from './language-selector/language-selector.component';
+import {LanguageSelectorComponent} from '../../language-selector/language-selector.component';
 import {Router} from '@angular/router';
-import {RouteHolder} from '../../../app/routing/route-holder';
-import {DialogResult} from '../../dialog/dialog';
-import {Language} from '../../../common/constants/language';
+import {RouteHolder} from '../../../../app/routing/route-holder';
+import {DialogResult} from '../../../dialog/dialog';
+import {Language} from '../../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
-import {Session} from '../../../app/configuration/session';
-import {pushIfTrue} from '../../utils/list-util';
-import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
+import {Session} from '../../../../app/configuration/session';
+import {pushIfTrue} from '../../../utils/list-util';
+import {SignUpComponentType} from '../../../../app/login-page/sign-up/sign-up.component';
 import {Subscription} from 'rxjs';
 
 interface MenuItem {

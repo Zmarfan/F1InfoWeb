@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
-import {Language, LanguageUtil} from '../../../../common/constants/language';
+import {Language, LanguageUtil} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {cancelDialog, closeDialog, DialogResult} from '../../../dialog/dialog';
+import {cancelDialog, closeDialog, DialogResult} from '../../dialog/dialog';
 
 interface LanguageOption {
     language: Language;

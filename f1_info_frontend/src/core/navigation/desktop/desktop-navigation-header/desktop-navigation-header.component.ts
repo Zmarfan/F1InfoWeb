@@ -2,10 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
 import {faHouseChimney} from '@fortawesome/free-solid-svg-icons';
-import {RouteHolder} from '../../../app/routing/route-holder';
+import {RouteHolder} from '../../../../app/routing/route-holder';
 import {NavigationEnd, Route, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {Session} from '../../../app/configuration/session';
+import {Session} from '../../../../app/configuration/session';
 
 interface RouteItem {
     route: string;
@@ -17,10 +17,10 @@ interface RouteItem {
 
 @Component({
     selector: 'app-navigation-header',
-    templateUrl: './navigation-header.component.html',
-    styleUrls: ['./navigation-header.component.scss'],
+    templateUrl: './desktop-navigation-header.component.html',
+    styleUrls: ['./desktop-navigation-header.component.scss'],
 })
-export class NavigationHeaderComponent implements OnInit, OnDestroy {
+export class DesktopNavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'key.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
         { route: 'test', key: 'key.test', icon: faCircleHalfStroke, selected: false, loggedIn: true },
