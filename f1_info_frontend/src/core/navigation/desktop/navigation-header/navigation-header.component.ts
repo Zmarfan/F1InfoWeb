@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
-import {faBars, faCheck, faCross, faHouseChimney, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faHouseChimney, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {RouteHolder} from '../../../../app/routing/route-holder';
 import {NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
