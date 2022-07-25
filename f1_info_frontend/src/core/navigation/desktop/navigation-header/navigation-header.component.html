@@ -1,8 +1,16 @@
-<div class="navigation-image">
+<div class="desktop desktop-navigation-header">
     <img src="https://picsum.photos/600/200">
 </div>
 
-<section class="main-navigation-menu">
+<section class="mobile mobile-navigation-header">
+    <fa-icon (click)="openMobileNavigation()" [icon]="mobileIcon"></fa-icon>
+</section>
+
+<section
+    class="main-navigation-menu"
+    [class.main-navigation-menu--opened]="mobileNavigationOpened"
+    [class.main-navigation-menu--close]="!mobileNavigationOpened"
+>
     <div class="main-navigation-menu__content">
         <ng-container *ngFor="let item of routeItems">
             <div

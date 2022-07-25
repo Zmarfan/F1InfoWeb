@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
-import {faHouseChimney} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faCheck, faCross, faHouseChimney, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {RouteHolder} from '../../../../app/routing/route-holder';
-import {NavigationEnd, Route, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Session} from '../../../../app/configuration/session';
 
@@ -17,15 +17,16 @@ interface RouteItem {
 
 @Component({
     selector: 'app-navigation-header',
-    templateUrl: './desktop-navigation-header.component.html',
-    styleUrls: ['./desktop-navigation-header.component.scss'],
+    templateUrl: './navigation-header.component.html',
+    styleUrls: ['./navigation-header.component.scss', '../../../../app/app.component.scss'],
 })
-export class DesktopNavigationHeaderComponent implements OnInit, OnDestroy {
+export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'key.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
         { route: 'test', key: 'key.test', icon: faCircleHalfStroke, selected: false, loggedIn: true },
     ];
 
+    public mobileNavigationOpened: boolean = false;
     private mLoggedIn: boolean = false;
     private mRouteChangeSubscription!: Subscription;
     private mLoggedInSubscription!: Subscription;
@@ -34,6 +35,10 @@ export class DesktopNavigationHeaderComponent implements OnInit, OnDestroy {
         private mRouter: Router,
         private mSession: Session
     ) {
+    }
+
+    public get mobileIcon(): IconDefinition {
+        return this.mobileNavigationOpened ? faTimes : faBars;
     }
 
     public ngOnInit() {
@@ -53,12 +58,17 @@ export class DesktopNavigationHeaderComponent implements OnInit, OnDestroy {
         this.mLoggedInSubscription.unsubscribe();
     }
 
+    public openMobileNavigation() {
+        this.mobileNavigationOpened = !this.mobileNavigationOpened;
+    }
+
     public shouldDisplayItem(item: RouteItem): boolean {
         return !item.loggedIn || this.mLoggedIn;
     }
 
     public navigationItemClicked(item: RouteItem) {
         this.mRouter.navigateByUrl(item.route).then();
+        this.mobileNavigationOpened = false;
     }
 
     private setNewRoute(item: RouteItem | undefined) {

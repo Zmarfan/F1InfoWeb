@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LoadingSpinnerComponent } from './loading/loading-spinner/loading-spinner.component';
 import { LoadingElementComponent } from './loading/loading-element/loading-element.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import { DesktopProfileHeaderComponent } from './navigation/desktop/desktop-profile-header/desktop-profile-header.component';
 import {TranslateModule} from '@ngx-translate/core';
 import { LanguageSelectorComponent } from './navigation/language-selector/language-selector.component';
 import { LoginSignUpComponent } from '../app/login-page/login-sign-up/login-sign-up.component';
@@ -15,7 +14,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { TextInputComponent } from './input/fields/text-input/text-input.component';
 import {RouterModule} from '@angular/router';
 import { PageInformationComponent } from './information/page-information/page-information.component';
-import { DesktopNavigationHeaderComponent } from './navigation/desktop/desktop-navigation-header/desktop-navigation-header.component';
+import { NavigationHeaderComponent } from './navigation/desktop/navigation-header/navigation-header.component';
+import {DesktopProfileHeaderComponent} from './navigation/desktop/desktop-profile-header/desktop-profile-header.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +28,7 @@ import { DesktopNavigationHeaderComponent } from './navigation/desktop/desktop-n
         ButtonDirective,
         TextInputComponent,
         PageInformationComponent,
-        DesktopNavigationHeaderComponent,
+        NavigationHeaderComponent,
     ],
     imports: [
         CommonModule,
@@ -46,7 +46,7 @@ import { DesktopNavigationHeaderComponent } from './navigation/desktop/desktop-n
         LoginSignUpComponent,
         PrimaryButtonDirective,
         PageInformationComponent,
-        DesktopNavigationHeaderComponent,
+        NavigationHeaderComponent,
         DesktopProfileHeaderComponent,
     ],
 })
