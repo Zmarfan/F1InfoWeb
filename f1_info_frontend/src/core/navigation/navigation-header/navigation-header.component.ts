@@ -2,11 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faBars, faHouseChimney, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
-import {RouteHolder} from '../../../../app/routing/route-holder';
+import {RouteHolder} from '../../../app/routing/route-holder';
 import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
-import {Session} from '../../../../app/configuration/session';
+import {Session} from '../../../app/configuration/session';
 
 export interface RouteItem {
     route: string;

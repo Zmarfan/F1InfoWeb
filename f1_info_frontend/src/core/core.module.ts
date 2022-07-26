@@ -14,9 +14,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { TextInputComponent } from './input/fields/text-input/text-input.component';
 import {RouterModule} from '@angular/router';
 import { PageInformationComponent } from './information/page-information/page-information.component';
-import { NavigationHeaderComponent } from './navigation/desktop/navigation-header/navigation-header.component';
+import { NavigationHeaderComponent } from './navigation/navigation-header/navigation-header.component';
 import {DesktopProfileHeaderComponent} from './navigation/desktop/desktop-profile-header/desktop-profile-header.component';
-import { NavigationMenuComponent } from './navigation/desktop/navigation-header/navigation-menu/navigation-menu.component';
+import { NavigationMenuComponent } from './navigation/navigation-header/navigation-menu/navigation-menu.component';
 
 @NgModule({
     declarations: [
