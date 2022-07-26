@@ -14,7 +14,7 @@ import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
 import {Subscription} from 'rxjs';
 
-interface MenuItem {
+export interface MenuItem {
     icon: IconDefinition;
     translationKey: string;
     clickCallback: () => void;
@@ -22,31 +22,16 @@ interface MenuItem {
 }
 
 @Component({
-    selector: 'app-desktop-profile-header',
-    templateUrl: './desktop-profile-header.component.html',
-    styleUrls: ['./desktop-profile-header.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ transform: 'translateY(-5px) scaleY(0.85)', opacity: 0 }),
-                animate('0.25s ease-out', style({ transform: 'translateY(0) scaleY(1)', opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ transform: 'translateY(0) scaleY(1)', opacity: 1 }),
-                animate('0.25s ease-in', style({ transform: 'translateY(-5px) scaleY(0.85)', opacity: 0 })),
-            ]),
-        ]),
-    ],
+    selector: 'app-profile-header',
+    templateUrl: './profile-header.component.html',
 })
-export class DesktopProfileHeaderComponent implements OnDestroy {
+export class ProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
-    private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
 
     public menuOpen: boolean = false;
     public userName: string = 'Lord_Zmarfan';
     public displayName: string = 'Anonymous User';
 
-    private mLastTimeStamp: number = 0;
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
 
@@ -65,7 +50,7 @@ export class DesktopProfileHeaderComponent implements OnDestroy {
     public get menuItems(): MenuItem[] {
         const items: MenuItem[] = [
             { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => DesktopProfileHeaderComponent.toggleDarkMode() },
+            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
         ];
 
         pushIfTrue(
@@ -83,26 +68,11 @@ export class DesktopProfileHeaderComponent implements OnDestroy {
     }
 
     private static toggleDarkMode() {
-        document.body.classList.toggle(DesktopProfileHeaderComponent.DARK_THEME_CLASS);
-    }
-
-    @HostListener('document:click', ['$event'])
-    public mouseClick(event: MouseEvent) {
-        if (!this.mElement.nativeElement.contains(event.target)) {
-            this.menuOpen = false;
-            this.mLastTimeStamp = event.timeStamp;
-        }
+        document.body.classList.toggle(ProfileHeaderComponent.DARK_THEME_CLASS);
     }
 
     public ngOnDestroy() {
         this.mSubscription.unsubscribe();
-    }
-
-    public menuToggle(event: MouseEvent) {
-        if (this.mLastTimeStamp + DesktopProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {
-            this.menuOpen = !this.menuOpen;
-            this.mLastTimeStamp = event.timeStamp;
-        }
     }
 
     private openLanguageDialog() {

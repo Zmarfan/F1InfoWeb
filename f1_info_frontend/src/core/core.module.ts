@@ -15,14 +15,15 @@ import { TextInputComponent } from './input/fields/text-input/text-input.compone
 import {RouterModule} from '@angular/router';
 import { PageInformationComponent } from './information/page-information/page-information.component';
 import { NavigationHeaderComponent } from './navigation/navigation-header/navigation-header.component';
-import {DesktopProfileHeaderComponent} from './navigation/desktop-profile-header/desktop-profile-header.component';
+import {ProfileHeaderComponent} from './navigation/profile-header/profile-header.component';
 import { NavigationMenuComponent } from './navigation/navigation-header/navigation-menu/navigation-menu.component';
+import { DesktopProfileHeaderComponent } from './navigation/profile-header/desktop-profile-header/desktop-profile-header.component';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
         LoadingElementComponent,
-        DesktopProfileHeaderComponent,
+        ProfileHeaderComponent,
         LanguageSelectorComponent,
         LoginSignUpComponent,
         PrimaryButtonDirective,
@@ -31,6 +32,7 @@ import { NavigationMenuComponent } from './navigation/navigation-header/navigati
         PageInformationComponent,
         NavigationHeaderComponent,
         NavigationMenuComponent,
+        DesktopProfileHeaderComponent,
     ],
     imports: [
         CommonModule,
@@ -49,7 +51,7 @@ import { NavigationMenuComponent } from './navigation/navigation-header/navigati
         PrimaryButtonDirective,
         PageInformationComponent,
         NavigationHeaderComponent,
-        DesktopProfileHeaderComponent,
+        ProfileHeaderComponent,
     ],
 })
 export class CoreModule {
