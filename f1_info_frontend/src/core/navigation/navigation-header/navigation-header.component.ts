@@ -23,15 +23,14 @@ export interface RouteItem {
     animations: [
         trigger('mobileInOutAnimation', [
             transition(':enter', [
-                animate('0.5s ease-in', keyframes([
-                    style({ width: '0', opacity: 0, offset: 0 }),
-                    style({ width: '91%', opacity: 1, offset: 0.75 }),
-                    style({ width: '90%', opacity: 1, offset: 1 }),
+                animate('0.25s ease-in', keyframes([
+                    style({ transform: 'translateX(-100%)', opacity: 0, offset: 0 }),
+                    style({ transform: 'translateX(0)', opacity: 1, offset: 1 }),
                 ])),
             ]),
             transition(':leave', [
-                style({ width: '90%', opacity: 1 }),
-                animate('0.25s ease-in', style({ width: 0, opacity: 0 })),
+                style({ transform: 'translateX(0)', opacity: 1 }),
+                animate('0.25s ease-in', style({ transform: 'translateX(-100%)', opacity: 0 })),
             ]),
         ]),
     ],

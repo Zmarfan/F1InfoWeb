@@ -32,6 +32,7 @@
 
 .main-navigation-menu {
   position: fixed;
+  z-index: 100;
   top: 4rem;
   left: 0;
   user-select: none;

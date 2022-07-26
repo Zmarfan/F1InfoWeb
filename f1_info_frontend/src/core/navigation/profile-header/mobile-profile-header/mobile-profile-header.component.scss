@@ -1,0 +1,89 @@
+.header {
+  height: 100%;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+
+  fa-icon {
+    cursor: pointer;
+    font-size: 2.5rem;
+    transition: transform linear 0.1s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.container {
+  position: fixed;
+  z-index: 100;
+  top: 4rem;
+  right: 0;
+  user-select: none;
+  width: 90%;
+  height: calc(100% - 4rem);
+  background: var(--bkg-color);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--light-primary-color);
+
+  fa-icon {
+    font-size: 3.25rem;
+    @media (max-width: 27rem) {
+      font-size: 2rem;
+    }
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  &__names {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    @media (max-width: 27rem) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__user-name {
+    font-size: 1.25rem;
+    @media (max-width: 27rem) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+
+    fa-icon {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 2.5rem;
+      padding: 0 1rem;
+
+      &:hover {
+        cursor: pointer;
+        background: var(--dark-primary-color);
+      }
+
+      @media (max-width: 22rem) {
+        font-size: 2rem;
+        padding: 0 0.25rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<section class="header">
+    <fa-icon (click)="toggleProfileHeader()" [icon]="icon"></fa-icon>
+</section>
+
+<section *ngIf="headerOpen" @inOutAnimation class="container">
+    <div class="profile-header">
+        <div class="profile-header__user-info">
+            <fa-icon icon="circle-user"></fa-icon>
+            <div class="profile-header__names">
+                <div class="profile-header__user-name">{{userName}}</div>
+                <div>{{displayName}}</div>
+            </div>
+        </div>
+
+        <div class="profile-header__icons">
+            <fa-icon [icon]="['far', 'bell']"></fa-icon>
+            <fa-icon [icon]="['far', 'question-circle']"></fa-icon>
+        </div>
+    </div>
+
+    <div class="display-menu">
+        <div
+            *ngFor="let menuItem of menuItems; let last = last"
+            (click)="menuItemClicked(menuItem)"
+            [ngClass]="{'display-menu__wide': last}"
+            class="display-menu__route {{menuItem.cssClass}}"
+        >
+            <fa-icon class="fa-fw" [icon]="menuItem.icon"></fa-icon>
+            <span>{{menuItem.translationKey | translate}}</span>
+        </div>
+    </div>
+</section>

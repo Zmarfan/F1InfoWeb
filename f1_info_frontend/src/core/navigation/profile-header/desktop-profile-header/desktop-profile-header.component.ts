@@ -5,7 +5,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 @Component({
     selector: 'app-desktop-profile-header',
     templateUrl: './desktop-profile-header.component.html',
-    styleUrls: ['./desktop-profile-header.component.scss'],
+    styleUrls: ['./desktop-profile-header.component.scss', '../profile-header.component.scss'],
     animations: [
         trigger('inOutAnimation', [
             transition(':enter', [

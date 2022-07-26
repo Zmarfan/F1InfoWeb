@@ -18,6 +18,7 @@ import { NavigationHeaderComponent } from './navigation/navigation-header/naviga
 import {ProfileHeaderComponent} from './navigation/profile-header/profile-header.component';
 import { NavigationMenuComponent } from './navigation/navigation-header/navigation-menu/navigation-menu.component';
 import { DesktopProfileHeaderComponent } from './navigation/profile-header/desktop-profile-header/desktop-profile-header.component';
+import { MobileProfileHeaderComponent } from './navigation/profile-header/mobile-profile-header/mobile-profile-header.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { DesktopProfileHeaderComponent } from './navigation/profile-header/deskt
         NavigationHeaderComponent,
         NavigationMenuComponent,
         DesktopProfileHeaderComponent,
+        MobileProfileHeaderComponent,
     ],
     imports: [
         CommonModule,

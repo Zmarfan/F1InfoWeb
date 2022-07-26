@@ -1,0 +1,66 @@
+.display-menu {
+  color: var(--text-color);
+  background: var(--bkg-color);
+
+  &--desktop {
+    transform-origin: top;
+    border-radius: 0.25rem;
+    margin-top: 5px;
+    box-shadow: var(--bkg-shadow-color) 0 0 5px;
+  }
+
+  &__route {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    padding: 0.6rem 0;
+    font-size: 1rem;
+    transition: background 0.2s ease-in-out;
+
+    &::after {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      content: "";
+      background: var(--light-primary-color);
+      height: 1px;
+      width: 0;
+      transition: width 0.2s ease-in-out;
+    }
+
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: "";
+      background: var(--light-primary-color);
+      height: 1px;
+      width: 0;
+      transition: width 0.2s ease-in-out;
+    }
+
+    &:hover {
+      box-sizing: border-box;
+      background: var(--bkg-color-light-accent);
+      cursor: pointer;
+
+      &::after {
+        width: 50%;
+      }
+
+      &::before {
+        width: 50%;
+      }
+    }
+
+    fa-icon {
+      font-size: 1.15rem;
+      padding: 0 1rem;
+    }
+  }
+
+  &__wide {
+    border-top: 1px var(--bkg-color-shade) solid;
+    padding: 1.1rem 0;
+  }
+}
