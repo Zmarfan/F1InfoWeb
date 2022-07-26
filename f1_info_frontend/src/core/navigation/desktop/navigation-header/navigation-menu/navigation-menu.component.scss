@@ -1,0 +1,70 @@
+.navigation-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__copyright {
+    text-align: center;
+  }
+}
+
+.route-item {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0 0.75rem 1.25rem;
+  color: var(--text-color);
+  transition: 0.2s linear background-color, 0.2s linear color;
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: "";
+    background: var(--primary-color);
+    height: 1px;
+    width: 0;
+    transition: width 0.2s ease-in-out;
+  }
+
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    background: var(--primary-color);
+    height: 1px;
+    width: 0;
+    transition: width 0.2s ease-in-out;
+  }
+
+  fa-icon {
+    font-size: 1.2rem;
+  }
+
+  &--selectable {
+    &:hover {
+      background: var(--bkg-color-light-accent);
+
+      &::after {
+        width: 50%;
+      }
+
+      &::before {
+        width: 50%;
+      }
+    }
+  }
+
+  &--selected {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+  }
+
+  &__text {
+    font-size: 1rem;
+  }
+}

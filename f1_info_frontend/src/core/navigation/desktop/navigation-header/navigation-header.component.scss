@@ -35,112 +35,14 @@
   top: 4rem;
   left: 0;
   user-select: none;
-  width: 15rem;
+  width: 90%;
   height: calc(100% - 6rem);
   background: var(--bkg-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding-top: 2rem;
   box-shadow: var(--bkg-shadow-color) -0.5rem 0 20px;
   overflow: hidden;
 
-  &--close {
-    @media (max-width: 70rem) {
-      animation: close-mobile 0.25s ease-in-out forwards;
-    }
-  }
-
-  &--opened {
-    @media (max-width: 70rem) {
-      animation: open-mobile 0.5s ease-in-out forwards;
-    }
-  }
-
-  &__copyright {
-    text-align: center;
-  }
-}
-
-@keyframes open-mobile {
-  0% {
-    opacity: 0;
-    width: 0;
-  }
-  75% {
-    width: 91%;
-    opacity: 1;
-  }
-  100% {
-    width: 90%;
-  }
-}
-
-@keyframes close-mobile {
-  0% {
-    width: 90%;
-  }
-  100% {
-    width: 0;
-  }
-}
-
-.route-item {
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 0 0.75rem 1.25rem;
-  color: var(--text-color);
-  transition: 0.2s linear background-color, 0.2s linear color;
-
-  &::after {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    content: "";
-    background: var(--primary-color);
-    height: 1px;
-    width: 0;
-    transition: width 0.2s ease-in-out;
-  }
-
-  &::before {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    content: "";
-    background: var(--primary-color);
-    height: 1px;
-    width: 0;
-    transition: width 0.2s ease-in-out;
-  }
-
-  fa-icon {
-    font-size: 1.2rem;
-  }
-
-  &--selectable {
-    &:hover {
-      background: var(--bkg-color-light-accent);
-
-      &::after {
-        width: 50%;
-      }
-
-      &::before {
-        width: 50%;
-      }
-    }
-  }
-
-  &--selected {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-  }
-
-  &__text {
-    font-size: 1rem;
+  &--desktop {
+    width: 15rem;
   }
 }

@@ -1,10 +1,12 @@
+@import "src/styles/responsiveness.scss";
+
 .route-offset {
   position: absolute;
   width: 100%;
   height: calc(100% - 4rem);
   top: 4rem;
 
-  @media(min-width: 70rem) {
+  @media(min-width: $mobile-max-width) {
     left: 15rem;
     width: calc(100% - 15rem);
   }
@@ -18,16 +20,4 @@
   color: #d5d5d5;
   display: flex;
   justify-content: space-between;
-}
-
-.desktop {
-  @media(max-width: 70rem) {
-    display: none;
-  }
-}
-
-.mobile {
-  @media(min-width: 70rem) {
-    display: none;
-  }
 }

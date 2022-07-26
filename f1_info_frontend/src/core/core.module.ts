@@ -16,6 +16,7 @@ import {RouterModule} from '@angular/router';
 import { PageInformationComponent } from './information/page-information/page-information.component';
 import { NavigationHeaderComponent } from './navigation/desktop/navigation-header/navigation-header.component';
 import {DesktopProfileHeaderComponent} from './navigation/desktop/desktop-profile-header/desktop-profile-header.component';
+import { NavigationMenuComponent } from './navigation/desktop/navigation-header/navigation-menu/navigation-menu.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import {DesktopProfileHeaderComponent} from './navigation/desktop/desktop-profil
         TextInputComponent,
         PageInformationComponent,
         NavigationHeaderComponent,
+        NavigationMenuComponent,
     ],
     imports: [
         CommonModule,

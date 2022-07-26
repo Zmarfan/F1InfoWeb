@@ -1,0 +1,13 @@
+$mobile-max-width: 70rem;
+
+.desktop {
+  @media(max-width: $mobile-max-width) {
+    display: none !important;
+  }
+}
+
+.mobile {
+  @media(min-width: $mobile-max-width) {
+    display: none !important;
+  }
+}

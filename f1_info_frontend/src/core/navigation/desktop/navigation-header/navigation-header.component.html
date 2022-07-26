@@ -6,26 +6,10 @@
     <fa-icon (click)="openMobileNavigation()" [icon]="mobileIcon"></fa-icon>
 </section>
 
-<section
-    class="main-navigation-menu"
-    [class.main-navigation-menu--opened]="mobileNavigationOpened"
-    [class.main-navigation-menu--close]="!mobileNavigationOpened"
->
-    <div class="main-navigation-menu__content">
-        <ng-container *ngFor="let item of routeItems">
-            <div
-                *ngIf="shouldDisplayItem(item)"
-                class="route-item"
-                (click)="navigationItemClicked(item)"
-                [class.route-item--selectable]="!item.selected"
-                [class.route-item--selected]="item.selected"
-            >
-                <fa-icon [icon]="item.icon"></fa-icon>
-                <span class="route-item__text">
-                {{ item.key | translate }}
-            </span>
-            </div>
-        </ng-container>
-    </div>
-    <span class="main-navigation-menu__copyright">Copyright Filip Petersson</span>
+<section *ngIf="mobileNavigationOpened" @mobileInOutAnimation class="main-navigation-menu">
+    <app-navigation-menu [routeItems]="routeItemsToShow" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
+</section>
+
+<section class="desktop main-navigation-menu main-navigation-menu--desktop">
+    <app-navigation-menu [routeItems]="routeItemsToShow" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
 </section>

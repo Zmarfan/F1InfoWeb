@@ -1,0 +1,18 @@
+<section class="navigation-menu">
+    <div>
+        <ng-container *ngFor="let item of routeItems">
+            <div
+                class="route-item"
+                (click)="navigationItemClicked(item)"
+                [class.route-item--selectable]="!item.selected"
+                [class.route-item--selected]="item.selected"
+            >
+                <fa-icon [icon]="item.icon"></fa-icon>
+                <span class="route-item__text">
+                {{ item.key | translate }}
+            </span>
+            </div>
+        </ng-container>
+    </div>
+    <span class="navigation-menu__copyright" >Copyright Filip Petersson</span>
+</section>
