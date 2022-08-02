@@ -5,6 +5,7 @@ import {Endpoints} from '../configuration/endpoints';
 import {map, tap} from 'rxjs';
 import {Session} from '../configuration/session';
 import {RouteHolder} from './route-holder';
+import {GetUserResponse} from '../../generated/server-responses';
 
 @Injectable({
     providedIn: 'root',
@@ -18,8 +19,9 @@ export class AnonymousGuard implements CanActivate {
     }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.mHttpClient.get<boolean>(Endpoints.AUTHENTICATION.isLoggedIn)
+        return this.mHttpClient.get<GetUserResponse>(Endpoints.AUTHENTICATION.getUser)
             .pipe(
+                map((userResponse) => userResponse !== null),
                 tap((loggedIn) => {
                     if (loggedIn) {
                         this.mSession.login();

@@ -2,46 +2,56 @@ import {Injectable, OnInit} from '@angular/core';
 import {AppRoutingModule} from '../routing/app-routing.module';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from './endpoints';
-import {Observable, startWith, Subject, tap} from 'rxjs';
+import {map, Observable, startWith, Subject, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {RouteHolder} from '../routing/route-holder';
+import {GetUserResponse} from '../../generated/server-responses';
+
+export type User = GetUserResponse;
 
 @Injectable({
     providedIn: 'root',
 })
 export class Session {
-    private mLoggedIn: Subject<boolean> = new Subject<boolean>();
-    private readonly mLoggedIn$: Observable<boolean>;
+    private mUser: Subject<User | null> = new Subject<User | null>();
+    private readonly mUser$: Observable<User | null>;
     private mClientLoggedInStatus: boolean = false;
 
     public constructor(
         private mRouter: Router,
         private mHttpClient: HttpClient
     ) {
-        this.mLoggedIn$ = this.mLoggedIn.asObservable();
-        this.mHttpClient.get<boolean>(Endpoints.AUTHENTICATION.isLoggedIn)
-            .pipe(startWith(false))
-            .subscribe((loggedIn) => {
-                this.mClientLoggedInStatus = loggedIn;
-                this.mLoggedIn.next(loggedIn);
-            });
+        this.mUser$ = this.mUser.asObservable();
+        this.fetchUser();
     }
 
     public get isLoggedIn(): Observable<boolean> {
-        return this.mLoggedIn$;
+        return this.mUser$.pipe(map((user) => user !== null));
+    }
+
+    public get user(): Observable<User> {
+        return this.mUser$.pipe(map((user) => user === null ? {} as User : user));
     }
 
     public login() {
         if (!this.mClientLoggedInStatus) {
-            this.mClientLoggedInStatus = true;
-            this.mLoggedIn.next(true);
+            this.fetchUser();
         }
     }
 
     public logout() {
         this.mHttpClient.post(Endpoints.AUTHENTICATION.logout, {}).subscribe((_) => {
             this.mClientLoggedInStatus = false;
-            this.mLoggedIn.next(false);
+            this.mUser.next(null);
         });
+    }
+
+    private fetchUser() {
+        this.mHttpClient.get<GetUserResponse>(Endpoints.AUTHENTICATION.getUser)
+            .pipe(startWith(null))
+            .subscribe((userResponse) => {
+                this.mClientLoggedInStatus = userResponse !== null;
+                this.mUser.next(userResponse);
+            });
     }
 }

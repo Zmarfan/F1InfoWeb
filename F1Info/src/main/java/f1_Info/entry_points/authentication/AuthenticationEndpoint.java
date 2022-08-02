@@ -6,6 +6,7 @@ import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
 import f1_Info.entry_points.authentication.commands.forgot_password_command.ForgotPasswordCommand;
+import f1_Info.entry_points.authentication.commands.get_user_command.GetUserCommand;
 import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
 import f1_Info.entry_points.authentication.commands.set_new_user_password_command.SetNewUserPasswordCommand;
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
-import static f1_Info.configuration.web.ResponseUtil.ok;
-
 @RestController
 @RequestMapping("/Authentication")
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
@@ -41,9 +40,9 @@ public class AuthenticationEndpoint {
     private final EmailService mEmailService;
     private final ClientUriFactory mClientUriFactory;
 
-    @GetMapping("/isLoggedIn")
-    public ResponseEntity<Boolean> isUserLoggedIn() {
-        return ok(mEndpointHelper.isLoggedIn());
+    @GetMapping("/getUser")
+    public ResponseEntity<?> getUser() {
+        return mEndpointHelper.runCommand(mHttpServletRequest, GetUserCommand::new);
     }
 
     @PostMapping("/register")

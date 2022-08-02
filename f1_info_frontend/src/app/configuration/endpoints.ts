@@ -6,7 +6,7 @@ export class Endpoints {
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly AUTHENTICATION = {
-        isLoggedIn: `${Endpoints.AUTHENTICATION_BASE}isLoggedIn`,
+        getUser: `${Endpoints.AUTHENTICATION_BASE}getUser`,
         login: `${Endpoints.AUTHENTICATION_BASE}login`,
         logout: `${Endpoints.AUTHENTICATION_BASE}logout`,
         register: `${Endpoints.AUTHENTICATION_BASE}register`,
