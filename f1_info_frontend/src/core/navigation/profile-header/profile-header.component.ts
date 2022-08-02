@@ -12,7 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Session} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
-import {Subscription} from 'rxjs';
+import {map, Observable, shareReplay, Subscription} from 'rxjs';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -29,8 +29,8 @@ export class ProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
 
     public menuOpen: boolean = false;
-    public userName: string = 'Lord_Zmarfan';
-    public displayName: string = 'Anonymous User';
+    public displayName$: Observable<string | undefined>;
+    public email$: Observable<string | undefined>;
 
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
@@ -45,6 +45,9 @@ export class ProfileHeaderComponent implements OnDestroy {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
             this.mLoggedIn = loggedIn;
         });
+
+        this.displayName$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.displayName));
+        this.email$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.displayName));
     }
 
     public get menuItems(): MenuItem[] {

@@ -3,6 +3,7 @@ import {MenuItem} from '../profile-header.component';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleUser, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-mobile-profile-header',
@@ -24,8 +25,8 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
     ],
 })
 export class MobileProfileHeaderComponent {
-    @Input() public userName!: string;
-    @Input() public displayName!: string;
+    @Input() public displayName$!: Observable<string | undefined>;
+    @Input() public email$!: Observable<string | undefined>;
     @Input() public menuItems!: MenuItem[];
 
     public headerOpen: boolean = false;

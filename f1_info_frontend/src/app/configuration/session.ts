@@ -29,8 +29,8 @@ export class Session {
         return this.mUser$.pipe(map((user) => user !== null));
     }
 
-    public get user(): Observable<User> {
-        return this.mUser$.pipe(map((user) => user === null ? {} as User : user));
+    public get user(): Observable<User | null> {
+        return this.mUser$;
     }
 
     public login() {

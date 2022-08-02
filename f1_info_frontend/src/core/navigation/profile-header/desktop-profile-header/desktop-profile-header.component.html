@@ -6,8 +6,8 @@
         <div (click)="menuToggle($event)" class="user-section__menu">
             <fa-icon icon="circle-user" class="user-section__icon"></fa-icon>
             <div class="user-section__names">
-                <span class="user-section__user-name">{{userName}}</span>
-                <span class="user-section__display-name">{{displayName}}</span>
+                <span class="user-section__user-name">{{displayName$ | async}}</span>
+                <span class="user-section__display-name">{{(email$ | async) ?? 'navigation.profile.anonymousUser' | translate}}</span>
             </div>
             <fa-icon icon="caret-down" class="user-section__arrow"></fa-icon>
         </div>

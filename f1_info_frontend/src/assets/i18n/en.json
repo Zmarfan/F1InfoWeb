@@ -18,6 +18,7 @@
   },
   "navigation": {
     "profile": {
+      "anonymousUser": "Anonymous User",
       "loginOrSignUp": "Log in/Sign up",
       "darkMode": "Toggle dark mode",
       "language": "Select language",

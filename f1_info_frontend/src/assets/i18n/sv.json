@@ -18,6 +18,7 @@
   },
   "navigation": {
     "profile": {
+      "anonymousUser": "Anonym Användare",
       "loginOrSignUp": "Logga in/Bli medlem",
       "darkMode": "Växla mörkt tema",
       "language": "Välj språk",
