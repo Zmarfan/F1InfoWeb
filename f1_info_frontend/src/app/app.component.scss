@@ -21,3 +21,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.mobile-image {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6rem;
+}
