@@ -5,4 +5,10 @@ import lombok.Value;
 @Value
 public class GetUserResponse {
     String mDisplayName;
+    String mEmail;
+
+    public GetUserResponse(final GetUserRecord userRecord) {
+        mDisplayName = userRecord.getEmail();
+        mEmail = userRecord.getEmail();
+    }
 }

@@ -9,6 +9,7 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 @AllArgsConstructor
 public class GetUserCommand implements Command {
     private final Long mUserId;
+    private final Database mDatabase;
 
     @Override
     public String getAction() {
@@ -20,6 +21,6 @@ public class GetUserCommand implements Command {
         if (mUserId == null) {
             return ok();
         }
-        return ok(new GetUserResponse("TEST NAME"));
+        return ok(new GetUserResponse(mDatabase.getUser(mUserId)));
     }
 }

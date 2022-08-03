@@ -6,6 +6,7 @@ import f1_Info.configuration.web.users.UserManager;
 import f1_Info.entry_points.authentication.commands.UserDetailsRequestBody;
 import f1_Info.entry_points.authentication.commands.enable_user_command.EnableUserCommand;
 import f1_Info.entry_points.authentication.commands.forgot_password_command.ForgotPasswordCommand;
+import f1_Info.entry_points.authentication.commands.get_user_command.Database;
 import f1_Info.entry_points.authentication.commands.get_user_command.GetUserCommand;
 import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
 import f1_Info.entry_points.authentication.commands.set_new_user_password_command.SetNewUserPasswordCommand;
@@ -39,10 +40,11 @@ public class AuthenticationEndpoint {
     private final UserManager mUserManager;
     private final EmailService mEmailService;
     private final ClientUriFactory mClientUriFactory;
+    private final Database mGetUserDatabase;
 
     @GetMapping("/getUser")
     public ResponseEntity<?> getUser() {
-        return mEndpointHelper.runCommand(mHttpServletRequest, GetUserCommand::new);
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetUserCommand(userId, mGetUserDatabase));
     }
 
     @PostMapping("/register")
