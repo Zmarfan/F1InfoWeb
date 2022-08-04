@@ -47,7 +47,7 @@ export class ProfileHeaderComponent implements OnDestroy {
         });
 
         this.displayName$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.displayName));
-        this.email$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.displayName));
+        this.email$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.email));
     }
 
     public get menuItems(): MenuItem[] {
