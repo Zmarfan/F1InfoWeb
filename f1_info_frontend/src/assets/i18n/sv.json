@@ -17,10 +17,14 @@
     "swedish": "Svenska"
   },
   "navigation": {
+    "route": {
+      "homepage": "Hem"
+    },
     "profile": {
       "anonymousUser": "Anonym Användare",
       "loginOrSignUp": "Logga in/Bli medlem",
       "darkMode": "Växla mörkt tema",
+      "userSettings": "Profilinställningar",
       "language": "Välj språk",
       "logout": "Logga ut"
     }

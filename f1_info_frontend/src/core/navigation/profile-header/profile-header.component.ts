@@ -1,7 +1,7 @@
 import {Component, ElementRef, HostListener, OnDestroy} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCircleHalfStroke, faEarthAfrica, faRightToBracket} from '@fortawesome/free-solid-svg-icons';
+import {faCircleHalfStroke, faEarthAfrica, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
 import {Router} from '@angular/router';
@@ -58,6 +58,12 @@ export class ProfileHeaderComponent implements OnDestroy {
 
         pushIfTrue(
             items,
+            this.mLoggedIn,
+            { icon: faUserGear, translationKey: 'navigation.profile.userSettings', clickCallback: () => this.openUserSettingsDialog() }
+        );
+
+        pushIfTrue(
+            items,
             !this.mLoggedIn,
             { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() }
         );
@@ -76,6 +82,10 @@ export class ProfileHeaderComponent implements OnDestroy {
 
     public ngOnDestroy() {
         this.mSubscription.unsubscribe();
+    }
+
+    private openUserSettingsDialog() {
+        console.log('Hej');
     }
 
     private openLanguageDialog() {

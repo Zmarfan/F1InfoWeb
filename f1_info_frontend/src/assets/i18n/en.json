@@ -17,10 +17,14 @@
     "swedish": "Swedish"
   },
   "navigation": {
+    "route": {
+      "homepage": "Homepage"
+    },
     "profile": {
       "anonymousUser": "Anonymous User",
       "loginOrSignUp": "Log in/Sign up",
       "darkMode": "Toggle dark mode",
+      "userSettings": "Profile Settings",
       "language": "Select language",
       "logout": "Log out"
     }

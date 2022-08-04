@@ -37,7 +37,7 @@ export interface RouteItem {
 })
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
-        { route: RouteHolder.HOMEPAGE, key: 'key.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
+        { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
         { route: 'test', key: 'key.test', icon: faCircleHalfStroke, selected: false, loggedIn: true },
     ];
 
