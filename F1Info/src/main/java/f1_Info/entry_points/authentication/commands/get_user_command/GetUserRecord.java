@@ -5,4 +5,5 @@ import lombok.Value;
 @Value
 public class GetUserRecord {
     String mEmail;
+    String mDisplayName;
 }

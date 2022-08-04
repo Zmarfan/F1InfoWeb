@@ -6,4 +6,6 @@ begin
     set v_user_id := (select last_insert_id());
 
     insert into user_authorities (user_id, authority_name) values (v_user_id, 'user');
+
+    call insert_user_information(v_user_id, null, create_event(1, 1000, 'init'), current_timestamp);
 end;
