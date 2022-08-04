@@ -1,3 +1,10 @@
+drop function if exists create_event;
+create function create_event(p_entity_id int, p_type_id int, p_comment varchar(255)) returns int
+begin
+  insert into events (entity_id, type_id, time, comment) values (p_entity_id, p_type_id, current_timestamp, p_comment);
+  return last_insert_id();
+end;
+
 drop procedure if exists return_null;
 create procedure return_null()
 begin

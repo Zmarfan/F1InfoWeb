@@ -54,3 +54,30 @@ create table countries(
 
   constraint countries_pk primary key (country_code)
 );
+
+create table event_entities(
+  id int not null,
+  name varchar(255),
+
+  constraint event_entities_pk primary key (id)
+);
+
+create table event_types(
+  id int not null,
+  name varchar(255),
+
+  constraint event_types_pk primary key (id)
+);
+
+
+create table events(
+  id int not null auto_increment,
+  entity_id int not null,
+  type_id int not null,
+  time timestamp,
+  comment varchar(255) not null,
+
+  constraint events_pk primary key (id),
+  constraint events_entity_id_fk foreign key (entity_id) references event_entities (id),
+  constraint events_type_id_fk foreign key (type_id) references event_types (id)
+);
