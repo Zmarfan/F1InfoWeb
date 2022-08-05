@@ -28,7 +28,6 @@ export interface MenuItem {
 export class ProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
 
-    public menuOpen: boolean = false;
     public displayName$: Observable<string | undefined>;
     public email$: Observable<string | undefined>;
 
@@ -89,8 +88,6 @@ export class ProfileHeaderComponent implements OnDestroy {
     }
 
     private openLanguageDialog() {
-        this.menuOpen = false;
-
         const openedSelectedLanguage = this.mTranslateService.currentLang as Language;
         this.mDialog.open(LanguageSelectorComponent).afterClosed().subscribe((result: DialogResult) => {
             if (!result?.wasApplied) {
@@ -101,12 +98,10 @@ export class ProfileHeaderComponent implements OnDestroy {
 
     private routeToLogin() {
         this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.SIGN_UP } }).then();
-        this.menuOpen = false;
     }
 
     private logout() {
         this.mSession.logout();
         this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
-        this.menuOpen = false;
     }
 }
