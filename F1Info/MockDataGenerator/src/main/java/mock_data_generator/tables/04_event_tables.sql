@@ -21,7 +21,7 @@ create table user_information_changes(
   constraint user_information_changes_event_id_fk foreign key (event_id) references events (id)
 );
 
-create or replace view v_latest_user_information as
+create or replace view latest_user_information_v as
   select
     user_id,
     display_name,

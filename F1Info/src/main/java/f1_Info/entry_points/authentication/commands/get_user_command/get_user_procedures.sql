@@ -6,7 +6,7 @@ begin
      user_info.display_name
   from
      users
-     inner join v_latest_user_information user_info on user_info.user_id = users.id
+     inner join latest_user_information_v user_info on user_info.user_id = users.id
   where
      users.id = p_user_id;
 end;
