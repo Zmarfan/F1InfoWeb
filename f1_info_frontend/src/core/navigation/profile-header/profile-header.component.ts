@@ -13,6 +13,7 @@ import {Session} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
 import {map, Observable, shareReplay, Subscription} from 'rxjs';
+import {UserSettingsComponent} from '../user-settings/user-settings.component';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -84,7 +85,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     }
 
     private openUserSettingsDialog() {
-        console.log('Hej');
+        this.mDialog.open(UserSettingsComponent);
     }
 
     private openLanguageDialog() {

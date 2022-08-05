@@ -1,0 +1,25 @@
+<section class="holder">
+    <h3>{{'userSettings.header' | translate}}</h3>
+
+    <form class="user-form" [formGroup]="formData" (ngSubmit)="submitForm(formData.value)">
+        <app-text-input
+            class="user-form__form"
+            [inputConfig]="{
+                errorKeys,
+                formControl: displayName,
+                labelKey: 'userSettings.displayNameLabel',
+                hintKey: 'userSettings.displayNameHint',
+                inputType: 'text',
+                idAttribute: 'displayNameId',
+                isRequired: false
+            }"
+            formControlName="displayName"
+        ></app-text-input>
+
+        <div class="user-form__buttons">
+            <button appButton (click)="cancel()">{{'buttons.cancel' | translate}}</button>
+            <button appPrimaryButton type="submit" [disabled]="!formData.valid">{{'userSettings.save' | translate}}</button>
+        </div>
+    </form>
+</section>
+

@@ -26,7 +26,7 @@ export class LanguageSelectorComponent {
     ];
 
     public constructor(
-        private dialogRef: MatDialogRef<LanguageSelectorComponent>,
+        private mDialogRef: MatDialogRef<LanguageSelectorComponent>,
         private mTranslateService: TranslateService
     ) {
     }
@@ -40,10 +40,10 @@ export class LanguageSelectorComponent {
     }
 
     public cancel() {
-        cancelDialog(this.dialogRef);
+        cancelDialog(this.mDialogRef);
     }
 
     public apply() {
-        closeDialog(this.dialogRef);
+        closeDialog(this.mDialogRef);
     }
 }

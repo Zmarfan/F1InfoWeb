@@ -10,7 +10,9 @@
     "requiredEmail": "Email is <strong>required</strong>",
     "emailFormat": "Please enter a valid email address",
     "requiredPassword": "Password is <strong>required</strong>",
-    "passwordMinLength": "Password must be at least <strong>{{length}} characters</strong>"
+    "passwordMinLength": "Password must be at least <strong>{{length}} characters</strong>",
+    "requiredText": "Entry is <strong>required</strong>",
+    "textMinLength": "Text must be at least <strong>{{length}} characters</strong"
   },
   "language": {
     "english": "English",
@@ -86,5 +88,12 @@
       "title": "A password reset email has been sent to {{email}}.",
       "paragraph1": "Please open this email as to be create a new password for your account."
     }
+  },
+  "userSettings": {
+    "header": "Change User Settings",
+    "displayNameLabel": "Change Display Name",
+    "displayNameHint": "This name is what other users see",
+    "save": "Save Changes",
+    "duplicateDisplayNameError": "New name can not be the same as current name"
   }
 }

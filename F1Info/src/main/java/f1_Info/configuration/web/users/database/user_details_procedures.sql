@@ -31,7 +31,7 @@ create procedure user_details_enable_user(in p_user_id int)
 begin
     update users set enabled = 'Y' where id = p_user_id;
 
-    call insert_user_information(p_user_id, null, create_event(1, 1000, 'init'), current_timestamp);
+    call insert_user_information(p_user_id, 'New User', create_event(1, 1000, 'init'), current_timestamp);
 end;
 
 drop procedure if exists user_details_set_new_password_for_user;

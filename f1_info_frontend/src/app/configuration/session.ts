@@ -16,6 +16,7 @@ export class Session {
     private mUser: Subject<User | null> = new Subject<User | null>();
     private readonly mUser$: Observable<User | null>;
     private mClientLoggedInStatus: boolean = false;
+    private mLastUser: User | null = null;
 
     public constructor(
         private mRouter: Router,
@@ -31,6 +32,10 @@ export class Session {
 
     public get user(): Observable<User | null> {
         return this.mUser$;
+    }
+
+    public get getUser(): User | null {
+        return this.mLastUser;
     }
 
     public login() {
@@ -52,6 +57,7 @@ export class Session {
             .subscribe((userResponse) => {
                 this.mClientLoggedInStatus = userResponse !== null;
                 this.mUser.next(userResponse);
+                this.mLastUser = userResponse;
             });
     }
 }

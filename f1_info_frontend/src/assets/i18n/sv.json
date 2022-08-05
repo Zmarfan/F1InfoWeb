@@ -10,7 +10,9 @@
     "requiredEmail": "E-post <strong>krävs</strong>",
     "emailFormat": "Ange en giltig e-postaddress",
     "requiredPassword": "Lösenord <strong>krävs</strong>",
-    "passwordMinLength": "Lösenord måste vara minst <strong>{{length}} karaktärer</strong>"
+    "passwordMinLength": "Lösenord måste vara minst <strong>{{length}} karaktärer</strong>",
+    "requiredText": "Text <strong>krävs</strong>",
+    "textMinLength": "Texten måste vara minst <strong>{{length}} karaktärer</strong"
   },
   "language": {
     "english": "Engelska",
@@ -86,5 +88,12 @@
       "title": "Ett e-postmeddelande om lösenordsåterställning har skickats till {{email}}.",
       "paragraph1": "Vänligen öppna detta e-postmeddelande för att skapa ett nytt lösenord för ditt konto."
     }
+  },
+  "userSettings": {
+    "header": "Ändra Användarinställningar",
+    "displayNameLabel": "Ändra Visningsnamn",
+    "displayNameHint": "Detta namn är vad andra användare ser",
+    "save": "Spara Ändringar",
+    "duplicateDisplayNameError": "Nytt namn kan inte vara samma som nuvarande namn"
   }
 }

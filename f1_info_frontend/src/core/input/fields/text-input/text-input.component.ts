@@ -96,6 +96,9 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
         } else if (this.config.inputType === InputType.PASSWORD) {
             pushIfTrue(errors, errorObject.required, { key: 'input.requiredPassword' });
             pushIfTrue(errors, errorObject.minlength, { key: 'input.passwordMinLength', parameters: { length: errorObject.minlength?.requiredLength }});
+        } else if (this.config.inputType === InputType.TEXT) {
+            pushIfTrue(errors, errorObject.required, { key: 'input.requiredText' });
+            pushIfTrue(errors, errorObject.minlength, { key: 'input.textMinLength', parameters: { length: errorObject.minlength?.requiredLength }});
         }
 
         if (exists(this.config.errorKeys)) {

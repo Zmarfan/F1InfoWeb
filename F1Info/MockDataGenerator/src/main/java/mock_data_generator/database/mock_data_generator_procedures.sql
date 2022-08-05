@@ -7,5 +7,5 @@ begin
 
     insert into user_authorities (user_id, authority_name) values (v_user_id, 'user');
 
-    call insert_user_information(v_user_id, 'DisplayName', create_event(1, 1000, 'init'), current_timestamp);
+    call insert_user_information(v_user_id, 'New User', create_event(1, 1000, 'init'), current_timestamp);
 end;
