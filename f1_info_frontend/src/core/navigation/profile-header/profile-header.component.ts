@@ -9,7 +9,7 @@ import {RouteHolder} from '../../../app/routing/route-holder';
 import {DialogResult} from '../../dialog/dialog';
 import {Language} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
-import {Session} from '../../../app/configuration/session';
+import {Session, User} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
 import {map, Observable, shareReplay, Subscription} from 'rxjs';
@@ -28,10 +28,6 @@ export interface MenuItem {
 })
 export class ProfileHeaderComponent implements OnDestroy {
     private static readonly DARK_THEME_CLASS = 'dark-theme';
-
-    public displayName$: Observable<string | undefined>;
-    public email$: Observable<string | undefined>;
-
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
 
@@ -45,9 +41,6 @@ export class ProfileHeaderComponent implements OnDestroy {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
             this.mLoggedIn = loggedIn;
         });
-
-        this.displayName$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.displayName));
-        this.email$ = this.mSession.user.pipe(shareReplay(1), map((user) => user?.email));
     }
 
     public get menuItems(): MenuItem[] {

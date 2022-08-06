@@ -4,6 +4,7 @@ import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleUser, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {Observable} from 'rxjs';
+import {Session, User} from '../../../../app/configuration/session';
 
 @Component({
     selector: 'app-mobile-profile-header',
@@ -25,11 +26,14 @@ import {Observable} from 'rxjs';
     ],
 })
 export class MobileProfileHeaderComponent {
-    @Input() public displayName$!: Observable<string | undefined>;
-    @Input() public email$!: Observable<string | undefined>;
     @Input() public menuItems!: MenuItem[];
 
     public headerOpen: boolean = false;
+
+    public constructor(
+        public session: Session
+    ) {
+    }
 
     public get icon(): IconDefinition {
         return this.headerOpen ? faTimes : faCircleUser;

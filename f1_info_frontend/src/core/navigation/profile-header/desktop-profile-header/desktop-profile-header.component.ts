@@ -2,6 +2,7 @@ import {Component, ElementRef, HostListener, Input} from '@angular/core';
 import {MenuItem} from '../profile-header.component';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Observable} from 'rxjs';
+import {Session} from '../../../../app/configuration/session';
 
 @Component({
     selector: 'app-desktop-profile-header',
@@ -23,13 +24,12 @@ import {Observable} from 'rxjs';
 export class DesktopProfileHeaderComponent {
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
     @Input() public menuItems!: MenuItem[];
-    @Input() public displayName$!: Observable<string | undefined>;
-    @Input() public email$!: Observable<string | undefined>;
 
     public menuOpen: boolean = false;
     private mLastTimeStamp: number = 0;
 
     public constructor(
+        public session: Session,
         private mElement: ElementRef
     ) {
     }

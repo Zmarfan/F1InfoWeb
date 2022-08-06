@@ -33,7 +33,7 @@ export class UserSettingsComponent {
         private mMessageService: GlobalMessageService,
         private mTranslate: TranslateService
     ) {
-        this.displayName = new FormControl(mSession.getUser?.displayName ?? '', [
+        this.displayName = new FormControl(mSession.user?.displayName ?? '', [
             Validators.maxLength(UserSettingsComponent.MAX_DISPLAY_NAME_LENGTH),
             UserSettingsComponent.displayNamePaddingValidator,
             (control) => UserSettingsComponent.displayNameSameValueValidator(control, this.mSession),
@@ -47,7 +47,7 @@ export class UserSettingsComponent {
     }
 
     private static displayNameSameValueValidator(control: AbstractControl, session: Session): ValidationErrors | null {
-        return session.getUser?.displayName === control.value ? { duplicateDisplayName: true } : null;
+        return session.user?.displayName === control.value ? { duplicateDisplayName: true } : null;
     }
 
     public submitForm(formData: UserSettings) {
@@ -69,6 +69,7 @@ export class UserSettingsComponent {
     }
 
     private successfullyUpdated() {
+        this.mSession.fetchUser();
         this.mMessageService.addSuccess(this.mTranslate.instant('userSettings.successUpdate'));
         this.cancel();
     }

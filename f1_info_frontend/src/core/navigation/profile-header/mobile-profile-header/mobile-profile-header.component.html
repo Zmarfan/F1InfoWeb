@@ -7,8 +7,8 @@
         <div class="profile-header__user-info">
             <fa-icon icon="circle-user"></fa-icon>
             <div class="profile-header__names">
-                <div class="profile-header__user-name">{{displayName$ | async}}</div>
-                <div>{{(email$ | async) ?? 'navigation.profile.anonymousUser' | translate}}</div>
+                <div class="profile-header__user-name">{{session.user?.displayName}}</div>
+                <div>{{session.user?.email ?? 'navigation.profile.anonymousUser' | translate}}</div>
             </div>
         </div>
 

@@ -30,11 +30,7 @@ export class Session {
         return this.mUser$.pipe(map((user) => user !== null));
     }
 
-    public get user(): Observable<User | null> {
-        return this.mUser$;
-    }
-
-    public get getUser(): User | null {
+    public get user(): User | null {
         return this.mLastUser;
     }
 
@@ -51,7 +47,7 @@ export class Session {
         });
     }
 
-    private fetchUser() {
+    public fetchUser() {
         this.mHttpClient.get<GetUserResponse>(Endpoints.AUTHENTICATION.getUser)
             .pipe(startWith(null))
             .subscribe((userResponse) => {
