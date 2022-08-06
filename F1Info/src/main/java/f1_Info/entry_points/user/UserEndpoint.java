@@ -2,9 +2,10 @@ package f1_Info.entry_points.user;
 
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
-import f1_Info.entry_points.user.commands.NewUserSettingsRequestBody;
-import f1_Info.entry_points.user.commands.UpdateUserSettingsCommand;
-import f1_Info.entry_points.user.commands.UserSettingsValidator;
+import f1_Info.entry_points.user.commands.update_user_settings_command.Database;
+import f1_Info.entry_points.user.commands.update_user_settings_command.NewUserSettingsRequestBody;
+import f1_Info.entry_points.user.commands.update_user_settings_command.UpdateUserSettingsCommand;
+import f1_Info.entry_points.user.commands.update_user_settings_command.UserSettingsValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 public class UserEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
+    private final Database mUpdateUserSettingsDatabase;
 
     @PostMapping("/update-settings")
     public ResponseEntity<?> updateUserSettings(@RequestBody final NewUserSettingsRequestBody newUserSettings) {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> {
-            if (newUserSettings == null || !UserSettingsValidator.userSettingsAreValid(newUserSettings)) {
+            if (newUserSettings == null || !UserSettingsValidator.newUserSettingsAreOfValidFormat(newUserSettings)) {
                 throw new BadRequestException();
             }
 
-            return new UpdateUserSettingsCommand(newUserSettings);
+            return new UpdateUserSettingsCommand(userId, newUserSettings, mUpdateUserSettingsDatabase);
         });
     }
 }
