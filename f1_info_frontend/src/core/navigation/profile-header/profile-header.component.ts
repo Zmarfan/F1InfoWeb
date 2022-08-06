@@ -85,7 +85,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     }
 
     private openUserSettingsDialog() {
-        this.mDialog.open(UserSettingsComponent);
+        this.mDialog.open(UserSettingsComponent, { disableClose: true });
     }
 
     private openLanguageDialog() {

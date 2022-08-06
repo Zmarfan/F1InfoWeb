@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {UserDetails} from '../../../app/login-page/login-sign-up/login-sign-up.component';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors} from '@angular/forms';
 import {Session} from '../../../app/configuration/session';
-import {map, Observable} from 'rxjs';
 import {cancelDialog} from '../../dialog/dialog';
 import {MatDialogRef} from '@angular/material/dialog';
+import {UserSettingsService} from './user-settings.service';
+import {catchError, EMPTY, throwError} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 
-interface UserSettings {
+export interface UserSettings {
     displayName: string;
 }
 
@@ -22,10 +23,12 @@ export class UserSettingsComponent {
 
     public formData: FormGroup;
     public errorKeys = { duplicateDisplayName: 'userSettings.duplicateDisplayNameError' };
+    public loading: boolean = false;
 
     public constructor(
         private mDialogRef: MatDialogRef<UserSettingsComponent>,
-        private mSession: Session
+        private mSession: Session,
+        private mUserSettingsService: UserSettingsService
     ) {
         this.displayName = new FormControl(mSession.getUser?.displayName ?? '', [
             UserSettingsComponent.displayNamePaddingValidator,
@@ -43,8 +46,12 @@ export class UserSettingsComponent {
         return session.getUser?.displayName === control.value ? { duplicateDisplayName: true } : null;
     }
 
-    public submitForm(formData: UserDetails) {
-        console.log('Hje');
+    public submitForm(formData: UserSettings) {
+        this.mUserSettingsService.updateUserSettings({ displayName: formData.displayName.trim() })
+            .subscribe({
+                next: () => this.cancel(),
+                error: (error: HttpErrorResponse) => console.log(error),
+            });
     }
 
     public cancel() {
