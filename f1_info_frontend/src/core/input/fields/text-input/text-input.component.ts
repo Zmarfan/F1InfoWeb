@@ -27,6 +27,7 @@ interface ValidationErrorParameters {
     required?: boolean;
     email?: boolean;
     minlength?: { requiredLength: number, actualLength: number };
+    maxlength?: { requiredLength: number, actualLength: number };
 }
 
 interface ValidationError {
@@ -99,6 +100,7 @@ export class TextInputComponent implements OnInit, ControlValueAccessor, Validat
         } else if (this.config.inputType === InputType.TEXT) {
             pushIfTrue(errors, errorObject.required, { key: 'input.requiredText' });
             pushIfTrue(errors, errorObject.minlength, { key: 'input.textMinLength', parameters: { length: errorObject.minlength?.requiredLength }});
+            pushIfTrue(errors, errorObject.maxlength, { key: 'input.textMaxLength', parameters: { length: errorObject.maxlength?.requiredLength }});
         }
 
         if (exists(this.config.errorKeys)) {

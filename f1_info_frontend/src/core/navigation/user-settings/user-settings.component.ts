@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Session} from '../../../app/configuration/session';
 import {cancelDialog} from '../../dialog/dialog';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -18,6 +18,8 @@ export interface UserSettings {
     styleUrls: ['./user-settings.component.scss'],
 })
 export class UserSettingsComponent {
+    private static readonly MAX_DISPLAY_NAME_LENGTH: number = 20;
+
     public displayName: FormControl;
 
     public formData: FormGroup;
@@ -32,6 +34,7 @@ export class UserSettingsComponent {
         private mTranslate: TranslateService
     ) {
         this.displayName = new FormControl(mSession.getUser?.displayName ?? '', [
+            Validators.maxLength(UserSettingsComponent.MAX_DISPLAY_NAME_LENGTH),
             UserSettingsComponent.displayNamePaddingValidator,
             (control) => UserSettingsComponent.displayNameSameValueValidator(control, this.mSession),
         ]);

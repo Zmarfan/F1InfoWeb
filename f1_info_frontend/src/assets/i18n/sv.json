@@ -13,7 +13,8 @@
     "requiredPassword": "Lösenord <strong>krävs</strong>",
     "passwordMinLength": "Lösenord måste vara minst <strong>{{length}} karaktärer</strong>",
     "requiredText": "Text <strong>krävs</strong>",
-    "textMinLength": "Texten måste vara minst <strong>{{length}} karaktärer</strong"
+    "textMinLength": "Texten måste vara minst <strong>{{length}} karaktärer</strong",
+    "textMaxLength": "Texten kan inte vara längre än <strong>{{length}} characters</strong"
   },
   "language": {
     "english": "Engelska",

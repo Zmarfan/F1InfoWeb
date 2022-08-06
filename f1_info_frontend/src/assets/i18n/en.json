@@ -13,7 +13,8 @@
     "requiredPassword": "Password is <strong>required</strong>",
     "passwordMinLength": "Password must be at least <strong>{{length}} characters</strong>",
     "requiredText": "Entry is <strong>required</strong>",
-    "textMinLength": "Text must be at least <strong>{{length}} characters</strong"
+    "textMinLength": "Text must be at least <strong>{{length}} characters</strong",
+    "textMaxLength": "Text can not be longer than <strong>{{length}} characters</strong"
   },
   "language": {
     "english": "English",
