@@ -1,6 +1,9 @@
 {
   "unexpectedError": "An unexpected error has occurred",
   "genericHttpError": "An unexpected error with error code: {{code}} occurred",
+  "errors": {
+    "sessionExpired": "Your session has expired, please login again"
+  },
   "buttons": {
     "cancel": "Cancel",
     "apply": "Apply"

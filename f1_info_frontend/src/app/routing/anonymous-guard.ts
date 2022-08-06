@@ -21,16 +21,18 @@ export class AnonymousGuard implements CanActivate {
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.mHttpClient.get<GetUserResponse>(Endpoints.AUTHENTICATION.getUser)
             .pipe(
-                map((userResponse) => userResponse !== null),
-                tap((loggedIn) => {
-                    if (loggedIn) {
-                        this.mSession.login();
-                        this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
-                    } else {
-                        this.mSession.logout();
+                map((userResponse) => ({ loggedIn: userResponse !== null, stateChanged: userResponse !== this.mSession.user})),
+                tap((state) => {
+                    if (state.stateChanged) {
+                        if (state.loggedIn) {
+                            this.mSession.login();
+                            this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
+                        } else {
+                            this.mSession.logout();
+                        }
                     }
                 }),
-                map((loggedIn) => !loggedIn)
+                map((state) => !state.loggedIn)
             );
     }
 }

@@ -3,7 +3,10 @@
   "genericHttpError": "Ett oväntat fel med felkoden: {{code}} har inträffades",
   "buttons": {
     "cancel": "Avbryt",
-    "apply": "Välj"
+    "apply": "Välj",
+    "errors": {
+      "sessionExpired": "Din session har löpt ut, vänligen logga in igen"
+    }
   },
   "input": {
     "email": "E-post",

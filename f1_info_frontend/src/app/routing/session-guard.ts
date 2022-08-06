@@ -20,15 +20,18 @@ export class SessionGuard implements CanActivate {
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.mHttpClient.get<GetUserResponse>(Endpoints.AUTHENTICATION.getUser).pipe(
-            map((userResponse) => userResponse !== null),
-            tap((loggedIn) => {
-                if (!loggedIn) {
-                    this.mSession.logout();
-                    this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
-                } else {
-                    this.mSession.login();
+            map((userResponse) => ({ loggedIn: userResponse !== null, changedState: userResponse !== this.mSession.user })),
+            tap((state) => {
+                if (state.changedState) {
+                    if (!state.loggedIn) {
+                        this.mSession.logout();
+                        this.mRouter.navigateByUrl(RouteHolder.LOGIN_PAGE).then();
+                    } else {
+                        this.mSession.login();
+                    }
                 }
-            })
+            }),
+            map((state) => state.loggedIn)
         );
     }
 }
