@@ -13,7 +13,6 @@ interface MessageConfig {
 })
 export class GlobalMessageDisplayComponent {
     private static readonly MAX_MESSAGES_TO_DISPLAY: number = 4;
-    private mTestCounter: number = 1;
 
     public constructor(
         private mMessageService: GlobalMessageService
@@ -32,9 +31,5 @@ export class GlobalMessageDisplayComponent {
         case GlobalMessageType.SUCCESS: return 'holder__entry--success';
         case GlobalMessageType.ERROR: return 'holder__entry--error';
         }
-    }
-
-    public testClick() {
-        this.mMessageService.addMessage({ message: 'Test message' + this.mTestCounter++, type: GlobalMessageType.INFO });
     }
 }

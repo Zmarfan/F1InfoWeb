@@ -1,5 +1,6 @@
 {
-  "unexpectedError": "Ett oväntat fel har inträffats",
+  "unexpectedError": "Ett oväntat fel har inträffades",
+  "genericHttpError": "Ett oväntat fel med felkoden: {{code}} har inträffades",
   "buttons": {
     "cancel": "Avbryt",
     "apply": "Välj"
@@ -94,6 +95,7 @@
     "displayNameLabel": "Ändra Visningsnamn",
     "displayNameHint": "Detta namn är vad andra användare ser",
     "save": "Spara Ändringar",
-    "duplicateDisplayNameError": "Nytt namn kan inte vara samma som nuvarande namn"
+    "duplicateDisplayNameError": "Nytt namn kan inte vara samma som nuvarande namn",
+    "successUpdate": "Användarinställningar har uppdaterats!"
   }
 }

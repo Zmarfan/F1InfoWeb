@@ -1,5 +1,6 @@
 {
   "unexpectedError": "An unexpected error has occurred",
+  "genericHttpError": "An unexpected error with error code: {{code}} occurred",
   "buttons": {
     "cancel": "Cancel",
     "apply": "Apply"
@@ -94,6 +95,7 @@
     "displayNameLabel": "Change Display Name",
     "displayNameHint": "This name is what other users see",
     "save": "Save Changes",
-    "duplicateDisplayNameError": "New name can not be the same as current name"
+    "duplicateDisplayNameError": "New name can not be the same as current name",
+    "successUpdate": "User settings has been updated!"
   }
 }
