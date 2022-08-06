@@ -14,6 +14,6 @@ export class UserSettingsService {
     }
 
     public updateUserSettings(userSettings: UserSettings): Observable<Object> {
-        return this.mHttpClient.post(Endpoints.AUTHENTICATION.getUser, userSettings);
+        return this.mHttpClient.post(Endpoints.USER.updateSettings, userSettings);
     }
 }

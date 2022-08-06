@@ -33,9 +33,10 @@ public class EndpointHelper {
     }
 
     public ResponseEntity<?> runCommand(final HttpServletRequest request, final Function<Long, Command> createCommand) {
+        final Long userId = getUserIdFromSession(request);
         final Command command;
         try {
-            command = createCommand.apply(getUserIdFromSession(request));
+            command = createCommand.apply(userId);
         } catch (final ForbiddenException e) {
             return forbidden(e.getMessage());
         } catch (final BadRequestException e) {
@@ -44,7 +45,7 @@ public class EndpointHelper {
             return internalServerError();
         }
 
-        return executeCommand(command);
+        return executeCommand(userId, command);
     }
 
     public boolean isLoggedIn() {
@@ -60,11 +61,20 @@ public class EndpointHelper {
         }
     }
 
-    private ResponseEntity<?> executeCommand(Command command) {
+    private ResponseEntity<?> executeCommand(final Long userId, Command command) {
         try {
             return command.execute();
+        } catch (final ForbiddenException e) {
+            return forbidden();
+        } catch (final BadRequestException e) {
+            return badRequest();
         } catch (final Exception e) {
-            mLogger.severe("execute", command.getClass(), String.format("Internal server error occurred in command while: %s", command.getAction()), e);
+            mLogger.severe(
+                "execute",
+                command.getClass(),
+                String.format("Internal server error occurred in command for user: %d while: %s", userId, command.getAction()),
+                e
+            );
             return internalServerError();
         }
     }
