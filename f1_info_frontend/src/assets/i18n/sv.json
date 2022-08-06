@@ -5,7 +5,7 @@
     "cancel": "Avbryt",
     "apply": "Välj",
     "errors": {
-      "sessionExpired": "Din session har löpt ut, vänligen logga in igen"
+      "unableToReachServer": "Det går inte att kommunicera med servern just nu, försök igen senare"
     }
   },
   "input": {

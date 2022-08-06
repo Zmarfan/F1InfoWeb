@@ -2,7 +2,7 @@
   "unexpectedError": "An unexpected error has occurred",
   "genericHttpError": "An unexpected error with error code: {{code}} occurred",
   "errors": {
-    "sessionExpired": "Your session has expired, please login again"
+    "unableToReachServer": "Unable to communicate with server at this time, please try again later"
   },
   "buttons": {
     "cancel": "Cancel",
