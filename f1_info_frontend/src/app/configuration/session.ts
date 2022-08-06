@@ -44,6 +44,7 @@ export class Session {
         this.mHttpClient.post(Endpoints.AUTHENTICATION.logout, {}).subscribe((_) => {
             this.mClientLoggedInStatus = false;
             this.mUser.next(null);
+            this.mLastUser = null;
         });
     }
 
