@@ -22,6 +22,13 @@ body {
   --button-shadow: #958ea6;
 
   --selected-color: #b4aed0;
+
+  --global-message-bkg-info: #b4aed0;
+  --global-message-border-info: #7866b2;
+  --global-message-bkg-success: #bad0ae;
+  --global-message-border-success: #76b266;
+  --global-message-bkg-error: #d0aeae;
+  --global-message-border-error: #b26666;
 }
 body.dark-theme {
   --error: #de6a61;
@@ -47,4 +54,11 @@ body.dark-theme {
   --button-shadow: #232225;
 
   --selected-color: #373642;
+
+  --global-message-bkg-info: #373642;
+  --global-message-border-info: #8171bb;
+  --global-message-bkg-success: #394236;
+  --global-message-border-success: #81bb71;
+  --global-message-bkg-error: #423636;
+  --global-message-border-error: #bb7171;
 }

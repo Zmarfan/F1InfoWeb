@@ -1,0 +1,7 @@
+<section class="holder">
+    <div *ngFor="let message of messages" class="holder__entry {{message.cssClass}}">
+        {{message.message}}
+    </div>
+    <button appButton (click)="testClick()">test click</button>
+
+</section>
