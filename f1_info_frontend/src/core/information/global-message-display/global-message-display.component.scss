@@ -11,7 +11,6 @@
   gap: 0.5rem;
 
   &__entry {
-    color: var(--text-color);
     padding: 1rem;
     border-radius: 10px;
     box-shadow: var(--bkg-shadow-color) 0 0 4px;
@@ -19,16 +18,19 @@
     &--info {
       background: var(--global-message-bkg-info);
       border: var(--global-message-border-info) 1px solid;
+      color: var(--global-message-text-info);
     }
 
     &--success {
       background: var(--global-message-bkg-success);
       border: var(--global-message-border-success) 1px solid;
+      color: var(--global-message-text-success);
     }
 
     &--error {
       background: var(--global-message-bkg-error);
       border: var(--global-message-border-error) 1px solid;
+      color: var(--global-message-text-error);
     }
   }
 }

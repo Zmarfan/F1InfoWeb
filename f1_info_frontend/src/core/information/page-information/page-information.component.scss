@@ -40,16 +40,16 @@
   }
 
   &--information {
-    background: #eaf6ff;
+    background: var(--global-message-bkg-info);
 
     fa-icon {
       font-size: 4rem;
-      color: #5a819d;
+      color: #6b5a9d;
     }
   }
 
   &--success {
-    background: #eaffeb;
+    background: var(--global-message-bkg-success);
 
     fa-icon {
       font-size: 4rem;
@@ -58,7 +58,7 @@
   }
 
   &--error {
-    background: #ffeaea;
+    background: var(--global-message-bkg-error);
 
     fa-icon {
       color: var(--error);
