@@ -1,8 +1,8 @@
 <section class="header">
     <h1>{{'reports.driver.title' | translate}}</h1>
 
-    <app-drop-down-filter [options]="seasonsOptions" [labelKey]="'reports.seasonDropdown.label'"></app-drop-down-filter>
-    <app-drop-down-filter [labelKey]="'unexpectedError'"></app-drop-down-filter>
+    <app-drop-down-filter [options]="seasonsOptions" [labelKey]="'reports.seasonDropdown.label'" [valueChanged]="seasonFilterChanged"></app-drop-down-filter>
+    <app-drop-down-filter [labelKey]="'unexpectedError'" [valueChanged]="driverFilterChanged"></app-drop-down-filter>
 </section>
 
 <app-report-element [columns]="columns" [rows]="rows" [sortConfig]="sortConfig"></app-report-element>

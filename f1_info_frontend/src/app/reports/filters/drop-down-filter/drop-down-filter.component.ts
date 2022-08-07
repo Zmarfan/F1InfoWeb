@@ -14,6 +14,7 @@ export class DropDownFilterComponent implements OnInit {
     @Input() public options: DropdownOption[] = [];
     @Input() public allOption: boolean = true;
     @Input() public labelKey: string = '';
+    @Input() public valueChanged!: (value: any) => void;
 
     public selectedOption!: string | number | null;
     public uniqueLabel: string = `dropDownFilter${Math.random()}`;
@@ -23,5 +24,9 @@ export class DropDownFilterComponent implements OnInit {
             this.options.unshift({ displayValue: 'dropdown.all', value: null });
         }
         this.selectedOption = this.options[0].value;
+    }
+
+    public onValueChanged(target: EventTarget | null) {
+        this.valueChanged((target as HTMLInputElement).value);
     }
 }

@@ -38,7 +38,20 @@ export class DriverReportComponent {
         defaultSortDirection: SortDirection.ASCENDING,
     };
 
+    private mSelectedSeason: number | null = null;
+    private mSelectedDriver: string | null = null;
+
     public sort(sortSetting: SortSetting) {
         console.log(sortSetting);
+    }
+
+    public seasonFilterChanged(newSeason: number | null) {
+        console.log(newSeason);
+        this.mSelectedSeason = newSeason;
+    }
+
+    public driverFilterChanged(newDriver: string | null) {
+        console.log(newDriver);
+        this.mSelectedDriver = newDriver;
     }
 }
