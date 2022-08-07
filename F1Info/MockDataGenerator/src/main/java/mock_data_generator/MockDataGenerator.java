@@ -24,7 +24,6 @@ import static mock_data_generator.ConsoleLogger.*;
 @AllArgsConstructor
 public class MockDataGenerator {
     private static final String RESET_DATABASE_FILE_PATH = "MockDataGenerator/src/main/java/mock_data_generator/setup/reset_database.sql";
-    private static final String TABLES_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/tables";
     private static final String DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/data";
     private static final String HELPER_FUNCTIONS_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/helper";
 
@@ -53,7 +52,7 @@ public class MockDataGenerator {
 
     private void createTables() throws SQLException, IOException {
         logInfo("Creating Tables...");
-        executeSqlFilesInDirectory(TABLES_DIRECTORY);
+        runSqlFilesEndingWith("_tables.sql");
     }
 
     private void createData() throws SQLException, IOException {
@@ -68,7 +67,7 @@ public class MockDataGenerator {
 
     private void createProcedures() throws SQLException, IOException {
         logInfo("Setting up Procedures...");
-        executeSqlProcedureFiles();
+        runSqlFilesEndingWith("_procedures.sql");
     }
 
     private void createMockData() throws SQLException {
@@ -86,21 +85,6 @@ public class MockDataGenerator {
         }
     }
 
-    private void executeSqlProcedureFiles() throws SQLException, IOException {
-        Path start = Paths.get(".");
-        try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
-            List<File> proceduresSqlFiles = stream
-                .map(Path::toFile)
-                .filter(File::isFile)
-                .filter(file -> file.getName().endsWith("_procedures.sql"))
-                .toList();
-
-            for (final File file : proceduresSqlFiles) {
-                runSqlStatementsFromFilePath(file.toPath());
-            }
-        }
-    }
-
     private void runSqlStatementsFromFilePath(final Path filePath) throws SQLException, IOException {
         logFile("Executing: " + filePath.getFileName().toString());
 
@@ -115,6 +99,21 @@ public class MockDataGenerator {
         catch (final Exception e) {
             logError("statement: " + executingStatement);
             throw e;
+        }
+    }
+
+    private void runSqlFilesEndingWith(final String ending) throws SQLException, IOException {
+        Path start = Paths.get(".");
+        try (Stream<Path> stream = Files.walk(start, Integer.MAX_VALUE)) {
+            List<File> proceduresSqlFiles = stream
+                .map(Path::toFile)
+                .filter(File::isFile)
+                .filter(file -> file.getName().endsWith(ending))
+                .toList();
+
+            for (final File file : proceduresSqlFiles) {
+                runSqlStatementsFromFilePath(file.toPath());
+            }
         }
     }
 
