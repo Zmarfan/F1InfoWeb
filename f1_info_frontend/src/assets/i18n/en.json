@@ -25,7 +25,8 @@
   },
   "navigation": {
     "route": {
-      "homepage": "Homepage"
+      "homepage": "Homepage",
+      "driverReport": "Driver Report"
     },
     "profile": {
       "anonymousUser": "Anonymous User",

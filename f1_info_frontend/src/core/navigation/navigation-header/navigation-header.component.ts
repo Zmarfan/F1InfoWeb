@@ -38,7 +38,7 @@ export interface RouteItem {
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
-        { route: 'test', key: 'key.test', icon: faCircleHalfStroke, selected: false, loggedIn: true },
+        { route: RouteHolder.DRIVER_REPORT, key: 'navigation.route.driverReport', icon: faCircleHalfStroke, selected: false, loggedIn: false },
     ];
 
     public mobileNavigationOpened: boolean = false;

@@ -11,10 +11,10 @@ interface TestRow {
 }
 
 @Component({
-    selector: 'app-test',
-    templateUrl: './test.component.html',
+    selector: 'app-driver-report',
+    templateUrl: './driver-report.component.html',
 })
-export class TestComponent {
+export class DriverReportComponent {
     public columns: ReportColumn[] = [
         new ReportColumn('name', 'name'),
         new ReportColumn('age', 'age'),
