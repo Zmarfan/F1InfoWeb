@@ -29,7 +29,7 @@
   "navigation": {
     "route": {
       "homepage": "Homepage",
-      "driverReport": "Driver Report"
+      "driverReport": "Driver Standings"
     },
     "profile": {
       "anonymousUser": "Anonymous User",
@@ -112,7 +112,7 @@
       "label": "Season"
     },
     "driver": {
-      "title": "Driver Report"
+      "title": "Driver Standings"
     }
   }
 }

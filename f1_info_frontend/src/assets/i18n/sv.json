@@ -29,7 +29,7 @@
   "navigation": {
     "route": {
       "homepage": "Hem",
-      "driverReport": "Förarrapport"
+      "driverReport": "Förarställning"
     },
     "profile": {
       "anonymousUser": "Anonym Användare",
@@ -112,7 +112,7 @@
       "label": "Säsong"
     },
     "driver": {
-      "title": "Förarrapport"
+      "title": "Förarställning"
 
     }
   }
