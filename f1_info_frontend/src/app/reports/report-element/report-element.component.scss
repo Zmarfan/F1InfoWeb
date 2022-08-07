@@ -1,9 +1,9 @@
 .main-table {
   width: 100%;
+  border-top: var(--bkg-shadow-color) dashed 1px;
   border-spacing: 0;
 
   th {
-    background: var(--global-message-bkg-info);
     padding: 1rem;
   }
   td {
