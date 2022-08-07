@@ -1,0 +1,11 @@
+<table *ngIf="table" class="main-table">
+    <tr>
+        <th *ngFor="let column of table.columns">{{column.key | translate}}</th>
+    </tr>
+    <tr *ngFor="let row of table.rows">
+        <td *ngFor="let column of table.columns">
+            <app-report-element-entry *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-report-element-entry>
+            <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
+        </td>
+    </tr>
+</table>

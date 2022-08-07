@@ -1,0 +1,19 @@
+.main-table {
+  width: 100%;
+  border-spacing: 0;
+
+  th {
+    background: var(--global-message-bkg-info);
+    padding: 1rem;
+  }
+  td {
+    background: var(--bkg-color);
+    padding: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  tr:nth-child(odd) td {
+    background: var(--bkg-color-light-accent);
+  }
+}
