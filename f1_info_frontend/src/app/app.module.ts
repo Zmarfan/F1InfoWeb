@@ -24,8 +24,8 @@ import {SessionGuard} from './routing/session-guard';
 import {Session} from './configuration/session';
 import {AnonymousGuard} from './routing/anonymous-guard';
 import { ReportElementComponent } from './reports/report-element/report-element.component';
-import { ReportElementEntryDirective } from './reports/entry/report-element-entry.directive';
-import { ReportElementEntryComponent } from './reports/entry/report-element-entry/report-element-entry.component';
+import { ComposeDirective } from '../core/compose/compose.directive';
+import { ComposeComponent } from '../core/compose/compose.component';
 import { TranslateEntryComponent } from './reports/entry/data-report-entry/translate-entry.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,8 +59,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ResetPasswordComponent,
         DriverReportComponent,
         ReportElementComponent,
-        ReportElementEntryDirective,
-        ReportElementEntryComponent,
+        ComposeDirective,
+        ComposeComponent,
         TranslateEntryComponent,
     ],
     providers: [

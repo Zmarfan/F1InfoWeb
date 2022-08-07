@@ -1,9 +1,9 @@
 import {Directive, ViewContainerRef} from '@angular/core';
 
 @Directive({
-    selector: '[appReportElementEntry]',
+    selector: '[appCompose]',
 })
-export class ReportElementEntryDirective {
+export class ComposeDirective {
     public constructor(
         public viewContainerRef: ViewContainerRef
     ) {

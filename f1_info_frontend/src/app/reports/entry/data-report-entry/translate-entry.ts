@@ -1,7 +1,7 @@
-import {ReportEntryItem} from '../report-element-entry/report-element-entry.component';
+import {ComposeItem} from '../../../../core/compose/compose.component';
 import {TranslateEntryComponent, TranslateItem} from './translate-entry.component';
 
-export class TranslateEntry implements ReportEntryItem {
+export class TranslateEntry implements ComposeItem {
     public viewModel = TranslateEntryComponent;
     public data: TranslateItem;
 

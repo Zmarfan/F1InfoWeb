@@ -12,7 +12,7 @@
         </tr>
         <tr *ngFor="let row of table.rows">
             <td *ngFor="let column of table.columns">
-                <app-report-element-entry *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-report-element-entry>
+                <app-compose *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-compose>
                 <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
             </td>
         </tr>

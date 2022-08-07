@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ReportElement} from '../report-element-entry/report-element-entry.component';
+import {Compose} from '../../../../core/compose/compose.component';
 
 export interface TranslateItem {
     key: string;
@@ -10,6 +10,6 @@ export interface TranslateItem {
     selector: 'app-data-report-entry',
     template: '<div>{{ data.key | translate: data.params }}</div>',
 })
-export class TranslateEntryComponent implements ReportElement<TranslateItem> {
+export class TranslateEntryComponent implements Compose<TranslateItem> {
     public data!: TranslateItem;
 }
