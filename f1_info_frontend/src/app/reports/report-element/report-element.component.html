@@ -1,11 +1,20 @@
-<table *ngIf="table" class="main-table">
-    <tr>
-        <th *ngFor="let column of table.columns">{{column.key | translate}}</th>
-    </tr>
-    <tr *ngFor="let row of table.rows">
-        <td *ngFor="let column of table.columns">
-            <app-report-element-entry *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-report-element-entry>
-            <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
-        </td>
-    </tr>
-</table>
+<app-loading-element [loading]="loading">
+    <table class="main-table">
+        <tr>
+            <th *ngFor="let column of table.columns">
+                <span
+                    *ngIf="sortConfig; else normalColumn"
+                    (click)="sortColumn(column)"
+                    class="main-table__sortable-column {{sortableColumnClass(column)}}"
+                >{{column.key | translate}}</span>
+                <ng-template #normalColumn>{{column.key | translate}}</ng-template>
+            </th>
+        </tr>
+        <tr *ngFor="let row of table.rows">
+            <td *ngFor="let column of table.columns">
+                <app-report-element-entry *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-report-element-entry>
+                <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
+            </td>
+        </tr>
+    </table>
+</app-loading-element>

@@ -16,4 +16,32 @@
   tr:nth-child(odd) td {
     background: var(--bkg-color-light-accent);
   }
+
+  &__sortable-column {
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+
+    &::after {
+      position: absolute;
+      right: -15px;
+      top: 0;
+    }
+
+    &:hover {
+      color: var(--primary-color);
+    }
+
+    &--ascending {
+      &::after {
+        content: '⮝';
+      }
+    }
+
+    &--descending {
+      &::after {
+        content: '⮟';
+      }
+    }
+  }
 }

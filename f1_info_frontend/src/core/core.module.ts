@@ -59,6 +59,7 @@ import { GlobalMessageDisplayComponent } from './information/global-message-disp
         NavigationHeaderComponent,
         ProfileHeaderComponent,
         GlobalMessageDisplayComponent,
+        ButtonDirective,
     ],
 })
 export class CoreModule {

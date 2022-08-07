@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateEntry} from '../reports/entry/data-report-entry/translate-entry';
 import {ReportColumn} from '../reports/report-element/report-column';
+import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 
 interface TestRow {
     name: string;
@@ -17,7 +18,7 @@ export class TestComponent {
     public columns: ReportColumn[] = [
         new ReportColumn('name', 'name'),
         new ReportColumn('age', 'age'),
-        new ReportColumn('age', 'age'),
+        new ReportColumn('country', 'country'),
         new ReportColumn('key', 'unexpectedError'),
     ];
     public rows: TestRow[] = [
@@ -25,4 +26,14 @@ export class TestComponent {
         { name: 'Bob', age: 44, country: 'USA', key: new TranslateEntry('unexpectedError') },
         { name: 'Daisy', age: 14, country: 'Turkey', key: new TranslateEntry('unexpectedError') },
     ];
+
+    public sortConfig: ReportSortConfig = {
+        sortCallback: this.sort,
+        defaultSortName: 'age',
+        defaultSortDirection: SortDirection.ASCENDING,
+    };
+
+    public sort(sortSetting: SortSetting) {
+        console.log(sortSetting);
+    }
 }
