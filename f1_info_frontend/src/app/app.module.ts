@@ -17,7 +17,7 @@ import { LoginComponent } from './login-page/login/login.component';
 import { SignUpComponent } from './login-page/sign-up/sign-up.component';
 import {TokenInterceptor} from './configuration/http-interceptor';
 import { ForgotPasswordComponent } from './login-page/password-reseting/forgot-password/forgot-password.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ResetPasswordComponent } from './login-page/password-reseting/reset-password/reset-password.component';
 import { DriverReportComponent } from './driver-report/driver-report.component';
 import {SessionGuard} from './routing/session-guard';
@@ -27,6 +27,7 @@ import { ReportElementComponent } from './reports/report-element/report-element.
 import { ComposeDirective } from '../core/compose/compose.directive';
 import { ComposeComponent } from '../core/compose/compose.component';
 import { TranslateEntryComponent } from './reports/entry/data-report-entry/translate-entry.component';
+import { DropDownFilterComponent } from './reports/filters/drop-down-filter/drop-down-filter.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CoreModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        FormsModule,
     ],
     declarations: [
         AppComponent,
@@ -62,6 +64,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ComposeDirective,
         ComposeComponent,
         TranslateEntryComponent,
+        DropDownFilterComponent,
+        DropDownFilterComponent,
     ],
     providers: [
         {

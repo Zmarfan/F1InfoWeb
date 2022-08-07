@@ -1,0 +1,9 @@
+<div class="holder">
+    <label [for]="uniqueLabel">{{labelKey | translate}}</label>
+
+    <select [(ngModel)]="selectedOption" [id]="uniqueLabel">
+        <option *ngFor="let option of options" [value]="option.value">
+            {{option.displayValue.toString() | translate}}
+        </option>
+    </select>
+</div>

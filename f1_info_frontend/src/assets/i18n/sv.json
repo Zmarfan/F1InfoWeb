@@ -19,6 +19,9 @@
     "textMinLength": "Texten måste vara minst <strong>{{length}} karaktärer</strong",
     "textMaxLength": "Texten kan inte vara längre än <strong>{{length}} characters</strong"
   },
+  "dropdown": {
+    "all": "Alla"
+  },
   "language": {
     "english": "Engelska",
     "swedish": "Svenska"
@@ -103,5 +106,14 @@
     "save": "Spara Ändringar",
     "duplicateDisplayNameError": "Nytt namn kan inte vara samma som nuvarande namn",
     "successUpdate": "Användarinställningar har uppdaterats!"
+  },
+  "reports": {
+    "seasonDropdown": {
+      "label": "Säsong"
+    },
+    "driver": {
+      "title": "Förarrapport"
+
+    }
   }
 }

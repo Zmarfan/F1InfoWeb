@@ -19,6 +19,9 @@
     "textMinLength": "Text must be at least <strong>{{length}} characters</strong",
     "textMaxLength": "Text can not be longer than <strong>{{length}} characters</strong"
   },
+  "dropdown": {
+    "all": "All"
+  },
   "language": {
     "english": "English",
     "swedish": "Swedish"
@@ -103,5 +106,13 @@
     "save": "Save Changes",
     "duplicateDisplayNameError": "New name can not be the same as current name",
     "successUpdate": "User settings has been updated!"
+  },
+  "reports": {
+    "seasonDropdown": {
+      "label": "Season"
+    },
+    "driver": {
+      "title": "Driver Report"
+    }
   }
 }

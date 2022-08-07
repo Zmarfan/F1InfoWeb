@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {TranslateEntry} from '../reports/entry/data-report-entry/translate-entry';
 import {ReportColumn} from '../reports/report-element/report-column';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
+import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
+import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 
 interface TestRow {
     name: string;
@@ -16,6 +18,8 @@ interface TestRow {
     styleUrls: ['./driver-report.component.scss'],
 })
 export class DriverReportComponent {
+    public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+
     public columns: ReportColumn[] = [
         new ReportColumn('name', 'name'),
         new ReportColumn('age', 'age'),

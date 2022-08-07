@@ -1,14 +1,8 @@
 <section class="header">
-    <h1>Driver Report</h1>
+    <h1>{{'reports.driver.title' | translate}}</h1>
 
-    <div>
-        <select>
-            <option>test1</option>
-        </select>
-        <select>
-            <option>test1</option>
-        </select>
-    </div>
+    <app-drop-down-filter [options]="seasonsOptions" [labelKey]="'reports.seasonDropdown.label'"></app-drop-down-filter>
+    <app-drop-down-filter [labelKey]="'unexpectedError'"></app-drop-down-filter>
 </section>
 
 <app-report-element [columns]="columns" [rows]="rows" [sortConfig]="sortConfig"></app-report-element>
