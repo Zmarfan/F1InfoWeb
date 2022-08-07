@@ -56,6 +56,7 @@ export class LoginSignUpComponent implements OnInit {
 
     public errorKeys = {
         invalidCredentials: 'loginPage.invalidCredentials',
+        tooManyRequests: 'loginPage.tooManyRequests',
         disabledAccount: 'loginPage.disabledAccount',
         failedRegistration: 'signUpPage.failedRegistration',
         unexpectedError: 'unexpectedError',
@@ -113,10 +114,14 @@ export class LoginSignUpComponent implements OnInit {
     }
 
     private handleFailedLogin(response: UserLoginResponse) {
+        this.password.setValue('');
+
         if (response.responseType === 'INVALID_CREDENTIALS') {
             this.password.setErrors({ invalidCredentials: true });
         } else if (response.responseType === 'DISABLED') {
             this.password.setErrors({ disabledAccount: true });
+        } else if (response.responseType === 'TOO_MANY_REQUESTS') {
+            this.password.setErrors({ tooManyRequests: true });
         } else {
             this.password.setErrors({ unexpectedError: true });
         }

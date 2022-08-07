@@ -26,4 +26,12 @@ public class Database extends TaskDatabase {
     public int getAmountOfFailedAttempts(final String ip) throws SQLException {
         return executeBasicQuery(new GetAmountOfFailedRequestsQueryData(ip));
     }
+
+    public void addFailedLoginAttempt(final String ip) throws SQLException {
+        executeVoidQuery(new AddFailedLoginAttemptQueryData(ip));
+    }
+
+    public void resetFailedAttempts(final String ip) throws SQLException {
+        executeVoidQuery(new ResetFailedAttemptsQueryData(ip));
+    }
 }

@@ -71,6 +71,7 @@
     "needAnAccount": "Need an account?",
     "signUpHere": "Sign up here",
     "invalidCredentials": "Your login credentials don't match an account in our system",
+    "tooManyRequests": "You have made too many failed login attempts. Please wait 10 minutes and try again",
     "disabledAccount": "Please verify your email as to enable this account",
     "forgotYourPassword": "Forgot your password?"
   },

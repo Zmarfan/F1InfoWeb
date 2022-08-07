@@ -71,6 +71,7 @@
     "needAnAccount": "Behöver du ett konto?",
     "signUpHere": "Registrera här",
     "invalidCredentials": "Dina inloggningsuppgifter matchar inte ett konto i vårt system",
+    "tooManyRequests": "Du har gjort för många misslyckade inloggningsförsök. Vänta 10 minuter och försök igen",
     "disabledAccount": "Var god verifiera din e-post för att låsa upp ditt konto",
     "forgotYourPassword": "Glömt bort ditt lösenord?"
   },

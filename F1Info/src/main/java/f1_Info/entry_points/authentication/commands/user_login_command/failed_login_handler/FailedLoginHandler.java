@@ -28,9 +28,17 @@ public class FailedLoginHandler {
 
     public void addFailedLoginAttempt(final String ip) {
         try {
-            mDatabase.executeVoidQuery(new AddFailedLoginAttemptQueryData(ip));
+            mDatabase.addFailedLoginAttempt(ip);
         } catch (final SQLException e) {
             mLogger.severe("addFailedLoginAttempt", this.getClass(), String.format("Unable to add failed login attempt for ip: %s", ip), e);
+        }
+    }
+
+    public void resetFailedAttempts(final String ip) {
+        try {
+            mDatabase.resetFailedAttempts(ip);
+        } catch (final SQLException e) {
+            mLogger.severe("resetFailedAttempts", this.getClass(), String.format("Unable to reset failed login attempts for ip: %s", ip), e);
         }
     }
 }

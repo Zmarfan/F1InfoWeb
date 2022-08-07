@@ -11,6 +11,7 @@ import f1_Info.entry_points.authentication.commands.get_user_command.GetUserComm
 import f1_Info.entry_points.authentication.commands.logout_user_command.LogoutUserCommand;
 import f1_Info.entry_points.authentication.commands.set_new_user_password_command.SetNewUserPasswordCommand;
 import f1_Info.entry_points.authentication.commands.user_login_command.UserLoginCommand;
+import f1_Info.entry_points.authentication.commands.user_login_command.failed_login_handler.FailedLoginHandler;
 import f1_Info.entry_points.authentication.commands.user_register_command.UserRegisterCommand;
 import f1_Info.entry_points.authentication.services.AuthenticationService;
 import f1_Info.entry_points.authentication.services.token_service.TokenService;
@@ -41,6 +42,7 @@ public class AuthenticationEndpoint {
     private final EmailService mEmailService;
     private final ClientUriFactory mClientUriFactory;
     private final Database mGetUserDatabase;
+    private final FailedLoginHandler mFailedLoginHandler;
 
     @GetMapping("/getUser")
     public ResponseEntity<?> getUser() {
@@ -92,6 +94,7 @@ public class AuthenticationEndpoint {
                 mEndpointHelper.convertEmail(loginBody.getEmail()),
                 loginBody.getPassword(),
                 mHttpServletRequest,
+                mFailedLoginHandler,
                 mAuthenticationService
             );
         });

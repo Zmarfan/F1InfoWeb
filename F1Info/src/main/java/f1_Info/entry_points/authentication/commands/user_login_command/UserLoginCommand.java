@@ -44,6 +44,7 @@ public class UserLoginCommand implements Command {
             return notAcceptable(new UserLoginResponse(UserLoginResponseType.INVALID_CREDENTIALS));
         }
 
+        mFailedLoginHandler.resetFailedAttempts(ip);
         return ok();
     }
 }
