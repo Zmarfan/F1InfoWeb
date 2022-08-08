@@ -8,6 +8,13 @@
         [valueChanged]="seasonFilterChanged"
     ></app-drop-down-filter>
     <app-drop-down-filter
+        *ngIf="true"
+        [options]="raceTypeOptions"
+        [labelKey]="'reports.driver.raceTypeLabel'"
+        [allOption]="false"
+        [valueChanged]="raceTypeFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
         [loading]="filterLoading"
         [options]="driverOptions"
         [labelKey]="'reports.driver.driverLabel'"

@@ -114,8 +114,11 @@
     "driver": {
       "title": "Förarställning",
       "driverLabel": "Förare:",
+      "raceTypeLabel": "Typ:",
       "roundLabel": "Runda:",
       "roundEntry": "Runda {{round}}",
+      "race": "Race",
+      "sprint": "Sprint",
       "all": {
         "position": "Pos.",
         "driver": "Förare",

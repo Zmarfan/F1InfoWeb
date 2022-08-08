@@ -13,8 +13,8 @@ begin
     races.year = p_season;
 end;
 
-drop procedure if exists get_driver_report_filter_values_info;
-create procedure get_driver_report_filter_values_info(in p_season int)
+drop procedure if exists get_driver_report_filter_values_amount_of_seasons;
+create procedure get_driver_report_filter_values_amount_of_seasons(in p_season int)
 begin
   select
     max(races.round) as amount_of_rounds

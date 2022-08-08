@@ -8,7 +8,7 @@ import {GlobalMessageService} from '../../core/information/global-message-displa
 import {
     AllDriverReportResponse,
     DriverReportFilterResponse,
-    IndividualDriverReportResponse,
+    IndividualDriverReportResponse
 } from '../../generated/server-responses';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 
@@ -38,6 +38,11 @@ export interface IndividualDriverReportParameters extends ReportParameters{
     driverIdentifier: string;
 }
 
+export enum RaceType {
+    RACE = 1,
+    SPRINT = 2,
+}
+
 @Component({
     selector: 'app-driver-report',
     templateUrl: './driver-report.component.html',
@@ -45,6 +50,10 @@ export interface IndividualDriverReportParameters extends ReportParameters{
 })
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+    public raceTypeOptions: DropdownOption[] = [
+        { displayValue: 'reports.driver.race', value: RaceType.RACE },
+        { displayValue: 'reports.driver.sprint', value: RaceType.SPRINT },
+    ];
     public driverOptions: DropdownOption[] = [];
     public roundOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;
@@ -72,6 +81,7 @@ export class DriverReportComponent implements OnInit {
 
     public selectedRound: number = 1;
     private mSelectedSeason: number = new Date().getFullYear();
+    private mSelectedRaceType: RaceType = RaceType.RACE;
     private mSelectedDriver: string | null = null;
     private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
     private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.DESCENDING };
@@ -139,6 +149,11 @@ export class DriverReportComponent implements OnInit {
 
     public seasonFilterChanged = (newSeason: number) => {
         this.mSelectedSeason = newSeason;
+        this.fetchAndAssignFilterValues();
+    };
+
+    public raceTypeFilterChanged = (newRaceType: RaceType) => {
+        this.mSelectedRaceType = newRaceType;
         this.fetchAndAssignFilterValues();
     };
 

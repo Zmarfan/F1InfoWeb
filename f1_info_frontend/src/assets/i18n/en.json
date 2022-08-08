@@ -114,8 +114,11 @@
     "driver": {
       "title": "Driver Standings",
       "driverLabel": "Driver:",
+      "raceTypeLabel": "Type:",
       "roundLabel": "Round:",
       "roundEntry": "Round {{round}}",
+      "race": "Race",
+      "sprint": "Sprint",
       "all": {
         "position": "Pos.",
         "driver": "Driver",

@@ -4,11 +4,11 @@ import database.IQueryData;
 import lombok.Value;
 
 @Value
-public class GetSeasonInfoQueryData implements IQueryData<SeasonInfoRecord> {
+public class GetAmountOfRoundsInSeasonQueryData implements IQueryData<Integer> {
     int mSeason;
 
     @Override
     public String getStoredProcedureName() {
-        return "get_driver_report_filter_values_info";
+        return "get_driver_report_filter_values_amount_of_seasons";
     }
 }
