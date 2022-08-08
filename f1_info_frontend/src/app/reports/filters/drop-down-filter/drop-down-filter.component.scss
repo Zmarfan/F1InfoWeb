@@ -1,5 +1,7 @@
 .holder {
-  text-align: center;
+  display: flex;
+  align-items: center;
+
   margin-right: 1rem;
   label {
     font-weight: 500;

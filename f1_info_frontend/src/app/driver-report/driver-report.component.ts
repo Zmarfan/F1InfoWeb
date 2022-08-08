@@ -23,6 +23,7 @@ interface TestRow {
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public driverOptions: DropdownOption[] = [];
+    public driverSelectLoading: boolean = true;
 
     public columns: ReportColumn[] = [
         new ReportColumn('name', 'name'),
@@ -69,9 +70,16 @@ export class DriverReportComponent implements OnInit {
     };
 
     private fetchDriversFromSeason() {
+        this.driverSelectLoading = true;
         this.mDriverReportService.getDriversFromSeason(this.mSelectedSeason).subscribe({
-            next: (response) => this.populateDriverFilter(response),
-            error: (error) => this.mMessageService.addHttpError(error),
+            next: (response) => {
+                this.driverSelectLoading = false;
+                this.populateDriverFilter(response);
+            },
+            error: (error) => {
+                this.driverSelectLoading = false;
+                this.mMessageService.addHttpError(error);
+            },
         });
     }
 

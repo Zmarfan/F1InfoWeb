@@ -1,9 +1,11 @@
 <div class="holder">
     <label [for]="uniqueLabel">{{labelKey | translate}}</label>
 
-    <select [(ngModel)]="selectedOption" (change)="onValueChanged($event.target)" [id]="uniqueLabel">
-        <option *ngFor="let option of options" [value]="option.value">
-            {{option.displayValue.toString() | translate}}
-        </option>
-    </select>
+    <app-loading-element [loading]="loading" [size]="loadingSpinnerSize">
+        <select [(ngModel)]="selectedOption" (change)="onValueChanged($event.target)" [id]="uniqueLabel">
+            <option *ngFor="let option of options" [value]="option.value">
+                {{option.displayValue.toString() | translate}}
+            </option>
+        </select>
+    </app-loading-element>
 </div>

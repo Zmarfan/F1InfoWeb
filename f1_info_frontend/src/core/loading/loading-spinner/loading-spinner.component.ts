@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {LoadingSpinnerSize} from '../loading-element/loading-element.component';
 
 @Component({
     selector: 'app-loading-spinner',
@@ -6,4 +7,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./loading-spinner.component.scss'],
 })
 export class LoadingSpinnerComponent {
+    @Input() public size!: LoadingSpinnerSize;
+
+    public get modifierCss(): string {
+        return this.size === LoadingSpinnerSize.SMALL ? 'loader--small' : '';
+    }
 }

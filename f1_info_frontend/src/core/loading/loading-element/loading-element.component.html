@@ -1,5 +1,5 @@
 <div *ngIf="loading; else displayContent" class="loading">
-    <app-loading-spinner></app-loading-spinner>
+    <app-loading-spinner [size]="size"></app-loading-spinner>
 </div>
 
 <ng-template #displayContent>

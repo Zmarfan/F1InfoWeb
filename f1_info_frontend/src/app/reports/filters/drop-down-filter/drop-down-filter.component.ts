@@ -1,4 +1,5 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
+import {LoadingSpinnerSize} from '../../../../core/loading/loading-element/loading-element.component';
 
 export interface DropdownOption {
     displayValue: string | number;
@@ -11,11 +12,13 @@ export interface DropdownOption {
     styleUrls: ['./drop-down-filter.component.scss'],
 })
 export class DropDownFilterComponent implements OnChanges {
+    @Input() public loading: boolean = false;
     @Input() public options: DropdownOption[] = [];
     @Input() public allOption: boolean = true;
     @Input() public labelKey: string = '';
     @Input() public valueChanged!: (value: any) => void;
 
+    public loadingSpinnerSize: LoadingSpinnerSize = LoadingSpinnerSize.SMALL;
     public selectedOption!: string | number | null;
     public uniqueLabel: string = `dropDownFilter${Math.random()}`;
 
