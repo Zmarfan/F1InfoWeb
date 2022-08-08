@@ -118,7 +118,7 @@
         "position": "Pos.",
         "driver": "Förare",
         "nationality": "Nationalitet",
-        "constructor": "Konstruktör,",
+        "constructor": "Konstruktör",
         "points": "Poäng"
       },
       "driver": {

@@ -118,7 +118,7 @@
         "position": "Pos.",
         "driver": "Driver",
         "nationality": "Nationality",
-        "constructor": "Constructor,",
+        "constructor": "Constructor",
         "points": "Points"
       },
       "driver": {

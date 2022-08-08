@@ -98,7 +98,7 @@ export class DriverReportComponent implements OnInit {
         return {
             position: response.position,
             driver: response.driverFullName,
-            nationality: response.driverCountry,
+            nationality: response.driverCountryIOC,
             constructor: response.constructor,
             points: response.points,
         };
