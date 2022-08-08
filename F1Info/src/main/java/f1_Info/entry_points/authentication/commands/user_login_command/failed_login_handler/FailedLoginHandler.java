@@ -10,7 +10,7 @@ import java.sql.SQLException;
 @Service
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class FailedLoginHandler {
-    private static final int MAX_FAILED_ATTEMPTS = 5;
+    static final int MAX_FAILED_ATTEMPTS = 5;
 
     private final Database mDatabase;
     private final Logger mLogger;
