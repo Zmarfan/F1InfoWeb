@@ -69,9 +69,9 @@ export class DriverReportComponent implements OnInit {
 
     public loading: boolean = false;
 
+    public selectedRound: number = 1;
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedDriver: string | null = null;
-    private mSelectedRound: number = 1;
     private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
     private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
     private mAllSortConfig: ReportSortConfig = {
@@ -148,7 +148,7 @@ export class DriverReportComponent implements OnInit {
     };
 
     public roundFilterChanged = (newRound: number) => {
-        this.mSelectedRound = newRound;
+        this.selectedRound = newRound;
         this.runReport();
     };
 
@@ -175,7 +175,12 @@ export class DriverReportComponent implements OnInit {
     }
 
     private populateRoundFilter(response: DriverReportFilterResponse) {
-        console.log('hej');
+        const options: DropdownOption[] = [];
+        for (let round = 1; round <= response.amountOfRounds; round++) {
+            options.push({ displayValue: 'reports.driver.roundEntry', value: round, translateParams: { round } })
+        }
+        this.roundOptions = options;
+        this.selectedRound = response.amountOfRounds;
     }
 
     private runReport() {

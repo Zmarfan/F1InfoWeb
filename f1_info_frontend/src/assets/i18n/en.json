@@ -109,11 +109,13 @@
   },
   "reports": {
     "seasonDropdown": {
-      "label": "Season"
+      "label": "Season:"
     },
     "driver": {
       "title": "Driver Standings",
-      "driverLabel": "Driver",
+      "driverLabel": "Driver:",
+      "roundLabel": "Round:",
+      "roundEntry": "Round {{round}}",
       "all": {
         "position": "Pos.",
         "driver": "Driver",

@@ -109,11 +109,13 @@
   },
   "reports": {
     "seasonDropdown": {
-      "label": "Säsong"
+      "label": "Säsong:"
     },
     "driver": {
       "title": "Förarställning",
-      "driverLabel": "Förare",
+      "driverLabel": "Förare:",
+      "roundLabel": "Runda:",
+      "roundEntry": "Runda {{round}}",
       "all": {
         "position": "Pos.",
         "driver": "Förare",

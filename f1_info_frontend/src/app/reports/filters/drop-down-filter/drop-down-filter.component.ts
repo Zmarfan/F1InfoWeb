@@ -4,6 +4,7 @@ import {LoadingSpinnerSize} from '../../../../core/loading/loading-element/loadi
 export interface DropdownOption {
     displayValue: string | number;
     value: string | number | null;
+    translateParams?: any;
 }
 
 @Component({
@@ -16,6 +17,7 @@ export class DropDownFilterComponent implements OnChanges {
     @Input() public options: DropdownOption[] = [];
     @Input() public allOption: boolean = true;
     @Input() public labelKey: string = '';
+    @Input() public selectedValue: string | number | null = null;
     @Input() public valueChanged!: (value: any) => void;
 
     public loadingSpinnerSize: LoadingSpinnerSize = LoadingSpinnerSize.SMALL;
@@ -27,7 +29,12 @@ export class DropDownFilterComponent implements OnChanges {
             this.options = this.options.filter((option) => option.value !== null);
             this.options.unshift({ displayValue: 'dropdown.all', value: null });
         }
-        this.selectedOption = this.options[0].value;
+
+        if (this.selectedValue !== null) {
+            this.selectedOption = this.selectedValue;
+        } else {
+            this.selectedOption = this.options[0].value;
+        }
     }
 
     public onValueChanged(target: EventTarget | null) {

@@ -23,4 +23,8 @@ public class Database extends TaskDatabase {
     public List<DriverFromSeasonRecord> getDriversFromSeason(final int season) throws SQLException {
         return executeListQuery(new GetDriversFromSeasonQueryData(season));
     }
+
+    public SeasonInfoRecord getSeasonInfo(final int season) throws SQLException {
+        return executeQuery(new GetSeasonInfoQueryData(season));
+    }
 }
