@@ -31,6 +31,7 @@ export class DropDownFilterComponent implements OnChanges {
     }
 
     public onValueChanged(target: EventTarget | null) {
-        this.valueChanged((target as HTMLInputElement).value);
+        const value: string = (target as HTMLInputElement).value;
+        this.valueChanged(value === 'null' ? null : value);
     }
 }
