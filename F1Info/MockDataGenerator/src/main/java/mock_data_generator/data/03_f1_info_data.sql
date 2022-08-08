@@ -147,3 +147,5 @@ insert into finish_status (type) values ('Seat');
 insert into finish_status (type) values ('Damage');
 insert into finish_status (type) values ('Debris');
 insert into finish_status (type) values ('Illness');
+insert into finish_status (type) values ('Cooling system');
+insert into finish_status (type) values ('Undertray');

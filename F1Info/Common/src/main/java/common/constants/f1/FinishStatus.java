@@ -142,7 +142,9 @@ public enum FinishStatus {
     SEAT("Seat"),
     DAMAGE("Damage"),
     DEBRIS("Debris"),
-    ILLNESS("Illness");
+    ILLNESS("Illness"),
+    COOLING_SYSTEM("Cooling system"),
+    UNDERTRAY("Undertray");
 
     private final String mStringCode;
 
