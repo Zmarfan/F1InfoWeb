@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 export interface DropdownOption {
     displayValue: string | number;
@@ -10,7 +10,7 @@ export interface DropdownOption {
     templateUrl: './drop-down-filter.component.html',
     styleUrls: ['./drop-down-filter.component.scss'],
 })
-export class DropDownFilterComponent implements OnInit {
+export class DropDownFilterComponent implements OnChanges {
     @Input() public options: DropdownOption[] = [];
     @Input() public allOption: boolean = true;
     @Input() public labelKey: string = '';
@@ -19,7 +19,7 @@ export class DropDownFilterComponent implements OnInit {
     public selectedOption!: string | number | null;
     public uniqueLabel: string = `dropDownFilter${Math.random()}`;
 
-    public ngOnInit() {
+    public ngOnChanges() {
         if (this.allOption) {
             this.options.unshift({ displayValue: 'dropdown.all', value: null });
         }

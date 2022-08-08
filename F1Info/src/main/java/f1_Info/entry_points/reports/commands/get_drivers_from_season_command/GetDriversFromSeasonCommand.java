@@ -4,9 +4,12 @@ import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import static f1_Info.configuration.web.ResponseUtil.ok;
+
 @AllArgsConstructor
 public class GetDriversFromSeasonCommand implements Command {
     private final int mSeason;
+    private final Database mDatabase;
 
     @Override
     public String getAction() {
@@ -15,6 +18,6 @@ public class GetDriversFromSeasonCommand implements Command {
 
     @Override
     public ResponseEntity<?> execute() throws Exception {
-        return null;
+        return ok(mDatabase.getDriversFromSeason(mSeason).stream().map(DriverReportDriverResponse::new).toList());
     }
 }

@@ -76,6 +76,8 @@ export class DriverReportComponent implements OnInit {
     }
 
     private populateDriverFilter(response: DriverReportDriverResponse[]) {
-        console.log(response);
+        this.driverOptions = response
+            .sort((d1, d2) => d1.fullName.localeCompare(d2.fullName))
+            .map((driver) => ({ displayValue: driver.fullName, value: driver.driverIdentifier }));
     }
 }
