@@ -6,6 +6,7 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
+import {DriverReportDriverResponse} from '../../generated/server-responses';
 
 interface TestRow {
     name: string;
@@ -69,8 +70,12 @@ export class DriverReportComponent implements OnInit {
 
     private fetchDriversFromSeason() {
         this.mDriverReportService.getDriversFromSeason(this.mSelectedSeason).subscribe({
-            next: (response) => console.log(response),
+            next: (response) => this.populateDriverFilter(response),
             error: (error) => this.mMessageService.addHttpError(error),
         });
+    }
+
+    private populateDriverFilter(response: DriverReportDriverResponse[]) {
+        console.log(response);
     }
 }

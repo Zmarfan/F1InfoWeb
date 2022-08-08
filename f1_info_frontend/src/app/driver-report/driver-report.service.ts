@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from '../configuration/endpoints';
 import {parseTemplate} from 'url-template';
-
-interface DriverReportDriverResponse {
-
-}
+import {DriverReportDriverResponse} from '../../generated/server-responses';
 
 @Injectable({
     providedIn: 'root',
