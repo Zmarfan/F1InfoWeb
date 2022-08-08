@@ -1,5 +1,6 @@
 package f1_Info.entry_points.reports.commands.get_all_driver_report_command;
 
+import common.constants.CountryCodes;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -8,14 +9,14 @@ import java.math.BigDecimal;
 public class AllDriverReportResponse {
     int mPosition;
     String mDriverFullName;
-    String mDriverCountryIOC;
+    CountryCodes mCountryCodes;
     String mConstructor;
     BigDecimal mPoints;
 
     public AllDriverReportResponse(final AllDriverReportRecord reportRecord) {
         mPosition = reportRecord.getPosition();
         mDriverFullName = String.format("%s %s", reportRecord.getFirstName(), reportRecord.getLastName());
-        mDriverCountryIOC = reportRecord.getDriverCountry().getIOCCode();
+        mCountryCodes = CountryCodes.fromCountry(reportRecord.getDriverCountry());
         mConstructor = reportRecord.getConstructor();
         mPoints = reportRecord.getPoints();
     }

@@ -6,11 +6,12 @@ import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-d
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {AllDriverReportResponse, DriverReportDriverResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
+import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 
 interface AllDriverRow {
     position: number;
     driver: string;
-    nationality: string;
+    nationality: CountryEntry;
     constructor: string;
     points: number;
 }
@@ -98,7 +99,7 @@ export class DriverReportComponent implements OnInit {
         return {
             position: response.position,
             driver: response.driverFullName,
-            nationality: response.driverCountryIOC,
+            nationality: new CountryEntry(response.countryCodes),
             constructor: response.constructor,
             points: response.points,
         };
