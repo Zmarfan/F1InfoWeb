@@ -24,6 +24,7 @@ export class DropDownFilterComponent implements OnChanges {
 
     public ngOnChanges() {
         if (this.allOption) {
+            this.options = this.options.filter((option) => option.value !== null);
             this.options.unshift({ displayValue: 'dropdown.all', value: null });
         }
         this.selectedOption = this.options[0].value;
