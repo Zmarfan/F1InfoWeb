@@ -4,6 +4,7 @@ export class Endpoints {
     private static readonly BASE_URL: string = environment.baseUrl;
     private static readonly AUTHENTICATION_BASE: string = Endpoints.BASE_URL + 'Authentication/';
     private static readonly USER_BASE: string = Endpoints.BASE_URL + 'User/';
+    private static readonly REPORTS_BASE: string = Endpoints.BASE_URL + 'Reports/';
 
     // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly AUTHENTICATION = {
@@ -19,5 +20,10 @@ export class Endpoints {
     // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly USER = {
         updateSettings: `${Endpoints.USER_BASE}update-settings`,
+    };
+
+    // eslint-disable-next-line @typescript-eslint/member-ordering
+    public static readonly REPORTS = {
+        driversFromSeason: `${Endpoints.REPORTS_BASE}drivers-from-season/{season}`,
     };
 }

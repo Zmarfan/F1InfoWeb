@@ -112,7 +112,8 @@
       "label": "Season"
     },
     "driver": {
-      "title": "Driver Standings"
+      "title": "Driver Standings",
+      "driverLabel": "Driver"
     }
   }
 }

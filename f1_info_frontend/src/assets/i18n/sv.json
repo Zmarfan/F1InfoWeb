@@ -112,8 +112,8 @@
       "label": "Säsong"
     },
     "driver": {
-      "title": "Förarställning"
-
+      "title": "Förarställning",
+      "driverLabel": "Förare"
     }
   }
 }

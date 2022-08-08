@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TranslateEntry} from '../reports/entry/data-report-entry/translate-entry';
 import {ReportColumn} from '../reports/report-element/report-column';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
+import {DriverReportService} from './driver-report.service';
+import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 
 interface TestRow {
     name: string;
@@ -17,8 +19,9 @@ interface TestRow {
     templateUrl: './driver-report.component.html',
     styleUrls: ['./driver-report.component.scss'],
 })
-export class DriverReportComponent {
+export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+    public driverOptions: DropdownOption[] = [];
 
     public columns: ReportColumn[] = [
         new ReportColumn('name', 'name'),
@@ -38,20 +41,36 @@ export class DriverReportComponent {
         defaultSortDirection: SortDirection.ASCENDING,
     };
 
-    private mSelectedSeason: number | null = null;
+    private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedDriver: string | null = null;
+
+    public constructor(
+        private mDriverReportService: DriverReportService,
+        private mMessageService: GlobalMessageService
+    ) {
+    }
+
+    public ngOnInit() {
+        this.fetchDriversFromSeason();
+    }
 
     public sort(sortSetting: SortSetting) {
         console.log(sortSetting);
     }
 
-    public seasonFilterChanged(newSeason: number | null) {
-        console.log(newSeason);
+    public seasonFilterChanged = (newSeason: number) => {
         this.mSelectedSeason = newSeason;
-    }
+        this.fetchDriversFromSeason();
+    };
 
-    public driverFilterChanged(newDriver: string | null) {
-        console.log(newDriver);
+    public driverFilterChanged = (newDriver: string | null) => {
         this.mSelectedDriver = newDriver;
+    };
+
+    private fetchDriversFromSeason() {
+        this.mDriverReportService.getDriversFromSeason(this.mSelectedSeason).subscribe({
+            next: (response) => console.log(response),
+            error: (error) => this.mMessageService.addHttpError(error),
+        });
     }
 }
