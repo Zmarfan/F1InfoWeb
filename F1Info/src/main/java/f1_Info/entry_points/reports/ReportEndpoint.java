@@ -5,8 +5,8 @@ import f1_Info.background.ergast_tasks.ErgastFetchingInformation;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetAllDriverReportCommand;
-import f1_Info.entry_points.reports.commands.get_drivers_from_season_command.Database;
-import f1_Info.entry_points.reports.commands.get_drivers_from_season_command.GetDriversFromSeasonCommand;
+import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.Database;
+import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 public class ReportEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
-    private final Database mDriversFromSeasonDatabase;
+    private final Database mDriverReportFilterDatabase;
     private final f1_Info.entry_points.reports.commands.get_driver_report_commands.Database mDriverReportDatabase;
     private final DateFactory mDateFactory;
 
-    @GetMapping("/drivers-from-season/{season}")
-    public ResponseEntity<?> driversFromSeason(@PathVariable("season") final int season) {
+    @GetMapping("/driver-report-filter-values/{season}")
+    public ResponseEntity<?> getDriverReportFilterValues(@PathVariable("season") final int season) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
             if (!seasonIsValid(season)) {
                 throw new BadRequestException();
             }
 
-            return new GetDriversFromSeasonCommand(season, mDriversFromSeasonDatabase);
+            return new GetDriverReportFilterValuesCommand(season, mDriverReportFilterDatabase);
         });
     }
 

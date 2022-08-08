@@ -5,7 +5,11 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {AllDriverReportResponse, DriverReportDriverResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
+import {
+    AllDriverReportResponse,
+    DriverReportFilterResponse,
+    IndividualDriverReportResponse,
+} from '../../generated/server-responses';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 
 interface AllDriverRow {
@@ -41,7 +45,8 @@ export interface IndividualDriverReportParameters extends ReportParameters{
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public driverOptions: DropdownOption[] = [];
-    public driverSelectLoading: boolean = true;
+    public roundOptions: DropdownOption[] = [];
+    public filterLoading: boolean = true;
 
     public allReportColumns: ReportColumn[] = [
         new ReportColumn('position', 'reports.driver.all.position'),
@@ -66,6 +71,7 @@ export class DriverReportComponent implements OnInit {
 
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedDriver: string | null = null;
+    private mSelectedRound: number = 1;
     private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
     private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
     private mAllSortConfig: ReportSortConfig = {
@@ -116,7 +122,7 @@ export class DriverReportComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.fetchDriversFromSeason();
+        this.fetchAndAssignFilterValues();
         this.runReport();
     }
 
@@ -132,7 +138,7 @@ export class DriverReportComponent implements OnInit {
 
     public seasonFilterChanged = (newSeason: number) => {
         this.mSelectedSeason = newSeason;
-        this.fetchDriversFromSeason();
+        this.fetchAndAssignFilterValues();
         this.runReport();
     };
 
@@ -141,25 +147,35 @@ export class DriverReportComponent implements OnInit {
         this.runReport();
     };
 
-    private fetchDriversFromSeason() {
+    public roundFilterChanged = (newRound: number) => {
+        this.mSelectedRound = newRound;
+        this.runReport();
+    };
+
+    private fetchAndAssignFilterValues() {
         this.mSelectedDriver = null;
-        this.driverSelectLoading = true;
-        this.mDriverReportService.getDriversFromSeason(this.mSelectedSeason).subscribe({
+        this.filterLoading = true;
+        this.mDriverReportService.getFilterValues(this.mSelectedSeason).subscribe({
             next: (response) => {
-                this.driverSelectLoading = false;
+                this.filterLoading = false;
                 this.populateDriverFilter(response);
+                this.populateRoundFilter(response);
             },
             error: (error) => {
-                this.driverSelectLoading = false;
+                this.filterLoading = false;
                 this.mMessageService.addHttpError(error);
             },
         });
     }
 
-    private populateDriverFilter(response: DriverReportDriverResponse[]) {
-        this.driverOptions = response
+    private populateDriverFilter(response: DriverReportFilterResponse) {
+        this.driverOptions = response.drivers
             .sort((d1, d2) => d1.fullName.localeCompare(d2.fullName))
             .map((driver) => ({ displayValue: driver.fullName, value: driver.driverIdentifier }));
+    }
+
+    private populateRoundFilter(response: DriverReportFilterResponse) {
+        console.log('hej');
     }
 
     private runReport() {

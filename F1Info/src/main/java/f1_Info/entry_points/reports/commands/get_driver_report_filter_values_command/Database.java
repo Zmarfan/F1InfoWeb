@@ -1,4 +1,4 @@
-package f1_Info.entry_points.reports.commands.get_drivers_from_season_command;
+package f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command;
 
 import common.configuration.Configuration;
 import common.logger.Logger;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.util.List;
 
-@Component(value = "GetDriversFromSeasonCommandDatabase")
+@Component(value = "GetDriverReportFilterValuesCommandDatabase")
 public class Database extends TaskDatabase {
 
     @Autowired

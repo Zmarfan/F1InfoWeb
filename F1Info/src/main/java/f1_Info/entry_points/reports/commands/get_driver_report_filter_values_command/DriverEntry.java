@@ -1,13 +1,13 @@
-package f1_Info.entry_points.reports.commands.get_drivers_from_season_command;
+package f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command;
 
 import lombok.Value;
 
 @Value
-public class DriverReportDriverResponse {
+public class DriverEntry {
     String mDriverIdentifier;
     String mFullName;
 
-    public DriverReportDriverResponse(final DriverFromSeasonRecord driverRecord) {
+    public DriverEntry(final DriverFromSeasonRecord driverRecord) {
         mDriverIdentifier = driverRecord.getDriverIdentifier();
         mFullName = String.format("%s %s", driverRecord.getFirstName(), driverRecord.getLastName());
     }

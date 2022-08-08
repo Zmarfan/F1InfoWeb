@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from '../configuration/endpoints';
 import {parseTemplate} from 'url-template';
-import {AllDriverReportResponse, DriverReportDriverResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
+import {AllDriverReportResponse, DriverReportFilterResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
 import {AllDriverReportParameters, IndividualDriverReportParameters} from './driver-report.component';
 
 @Injectable({
@@ -14,8 +14,8 @@ export class DriverReportService {
     ) {
     }
 
-    public getDriversFromSeason(season: number) {
-        return this.mHttpClient.get<DriverReportDriverResponse[]>(parseTemplate(Endpoints.REPORTS.driversFromSeason).expand({ season }));
+    public getFilterValues(season: number) {
+        return this.mHttpClient.get<DriverReportFilterResponse>(parseTemplate(Endpoints.REPORTS.getDriverReportFilterValues).expand({ season }));
     }
 
     public getAllReport(params: AllDriverReportParameters) {

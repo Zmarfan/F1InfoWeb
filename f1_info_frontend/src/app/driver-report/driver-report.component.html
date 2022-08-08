@@ -8,10 +8,17 @@
         [valueChanged]="seasonFilterChanged"
     ></app-drop-down-filter>
     <app-drop-down-filter
-        [loading]="driverSelectLoading"
+        [loading]="filterLoading"
         [options]="driverOptions"
         [labelKey]="'reports.driver.driverLabel'"
         [valueChanged]="driverFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
+        [loading]="filterLoading"
+        [options]="roundOptions"
+        [labelKey]="'reports.driver.roundLabel'"
+        [allOption]="false"
+        [valueChanged]="roundFilterChanged"
     ></app-drop-down-filter>
 </section>
 
