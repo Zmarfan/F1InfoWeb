@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ReportColumn} from './report-column';
 import {LoadingElementOffset} from '../../../core/loading/loading-element/loading-element.component';
 
@@ -32,7 +32,7 @@ export interface ReportElementConfig<T> {
     templateUrl: './report-element.component.html',
     styleUrls: ['./report-element.component.scss'],
 })
-export class ReportElementComponent<T> implements OnInit {
+export class ReportElementComponent<T> implements OnInit, OnChanges {
     @Input() public loading: boolean = false;
     @Input() public columns!: ReportColumn[];
     @Input() public rows!: T[];
@@ -48,7 +48,9 @@ export class ReportElementComponent<T> implements OnInit {
             this.mSortingColumn = this.sortConfig.defaultSortSetting.columnName;
             this.mSortingDirection = this.sortConfig.defaultSortSetting.direction;
         }
+    }
 
+    public ngOnChanges() {
         this.table = {
             columns: this.columns,
             rows: this.rows,

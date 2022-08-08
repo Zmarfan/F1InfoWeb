@@ -6,13 +6,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import static f1_Info.configuration.web.ResponseUtil.ok;
-import static java.util.Collections.emptyList;
 
 @AllArgsConstructor
 public class GetAllDriverReportCommand implements Command {
     private final int mSeason;
     private final SortDirection mSortDirection;
     private final String mSortColumn;
+    private final Database mDatabase;
 
     @Override
     public String getAction() {
@@ -20,6 +20,6 @@ public class GetAllDriverReportCommand implements Command {
     }
     @Override
     public ResponseEntity<?> execute() throws Exception {
-        return ok(emptyList());
+        return ok(mDatabase.getReportRows(mSeason, mSortDirection, mSortColumn).stream().map(AllDriverReportResponse::new).toList());
     }
 }

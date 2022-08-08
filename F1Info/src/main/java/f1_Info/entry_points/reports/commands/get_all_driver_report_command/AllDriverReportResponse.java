@@ -12,4 +12,12 @@ public class AllDriverReportResponse {
     Country mDriverCountry;
     String mConstructor;
     BigDecimal mPoints;
+
+    public AllDriverReportResponse(final AllDriverReportRecord reportRecord) {
+        mPosition = reportRecord.getPosition();
+        mDriverFullName = String.format("%s %s", reportRecord.getFirstName(), reportRecord.getLastName());
+        mDriverCountry = reportRecord.getDriverCountry();
+        mConstructor = reportRecord.getConstructor();
+        mPoints = reportRecord.getPoints();
+    }
 }

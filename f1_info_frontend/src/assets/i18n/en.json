@@ -115,7 +115,7 @@
       "title": "Driver Standings",
       "driverLabel": "Driver",
       "all": {
-        "position": "Position",
+        "position": "Pos.",
         "driver": "Driver",
         "nationality": "Nationality",
         "constructor": "Constructor,",

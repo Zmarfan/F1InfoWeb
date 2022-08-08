@@ -22,6 +22,7 @@ public class ReportEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
     private final Database mDriversFromSeasonDatabase;
+    private final f1_Info.entry_points.reports.commands.get_all_driver_report_command.Database mAllDriverReportDatabase;
     private final DateFactory mDateFactory;
 
     @GetMapping("/drivers-from-season/{season}")
@@ -46,7 +47,7 @@ public class ReportEndpoint {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetAllDriverReportCommand(season, SortDirection.fromString(sortDirection), sortColumn);
+            return new GetAllDriverReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mAllDriverReportDatabase);
         });
     }
 

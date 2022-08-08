@@ -115,7 +115,7 @@
       "title": "Förarställning",
       "driverLabel": "Förare",
       "all": {
-        "position": "Position",
+        "position": "Pos.",
         "driver": "Förare",
         "nationality": "Nationalitet",
         "constructor": "Konstruktör,",
