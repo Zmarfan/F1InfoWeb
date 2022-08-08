@@ -4,6 +4,10 @@ div {
   gap: 0.25rem;
   align-items: center;
 
+  @media(max-width: 500px) {
+    flex-direction: column-reverse;
+  }
+
   img {
     max-width: 1.5rem;
   }

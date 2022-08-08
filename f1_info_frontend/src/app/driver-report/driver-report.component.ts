@@ -17,7 +17,7 @@ interface AllDriverRow {
 }
 
 interface IndividualDriverRow {
-    grandPrix: string;
+    grandPrix: CountryEntry;
     date: string;
     constructor: string;
     racePosition: string;
@@ -99,7 +99,7 @@ export class DriverReportComponent implements OnInit {
         return {
             position: response.position,
             driver: response.driverFullName,
-            nationality: new CountryEntry(response.countryCodes),
+            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             points: response.points,
         };
@@ -107,7 +107,7 @@ export class DriverReportComponent implements OnInit {
 
     private static individualToView(response: IndividualDriverReportResponse): IndividualDriverRow {
         return {
-            grandPrix: response.circuitName,
+            grandPrix: new CountryEntry({ displayValue: response.circuitName, isoCode: response.circuitIsoCode }),
             date: response.date,
             constructor: response.constructor,
             racePosition: response.racePosition,
