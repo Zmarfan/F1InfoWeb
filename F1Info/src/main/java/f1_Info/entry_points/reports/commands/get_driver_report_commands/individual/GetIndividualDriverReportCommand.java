@@ -2,11 +2,11 @@ package f1_Info.entry_points.reports.commands.get_driver_report_commands.individ
 
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.reports.SortDirection;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.Database;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import static f1_Info.configuration.web.ResponseUtil.ok;
-import static java.util.Collections.emptyList;
 
 @AllArgsConstructor
 public class GetIndividualDriverReportCommand implements Command {
@@ -14,6 +14,7 @@ public class GetIndividualDriverReportCommand implements Command {
     private final String mDriverIdentifier;
     private final SortDirection mSortDirection;
     private final String mSortColumn;
+    private final Database mDatabase;
 
     @Override
     public String getAction() {
@@ -27,6 +28,11 @@ public class GetIndividualDriverReportCommand implements Command {
     }
     @Override
     public ResponseEntity<?> execute() throws Exception {
-        return ok(emptyList());
+        return ok(
+            mDatabase.getIndividualReportRows(mSeason, mDriverIdentifier, mSortDirection, mSortColumn)
+                .stream()
+                .map(IndividualDriverReportResponse::new)
+                .toList()
+        );
     }
 }

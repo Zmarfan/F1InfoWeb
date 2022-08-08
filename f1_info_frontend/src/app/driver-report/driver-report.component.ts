@@ -20,7 +20,7 @@ interface IndividualDriverRow {
     grandPrix: string;
     date: string;
     constructor: string;
-    racePosition: number;
+    racePosition: string;
     points: number;
 }
 
@@ -107,7 +107,7 @@ export class DriverReportComponent implements OnInit {
 
     private static individualToView(response: IndividualDriverReportResponse): IndividualDriverRow {
         return {
-            grandPrix: response.grandPrix,
+            grandPrix: response.circuitName,
             date: response.date,
             constructor: response.constructor,
             racePosition: response.racePosition,

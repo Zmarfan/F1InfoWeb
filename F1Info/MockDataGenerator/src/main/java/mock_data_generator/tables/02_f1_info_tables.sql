@@ -158,7 +158,7 @@ create table results(
   fastest_lap_id int,
   finish_status_type varchar(255) not null,
 
-  constraint results_pk primary key (id, race_id, driver_id, constructor_id),
+  constraint results_pk primary key (id, race_id, driver_id),
   constraint results_race_id foreign key (race_id) references races(id),
   constraint results_driver_id foreign key (driver_id) references drivers(id),
   constraint results_constructor_id foreign key (constructor_id) references constructors(id),

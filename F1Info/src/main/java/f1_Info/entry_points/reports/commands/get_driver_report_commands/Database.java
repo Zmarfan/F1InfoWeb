@@ -6,6 +6,8 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.entry_points.reports.SortDirection;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.AllDriverReportRecord;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetAllDriverReportRowsQueryData;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportRowsQueryData;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.IndividualDriverReportRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +27,14 @@ public class Database extends TaskDatabase {
 
     public List<AllDriverReportRecord> getAllReportRows(final int season, final SortDirection sortDirection, final String sortColumn) throws SQLException {
         return executeListQuery(new GetAllDriverReportRowsQueryData(season, sortDirection.getDirection(), sortColumn));
+    }
+
+    public List<IndividualDriverReportRecord> getIndividualReportRows(
+        final int season,
+        final String driverIdentifier,
+        final SortDirection sortDirection,
+        final String sortColumn
+    ) throws SQLException {
+        return executeListQuery(new GetIndividualDriverReportRowsQueryData(season, driverIdentifier, sortDirection.getDirection(), sortColumn));
     }
 }

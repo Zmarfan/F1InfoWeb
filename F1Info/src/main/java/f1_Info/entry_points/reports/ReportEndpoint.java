@@ -63,7 +63,7 @@ public class ReportEndpoint {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetIndividualDriverReportCommand(season, driverIdentifier, SortDirection.fromString(sortDirection), sortColumn);
+            return new GetIndividualDriverReportCommand(season, driverIdentifier, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
         });
     }
 
