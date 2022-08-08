@@ -113,7 +113,21 @@
     },
     "driver": {
       "title": "Förarställning",
-      "driverLabel": "Förare"
+      "driverLabel": "Förare",
+      "all": {
+        "position": "Position",
+        "driver": "Förare",
+        "nationality": "Nationalitet",
+        "constructor": "Konstruktör,",
+        "points": "Poäng"
+      },
+      "driver": {
+        "grandPrix": "Grand Prix",
+        "date": "Datum",
+        "constructor": "Konstruktör",
+        "racePosition": "Race Position",
+        "points": "Poäng"
+      }
     }
   }
 }

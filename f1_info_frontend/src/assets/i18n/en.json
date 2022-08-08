@@ -113,7 +113,21 @@
     },
     "driver": {
       "title": "Driver Standings",
-      "driverLabel": "Driver"
+      "driverLabel": "Driver",
+      "all": {
+        "position": "Position",
+        "driver": "Driver",
+        "nationality": "Nationality",
+        "constructor": "Constructor,",
+        "points": "Points"
+      },
+      "driver": {
+        "grandPrix": "Grand Prix",
+        "date": "Date",
+        "constructor": "Constructor",
+        "racePosition": "Race Position",
+        "points": "Points"
+      }
     }
   }
 }

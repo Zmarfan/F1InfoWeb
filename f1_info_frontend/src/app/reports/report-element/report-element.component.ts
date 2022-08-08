@@ -14,8 +14,7 @@ export interface SortSetting {
 
 export interface ReportSortConfig {
     sortCallback: (sortObject: SortSetting) => void;
-    defaultSortName: string;
-    defaultSortDirection: SortDirection;
+    defaultSortSetting: SortSetting;
 }
 
 export interface ReportElementConfig<T> {
@@ -41,8 +40,8 @@ export class ReportElementComponent<T> implements OnInit {
 
     public ngOnInit() {
         if (this.sortConfig !== undefined) {
-            this.mSortingColumn = this.sortConfig.defaultSortName;
-            this.mSortingDirection = this.sortConfig.defaultSortDirection;
+            this.mSortingColumn = this.sortConfig.defaultSortSetting.columnName;
+            this.mSortingDirection = this.sortConfig.defaultSortSetting.direction;
         }
 
         this.table = {

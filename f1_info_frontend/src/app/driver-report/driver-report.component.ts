@@ -25,31 +25,42 @@ export class DriverReportComponent implements OnInit {
     public driverOptions: DropdownOption[] = [];
     public driverSelectLoading: boolean = true;
 
-    public columns: ReportColumn[] = [
-        new ReportColumn('name', 'name'),
-        new ReportColumn('age', 'age'),
-        new ReportColumn('country', 'country'),
-        new ReportColumn('key', 'unexpectedError'),
-    ];
-    public rows: TestRow[] = [
-        { age: 24, name: 'Filip', country: 'Sweden', key: new TranslateEntry('unexpectedError') },
-        { name: 'Bob', age: 44, country: 'USA', key: new TranslateEntry('unexpectedError') },
-        { name: 'Daisy', age: 14, country: 'Turkey', key: new TranslateEntry('unexpectedError') },
+    public allReportColumns: ReportColumn[] = [
+        new ReportColumn('position', 'reports.driver.all.position'),
+        new ReportColumn('driver', 'reports.driver.all.driver'),
+        new ReportColumn('nationality', 'reports.driver.all.nationality'),
+        new ReportColumn('constructor', 'reports.driver.all.constructor'),
+        new ReportColumn('points', 'reports.driver.all.points'),
     ];
 
-    public sortConfig: ReportSortConfig = {
-        sortCallback: this.sort,
-        defaultSortName: 'age',
-        defaultSortDirection: SortDirection.ASCENDING,
-    };
+    public driverReportColumns: ReportColumn[] = [
+        new ReportColumn('grandPrix', 'reports.driver.driver.grandPrix'),
+        new ReportColumn('date', 'reports.driver.driver.date'),
+        new ReportColumn('constructor', 'reports.driver.driver.constructor'),
+        new ReportColumn('racePosition', 'reports.driver.driver.racePosition'),
+        new ReportColumn('points', 'reports.driver.driver.points'),
+    ];
 
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedDriver: string | null = null;
+    private mSortSetting: SortSetting = { columnName: '', direction: SortDirection.ASCENDING };
+    private mAllSortConfig: ReportSortConfig = {
+        sortCallback: this.sort,
+        defaultSortSetting: this.mSortSetting,
+    };
 
     public constructor(
         private mDriverReportService: DriverReportService,
         private mMessageService: GlobalMessageService
     ) {
+    }
+
+    public get showAllReport(): boolean {
+        return this.mSelectedDriver === null;
+    }
+
+    public get allSortConfig(): ReportSortConfig {
+        return this.mAllSortConfig;
     }
 
     public ngOnInit() {
