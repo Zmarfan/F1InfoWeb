@@ -30,6 +30,7 @@ interface IndividualDriverRow {
 
 export interface AllDriverReportParameters extends ReportParameters{
     season: number;
+    round: number;
 }
 
 export interface IndividualDriverReportParameters extends ReportParameters{
@@ -82,6 +83,7 @@ export class DriverReportComponent implements OnInit {
         sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
         defaultSortSetting: this.mDriverSortSetting,
     };
+    private mCurrentSeasonMaxRound: number = 1;
 
     public constructor(
         private mDriverReportService: DriverReportService,
@@ -123,7 +125,6 @@ export class DriverReportComponent implements OnInit {
 
     public ngOnInit() {
         this.fetchAndAssignFilterValues();
-        this.runReport();
     }
 
     public sort(sortSetting: SortSetting) {
@@ -139,11 +140,11 @@ export class DriverReportComponent implements OnInit {
     public seasonFilterChanged = (newSeason: number) => {
         this.mSelectedSeason = newSeason;
         this.fetchAndAssignFilterValues();
-        this.runReport();
     };
 
     public driverFilterChanged = (newDriver: string | null) => {
         this.mSelectedDriver = newDriver;
+        this.selectedRound = this.mCurrentSeasonMaxRound;
         this.runReport();
     };
 
@@ -160,6 +161,7 @@ export class DriverReportComponent implements OnInit {
                 this.filterLoading = false;
                 this.populateDriverFilter(response);
                 this.populateRoundFilter(response);
+                this.runReport();
             },
             error: (error) => {
                 this.filterLoading = false;
@@ -175,6 +177,8 @@ export class DriverReportComponent implements OnInit {
     }
 
     private populateRoundFilter(response: DriverReportFilterResponse) {
+        this.mCurrentSeasonMaxRound = response.amountOfRounds;
+
         const options: DropdownOption[] = [];
         for (let round = 1; round <= response.amountOfRounds; round++) {
             options.push({ displayValue: 'reports.driver.roundEntry', value: round, translateParams: { round } });
@@ -185,7 +189,12 @@ export class DriverReportComponent implements OnInit {
 
     private runReport() {
         if (this.showAllReport) {
-            this.runAllReport({ season: this.mSelectedSeason, sortColumn: this.mAllSortSetting.columnName, sortDirection: this.mAllSortSetting.direction });
+            this.runAllReport({
+                season: this.mSelectedSeason,
+                round: this.selectedRound,
+                sortColumn: this.mAllSortSetting.columnName,
+                sortDirection: this.mAllSortSetting.direction,
+            });
         } else {
             this.runDriverReport({
                 season: this.mSelectedSeason,

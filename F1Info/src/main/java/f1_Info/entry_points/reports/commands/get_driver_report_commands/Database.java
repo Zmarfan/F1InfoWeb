@@ -25,8 +25,8 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public List<AllDriverReportRecord> getAllReportRows(final int season, final SortDirection sortDirection, final String sortColumn) throws SQLException {
-        return executeListQuery(new GetAllDriverReportRowsQueryData(season, sortDirection.getDirection(), sortColumn));
+    public List<AllDriverReportRecord> getAllReportRows(final int season, final int round, final SortDirection sortDirection, final String sortColumn) throws SQLException {
+        return executeListQuery(new GetAllDriverReportRowsQueryData(season, round, sortDirection.getDirection(), sortColumn));
     }
 
     public List<IndividualDriverReportRecord> getIndividualReportRows(

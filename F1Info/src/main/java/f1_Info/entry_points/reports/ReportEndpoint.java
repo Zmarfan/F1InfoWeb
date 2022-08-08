@@ -36,18 +36,19 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-all-driver-report/{season}")
+    @GetMapping("/get-all-driver-report/{season}/{round}")
     public ResponseEntity<?> getAllDriverReport(
         @PathVariable("season") final int season,
+        @PathVariable("round") final int round,
         @RequestParam("sortColumn") final String sortColumn,
         @RequestParam("sortDirection") final String sortDirection
     ) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
-            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty()) {
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() && round > 0) {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetAllDriverReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
+            return new GetAllDriverReportCommand(season, round, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
         });
     }
 

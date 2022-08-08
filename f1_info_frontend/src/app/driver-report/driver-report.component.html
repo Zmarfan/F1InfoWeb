@@ -14,6 +14,7 @@
         [valueChanged]="driverFilterChanged"
     ></app-drop-down-filter>
     <app-drop-down-filter
+        *ngIf="showAllReport"
         [loading]="filterLoading"
         [options]="roundOptions"
         [labelKey]="'reports.driver.roundLabel'"

@@ -20,6 +20,7 @@ begin
     max(races.round) as amount_of_rounds
   from
     races
+    inner join driver_standings on driver_standings.race_id = races.id
   where
       races.year = p_season;
 end;
