@@ -1,0 +1,14 @@
+div {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  align-items: center;
+
+  img {
+    max-width: 1.5rem;
+  }
+
+  span {
+    min-width: 2.5rem;
+  }
+}

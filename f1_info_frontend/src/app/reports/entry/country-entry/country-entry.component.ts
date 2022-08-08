@@ -11,6 +11,6 @@ export class CountryEntryComponent implements Compose<CountryCodes> {
     public data!: CountryCodes;
 
     public get flagSrc(): string {
-        return '';
+        return `/assets/images/flags/${this.data.isoCode}.svg`;
     }
 }
