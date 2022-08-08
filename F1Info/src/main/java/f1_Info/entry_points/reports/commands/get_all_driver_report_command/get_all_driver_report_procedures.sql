@@ -14,7 +14,7 @@ begin
        drivers.first_name,
        drivers.last_name,
        drivers.country_code as driver_country,
-       countries.country_name,
+       countries.country_ico_code,
        constructors.name as constructor,
        max(driver_standings.points) as points
      from
@@ -31,13 +31,13 @@ begin
   order by
     (case when p_sort_column = 'position' and p_sort_direction = 'asc' then stats.position end),
     (case when p_sort_column = 'driver' and p_sort_direction = 'asc' then stats.first_name end),
-    (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_name end),
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
     (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
     (case when p_sort_column = 'points' and p_sort_direction = 'asc' then stats.points end),
 
     (case when p_sort_column = 'position' and p_sort_direction = 'desc' then stats.position end) desc,
     (case when p_sort_column = 'driver' and p_sort_direction = 'desc' then stats.first_name end) desc,
-    (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_name end) desc,
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
     (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
     (case when p_sort_column = 'points' and p_sort_direction = 'desc' then stats.points end) desc;
 end;
