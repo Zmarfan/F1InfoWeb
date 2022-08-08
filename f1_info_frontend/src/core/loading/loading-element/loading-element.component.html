@@ -1,4 +1,4 @@
-<div *ngIf="loading; else displayContent" class="loading">
+<div *ngIf="loading; else displayContent" class="loading {{offsetModifier}}">
     <app-loading-spinner [size]="size"></app-loading-spinner>
 </div>
 

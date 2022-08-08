@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ReportColumn} from './report-column';
+import {LoadingElementOffset} from '../../../core/loading/loading-element/loading-element.component';
 
 export enum SortDirection {
     ASCENDING = 'asc',
@@ -34,6 +35,7 @@ export class ReportElementComponent<T> implements OnInit {
     @Input() public sortConfig?: ReportSortConfig;
 
     public table!: ReportElementConfig<any>;
+    public loadingOffset: LoadingElementOffset = LoadingElementOffset.TOP;
     private mSortingColumn: string = '';
     private mSortingDirection: SortDirection = SortDirection.ASCENDING;
 
