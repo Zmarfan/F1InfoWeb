@@ -43,10 +43,15 @@ export class DriverReportComponent implements OnInit {
 
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedDriver: string | null = null;
-    private mSortSetting: SortSetting = { columnName: '', direction: SortDirection.ASCENDING };
+    private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
+    private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
     private mAllSortConfig: ReportSortConfig = {
         sortCallback: this.sort,
-        defaultSortSetting: this.mSortSetting,
+        defaultSortSetting: this.mAllSortSetting,
+    };
+    private mDriverSortConfig: ReportSortConfig = {
+        sortCallback: this.sort,
+        defaultSortSetting: this.mDriverSortSetting,
     };
 
     public constructor(
@@ -61,6 +66,10 @@ export class DriverReportComponent implements OnInit {
 
     public get allSortConfig(): ReportSortConfig {
         return this.mAllSortConfig;
+    }
+
+    public get driverSortConfig(): ReportSortConfig {
+        return this.mDriverSortConfig;
     }
 
     public ngOnInit() {
