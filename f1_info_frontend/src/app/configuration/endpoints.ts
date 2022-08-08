@@ -23,7 +23,7 @@ export class Endpoints {
 
     public static readonly REPORTS = {
         driversFromSeason: `${Endpoints.REPORTS_BASE}drivers-from-season/{season}`,
-        getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}?sortDirection={sortDirection},sortColumn={sortColumn}`,
-        getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}?sortDirection={sortDirection},sortColumn={sortColumn}`,
+        getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 }

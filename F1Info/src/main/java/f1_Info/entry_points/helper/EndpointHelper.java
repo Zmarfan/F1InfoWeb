@@ -39,7 +39,7 @@ public class EndpointHelper {
             command = createCommand.apply(userId);
         } catch (final ForbiddenException e) {
             return forbidden(e.getMessage());
-        } catch (final BadRequestException e) {
+        } catch (final IllegalArgumentException e) {
             return badRequest(e.getMessage());
         } catch (final Exception e) {
             return internalServerError();
