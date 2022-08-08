@@ -1,7 +1,8 @@
-package f1_Info.entry_points.reports.commands.get_all_driver_report_command;
+package f1_Info.entry_points.reports.commands.get_driver_report_commands.all;
 
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.reports.SortDirection;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.Database;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +21,6 @@ public class GetAllDriverReportCommand implements Command {
     }
     @Override
     public ResponseEntity<?> execute() throws Exception {
-        return ok(mDatabase.getReportRows(mSeason, mSortDirection, mSortColumn).stream().map(AllDriverReportResponse::new).toList());
+        return ok(mDatabase.getAllReportRows(mSeason, mSortDirection, mSortColumn).stream().map(AllDriverReportResponse::new).toList());
     }
 }

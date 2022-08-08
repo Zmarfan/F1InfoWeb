@@ -4,10 +4,10 @@ import common.helpers.DateFactory;
 import f1_Info.background.ergast_tasks.ErgastFetchingInformation;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
-import f1_Info.entry_points.reports.commands.get_all_driver_report_command.GetAllDriverReportCommand;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetAllDriverReportCommand;
 import f1_Info.entry_points.reports.commands.get_drivers_from_season_command.Database;
 import f1_Info.entry_points.reports.commands.get_drivers_from_season_command.GetDriversFromSeasonCommand;
-import f1_Info.entry_points.reports.commands.get_individual_driver_report_command.GetIndividualDriverReportCommand;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class ReportEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
     private final Database mDriversFromSeasonDatabase;
-    private final f1_Info.entry_points.reports.commands.get_all_driver_report_command.Database mAllDriverReportDatabase;
+    private final f1_Info.entry_points.reports.commands.get_driver_report_commands.Database mDriverReportDatabase;
     private final DateFactory mDateFactory;
 
     @GetMapping("/drivers-from-season/{season}")
@@ -47,7 +47,7 @@ public class ReportEndpoint {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetAllDriverReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mAllDriverReportDatabase);
+            return new GetAllDriverReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
         });
     }
 

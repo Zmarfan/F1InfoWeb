@@ -1,4 +1,4 @@
-package f1_Info.entry_points.reports.commands.get_individual_driver_report_command;
+package f1_Info.entry_points.reports.commands.get_driver_report_commands.individual;
 
 import lombok.Value;
 

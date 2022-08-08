@@ -1,4 +1,4 @@
-package f1_Info.entry_points.reports.commands.get_all_driver_report_command;
+package f1_Info.entry_points.reports.commands.get_driver_report_commands.all;
 
 import common.constants.CountryCodes;
 import lombok.Value;
