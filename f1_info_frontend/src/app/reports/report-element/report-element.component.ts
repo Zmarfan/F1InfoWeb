@@ -17,6 +17,11 @@ export interface ReportSortConfig {
     defaultSortSetting: SortSetting;
 }
 
+export interface ReportParameters {
+    sortDirection: SortDirection;
+    sortColumn: string;
+}
+
 export interface ReportElementConfig<T> {
     columns: ReportColumn[];
     rows: T[];

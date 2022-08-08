@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering,max-len */
 import {environment} from '../../environments/environment';
 
 export class Endpoints {
@@ -6,7 +7,6 @@ export class Endpoints {
     private static readonly USER_BASE: string = Endpoints.BASE_URL + 'User/';
     private static readonly REPORTS_BASE: string = Endpoints.BASE_URL + 'Reports/';
 
-    // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly AUTHENTICATION = {
         getUser: `${Endpoints.AUTHENTICATION_BASE}getUser`,
         login: `${Endpoints.AUTHENTICATION_BASE}login`,
@@ -17,13 +17,13 @@ export class Endpoints {
         resetPassword: `${Endpoints.AUTHENTICATION_BASE}reset-password/{token}`,
     };
 
-    // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly USER = {
         updateSettings: `${Endpoints.USER_BASE}update-settings`,
     };
 
-    // eslint-disable-next-line @typescript-eslint/member-ordering
     public static readonly REPORTS = {
         driversFromSeason: `${Endpoints.REPORTS_BASE}drivers-from-season/{season}`,
+        getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}?sortDirection={sortDirection},sortColumn={sortColumn}`,
+        getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}?sortDirection={sortDirection},sortColumn={sortColumn}`,
     };
 }
