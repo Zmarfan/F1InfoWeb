@@ -29,6 +29,7 @@ import { ComposeComponent } from '../core/compose/compose.component';
 import { TranslateEntryComponent } from './reports/entry/data-report-entry/translate-entry.component';
 import { DropDownFilterComponent } from './reports/filters/drop-down-filter/drop-down-filter.component';
 import { CountryEntryComponent } from './reports/entry/country-entry/country-entry.component';
+import { RaceReportComponent } from './race-report/race-report.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -68,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DropDownFilterComponent,
         DropDownFilterComponent,
         CountryEntryComponent,
+        RaceReportComponent,
     ],
     providers: [
         {

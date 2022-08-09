@@ -1,23 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportColumn} from '../reports/report-element/report-column';
-import {ReportParameters, ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
+import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {
-    AllDriverReportResponse,
-    DriverReportFilterResponse,
-    IndividualDriverReportResponse
-} from '../../generated/server-responses';
-import {CountryEntry} from '../reports/entry/country-entry/country-entry';
+import {DriverReportFilterResponse} from '../../generated/server-responses';
 import {AllDriverReportParameters, AllDriverRow, DriverReportData, IndividualDriverReportParameters, IndividualDriverRow, RaceType} from './driver-report-data';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-driver-report',
     templateUrl: './driver-report.component.html',
-    styleUrls: ['./driver-report.component.scss'],
+    styleUrls: ['./../reports/report-styling.scss'],
 })
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
