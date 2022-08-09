@@ -3,7 +3,7 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {RaceOverviewRow, RaceReport, RaceReportData} from './race-report-data';
+import {RaceOverviewRow, RaceReport, RaceReportData, RaceResultRow} from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
@@ -21,9 +21,11 @@ export class RaceReportComponent implements OnInit {
     public reportType: RaceReport = RaceReport.OVERVIEW;
 
     public overviewRows: RaceOverviewRow[] = [];
+    public raceResultRows: RaceResultRow[] = [];
 
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceOptions: DropdownOption[] = [];
+    public raceCategoryOptions: DropdownOption[] = [];
     public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();
 
     public filterLoading: boolean = true;
@@ -33,6 +35,11 @@ export class RaceReportComponent implements OnInit {
     public overviewSortConfig: ReportSortConfig = {
         sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
         defaultSortSetting: this.overviewSortSetting,
+    };
+    public raceResultSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
+    public raceResultSortConfig: ReportSortConfig = {
+        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+        defaultSortSetting: this.raceResultSortSetting,
     };
 
     private mSelectedSeason: number = new Date().getFullYear();
@@ -50,11 +57,6 @@ export class RaceReportComponent implements OnInit {
 
     public get seasonHasSprints(): boolean {
         return this.mRacesWithSprints.length > 0;
-    }
-
-    public get raceCategoryOptions(): DropdownOption[] {
-        const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === Number(this.mSelectedRaceRound));
-        return RaceReportData.getRaceCategoryOptions(raceData !== undefined);
     }
 
     public ngOnInit() {
@@ -79,7 +81,7 @@ export class RaceReportComponent implements OnInit {
     };
 
     public raceCategoryFilterChanged = (newRaceCategory: RaceReport) => {
-        this.reportType = newRaceCategory;
+        this.reportType = Number(newRaceCategory);
         this.runReport();
     };
 
@@ -90,6 +92,7 @@ export class RaceReportComponent implements OnInit {
                 this.filterLoading = false;
                 this.mRacesWithSprints = response.races.filter((race) => race.hasSprint);
                 this.populateRaceFilter(response);
+                this.populateRaceCategoryFilter();
                 this.runReport();
             },
             error: (error) => {
@@ -103,6 +106,11 @@ export class RaceReportComponent implements OnInit {
         this.raceOptions = response.races
             .sort((r1, r2) => r1.round > r2.round ? 1 : 0)
             .map((race) => ({ displayValue: race.name, value: race.round }));
+    }
+
+    private populateRaceCategoryFilter() {
+        const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === Number(this.mSelectedRaceRound));
+        this.raceCategoryOptions = RaceReportData.getRaceCategoryOptions(raceData !== undefined);
     }
 
     private sort(sortSetting: SortSetting) {

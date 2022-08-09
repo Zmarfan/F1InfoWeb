@@ -28,6 +28,16 @@ export interface RaceOverviewRow {
     time: string;
 }
 
+export interface RaceResultRow {
+    position: number;
+    raceNumber: number;
+    driver: string;
+    constructor: string;
+    laps: number;
+    timeRetired: string;
+    points: number;
+}
+
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
@@ -41,6 +51,16 @@ export class RaceReportData {
         new ReportColumn('constructor', 'reports.race.overview.constructor'),
         new ReportColumn('laps', 'reports.race.overview.laps'),
         new ReportColumn('time', 'reports.race.overview.time'),
+    ];
+
+    public static readonly raceResultReportColumns: ReportColumn[] = [
+        new ReportColumn('position', 'reports.race.raceResult.position'),
+        new ReportColumn('raceNumber', 'reports.race.raceResult.raceNumber'),
+        new ReportColumn('driver', 'reports.race.raceResult.driver'),
+        new ReportColumn('constructor', 'reports.race.raceResult.constructor'),
+        new ReportColumn('laps', 'reports.race.raceResult.laps'),
+        new ReportColumn('timeRetired', 'reports.race.raceResult.timeRetired'),
+        new ReportColumn('points', 'reports.race.raceResult.points'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {

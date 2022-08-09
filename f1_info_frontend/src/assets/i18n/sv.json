@@ -156,6 +156,15 @@
         "constructor": "Konstruktör",
         "laps": "Varv",
         "time": "Tid "
+      },
+      "raceResult": {
+        "position": "Pos.",
+        "raceNumber": "No.",
+        "driver": "Förare",
+        "constructor": "Konstruktör",
+        "laps": "Varv",
+        "timeRetired": "Tid/Avbröt",
+        "points": "Poäng"
       }
     }
   }

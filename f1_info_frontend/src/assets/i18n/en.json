@@ -156,6 +156,15 @@
         "constructor": "Constructor",
         "laps": "Laps",
         "time": "Time"
+      },
+      "raceResult": {
+        "position": "Pos.",
+        "raceNumber": "No.",
+        "driver": "Driver",
+        "constructor": "Constructor",
+        "laps": "Laps",
+        "timeRetired": "Time/Retired",
+        "points": "Points"
       }
     }
   }
