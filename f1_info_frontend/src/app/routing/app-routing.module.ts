@@ -9,6 +9,7 @@ import {ResetPasswordComponent} from '../login-page/password-reseting/reset-pass
 import {DriverReportComponent} from '../driver-report/driver-report.component';
 import {SessionGuard} from './session-guard';
 import {AnonymousGuard} from './anonymous-guard';
+import {RaceReportComponent} from '../race-report/race-report.component';
 
 const routes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: RouteHolder.LOGIN_PAGE, component: LoginComponent },
     { path: RouteHolder.RESET_PASSWORD_PAGE, component: ResetPasswordComponent },
     { path: RouteHolder.DRIVER_REPORT, component: DriverReportComponent },
+    { path: RouteHolder.RACE_REPORT, component: RaceReportComponent },
     { path: '**', redirectTo: RouteHolder.HOMEPAGE },
 ];
 

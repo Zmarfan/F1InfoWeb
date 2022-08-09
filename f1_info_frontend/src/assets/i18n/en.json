@@ -29,7 +29,8 @@
   "navigation": {
     "route": {
       "homepage": "Homepage",
-      "driverReport": "Driver Standings"
+      "driverReport": "Driver Standings",
+      "raceReport": "Race Results"
     },
     "profile": {
       "anonymousUser": "Anonymous User",

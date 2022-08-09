@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faBars, faHouseChimney, faPerson, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faCar, faHouseChimney, faPerson, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {RouteHolder} from '../../../app/routing/route-holder';
 import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
@@ -39,6 +39,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
         { route: RouteHolder.DRIVER_REPORT, key: 'navigation.route.driverReport', icon: faPerson, selected: false, loggedIn: false },
+        { route: RouteHolder.RACE_REPORT, key: 'navigation.route.raceReport', icon: faCar, selected: false, loggedIn: false },
     ];
 
     public mobileNavigationOpened: boolean = false;

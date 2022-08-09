@@ -29,7 +29,8 @@
   "navigation": {
     "route": {
       "homepage": "Hem",
-      "driverReport": "Förarställning"
+      "driverReport": "Förarställning",
+      "raceReport": "Raceresultat"
     },
     "profile": {
       "anonymousUser": "Anonym Användare",
