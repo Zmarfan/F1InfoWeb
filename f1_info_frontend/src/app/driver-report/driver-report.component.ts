@@ -8,6 +8,7 @@ import {GlobalMessageService} from '../../core/information/global-message-displa
 import {DriverReportFilterResponse} from '../../generated/server-responses';
 import {AllDriverReportParameters, AllDriverRow, DriverReportData, IndividualDriverReportParameters, IndividualDriverRow, RaceType} from './driver-report-data';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ReportHelperService} from '../reports/report-helper.service';
 
 @Component({
     selector: 'app-driver-report',
@@ -48,6 +49,7 @@ export class DriverReportComponent implements OnInit {
     private mSeasonHasSprints: boolean = false;
 
     public constructor(
+        private mReportHelper: ReportHelperService,
         private mDriverReportService: DriverReportService,
         private mMessageService: GlobalMessageService
     ) {
@@ -141,47 +143,40 @@ export class DriverReportComponent implements OnInit {
 
     private runReport() {
         if (this.showAllReport) {
-            this.runAllReport({
-                season: this.mSelectedSeason,
-                round: this.selectedRound,
-                sortColumn: this.mAllSortSetting.columnName,
-                sortDirection: this.mAllSortSetting.direction,
-            });
+            this.mReportHelper.runAllReport(
+                (rows: AllDriverRow[]) => {
+                    this.allRows = rows;
+                },
+                this.loadingCallback,
+                {
+                    season: this.mSelectedSeason,
+                    round: this.selectedRound,
+                    sortColumn: this.mAllSortSetting.columnName,
+                    sortDirection: this.mAllSortSetting.direction,
+                },
+                (params) => this.mDriverReportService.getAllReport(params),
+                (response) => DriverReportData.allToView(response)
+            );
         } else {
-            this.runDriverReport({
-                season: this.mSelectedSeason,
-                driverIdentifier: this.mSelectedDriver ?? '',
-                raceType: this.mSeasonHasSprints ? this.mSelectedRaceType : RaceType.RACE,
-                sortColumn: this.mDriverSortSetting.columnName,
-                sortDirection: this.mDriverSortSetting.direction,
-            });
+            this.mReportHelper.runAllReport(
+                (rows: IndividualDriverRow[]) => {
+                    this.individualRows = rows;
+                },
+                this.loadingCallback,
+                {
+                    season: this.mSelectedSeason,
+                    driverIdentifier: this.mSelectedDriver ?? '',
+                    raceType: this.mSeasonHasSprints ? this.mSelectedRaceType : RaceType.RACE,
+                    sortColumn: this.mDriverSortSetting.columnName,
+                    sortDirection: this.mDriverSortSetting.direction,
+                },
+                (params) => this.mDriverReportService.getIndividualReport(params),
+                (response) => DriverReportData.individualToView(response)
+            );
         }
     }
 
-    private runAllReport(params: AllDriverReportParameters) {
-        this.loading = true;
-        this.mDriverReportService.getAllReport(params).subscribe({
-            next: (responses) => {
-                this.loading = false;
-                this.allRows = responses.map((response) => DriverReportData.allToView(response));
-            },
-            error: this.handleReportFetchingError,
-        });
-    }
-
-    private runDriverReport(params: IndividualDriverReportParameters) {
-        this.loading = true;
-        this.mDriverReportService.getIndividualReport(params).subscribe({
-            next: (responses) => {
-                this.loading = false;
-                this.individualRows = responses.map((response) => DriverReportData.individualToView(response));
-            },
-            error: this.handleReportFetchingError,
-        });
-    }
-
-    private handleReportFetchingError(error: HttpErrorResponse) {
-        this.loading = false;
-        this.mMessageService.addHttpError(error);
-    }
+    private loadingCallback = (loading: boolean) => {
+        this.loading = loading;
+    };
 }

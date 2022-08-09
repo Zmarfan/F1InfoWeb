@@ -25,5 +25,6 @@ export class Endpoints {
         getDriverReportFilterValues: `${Endpoints.REPORTS_BASE}driver-report-filter-values/{season}`,
         getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getRaceReportFilterValues: `${Endpoints.REPORTS_BASE}race-report-filter-values/{season}`,
     };
 }

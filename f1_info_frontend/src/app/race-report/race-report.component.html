@@ -1,1 +1,11 @@
-<p>race-report works!</p>
+<section class="report-header">
+    <h1>{{'reports.race.title' | translate}}</h1>
+
+    <app-drop-down-filter
+        [options]="seasonsOptions"
+        [labelKey]="'reports.seasonDropdown.label'"
+        [allOption]="false"
+        [valueChanged]="seasonFilterChanged"
+    ></app-drop-down-filter>
+
+</section>
