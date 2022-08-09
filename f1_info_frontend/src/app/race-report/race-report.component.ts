@@ -7,6 +7,7 @@ import {RaceOverviewRow, RaceReport, RaceReportData} from './race-report-data';
 import {RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
+import {RaceType} from '../driver-report/driver-report-data';
 
 @Component({
     selector: 'app-race-report',
@@ -23,8 +24,11 @@ export class RaceReportComponent implements OnInit {
 
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceOptions: DropdownOption[] = [];
+    public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();
+
     public filterLoading: boolean = true;
     public loading: boolean = false;
+    public seasonHasSprints: boolean = false;
 
     public overviewSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
     public overviewSortConfig: ReportSortConfig = {
@@ -34,6 +38,7 @@ export class RaceReportComponent implements OnInit {
 
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedRaceRound: number | null = null;
+    private mSelectedRaceType: RaceType = RaceType.RACE;
 
     public constructor(
         private mReportHelper: ReportHelperService,
@@ -59,11 +64,17 @@ export class RaceReportComponent implements OnInit {
         this.runReport();
     };
 
+    public raceTypeFilterChanged = (newRaceType: RaceType) => {
+        this.mSelectedRaceType = newRaceType;
+        this.runReport();
+    };
+
     private fetchAndAssignFilterValues() {
         this.filterLoading = true;
         this.mRaceReportService.getFilterValues(this.mSelectedSeason).subscribe({
             next: (response) => {
                 this.filterLoading = false;
+                this.seasonHasSprints = response.races.filter((race) => race.hasSprint).length > 0;
                 this.populateRaceFilter(response);
                 this.runReport();
             },
@@ -75,9 +86,9 @@ export class RaceReportComponent implements OnInit {
     }
 
     private populateRaceFilter(response: RaceReportFilterResponse) {
-        this.raceOptions = response.circuits
-            .sort((c1, c2) => c1.round > c2.round ? 1 : 0)
-            .map((circuit) => ({ displayValue: circuit.name, value: circuit.round }));
+        this.raceOptions = response.races
+            .sort((r1, r2) => r1.round > r2.round ? 1 : 0)
+            .map((race) => ({ displayValue: race.name, value: race.round }));
     }
 
     private sort(sortSetting: SortSetting) {
@@ -105,7 +116,12 @@ export class RaceReportComponent implements OnInit {
                 this.overviewRows = rows;
             },
             this.loadingCallback,
-            { season: this.mSelectedSeason, sortColumn: this.overviewSortSetting.columnName, sortDirection: this.overviewSortSetting.direction },
+            {
+                season: this.mSelectedSeason,
+                sortColumn: this.overviewSortSetting.columnName,
+                sortDirection: this.overviewSortSetting.direction,
+                raceType: this.seasonHasSprints ? this.mSelectedRaceType : RaceType.RACE,
+            },
             (params) => this.mRaceReportService.getOverviewReport(params),
             (response) => RaceReportData.overviewToView(response)
         ); break;

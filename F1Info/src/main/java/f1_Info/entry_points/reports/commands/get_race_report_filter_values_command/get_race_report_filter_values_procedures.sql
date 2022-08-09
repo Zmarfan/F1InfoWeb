@@ -4,6 +4,7 @@ begin
   select distinct
     races.name,
     races.round,
+    if(races.sprint_time_and_date_id is not null, 'Y', 'N') as has_sprint,
     circuits.country_code as country
   from
     races

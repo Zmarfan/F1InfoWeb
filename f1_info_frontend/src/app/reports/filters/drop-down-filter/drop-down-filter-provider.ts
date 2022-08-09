@@ -1,4 +1,5 @@
 import {DropdownOption} from './drop-down-filter.component';
+import {RaceType} from '../../../driver-report/driver-report-data';
 
 export class DropDownFilterProvider {
     private static readonly FIRST_F1_SEASON: number = 1950;
@@ -10,5 +11,12 @@ export class DropDownFilterProvider {
             options.push({ displayValue: season, value: season });
         }
         return options;
+    }
+
+    public static createRaceTypeOptions(): DropdownOption[] {
+        return [
+            { displayValue: 'reports.driver.race', value: RaceType.RACE },
+            { displayValue: 'reports.driver.sprint', value: RaceType.SPRINT },
+        ];
     }
 }

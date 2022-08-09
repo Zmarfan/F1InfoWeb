@@ -92,9 +92,10 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-overview-race-report/{season}")
+    @GetMapping("/get-overview-race-report/{season}/{raceType}")
     public ResponseEntity<?> getIndividualDriverReport(
         @PathVariable("season") final int season,
+        @PathVariable("raceType") final String raceType,
         @RequestParam("sortColumn") final String sortColumn,
         @RequestParam("sortDirection") final String sortDirection
     ) {
@@ -103,7 +104,13 @@ public class ReportEndpoint {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetRaceOverviewReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mRaceReportDatabase);
+            return new GetRaceOverviewReportCommand(
+                season,
+                ResultType.fromStringCode(raceType),
+                SortDirection.fromString(sortDirection),
+                sortColumn,
+                mRaceReportDatabase
+            );
         });
     }
 

@@ -16,7 +16,7 @@ import {ReportHelperService} from '../reports/report-helper.service';
 })
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
-    public raceTypeOptions: DropdownOption[] = DriverReportData.raceTypeOptions;
+    public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();
     public driverOptions: DropdownOption[] = [];
     public roundOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;

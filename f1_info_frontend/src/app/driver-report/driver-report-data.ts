@@ -53,11 +53,6 @@ export class DriverReportData {
         new ReportColumn('points', 'reports.driver.driver.points'),
     ];
 
-    public static readonly raceTypeOptions: DropdownOption[] = [
-        { displayValue: 'reports.driver.race', value: RaceType.RACE },
-        { displayValue: 'reports.driver.sprint', value: RaceType.SPRINT },
-    ];
-
     public static allToView(response: AllDriverReportResponse): AllDriverRow {
         return {
             position: response.position,

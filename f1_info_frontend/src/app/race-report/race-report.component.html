@@ -13,6 +13,13 @@
         [labelKey]="'reports.race.raceLabel'"
         [valueChanged]="raceFilterChanged"
     ></app-drop-down-filter>
+    <app-drop-down-filter
+        *ngIf="seasonHasSprints && reportType === raceReportEnum.OVERVIEW"
+        [options]="raceTypeOptions"
+        [labelKey]="'reports.driver.raceTypeLabel'"
+        [allOption]="false"
+        [valueChanged]="raceTypeFilterChanged"
+    ></app-drop-down-filter>
 </section>
 
 <app-report-element *ngIf="reportType === raceReportEnum.OVERVIEW" [loading]="loading" [columns]="reportData.overviewReportColumns" [rows]="overviewRows" [sortConfig]="overviewSortConfig"></app-report-element>

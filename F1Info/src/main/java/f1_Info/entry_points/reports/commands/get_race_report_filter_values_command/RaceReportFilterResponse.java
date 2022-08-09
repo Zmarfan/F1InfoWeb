@@ -6,5 +6,5 @@ import java.util.List;
 
 @Value
 public class RaceReportFilterResponse {
-    List<RaceData> mCircuits;
+    List<RaceData> mRaces;
 }

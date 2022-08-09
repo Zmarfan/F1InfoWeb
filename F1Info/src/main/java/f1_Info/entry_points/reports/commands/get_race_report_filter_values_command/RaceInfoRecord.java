@@ -7,5 +7,6 @@ import lombok.Value;
 public class RaceInfoRecord {
     String mName;
     int mRound;
+    boolean mHasSprint;
     Country mCountry;
 }

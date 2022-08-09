@@ -2,6 +2,7 @@ import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
 import {OverviewRaceReportResponse} from '../../generated/server-responses';
+import {RaceType} from '../driver-report/driver-report-data';
 
 export enum RaceReport {
     OVERVIEW = 1,
@@ -28,6 +29,7 @@ export interface RaceOverviewRow {
 
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
+    raceType: RaceType;
 }
 
 export class RaceReportData {

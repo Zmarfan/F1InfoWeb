@@ -1,5 +1,5 @@
 drop procedure if exists get_race_report_overview;
-create procedure get_race_report_overview(in p_season int, in p_sort_direction varchar(5), in p_sort_column varchar(30))
+create procedure get_race_report_overview(in p_season int, in p_result_type varchar(10), in p_sort_direction varchar(5), in p_sort_column varchar(30))
 begin
   select
     stats.race_name,
@@ -28,7 +28,7 @@ begin
        inner join drivers on drivers.id = results.driver_id
        inner join constructors on constructors.id = results.constructor_id
      where
-       results.result_type = 'race' and races.year = p_season and results.finish_position_order = 1
+       results.result_type = p_result_type and races.year = p_season and results.finish_position_order = 1
    ) stats
   order by
     (case when p_sort_column = 'grandPrix' and p_sort_direction = 'asc' then stats.race_name end),

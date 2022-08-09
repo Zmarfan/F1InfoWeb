@@ -6,8 +6,9 @@ import lombok.Value;
 @Value
 public class GetOverviewReportRowsQueryData implements IQueryData<RaceOverviewRecord> {
     int m0Season;
-    String m1SortDirection;
-    String m2SortColumn;
+    String m1ResultType;
+    String m2SortDirection;
+    String m3SortColumn;
 
     @Override
     public String getStoredProcedureName() {
