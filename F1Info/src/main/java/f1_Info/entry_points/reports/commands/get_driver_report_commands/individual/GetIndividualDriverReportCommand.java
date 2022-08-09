@@ -1,5 +1,6 @@
 package f1_Info.entry_points.reports.commands.get_driver_report_commands.individual;
 
+import common.constants.f1.ResultType;
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.reports.SortDirection;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.Database;
@@ -12,6 +13,7 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 public class GetIndividualDriverReportCommand implements Command {
     private final int mSeason;
     private final String mDriverIdentifier;
+    private final ResultType mResultType;
     private final SortDirection mSortDirection;
     private final String mSortColumn;
     private final Database mDatabase;
@@ -29,7 +31,7 @@ public class GetIndividualDriverReportCommand implements Command {
     @Override
     public ResponseEntity<?> execute() throws Exception {
         return ok(
-            mDatabase.getIndividualReportRows(mSeason, mDriverIdentifier, mSortDirection, mSortColumn)
+            mDatabase.getIndividualReportRows(mSeason, mDriverIdentifier, mResultType, mSortDirection, mSortColumn)
                 .stream()
                 .map(IndividualDriverReportResponse::new)
                 .toList()

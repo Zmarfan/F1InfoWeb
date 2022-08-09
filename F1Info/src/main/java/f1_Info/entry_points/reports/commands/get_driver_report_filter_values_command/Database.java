@@ -24,7 +24,7 @@ public class Database extends TaskDatabase {
         return executeListQuery(new GetDriversFromSeasonQueryData(season));
     }
 
-    public int getAmountOfRoundsInSeason(final int season) throws SQLException {
-        return executeBasicQuery(new GetAmountOfRoundsInSeasonQueryData(season));
+    public SeasonInfoRecord getSeasonInfo(final int season) throws SQLException {
+        return executeQuery(new GetSeasonInfoQueryData(season));
     }
 }

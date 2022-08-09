@@ -1,5 +1,6 @@
 package f1_Info.entry_points.reports;
 
+import common.constants.f1.ResultType;
 import common.helpers.DateFactory;
 import f1_Info.background.ergast_tasks.ErgastFetchingInformation;
 import f1_Info.entry_points.helper.BadRequestException;
@@ -52,10 +53,11 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-individual-driver-report/{season}/{driverIdentifier}")
+    @GetMapping("/get-individual-driver-report/{season}/{driverIdentifier}/{raceType}")
     public ResponseEntity<?> getIndividualDriverReport(
         @PathVariable("season") final int season,
         @PathVariable("driverIdentifier") final String driverIdentifier,
+        @PathVariable("raceType") final String raceType,
         @RequestParam("sortColumn") final String sortColumn,
         @RequestParam("sortDirection") final String sortDirection
     ) {
@@ -64,7 +66,14 @@ public class ReportEndpoint {
                 throw new BadRequestException("Invalid sort column");
             }
 
-            return new GetIndividualDriverReportCommand(season, driverIdentifier, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
+            return new GetIndividualDriverReportCommand(
+                season,
+                driverIdentifier,
+                ResultType.fromStringCode(raceType),
+                SortDirection.fromString(sortDirection),
+                sortColumn,
+                mDriverReportDatabase
+            );
         });
     }
 

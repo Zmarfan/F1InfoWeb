@@ -28,6 +28,11 @@ interface IndividualDriverRow {
     points: number;
 }
 
+export enum RaceType {
+    RACE = 'race',
+    SPRINT = 'sprint',
+}
+
 export interface AllDriverReportParameters extends ReportParameters{
     season: number;
     round: number;
@@ -36,11 +41,7 @@ export interface AllDriverReportParameters extends ReportParameters{
 export interface IndividualDriverReportParameters extends ReportParameters{
     season: number;
     driverIdentifier: string;
-}
-
-export enum RaceType {
-    RACE = 1,
-    SPRINT = 2,
+    raceType: RaceType;
 }
 
 @Component({
@@ -94,6 +95,7 @@ export class DriverReportComponent implements OnInit {
         defaultSortSetting: this.mDriverSortSetting,
     };
     private mCurrentSeasonMaxRound: number = 1;
+    private mSeasonHasSprints: boolean = false;
 
     public constructor(
         private mDriverReportService: DriverReportService,
@@ -111,6 +113,10 @@ export class DriverReportComponent implements OnInit {
 
     public get driverSortConfig(): ReportSortConfig {
         return this.mDriverSortConfig;
+    }
+
+    public get showRaceTypeFilter(): boolean {
+        return !this.showAllReport && this.mSeasonHasSprints;
     }
 
     private static allToView(response: AllDriverReportResponse): AllDriverRow {
@@ -154,7 +160,7 @@ export class DriverReportComponent implements OnInit {
 
     public raceTypeFilterChanged = (newRaceType: RaceType) => {
         this.mSelectedRaceType = newRaceType;
-        this.fetchAndAssignFilterValues();
+        this.runReport();
     };
 
     public driverFilterChanged = (newDriver: string | null) => {
@@ -174,6 +180,7 @@ export class DriverReportComponent implements OnInit {
         this.mDriverReportService.getFilterValues(this.mSelectedSeason).subscribe({
             next: (response) => {
                 this.filterLoading = false;
+                this.mSeasonHasSprints = response.seasonHasSprints;
                 this.populateDriverFilter(response);
                 this.populateRoundFilter(response);
                 this.runReport();
@@ -214,6 +221,7 @@ export class DriverReportComponent implements OnInit {
             this.runDriverReport({
                 season: this.mSelectedSeason,
                 driverIdentifier: this.mSelectedDriver ?? '',
+                raceType: this.mSeasonHasSprints ? this.mSelectedRaceType : RaceType.RACE,
                 sortColumn: this.mDriverSortSetting.columnName,
                 sortDirection: this.mDriverSortSetting.direction,
             });

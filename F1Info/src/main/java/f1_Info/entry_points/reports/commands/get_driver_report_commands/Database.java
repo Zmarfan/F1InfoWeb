@@ -1,6 +1,7 @@
 package f1_Info.entry_points.reports.commands.get_driver_report_commands;
 
 import common.configuration.Configuration;
+import common.constants.f1.ResultType;
 import common.logger.Logger;
 import f1_Info.background.TaskDatabase;
 import f1_Info.entry_points.reports.SortDirection;
@@ -32,9 +33,15 @@ public class Database extends TaskDatabase {
     public List<IndividualDriverReportRecord> getIndividualReportRows(
         final int season,
         final String driverIdentifier,
-        final SortDirection sortDirection,
+        final ResultType resultType, final SortDirection sortDirection,
         final String sortColumn
     ) throws SQLException {
-        return executeListQuery(new GetIndividualDriverReportRowsQueryData(season, driverIdentifier, sortDirection.getDirection(), sortColumn));
+        return executeListQuery(new GetIndividualDriverReportRowsQueryData(
+            season,
+            driverIdentifier,
+            resultType.getStringCode(),
+            sortDirection.getDirection(),
+            sortColumn)
+        );
     }
 }

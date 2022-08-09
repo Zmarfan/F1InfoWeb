@@ -7,8 +7,9 @@ import lombok.Value;
 public class GetIndividualDriverReportRowsQueryData implements IQueryData<IndividualDriverReportRecord> {
     int m0Season;
     String m1DriverIdentifier;
-    String m2SortingDirection;
-    String m3SortingColumn;
+    String m2ResultType;
+    String m3SortingDirection;
+    String m4SortingColumn;
 
     @Override
     public String getStoredProcedureName() {

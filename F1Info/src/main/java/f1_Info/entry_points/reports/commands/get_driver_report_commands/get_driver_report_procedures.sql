@@ -19,10 +19,10 @@ begin
        driver_standings.points as points
      from
        driver_standings
-         inner join drivers on drivers.id = driver_standings.driver_id
-         inner join countries on countries.country_code = drivers.country_code
-         inner join constructors on constructors.id = driver_standings.constructor_id
-         inner join races on races.id = driver_standings.race_id
+       inner join drivers on drivers.id = driver_standings.driver_id
+       inner join countries on countries.country_code = drivers.country_code
+       inner join constructors on constructors.id = driver_standings.constructor_id
+       inner join races on races.id = driver_standings.race_id
      where
          races.year = p_season and round = p_round
      group by
@@ -46,6 +46,7 @@ drop procedure if exists get_individual_driver_report_get_rows;
 create procedure get_individual_driver_report_get_rows(
   in p_season int,
   in p_driver_identifier varchar(100),
+  in p_result_type varchar(100),
   in p_sort_direction varchar(5),
   in p_sort_column varchar(30)
 )
@@ -61,7 +62,7 @@ begin
      select
        circuits.name as circuit_name,
        circuits.country_code as circuit_country,
-       time_and_dates.date,
+       if(p_result_type = 'race', race_date.date, sprint_date.date) as date,
        constructors.name as constructor,
        case
          when results.position_type = 'finished' then results.finish_position_order
@@ -79,10 +80,11 @@ begin
        inner join drivers on drivers.id = driver_standings.driver_id
        inner join races on races.id = driver_standings.race_id
        inner join results on results.race_id = races.id and results.driver_id = drivers.id
-       inner join time_and_dates on time_and_dates.id = races.race_time_and_date_id
        inner join circuits on circuits.id = races.circuit_id
+       left join time_and_dates race_date on race_date.id = races.race_time_and_date_id
+       left join time_and_dates sprint_date on sprint_date.id = races.sprint_time_and_date_id
      where
-         results.result_type = 'race' and races.year = p_season and drivers.driver_identifier = p_driver_identifier
+         results.result_type = p_result_type and races.year = p_season and drivers.driver_identifier = p_driver_identifier
   ) stats
   order by
     (case when p_sort_column = 'grandPrix' and p_sort_direction = 'asc' then stats.circuit_name end),

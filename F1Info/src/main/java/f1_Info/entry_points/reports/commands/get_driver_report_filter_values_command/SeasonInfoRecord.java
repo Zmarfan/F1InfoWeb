@@ -2,11 +2,8 @@ package f1_Info.entry_points.reports.commands.get_driver_report_filter_values_co
 
 import lombok.Value;
 
-import java.util.List;
-
 @Value
-public class DriverReportFilterResponse {
-    List<DriverEntry> mDrivers;
+public class SeasonInfoRecord {
     int mAmountOfRounds;
-    boolean mSeasonHasSprints;
+    boolean mHasSprints;
 }
