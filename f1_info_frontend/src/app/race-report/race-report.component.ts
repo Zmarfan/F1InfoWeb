@@ -4,7 +4,7 @@ import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-d
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {RaceOverviewRow, RaceReport, RaceReportData} from './race-report-data';
-import {RaceReportFilterResponse} from '../../generated/server-responses';
+import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
 import {RaceType} from '../driver-report/driver-report-data';
@@ -28,7 +28,6 @@ export class RaceReportComponent implements OnInit {
 
     public filterLoading: boolean = true;
     public loading: boolean = false;
-    public seasonHasSprints: boolean = false;
 
     public overviewSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
     public overviewSortConfig: ReportSortConfig = {
@@ -40,11 +39,22 @@ export class RaceReportComponent implements OnInit {
     private mSelectedRaceRound: number | null = null;
     private mSelectedRaceType: RaceType = RaceType.RACE;
 
+    private mRacesWithSprints: RaceData[] = [];
+
     public constructor(
         private mReportHelper: ReportHelperService,
         private mRaceReportService: RaceReportService,
         private mMessageService: GlobalMessageService
     ) {
+    }
+
+    public get seasonHasSprints(): boolean {
+        return this.mRacesWithSprints.length > 0;
+    }
+
+    public get raceCategoryOptions(): DropdownOption[] {
+        const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === Number(this.mSelectedRaceRound));
+        return RaceReportData.getRaceCategoryOptions(raceData !== undefined);
     }
 
     public ngOnInit() {
@@ -68,12 +78,17 @@ export class RaceReportComponent implements OnInit {
         this.runReport();
     };
 
+    public raceCategoryFilterChanged = (newRaceCategory: RaceReport) => {
+        this.reportType = newRaceCategory;
+        this.runReport();
+    };
+
     private fetchAndAssignFilterValues() {
         this.filterLoading = true;
         this.mRaceReportService.getFilterValues(this.mSelectedSeason).subscribe({
             next: (response) => {
                 this.filterLoading = false;
-                this.seasonHasSprints = response.races.filter((race) => race.hasSprint).length > 0;
+                this.mRacesWithSprints = response.races.filter((race) => race.hasSprint);
                 this.populateRaceFilter(response);
                 this.runReport();
             },

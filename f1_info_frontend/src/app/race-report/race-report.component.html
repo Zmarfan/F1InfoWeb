@@ -14,6 +14,14 @@
         [valueChanged]="raceFilterChanged"
     ></app-drop-down-filter>
     <app-drop-down-filter
+        *ngIf="reportType !== raceReportEnum.OVERVIEW"
+        [loading]="filterLoading"
+        [options]="raceCategoryOptions"
+        [allOption]="false"
+        [labelKey]="'reports.race.raceCategory.label'"
+        [valueChanged]="raceCategoryFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
         *ngIf="seasonHasSprints && reportType === raceReportEnum.OVERVIEW"
         [options]="raceTypeOptions"
         [labelKey]="'reports.driver.raceTypeLabel'"

@@ -138,13 +138,24 @@
     "race": {
       "title": "Raceresultat",
       "raceLabel": "Race:",
+      "raceCategory": {
+        "label": "Kategori",
+        "raceResult": "Raceresultat",
+        "fastestLaps": "Snabbaste varv",
+        "pitStops": "Depåstopp",
+        "startingGrid": "Startplatser",
+        "qualifying": "Kvalresultat",
+        "sprint": "Sprintresultat",
+        "sprintGrid": "Sprintplatser",
+        "practice": "Träning {{round}}"
+      },
       "overview": {
         "grandPrix": "Grand Prix",
         "date": "Datum",
         "winner": "Vinnare",
         "constructor": "Konstruktör",
         "laps": "Varv",
-        "time": "Tid"
+        "time": "Tid "
       }
     }
   }

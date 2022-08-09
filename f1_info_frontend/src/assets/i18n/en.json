@@ -138,6 +138,17 @@
     "race": {
       "title": "Race Results",
       "raceLabel": "Race:",
+      "raceCategory": {
+        "label": "Category",
+        "raceResult": "Race Results",
+        "fastestLaps": "Fastest Laps",
+        "pitStops": "Pit Stops",
+        "startingGrid": "Starting Grid",
+        "qualifying": "Qualifying Results",
+        "sprint": "Sprint Results",
+        "sprintGrid": "Sprint Grid",
+        "practice": "Practice {{round}}"
+      },
       "overview": {
         "grandPrix": "Grand Prix",
         "date": "Date",

@@ -3,6 +3,7 @@ import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
 import {OverviewRaceReportResponse} from '../../generated/server-responses';
 import {RaceType} from '../driver-report/driver-report-data';
+import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 
 export enum RaceReport {
     OVERVIEW = 1,
@@ -41,6 +42,21 @@ export class RaceReportData {
         new ReportColumn('laps', 'reports.race.overview.laps'),
         new ReportColumn('time', 'reports.race.overview.time'),
     ];
+
+    public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
+        return [
+            { displayValue: 'reports.race.raceCategory.raceResult', value: RaceReport.RACE_RESULT },
+            { displayValue: 'reports.race.raceCategory.fastestLaps', value: RaceReport.FASTEST_LAPS },
+            { displayValue: 'reports.race.raceCategory.pitStops', value: RaceReport.PIT_STOPS },
+            { displayValue: 'reports.race.raceCategory.startingGrid', value: RaceReport.STARTING_GRID },
+            { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
+            ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprint', value: RaceReport.SPRINT }] : []),
+            ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprintGrid', value: RaceReport.SPRINT_GRID }] : []),
+            { displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 1 }, value: RaceReport.PRACTICE_1 },
+            { displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 2 }, value: RaceReport.PRACTICE_2 },
+            ...(!raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 3 }, value: RaceReport.PRACTICE_3 }] : []),
+        ];
+    }
 
     public static overviewToView(response: OverviewRaceReportResponse): RaceOverviewRow {
         return {
