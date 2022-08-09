@@ -134,6 +134,9 @@
         "racePosition": "Race Position",
         "points": "Poäng"
       }
+    },
+    "race": {
+      "title": "Raceresultat"
     }
   }
 }
