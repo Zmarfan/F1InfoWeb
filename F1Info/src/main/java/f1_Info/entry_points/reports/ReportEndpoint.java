@@ -9,6 +9,7 @@ import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetA
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.Database;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetRaceOverviewReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.GetRaceReportFilterValuesCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class ReportEndpoint {
     private final Database mDriverReportFilterDatabase;
     private final f1_Info.entry_points.reports.commands.get_driver_report_commands.Database mDriverReportDatabase;
     private final f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.Database mRaceReportFilterDatabase;
+    private final f1_Info.entry_points.reports.commands.get_race_report_commands.Database mRaceReportDatabase;
     private final DateFactory mDateFactory;
 
     @GetMapping("/driver-report-filter-values/{season}")
@@ -65,7 +67,7 @@ public class ReportEndpoint {
     ) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
             if (!seasonIsValid(season) || driverIdentifier == null || driverIdentifier.isEmpty() || sortColumn == null || sortColumn.isEmpty()) {
-                throw new BadRequestException("Invalid sort column");
+                throw new BadRequestException();
             }
 
             return new GetIndividualDriverReportCommand(
@@ -87,6 +89,21 @@ public class ReportEndpoint {
             }
 
             return new GetRaceReportFilterValuesCommand(season, mRaceReportFilterDatabase);
+        });
+    }
+
+    @GetMapping("/get-overview-race-report/{season}")
+    public ResponseEntity<?> getIndividualDriverReport(
+        @PathVariable("season") final int season,
+        @RequestParam("sortColumn") final String sortColumn,
+        @RequestParam("sortDirection") final String sortDirection
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty()) {
+                throw new BadRequestException("Invalid sort column");
+            }
+
+            return new GetRaceOverviewReportCommand(season, SortDirection.fromString(sortDirection), sortColumn, mRaceReportDatabase);
         });
     }
 

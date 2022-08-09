@@ -6,6 +6,7 @@ import {GlobalMessageService} from '../../core/information/global-message-displa
 import {RaceOverviewRow, RaceReport, RaceReportData} from './race-report-data';
 import {RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
+import {ReportHelperService} from '../reports/report-helper.service';
 
 @Component({
     selector: 'app-race-report',
@@ -25,23 +26,20 @@ export class RaceReportComponent implements OnInit {
     public filterLoading: boolean = true;
     public loading: boolean = false;
 
-    private mOverviewSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
-    private mOverviewSortConfig: ReportSortConfig = {
+    public overviewSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
+    public overviewSortConfig: ReportSortConfig = {
         sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
-        defaultSortSetting: this.mOverviewSortSetting,
+        defaultSortSetting: this.overviewSortSetting,
     };
 
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedRaceRound: number | null = null;
 
     public constructor(
+        private mReportHelper: ReportHelperService,
         private mRaceReportService: RaceReportService,
         private mMessageService: GlobalMessageService
     ) {
-    }
-
-    public get overviewSortConfig(): ReportSortConfig {
-        return this.mOverviewSortConfig;
     }
 
     public ngOnInit() {
@@ -84,7 +82,7 @@ export class RaceReportComponent implements OnInit {
 
     private sort(sortSetting: SortSetting) {
         switch (this.reportType) {
-        case RaceReport.OVERVIEW: this.mOverviewSortSetting = sortSetting; break;
+        case RaceReport.OVERVIEW: this.overviewSortSetting = sortSetting; break;
         case RaceReport.RACE_RESULT: break;
         case RaceReport.FASTEST_LAPS: break;
         case RaceReport.PIT_STOPS: break;
@@ -102,7 +100,15 @@ export class RaceReportComponent implements OnInit {
 
     private runReport() {
         switch (this.reportType) {
-        case RaceReport.OVERVIEW: break;
+        case RaceReport.OVERVIEW: this.mReportHelper.runAllReport(
+            (rows: RaceOverviewRow[]) => {
+                this.overviewRows = rows;
+            },
+            this.loadingCallback,
+            { season: this.mSelectedSeason, sortColumn: this.overviewSortSetting.columnName, sortDirection: this.overviewSortSetting.direction },
+            (params) => this.mRaceReportService.getOverviewReport(params),
+            (response) => RaceReportData.overviewToView(response)
+        ); break;
         case RaceReport.RACE_RESULT: break;
         case RaceReport.FASTEST_LAPS: break;
         case RaceReport.PIT_STOPS: break;
