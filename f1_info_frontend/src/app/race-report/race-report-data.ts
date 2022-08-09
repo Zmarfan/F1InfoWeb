@@ -1,3 +1,6 @@
+import {ReportColumn} from '../reports/report-element/report-column';
+import {CountryEntry} from '../reports/entry/country-entry/country-entry';
+
 export enum RaceReport {
     OVERVIEW = 1,
     RACE_RESULT = 2,
@@ -12,6 +15,22 @@ export enum RaceReport {
     QUALIFYING = 11,
 }
 
-export class RaceReportData {
+export interface RaceOverviewRow {
+    grandPrix: CountryEntry;
+    date: string;
+    winner: string;
+    constructor: string;
+    laps: number;
+    time: string;
+}
 
+export class RaceReportData {
+    public static readonly overviewReportColumns: ReportColumn[] = [
+        new ReportColumn('grandPrix', 'reports.race.overview.grandPrix'),
+        new ReportColumn('date', 'reports.race.overview.date'),
+        new ReportColumn('winner', 'reports.race.overview.winner'),
+        new ReportColumn('constructor', 'reports.race.overview.constructor'),
+        new ReportColumn('laps', 'reports.race.overview.laps'),
+        new ReportColumn('time', 'reports.race.overview.time'),
+    ];
 }

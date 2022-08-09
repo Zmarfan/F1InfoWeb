@@ -6,8 +6,7 @@ import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-d
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {DriverReportFilterResponse} from '../../generated/server-responses';
-import {AllDriverReportParameters, AllDriverRow, DriverReportData, IndividualDriverReportParameters, IndividualDriverRow, RaceType} from './driver-report-data';
-import {HttpErrorResponse} from '@angular/common/http';
+import {AllDriverRow, DriverReportData, IndividualDriverRow, RaceType} from './driver-report-data';
 import {ReportHelperService} from '../reports/report-helper.service';
 
 @Component({

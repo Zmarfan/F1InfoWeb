@@ -137,7 +137,15 @@
     },
     "race": {
       "title": "Race Results",
-      "raceLabel": "Race:"
+      "raceLabel": "Race:",
+      "overview": {
+        "grandPrix": "Grand Prix",
+        "date": "Date",
+        "winner": "Winner",
+        "constructor": "Constructor",
+        "laps": "Laps",
+        "time": "Time"
+      }
     }
   }
 }

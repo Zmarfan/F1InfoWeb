@@ -137,7 +137,15 @@
     },
     "race": {
       "title": "Raceresultat",
-      "raceLabel": "Race:"
+      "raceLabel": "Race:",
+      "overview": {
+        "grandPrix": "Grand Prix",
+        "date": "Datum",
+        "winner": "Vinnare",
+        "constructor": "Konstruktör",
+        "laps": "Varv",
+        "time": "Tid"
+      }
     }
   }
 }

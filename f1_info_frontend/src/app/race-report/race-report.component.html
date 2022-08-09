@@ -13,5 +13,6 @@
         [labelKey]="'reports.race.raceLabel'"
         [valueChanged]="raceFilterChanged"
     ></app-drop-down-filter>
-
 </section>
+
+<app-report-element *ngIf="reportType === raceReportEnum.OVERVIEW" [loading]="loading" [columns]="reportData.overviewReportColumns" [rows]="overviewRows" [sortConfig]="overviewSortConfig"></app-report-element>
