@@ -165,6 +165,15 @@
         "laps": "Laps",
         "timeRetired": "Time/Retired",
         "points": "Points"
+      },
+      "fastestLaps": {
+        "position": "Pos.",
+        "raceNumber": "No.",
+        "driver": "Driver",
+        "constructor": "Constructor",
+        "lap": "Lap",
+        "time": "Time",
+        "averageSpeed": "Average Speed"
       }
     }
   }

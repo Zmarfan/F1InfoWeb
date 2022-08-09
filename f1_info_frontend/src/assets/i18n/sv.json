@@ -165,6 +165,15 @@
         "laps": "Varv",
         "timeRetired": "Tid/Avbröt",
         "points": "Poäng"
+      },
+      "fastestLaps": {
+        "position": "Pos.",
+        "raceNumber": "No.",
+        "driver": "Förare",
+        "constructor": "Konstruktör",
+        "lap": "Varv",
+        "time": "Tid",
+        "averageSpeed": "Medelhastighet"
       }
     }
   }

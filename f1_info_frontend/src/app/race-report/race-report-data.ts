@@ -38,6 +38,16 @@ export interface RaceResultRow {
     points: number;
 }
 
+export interface FastestLapsRow {
+    position: number;
+    raceNumber: number;
+    driver: string;
+    constructor: string;
+    lap: number;
+    time: string;
+    averageSpeed: number;
+}
+
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
@@ -61,6 +71,16 @@ export class RaceReportData {
         new ReportColumn('laps', 'reports.race.raceResult.laps'),
         new ReportColumn('timeRetired', 'reports.race.raceResult.timeRetired'),
         new ReportColumn('points', 'reports.race.raceResult.points'),
+    ];
+
+    public static readonly fastestLapsReportColumns: ReportColumn[] = [
+        new ReportColumn('position', 'reports.race.fastestLaps.position'),
+        new ReportColumn('raceNumber', 'reports.race.fastestLaps.raceNumber'),
+        new ReportColumn('driver', 'reports.race.fastestLaps.driver'),
+        new ReportColumn('constructor', 'reports.race.fastestLaps.constructor'),
+        new ReportColumn('lap', 'reports.race.fastestLaps.lap'),
+        new ReportColumn('time', 'reports.race.fastestLaps.time'),
+        new ReportColumn('averageSpeed', 'reports.race.fastestLaps.averageSpeed'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
