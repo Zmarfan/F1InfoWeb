@@ -33,3 +33,4 @@
 <app-report-element *ngIf="reportType === raceReportEnum.OVERVIEW" [loading]="loading" [columns]="reportData.overviewReportColumns" [rows]="overviewRows" [sortConfig]="overviewSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.RACE_RESULT" [loading]="loading" [columns]="reportData.raceResultReportColumns" [rows]="raceResultRows" [sortConfig]="raceResultSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.FASTEST_LAPS" [loading]="loading" [columns]="reportData.fastestLapsReportColumns" [rows]="fastestLapsRows" [sortConfig]="fastestLapsSortConfig"></app-report-element>
+<app-report-element *ngIf="reportType === raceReportEnum.PIT_STOPS" [loading]="loading" [columns]="reportData.pitStopsReportColumns" [rows]="pitStopsRows" [sortConfig]="pitStopsSortConfig"></app-report-element>

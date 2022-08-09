@@ -159,7 +159,7 @@
       },
       "raceResult": {
         "position": "Pos.",
-        "raceNumber": "No.",
+        "driverNumber": "No.",
         "driver": "Driver",
         "constructor": "Constructor",
         "laps": "Laps",
@@ -168,12 +168,21 @@
       },
       "fastestLaps": {
         "position": "Pos.",
-        "raceNumber": "No.",
+        "driverNumber": "No.",
         "driver": "Driver",
         "constructor": "Constructor",
         "lap": "Lap",
         "time": "Time",
         "averageSpeed": "Average Speed"
+      },
+      "pitStops": {
+        "stopNumber": "Stop",
+        "driverNumber": "No.",
+        "driver": "Driver",
+        "constructor": "Constructor",
+        "lap": "Lap",
+        "time": "Time",
+        "total": "Total"
       }
     }
   }

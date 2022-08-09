@@ -159,7 +159,7 @@
       },
       "raceResult": {
         "position": "Pos.",
-        "raceNumber": "No.",
+        "driverNumber": "No.",
         "driver": "Förare",
         "constructor": "Konstruktör",
         "laps": "Varv",
@@ -168,12 +168,21 @@
       },
       "fastestLaps": {
         "position": "Pos.",
-        "raceNumber": "No.",
+        "driverNumber": "No.",
         "driver": "Förare",
         "constructor": "Konstruktör",
         "lap": "Varv",
         "time": "Tid",
         "averageSpeed": "Medelhastighet"
+      },
+      "pitStops": {
+        "stopNumber": "Stopp",
+        "driverNumber": "No.",
+        "driver": "Förare",
+        "constructor": "Konstruktör",
+        "lap": "Varv",
+        "time": "Tid",
+        "total": "Total"
       }
     }
   }

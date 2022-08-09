@@ -3,7 +3,7 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {FastestLapsRow, RaceOverviewRow, RaceReport, RaceReportData, RaceResultRow} from './race-report-data';
+import {FastestLapsRow, PitStopsRow, RaceOverviewRow, RaceReport, RaceReportData, RaceResultRow} from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
@@ -23,6 +23,7 @@ export class RaceReportComponent implements OnInit {
     public overviewRows: RaceOverviewRow[] = [];
     public raceResultRows: RaceResultRow[] = [];
     public fastestLapsRows: FastestLapsRow[] = [];
+    public pitStopsRows: PitStopsRow[] = [];
 
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceOptions: DropdownOption[] = [];
@@ -46,6 +47,11 @@ export class RaceReportComponent implements OnInit {
     public fastestLapsSortConfig: ReportSortConfig = {
         sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
         defaultSortSetting: this.fastestLapsSortSetting,
+    };
+    public pitStopsSortSetting: SortSetting = { columnName: 'lap', direction: SortDirection.ASCENDING };
+    public pitStopsSortConfig: ReportSortConfig = {
+        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+        defaultSortSetting: this.pitStopsSortSetting,
     };
 
     private mSelectedSeason: number = new Date().getFullYear();
@@ -124,7 +130,7 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.OVERVIEW: this.overviewSortSetting = sortSetting; break;
         case RaceReport.RACE_RESULT: this.raceResultSortSetting = sortSetting; break;
         case RaceReport.FASTEST_LAPS: this.fastestLapsSortSetting = sortSetting; break;
-        case RaceReport.PIT_STOPS: break;
+        case RaceReport.PIT_STOPS: this.pitStopsSortSetting = sortSetting; break;
         case RaceReport.STARTING_GRID: break;
         case RaceReport.SPRINT: break;
         case RaceReport.SPRINT_GRID: break;
