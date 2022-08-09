@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {parseTemplate} from 'url-template';
 import {Endpoints} from '../configuration/endpoints';
-
-interface RaceReportFilterResponse {
-
-}
+import {RaceReportFilterResponse} from '../../generated/server-responses';
 
 @Injectable({
     providedIn: 'root',

@@ -52,16 +52,16 @@ create procedure get_individual_driver_report_get_rows(
 )
 begin
   select
-    stats.circuit_name,
-    stats.circuit_country,
+    stats.race_name,
+    stats.race_country,
     stats.date,
     stats.constructor,
     stats.race_position,
     stats.points
   from (
      select
-       circuits.name as circuit_name,
-       circuits.country_code as circuit_country,
+       races.name as race_name,
+       circuits.country_code as race_country,
        if(p_result_type = 'race', race_date.date, sprint_date.date) as date,
        constructors.name as constructor,
        case
@@ -87,13 +87,13 @@ begin
          results.result_type = p_result_type and races.year = p_season and drivers.driver_identifier = p_driver_identifier
   ) stats
   order by
-    (case when p_sort_column = 'grandPrix' and p_sort_direction = 'asc' then stats.circuit_name end),
+    (case when p_sort_column = 'grandPrix' and p_sort_direction = 'asc' then stats.race_name end),
     (case when p_sort_column = 'date' and p_sort_direction = 'asc' then stats.date end),
     (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
     (case when p_sort_column = 'racePosition' and p_sort_direction = 'asc' then stats.race_position end),
     (case when p_sort_column = 'points' and p_sort_direction = 'asc' then stats.points end),
 
-    (case when p_sort_column = 'grandPrix' and p_sort_direction = 'desc' then stats.circuit_name end) desc,
+    (case when p_sort_column = 'grandPrix' and p_sort_direction = 'desc' then stats.race_name end) desc,
     (case when p_sort_column = 'date' and p_sort_direction = 'desc' then stats.date end) desc,
     (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
     (case when p_sort_column = 'racePosition' and p_sort_direction = 'desc' then stats.race_position end) desc,

@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 @Value
 public class IndividualDriverReportRecord {
-    String mCircuitName;
-    Country mCircuitCountry;
+    String mRaceName;
+    Country mRaceCountry;
     LocalDateTime mDate;
     String mConstructor;
     String mRacePosition;

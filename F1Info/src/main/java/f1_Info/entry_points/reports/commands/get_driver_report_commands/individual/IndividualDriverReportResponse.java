@@ -6,16 +6,16 @@ import java.math.BigDecimal;
 
 @Value
 public class IndividualDriverReportResponse {
-    String mCircuitName;
-    String mCircuitIsoCode;
+    String mRaceName;
+    String mRaceIsoCode;
     String mDate;
     String mConstructor;
     String mRacePosition;
     BigDecimal mPoints;
 
     public IndividualDriverReportResponse(final IndividualDriverReportRecord reportRecord) {
-        mCircuitName = reportRecord.getCircuitName();
-        mCircuitIsoCode = reportRecord.getCircuitCountry().getCode();
+        mRaceName = reportRecord.getRaceName();
+        mRaceIsoCode = reportRecord.getRaceCountry().getCode();
         mDate = reportRecord.getDate().toLocalDate().toString();
         mConstructor = reportRecord.getConstructor();
         mRacePosition = reportRecord.getRacePosition();

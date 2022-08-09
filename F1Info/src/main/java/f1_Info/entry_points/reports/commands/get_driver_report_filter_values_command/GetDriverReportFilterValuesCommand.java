@@ -15,7 +15,7 @@ public class GetDriverReportFilterValuesCommand implements Command {
 
     @Override
     public String getAction() {
-        return String.format("Fetch drivers from season %d", mSeason);
+        return String.format("Fetch driver report filter values from season %d", mSeason);
     }
 
     @Override

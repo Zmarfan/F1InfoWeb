@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {Observable} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',

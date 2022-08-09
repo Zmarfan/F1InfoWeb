@@ -6,9 +6,10 @@ import f1_Info.background.ergast_tasks.ErgastFetchingInformation;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetAllDriverReportCommand;
+import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.Database;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
-import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
+import f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.GetRaceReportFilterValuesCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class ReportEndpoint {
     private final HttpServletRequest mHttpServletRequest;
     private final Database mDriverReportFilterDatabase;
     private final f1_Info.entry_points.reports.commands.get_driver_report_commands.Database mDriverReportDatabase;
+    private final f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.Database mRaceReportFilterDatabase;
     private final DateFactory mDateFactory;
 
     @GetMapping("/driver-report-filter-values/{season}")
@@ -74,6 +76,17 @@ public class ReportEndpoint {
                 sortColumn,
                 mDriverReportDatabase
             );
+        });
+    }
+
+    @GetMapping("/race-report-filter-values/{season}")
+    public ResponseEntity<?> getRaceReportFilterValues(@PathVariable("season") final int season) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (!seasonIsValid(season)) {
+                throw new BadRequestException();
+            }
+
+            return new GetRaceReportFilterValuesCommand(season, mRaceReportFilterDatabase);
         });
     }
 

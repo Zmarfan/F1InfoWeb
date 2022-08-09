@@ -70,7 +70,7 @@ export class DriverReportData {
 
     public static individualToView(response: IndividualDriverReportResponse): IndividualDriverRow {
         return {
-            grandPrix: new CountryEntry({ displayValue: response.circuitName, isoCode: response.circuitIsoCode }),
+            grandPrix: new CountryEntry({ displayValue: response.raceName, isoCode: response.raceIsoCode }),
             date: response.date,
             constructor: response.constructor,
             racePosition: response.racePosition,

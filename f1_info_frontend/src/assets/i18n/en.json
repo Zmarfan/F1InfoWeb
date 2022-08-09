@@ -136,7 +136,8 @@
       }
     },
     "race": {
-      "title": "Race Results"
+      "title": "Race Results",
+      "raceLabel": "Race:"
     }
   }
 }

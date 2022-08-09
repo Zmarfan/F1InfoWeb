@@ -4,6 +4,7 @@ import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-d
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {RaceReport} from './race-report-data';
+import {RaceReportFilterResponse} from '../../generated/server-responses';
 
 @Component({
     selector: 'app-race-report',
@@ -12,10 +13,12 @@ import {RaceReport} from './race-report-data';
 })
 export class RaceReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+    public raceOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;
     public loading: boolean = true;
 
     private mSelectedSeason: number = new Date().getFullYear();
+    private mSelectedRaceRound: number | null = null;
     private mReportType: RaceReport = RaceReport.OVERVIEW;
 
     public constructor(
@@ -33,11 +36,17 @@ export class RaceReportComponent implements OnInit {
         this.fetchAndAssignFilterValues();
     };
 
+    public raceFilterChanged = (newRace: number | null) => {
+        this.mSelectedRaceRound = newRace;
+        this.runReport();
+    };
+
     private fetchAndAssignFilterValues() {
         this.filterLoading = true;
         this.mRaceReportService.getFilterValues(this.mSelectedSeason).subscribe({
             next: (response) => {
                 this.filterLoading = false;
+                this.populateRaceFilter(response);
                 this.runReport();
             },
             error: (error) => {
@@ -45,6 +54,12 @@ export class RaceReportComponent implements OnInit {
                 this.mMessageService.addHttpError(error);
             },
         });
+    }
+
+    private populateRaceFilter(response: RaceReportFilterResponse) {
+        this.raceOptions = response.circuits
+            .sort((c1, c2) => c1.round > c2.round ? 1 : 0)
+            .map((circuit) => ({ displayValue: circuit.name, value: circuit.round }));
     }
 
     private runReport() {
