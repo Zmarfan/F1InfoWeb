@@ -11,38 +11,8 @@ import {
     IndividualDriverReportResponse
 } from '../../generated/server-responses';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
-
-interface AllDriverRow {
-    position: number;
-    driver: string;
-    nationality: CountryEntry;
-    constructor: string;
-    points: number;
-}
-
-interface IndividualDriverRow {
-    grandPrix: CountryEntry;
-    date: string;
-    constructor: string;
-    racePosition: string;
-    points: number;
-}
-
-export enum RaceType {
-    RACE = 'race',
-    SPRINT = 'sprint',
-}
-
-export interface AllDriverReportParameters extends ReportParameters{
-    season: number;
-    round: number;
-}
-
-export interface IndividualDriverReportParameters extends ReportParameters{
-    season: number;
-    driverIdentifier: string;
-    raceType: RaceType;
-}
+import {AllDriverReportParameters, AllDriverRow, DriverReportData, IndividualDriverReportParameters, IndividualDriverRow, RaceType} from './driver-report-data';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-driver-report',
@@ -51,39 +21,24 @@ export interface IndividualDriverReportParameters extends ReportParameters{
 })
 export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
-    public raceTypeOptions: DropdownOption[] = [
-        { displayValue: 'reports.driver.race', value: RaceType.RACE },
-        { displayValue: 'reports.driver.sprint', value: RaceType.SPRINT },
-    ];
+    public raceTypeOptions: DropdownOption[] = DriverReportData.raceTypeOptions;
     public driverOptions: DropdownOption[] = [];
     public roundOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;
 
-    public allReportColumns: ReportColumn[] = [
-        new ReportColumn('position', 'reports.driver.all.position'),
-        new ReportColumn('driver', 'reports.driver.all.driver'),
-        new ReportColumn('nationality', 'reports.driver.all.nationality'),
-        new ReportColumn('constructor', 'reports.driver.all.constructor'),
-        new ReportColumn('points', 'reports.driver.all.points'),
-    ];
-
-    public driverReportColumns: ReportColumn[] = [
-        new ReportColumn('grandPrix', 'reports.driver.driver.grandPrix'),
-        new ReportColumn('date', 'reports.driver.driver.date'),
-        new ReportColumn('constructor', 'reports.driver.driver.constructor'),
-        new ReportColumn('racePosition', 'reports.driver.driver.racePosition'),
-        new ReportColumn('points', 'reports.driver.driver.points'),
-    ];
+    public allReportColumns: ReportColumn[] = DriverReportData.allReportColumns;
+    public driverReportColumns: ReportColumn[] = DriverReportData.driverReportColumns;
 
     public allRows: AllDriverRow[] = [];
     public individualRows: IndividualDriverRow[] = [];
 
     public loading: boolean = false;
-
     public selectedRound: number = 1;
+
     private mSelectedSeason: number = new Date().getFullYear();
     private mSelectedRaceType: RaceType = RaceType.RACE;
     private mSelectedDriver: string | null = null;
+
     private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
     private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.DESCENDING };
     private mAllSortConfig: ReportSortConfig = {
@@ -117,26 +72,6 @@ export class DriverReportComponent implements OnInit {
 
     public get showRaceTypeFilter(): boolean {
         return !this.showAllReport && this.mSeasonHasSprints;
-    }
-
-    private static allToView(response: AllDriverReportResponse): AllDriverRow {
-        return {
-            position: response.position,
-            driver: response.driverFullName,
-            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
-            constructor: response.constructor,
-            points: response.points,
-        };
-    }
-
-    private static individualToView(response: IndividualDriverReportResponse): IndividualDriverRow {
-        return {
-            grandPrix: new CountryEntry({ displayValue: response.circuitName, isoCode: response.circuitIsoCode }),
-            date: response.date,
-            constructor: response.constructor,
-            racePosition: response.racePosition,
-            points: response.points,
-        };
     }
 
     public ngOnInit() {
@@ -233,12 +168,9 @@ export class DriverReportComponent implements OnInit {
         this.mDriverReportService.getAllReport(params).subscribe({
             next: (responses) => {
                 this.loading = false;
-                this.allRows = responses.map((response) => DriverReportComponent.allToView(response));
+                this.allRows = responses.map((response) => DriverReportData.allToView(response));
             },
-            error: (error) => {
-                this.loading = false;
-                this.mMessageService.addHttpError(error);
-            },
+            error: this.handleReportFetchingError,
         });
     }
 
@@ -247,12 +179,14 @@ export class DriverReportComponent implements OnInit {
         this.mDriverReportService.getIndividualReport(params).subscribe({
             next: (responses) => {
                 this.loading = false;
-                this.individualRows = responses.map((response) => DriverReportComponent.individualToView(response));
+                this.individualRows = responses.map((response) => DriverReportData.individualToView(response));
             },
-            error: (error) => {
-                this.loading = false;
-                this.mMessageService.addHttpError(error);
-            },
+            error: this.handleReportFetchingError,
         });
+    }
+
+    private handleReportFetchingError(error: HttpErrorResponse) {
+        this.loading = false;
+        this.mMessageService.addHttpError(error);
     }
 }

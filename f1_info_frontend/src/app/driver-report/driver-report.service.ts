@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Endpoints} from '../configuration/endpoints';
 import {parseTemplate} from 'url-template';
 import {AllDriverReportResponse, DriverReportFilterResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
-import {AllDriverReportParameters, IndividualDriverReportParameters} from './driver-report.component';
+import {AllDriverReportParameters, IndividualDriverReportParameters} from './driver-report-data';
 
 @Injectable({
     providedIn: 'root',
