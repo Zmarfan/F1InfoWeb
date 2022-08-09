@@ -58,9 +58,8 @@ export class RaceReportComponent implements OnInit {
 
     public raceFilterChanged = (newRace: number | null) => {
         this.mSelectedRaceRound = newRace;
-        if (this.mSelectedRaceRound === null) {
-            this.reportType =RaceReport.OVERVIEW;
-        }
+        this.reportType = this.mSelectedRaceRound === null ? RaceReport.OVERVIEW : RaceReport.RACE_RESULT;
+
         this.runReport();
     };
 
