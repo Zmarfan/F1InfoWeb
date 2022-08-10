@@ -60,7 +60,6 @@ export interface StartingGridRow {
     driverNumber: number;
     driver: string;
     constructor: string;
-    time: string;
 }
 
 export interface QualifyingRow {
@@ -134,7 +133,6 @@ export class RaceReportData {
         new ReportColumn('driverNumber', 'reports.race.startingGrid.driverNumber', true),
         new ReportColumn('driver', 'reports.race.startingGrid.driver'),
         new ReportColumn('constructor', 'reports.race.startingGrid.constructor'),
-        new ReportColumn('time', 'reports.race.startingGrid.time'),
     ];
 
     public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [

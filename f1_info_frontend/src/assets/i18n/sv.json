@@ -188,8 +188,7 @@
         "position": "Pos.",
         "driverNumber": "No.",
         "driver": "Förare",
-        "constructor": "Konstruktör",
-        "time": "Tid"
+        "constructor": "Konstruktör"
       },
       "qualifying": {
         "position": "Pos.",

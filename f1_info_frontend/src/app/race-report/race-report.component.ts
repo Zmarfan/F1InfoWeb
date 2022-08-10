@@ -161,10 +161,10 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.RACE_RESULT: this.raceResultSortSetting = sortSetting; break;
         case RaceReport.FASTEST_LAPS: this.fastestLapsSortSetting = sortSetting; break;
         case RaceReport.PIT_STOPS: this.pitStopsSortSetting = sortSetting; break;
-        case RaceReport.STARTING_GRID: this.startingGridSortSetting = sortSetting; break;
         case RaceReport.QUALIFYING: this.qualifyingSortSetting = sortSetting; break;
         case RaceReport.SPRINT: this.sprintSortSetting = sortSetting; break;
-        case RaceReport.SPRINT_GRID: break;
+        case RaceReport.SPRINT_GRID:
+        case RaceReport.STARTING_GRID: this.startingGridSortSetting = sortSetting; break;
         }
 
         this.runReport();

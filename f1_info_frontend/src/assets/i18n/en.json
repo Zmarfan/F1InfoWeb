@@ -188,8 +188,7 @@
         "position": "Pos.",
         "driverNumber": "No.",
         "driver": "Driver",
-        "constructor": "Constructor",
-        "time": "Time"
+        "constructor": "Constructor"
       },
       "qualifying": {
         "position": "Pos.",
