@@ -1,7 +1,7 @@
 import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
-import {OverviewRaceReportResponse} from '../../generated/server-responses';
+import {OverviewRaceReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
 import {RaceType} from '../driver-report/driver-report-data';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 
@@ -29,6 +29,7 @@ export interface RaceResultRow {
     position: number;
     driverNumber: number;
     driver: string;
+    nationality: CountryEntry;
     constructor: string;
     laps: number;
     timeRetired: string;
@@ -73,19 +74,15 @@ export interface QualifyingRow {
     laps: string;
 }
 
-export interface SprintRow {
-    position: number;
-    driverNumber: number;
-    driver: string;
-    constructor: string;
-    laps: number;
-    timeRetired: string;
-    points: number;
-}
-
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
+}
+
+export interface RaceResultReportParameters extends ReportParameters{
+    season: number;
+    round: number;
+    type: RaceType;
 }
 
 export class RaceReportData {
@@ -102,8 +99,9 @@ export class RaceReportData {
         new ReportColumn('position', 'reports.race.raceResult.position'),
         new ReportColumn('driverNumber', 'reports.race.raceResult.driverNumber', true),
         new ReportColumn('driver', 'reports.race.raceResult.driver'),
+        new ReportColumn('nationality', 'reports.race.raceResult.nationality', true),
         new ReportColumn('constructor', 'reports.race.raceResult.constructor'),
-        new ReportColumn('laps', 'reports.race.raceResult.laps'),
+        new ReportColumn('laps', 'reports.race.raceResult.laps', true),
         new ReportColumn('timeRetired', 'reports.race.raceResult.timeRetired'),
         new ReportColumn('points', 'reports.race.raceResult.points'),
     ];
@@ -145,16 +143,6 @@ export class RaceReportData {
         new ReportColumn('q3', 'reports.race.qualifying.q3'),
     ];
 
-    public static readonly sprintReportColumns: ReportColumn<SprintRow>[] = [
-        new ReportColumn('position', 'reports.race.sprint.position'),
-        new ReportColumn('driverNumber', 'reports.race.sprint.driverNumber', true),
-        new ReportColumn('driver', 'reports.race.sprint.driver'),
-        new ReportColumn('constructor', 'reports.race.sprint.constructor'),
-        new ReportColumn('laps', 'reports.race.sprint.laps'),
-        new ReportColumn('timeRetired', 'reports.race.sprint.timeRetired'),
-        new ReportColumn('points', 'reports.race.sprint.points'),
-    ];
-
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
         return [
             { displayValue: 'reports.race.raceCategory.raceResult', value: RaceReport.RACE_RESULT },
@@ -175,6 +163,19 @@ export class RaceReportData {
             constructor: response.constructor,
             laps: response.laps,
             time: response.time,
+        };
+    }
+
+    public static raceResultToView(response: RaceResultReportResponse): RaceResultRow {
+        return {
+            position: response.position,
+            driverNumber: response.driverNumber ?? '-',
+            driver: response.driver,
+            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
+            constructor: response.constructor,
+            laps: response.laps,
+            timeRetired: response.timeRetired,
+            points: response.points,
         };
     }
 }

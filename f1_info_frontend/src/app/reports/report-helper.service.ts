@@ -12,7 +12,7 @@ export class ReportHelperService {
     ) {
     }
 
-    public runAllReport<T, R, Y>(
+    public runReport<T, R, Y>(
         assignCallback: (rows: Y[]) => void,
         loadingCallback: (loading: boolean) => void,
         params: T,

@@ -1,5 +1,4 @@
 import {ReportColumn} from '../reports/report-element/report-column';
-import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
 import {AllDriverReportResponse, IndividualDriverReportResponse} from '../../generated/server-responses';

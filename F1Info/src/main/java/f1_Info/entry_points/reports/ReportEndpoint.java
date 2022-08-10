@@ -10,6 +10,7 @@ import f1_Info.entry_points.reports.commands.get_driver_report_commands.individu
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.Database;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetRaceOverviewReportCommand;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.GetRaceReportFilterValuesCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,8 @@ public class ReportEndpoint {
         @RequestParam("sortDirection") final String sortDirection
     ) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
-            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() && round > 0) {
-                throw new BadRequestException("Invalid sort column");
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() || round <= 0) {
+                throw new BadRequestException();
             }
 
             return new GetAllDriverReportCommand(season, round, SortDirection.fromString(sortDirection), sortColumn, mDriverReportDatabase);
@@ -93,7 +94,7 @@ public class ReportEndpoint {
     }
 
     @GetMapping("/get-overview-race-report/{season}/{raceType}")
-    public ResponseEntity<?> getIndividualDriverReport(
+    public ResponseEntity<?> getOverviewRaceResultReport(
         @PathVariable("season") final int season,
         @PathVariable("raceType") final String raceType,
         @RequestParam("sortColumn") final String sortColumn,
@@ -107,6 +108,30 @@ public class ReportEndpoint {
             return new GetRaceOverviewReportCommand(
                 season,
                 ResultType.fromStringCode(raceType),
+                SortDirection.fromString(sortDirection),
+                sortColumn,
+                mRaceReportDatabase
+            );
+        });
+    }
+
+    @GetMapping("/get-race-result-report/{season}/{round}/{type}")
+    public ResponseEntity<?> getRaceResultReport(
+        @PathVariable("season") final int season,
+        @PathVariable("round") final int round,
+        @PathVariable("type") final String resultType,
+        @RequestParam("sortColumn") final String sortColumn,
+        @RequestParam("sortDirection") final String sortDirection
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() || round <= 0) {
+                throw new BadRequestException();
+            }
+
+            return new GetRaceResultReportCommand(
+                season,
+                round,
+                ResultType.fromStringCode(resultType),
                 SortDirection.fromString(sortDirection),
                 sortColumn,
                 mRaceReportDatabase

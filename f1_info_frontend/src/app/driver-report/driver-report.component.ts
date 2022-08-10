@@ -142,7 +142,7 @@ export class DriverReportComponent implements OnInit {
 
     private runReport() {
         if (this.showAllReport) {
-            this.mReportHelper.runAllReport(
+            this.mReportHelper.runReport(
                 (rows: AllDriverRow[]) => {
                     this.allRows = rows;
                 },
@@ -157,7 +157,7 @@ export class DriverReportComponent implements OnInit {
                 (response) => DriverReportData.allToView(response)
             );
         } else {
-            this.mReportHelper.runAllReport(
+            this.mReportHelper.runReport(
                 (rows: IndividualDriverRow[]) => {
                     this.individualRows = rows;
                 },

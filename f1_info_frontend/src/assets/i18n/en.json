@@ -161,6 +161,7 @@
         "position": "Pos.",
         "driverNumber": "No.",
         "driver": "Driver",
+        "nationality": "Nationality",
         "constructor": "Constructor",
         "laps": "Laps",
         "timeRetired": "Time/Retired",

@@ -7,6 +7,8 @@ import f1_Info.background.TaskDatabase;
 import f1_Info.entry_points.reports.SortDirection;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetOverviewReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.RaceOverviewRecord;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportRowsQueryData;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.RaceResultRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,5 +33,15 @@ public class Database extends TaskDatabase {
         final String sortColumn
     ) throws SQLException {
         return executeListQuery(new GetOverviewReportRowsQueryData(season, resultType.getStringCode(), sortDirection.getDirection(), sortColumn));
+    }
+
+    public List<RaceResultRecord> getRaceResultReportRows(
+        final int season,
+        final int round,
+        final ResultType resultType,
+        final SortDirection sortDirection,
+        final String sortColumn
+    ) throws SQLException {
+        return executeListQuery(new GetRaceResultReportRowsQueryData(season, round, resultType.getStringCode(), sortDirection.getDirection(), sortColumn));
     }
 }
