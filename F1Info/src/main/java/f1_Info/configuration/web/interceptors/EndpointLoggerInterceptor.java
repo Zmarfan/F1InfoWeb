@@ -21,6 +21,8 @@ public class EndpointLoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) {
+        final boolean isNormalRequest = request instanceof MyRequestWrapper;
+
         mLogger.info(request.getRequestURL().toString(), this.getClass(), String.format(
             "Endpoint called: %s%s, Type: %s, By user: %s, Request ip: %s, Request Body: %s, Response status: %s, Exception: %s",
             request.getRequestURI(),
@@ -28,7 +30,7 @@ public class EndpointLoggerInterceptor implements HandlerInterceptor {
             request.getMethod(),
             InterceptorUtil.getUser(request),
             InterceptorUtil.getIp(request),
-            getRequestBody((MyRequestWrapper) request),
+            isNormalRequest ? getRequestBody((MyRequestWrapper) request) : "Unknown request body",
             response.getStatus(),
             exception != null ? exception.getMessage() : "-"
         ));
