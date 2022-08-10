@@ -1,20 +1,24 @@
 <app-loading-element [loading]="loading" [offset]="loadingOffset">
     <table class="main-table">
         <tr>
-            <th *ngFor="let column of table.columns">
-                <span
-                    *ngIf="sortConfig; else normalColumn"
-                    (click)="sortColumn(column)"
-                    class="main-table__sortable-column {{sortableColumnClass(column)}}"
-                >{{column.key | translate}}</span>
-                <ng-template #normalColumn>{{column.key | translate}}</ng-template>
-            </th>
+            <ng-container *ngFor="let column of table.columns">
+                <th class="{{column.onlyDesktop ? 'desktop' : ''}}">
+                    <span
+                        *ngIf="sortConfig; else normalColumn"
+                        (click)="sortColumn(column)"
+                        class="main-table__sortable-column {{sortableColumnClass(column)}}"
+                    >{{column.key | translate}}</span>
+                    <ng-template #normalColumn>{{column.key | translate}}</ng-template>
+                </th>
+            </ng-container>
         </tr>
         <tr *ngFor="let row of table.rows">
-            <td *ngFor="let column of table.columns">
-                <app-compose *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-compose>
-                <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
-            </td>
+            <ng-container *ngFor="let column of table.columns">
+                <td class="{{column.onlyDesktop ? 'desktop' : ''}}">
+                    <app-compose *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-compose>
+                    <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
+                </td>
+            </ng-container>
         </tr>
     </table>
 </app-loading-element>

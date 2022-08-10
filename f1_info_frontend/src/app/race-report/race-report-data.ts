@@ -89,7 +89,7 @@ export class RaceReportData {
         new ReportColumn('winner', 'reports.race.overview.winner'),
         new ReportColumn('constructor', 'reports.race.overview.constructor'),
         new ReportColumn('laps', 'reports.race.overview.laps'),
-        new ReportColumn('time', 'reports.race.overview.time'),
+        new ReportColumn('time', 'reports.race.overview.time', true),
     ];
 
     public static readonly raceResultReportColumns: ReportColumn<RaceResultRow>[] = [
