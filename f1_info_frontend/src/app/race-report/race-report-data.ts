@@ -66,6 +66,17 @@ export interface StartingGridRow {
     time: string;
 }
 
+export interface QualifyingRow {
+    position: number;
+    driverNumber: number;
+    driver: string;
+    constructor: string;
+    q1: string;
+    q2: string;
+    q3: string;
+    laps: string;
+}
+
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
@@ -117,6 +128,16 @@ export class RaceReportData {
         new ReportColumn('driver', 'reports.race.startingGrid.driver'),
         new ReportColumn('constructor', 'reports.race.startingGrid.constructor'),
         new ReportColumn('time', 'reports.race.startingGrid.time'),
+    ];
+
+    public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
+        new ReportColumn('position', 'reports.race.qualifying.position'),
+        new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber'),
+        new ReportColumn('driver', 'reports.race.qualifying.driver'),
+        new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
+        new ReportColumn('q1', 'reports.race.qualifying.q1'),
+        new ReportColumn('q2', 'reports.race.qualifying.q2'),
+        new ReportColumn('q3', 'reports.race.qualifying.q3'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
