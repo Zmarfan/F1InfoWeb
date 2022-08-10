@@ -193,7 +193,15 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.PIT_STOPS: break;
         case RaceReport.STARTING_GRID: break;
         case RaceReport.QUALIFYING: break;
-        case RaceReport.SPRINT: break;
+        case RaceReport.SPRINT: this.mReportHelper.runReport(
+            (rows: RaceResultRow[]) => {
+                this.raceResultRows = rows;
+            },
+            this.loadingCallback,
+            this.createResultParameters(RaceType.SPRINT),
+            (params) => this.mRaceReportService.getRaceResultReport(params),
+            (response) => RaceReportData.raceResultToView(response)
+        ); break;
         case RaceReport.SPRINT_GRID: break;
         }
     }
