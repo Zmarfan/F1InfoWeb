@@ -11,12 +11,9 @@ export enum RaceReport {
     FASTEST_LAPS = 3,
     PIT_STOPS = 4,
     STARTING_GRID = 5,
-    SPRINT = 6,
-    SPRINT_GRID = 7,
-    PRACTICE_1 = 8,
-    PRACTICE_2 = 9,
-    PRACTICE_3 = 10,
-    QUALIFYING = 11,
+    QUALIFYING = 6,
+    SPRINT = 7,
+    SPRINT_GRID = 8,
 }
 
 export interface RaceOverviewRow {
@@ -77,6 +74,16 @@ export interface QualifyingRow {
     laps: string;
 }
 
+export interface SprintRow {
+    position: number;
+    driverNumber: number;
+    driver: string;
+    constructor: string;
+    laps: number;
+    timeRetired: string;
+    points: number;
+}
+
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
@@ -94,7 +101,7 @@ export class RaceReportData {
 
     public static readonly raceResultReportColumns: ReportColumn<RaceResultRow>[] = [
         new ReportColumn('position', 'reports.race.raceResult.position'),
-        new ReportColumn('driverNumber', 'reports.race.raceResult.driverNumber'),
+        new ReportColumn('driverNumber', 'reports.race.raceResult.driverNumber', true),
         new ReportColumn('driver', 'reports.race.raceResult.driver'),
         new ReportColumn('constructor', 'reports.race.raceResult.constructor'),
         new ReportColumn('laps', 'reports.race.raceResult.laps'),
@@ -104,7 +111,7 @@ export class RaceReportData {
 
     public static readonly fastestLapsReportColumns: ReportColumn<FastestLapsRow>[] = [
         new ReportColumn('position', 'reports.race.fastestLaps.position'),
-        new ReportColumn('driverNumber', 'reports.race.fastestLaps.driverNumber'),
+        new ReportColumn('driverNumber', 'reports.race.fastestLaps.driverNumber', true),
         new ReportColumn('driver', 'reports.race.fastestLaps.driver'),
         new ReportColumn('constructor', 'reports.race.fastestLaps.constructor'),
         new ReportColumn('lap', 'reports.race.fastestLaps.lap'),
@@ -114,7 +121,7 @@ export class RaceReportData {
 
     public static readonly pitStopsReportColumns: ReportColumn<PitStopsRow>[] = [
         new ReportColumn('stopNumber', 'reports.race.pitStops.stopNumber'),
-        new ReportColumn('driverNumber', 'reports.race.pitStops.driverNumber'),
+        new ReportColumn('driverNumber', 'reports.race.pitStops.driverNumber', true),
         new ReportColumn('driver', 'reports.race.pitStops.driver'),
         new ReportColumn('constructor', 'reports.race.pitStops.constructor'),
         new ReportColumn('lap', 'reports.race.pitStops.lap'),
@@ -124,7 +131,7 @@ export class RaceReportData {
 
     public static readonly startingGridReportColumns: ReportColumn<StartingGridRow>[] = [
         new ReportColumn('position', 'reports.race.startingGrid.position'),
-        new ReportColumn('driverNumber', 'reports.race.startingGrid.driverNumber'),
+        new ReportColumn('driverNumber', 'reports.race.startingGrid.driverNumber', true),
         new ReportColumn('driver', 'reports.race.startingGrid.driver'),
         new ReportColumn('constructor', 'reports.race.startingGrid.constructor'),
         new ReportColumn('time', 'reports.race.startingGrid.time'),
@@ -132,12 +139,22 @@ export class RaceReportData {
 
     public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
         new ReportColumn('position', 'reports.race.qualifying.position'),
-        new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber'),
+        new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
         new ReportColumn('driver', 'reports.race.qualifying.driver'),
         new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
         new ReportColumn('q1', 'reports.race.qualifying.q1'),
         new ReportColumn('q2', 'reports.race.qualifying.q2'),
         new ReportColumn('q3', 'reports.race.qualifying.q3'),
+    ];
+
+    public static readonly sprintReportColumns: ReportColumn<SprintRow>[] = [
+        new ReportColumn('position', 'reports.race.sprint.position'),
+        new ReportColumn('driverNumber', 'reports.race.sprint.driverNumber', true),
+        new ReportColumn('driver', 'reports.race.sprint.driver'),
+        new ReportColumn('constructor', 'reports.race.sprint.constructor'),
+        new ReportColumn('laps', 'reports.race.sprint.laps'),
+        new ReportColumn('timeRetired', 'reports.race.sprint.timeRetired'),
+        new ReportColumn('points', 'reports.race.sprint.points'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
@@ -149,9 +166,6 @@ export class RaceReportData {
             { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprint', value: RaceReport.SPRINT }] : []),
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprintGrid', value: RaceReport.SPRINT_GRID }] : []),
-            { displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 1 }, value: RaceReport.PRACTICE_1 },
-            { displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 2 }, value: RaceReport.PRACTICE_2 },
-            ...(!raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.practice', translateParams: { round: 3 }, value: RaceReport.PRACTICE_3 }] : []),
         ];
     }
 

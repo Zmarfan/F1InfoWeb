@@ -3,7 +3,17 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {FastestLapsRow, PitStopsRow, QualifyingRow, RaceOverviewRow, RaceReport, RaceReportData, RaceResultRow, StartingGridRow} from './race-report-data';
+import {
+    FastestLapsRow,
+    PitStopsRow,
+    QualifyingRow,
+    RaceOverviewRow,
+    RaceReport,
+    RaceReportData,
+    RaceResultRow,
+    SprintRow,
+    StartingGridRow,
+} from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
@@ -26,6 +36,7 @@ export class RaceReportComponent implements OnInit {
     public pitStopsRows: PitStopsRow[] = [];
     public startingGridRows: StartingGridRow[] = [];
     public qualifyingRows: QualifyingRow[] = [];
+    public sprintRows: SprintRow[] = [];
 
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceOptions: DropdownOption[] = [];
@@ -64,6 +75,11 @@ export class RaceReportComponent implements OnInit {
     public qualifyingSortConfig: ReportSortConfig<QualifyingRow> = {
         sortCallback: (sortObject: SortSetting<QualifyingRow>) => this.sort(sortObject),
         defaultSortSetting: this.qualifyingSortSetting,
+    };
+    public sprintSortSetting: SortSetting<SprintRow> = { columnName: 'position', direction: SortDirection.ASCENDING };
+    public sprintSortConfig: ReportSortConfig<SprintRow> = {
+        sortCallback: (sortObject: SortSetting<SprintRow>) => this.sort(sortObject),
+        defaultSortSetting: this.sprintSortSetting,
     };
 
     private mSelectedSeason: number = new Date().getFullYear();
@@ -147,11 +163,8 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.PIT_STOPS: this.pitStopsSortSetting = sortSetting; break;
         case RaceReport.STARTING_GRID: this.startingGridSortSetting = sortSetting; break;
         case RaceReport.QUALIFYING: this.qualifyingSortSetting = sortSetting; break;
-        case RaceReport.SPRINT: break;
+        case RaceReport.SPRINT: this.sprintSortSetting = sortSetting; break;
         case RaceReport.SPRINT_GRID: break;
-        case RaceReport.PRACTICE_1: break;
-        case RaceReport.PRACTICE_2: break;
-        case RaceReport.PRACTICE_3: break;
         }
 
         this.runReport();
@@ -177,12 +190,9 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.FASTEST_LAPS: break;
         case RaceReport.PIT_STOPS: break;
         case RaceReport.STARTING_GRID: break;
+        case RaceReport.QUALIFYING: break;
         case RaceReport.SPRINT: break;
         case RaceReport.SPRINT_GRID: break;
-        case RaceReport.PRACTICE_1: break;
-        case RaceReport.PRACTICE_2: break;
-        case RaceReport.PRACTICE_3: break;
-        case RaceReport.QUALIFYING: break;
         }
     }
 
