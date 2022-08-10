@@ -183,6 +183,13 @@
         "lap": "Lap",
         "time": "Time",
         "total": "Total"
+      },
+      "startingGrid": {
+        "position": "Pos.",
+        "driverNumber": "No.",
+        "driver": "Driver",
+        "constructor": "Constructor",
+        "time": "Time"
       }
     }
   }

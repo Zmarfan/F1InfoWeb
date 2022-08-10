@@ -58,6 +58,14 @@ export interface PitStopsRow {
     total: number;
 }
 
+export interface StartingGridRow {
+    position: number;
+    driverNumber: number;
+    driver: string;
+    constructor: string;
+    time: string;
+}
+
 export interface OverviewRaceReportParameters extends ReportParameters{
     season: number;
     raceType: RaceType;
@@ -101,6 +109,14 @@ export class RaceReportData {
         new ReportColumn('lap', 'reports.race.pitStops.lap'),
         new ReportColumn('time', 'reports.race.pitStops.time'),
         new ReportColumn('total', 'reports.race.pitStops.total'),
+    ];
+
+    public static readonly startingGridReportColumns: ReportColumn<StartingGridRow>[] = [
+        new ReportColumn('position', 'reports.race.startingGrid.position'),
+        new ReportColumn('driverNumber', 'reports.race.startingGrid.driverNumber'),
+        new ReportColumn('driver', 'reports.race.startingGrid.driver'),
+        new ReportColumn('constructor', 'reports.race.startingGrid.constructor'),
+        new ReportColumn('time', 'reports.race.startingGrid.time'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
