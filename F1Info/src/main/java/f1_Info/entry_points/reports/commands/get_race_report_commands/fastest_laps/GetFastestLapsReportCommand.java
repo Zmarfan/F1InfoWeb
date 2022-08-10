@@ -1,6 +1,5 @@
 package f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps;
 
-import common.constants.f1.ResultType;
 import f1_Info.entry_points.helper.Command;
 import f1_Info.entry_points.reports.SortDirection;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.Database;
@@ -15,7 +14,6 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 public class GetFastestLapsReportCommand implements Command {
     private final int mSeason;
     private final int mRound;
-    private final ResultType mResultType;
     private final SortDirection mSortDirection;
     private final String mSortColumn;
     private final Database mDatabase;
@@ -23,7 +21,7 @@ public class GetFastestLapsReportCommand implements Command {
     @Override
     public ResponseEntity<?> execute() throws SQLException {
         return ok(
-            mDatabase.getFastestLapsReportRows(mSeason, mRound, mResultType, mSortDirection, mSortColumn).stream().map(FastestLapsReportResponse::new).toList()
+            mDatabase.getFastestLapsReportRows(mSeason, mRound, mSortDirection, mSortColumn).stream().map(FastestLapsReportResponse::new).toList()
         );
     }
 }

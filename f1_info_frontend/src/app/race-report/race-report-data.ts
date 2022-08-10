@@ -14,7 +14,6 @@ export enum RaceReport {
     QUALIFYING = 6,
     SPRINT = 7,
     SPRINT_GRID = 8,
-    FASTEST_LAPS_SPRINT = 9,
 }
 
 export interface RaceOverviewRow {
@@ -81,10 +80,15 @@ export interface OverviewRaceReportParameters extends ReportParameters{
     raceType: RaceType;
 }
 
-export interface RaceSeasonRoundTypeReportParameters extends ReportParameters{
+export interface RaceResultReportParameters extends ReportParameters{
     season: number;
     round: number;
     type: RaceType;
+}
+
+export interface FastestLapsReportParameters extends ReportParameters{
+    season: number;
+    round: number;
 }
 
 export class RaceReportData {
@@ -159,7 +163,6 @@ export class RaceReportData {
             { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprint', value: RaceReport.SPRINT }] : []),
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprintGrid', value: RaceReport.SPRINT_GRID }] : []),
-            ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.fastestLapsSprint', value: RaceReport.FASTEST_LAPS_SPRINT }] : []),
         ];
     }
 

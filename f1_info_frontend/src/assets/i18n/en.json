@@ -146,8 +146,7 @@
         "startingGrid": "Starting Grid",
         "qualifying": "Qualifying Results",
         "sprint": "Sprint Results",
-        "sprintGrid": "Sprint Grid",
-        "fastestLapsSprint": "Sprint Fastest Laps"
+        "sprintGrid": "Sprint Grid"
       },
       "overview": {
         "grandPrix": "Grand Prix",

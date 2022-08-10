@@ -140,11 +140,10 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-fastest-laps-report/{season}/{round}/{type}")
+    @GetMapping("/get-fastest-laps-report/{season}/{round}")
     public ResponseEntity<?> getFastestLapsReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
-        @PathVariable("type") final String resultType,
         @RequestParam("sortColumn") final String sortColumn,
         @RequestParam("sortDirection") final String sortDirection
     ) {
@@ -153,14 +152,7 @@ public class ReportEndpoint {
                 throw new BadRequestException();
             }
 
-            return new GetFastestLapsReportCommand(
-                season,
-                round,
-                ResultType.fromStringCode(resultType),
-                SortDirection.fromString(sortDirection),
-                sortColumn,
-                mRaceReportDatabase
-            );
+            return new GetFastestLapsReportCommand(season, round, SortDirection.fromString(sortDirection), sortColumn, mRaceReportDatabase);
         });
     }
 

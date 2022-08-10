@@ -50,10 +50,9 @@ public class Database extends TaskDatabase {
     public List<FastestLapsRecord> getFastestLapsReportRows(
         final int season,
         final int round,
-        final ResultType resultType,
         final SortDirection sortDirection,
         final String sortColumn
     ) throws SQLException {
-        return executeListQuery(new GetFastestLapsReportRowsQueryData(season, round, resultType.getStringCode(), sortDirection.getDirection(), sortColumn));
+        return executeListQuery(new GetFastestLapsReportRowsQueryData(season, round, sortDirection.getDirection(), sortColumn));
     }
 }

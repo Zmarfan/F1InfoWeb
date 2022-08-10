@@ -146,8 +146,7 @@
         "startingGrid": "Startplatser",
         "qualifying": "Kvalresultat",
         "sprint": "Sprintresultat",
-        "sprintGrid": "Sprintplatser",
-        "fastestLapsSprint": "Sprint Snabbaste varv"
+        "sprintGrid": "Sprintplatser"
       },
       "overview": {
         "grandPrix": "Grand Prix",

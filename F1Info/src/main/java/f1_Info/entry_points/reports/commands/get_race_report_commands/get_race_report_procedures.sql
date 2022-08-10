@@ -122,7 +122,6 @@ drop procedure if exists get_fastest_laps_report;
 create procedure get_fastest_laps_report(
   in p_season int,
   in p_round int,
-  in p_result_type varchar(20),
   in p_sort_direction varchar(5),
   in p_sort_column varchar(30)
 )
@@ -157,7 +156,7 @@ begin
       inner join constructors on constructors.id = results.constructor_id
       left join fastest_laps on fastest_laps.id = results.fastest_lap_id
     where
-        results.result_type = p_result_type and races.year = p_season and races.round = p_round
+        results.result_type = 'race' and races.year = p_season and races.round = p_round
   ) stats
   order by
     (case when p_sort_column = 'position' and p_sort_direction = 'asc' then -stats.position end) desc,
