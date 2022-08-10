@@ -37,7 +37,7 @@ export interface IndividualDriverReportParameters extends ReportParameters{
 }
 
 export class DriverReportData {
-    public static readonly allReportColumns: ReportColumn[] = [
+    public static readonly allReportColumns: ReportColumn<AllDriverRow>[] = [
         new ReportColumn('position', 'reports.driver.all.position'),
         new ReportColumn('driver', 'reports.driver.all.driver'),
         new ReportColumn('nationality', 'reports.driver.all.nationality'),
@@ -45,7 +45,7 @@ export class DriverReportData {
         new ReportColumn('points', 'reports.driver.all.points'),
     ];
 
-    public static readonly driverReportColumns: ReportColumn[] = [
+    public static readonly driverReportColumns: ReportColumn<IndividualDriverRow>[] = [
         new ReportColumn('grandPrix', 'reports.driver.driver.grandPrix'),
         new ReportColumn('date', 'reports.driver.driver.date'),
         new ReportColumn('constructor', 'reports.driver.driver.constructor'),

@@ -64,7 +64,7 @@ export interface OverviewRaceReportParameters extends ReportParameters{
 }
 
 export class RaceReportData {
-    public static readonly overviewReportColumns: ReportColumn[] = [
+    public static readonly overviewReportColumns: ReportColumn<RaceOverviewRow>[] = [
         new ReportColumn('grandPrix', 'reports.race.overview.grandPrix'),
         new ReportColumn('date', 'reports.race.overview.date'),
         new ReportColumn('winner', 'reports.race.overview.winner'),
@@ -73,7 +73,7 @@ export class RaceReportData {
         new ReportColumn('time', 'reports.race.overview.time'),
     ];
 
-    public static readonly raceResultReportColumns: ReportColumn[] = [
+    public static readonly raceResultReportColumns: ReportColumn<RaceResultRow>[] = [
         new ReportColumn('position', 'reports.race.raceResult.position'),
         new ReportColumn('driverNumber', 'reports.race.raceResult.driverNumber'),
         new ReportColumn('driver', 'reports.race.raceResult.driver'),
@@ -83,7 +83,7 @@ export class RaceReportData {
         new ReportColumn('points', 'reports.race.raceResult.points'),
     ];
 
-    public static readonly fastestLapsReportColumns: ReportColumn[] = [
+    public static readonly fastestLapsReportColumns: ReportColumn<FastestLapsRow>[] = [
         new ReportColumn('position', 'reports.race.fastestLaps.position'),
         new ReportColumn('driverNumber', 'reports.race.fastestLaps.driverNumber'),
         new ReportColumn('driver', 'reports.race.fastestLaps.driver'),
@@ -93,14 +93,14 @@ export class RaceReportData {
         new ReportColumn('averageSpeed', 'reports.race.fastestLaps.averageSpeed'),
     ];
 
-    public static readonly pitStopsReportColumns: ReportColumn[] = [
+    public static readonly pitStopsReportColumns: ReportColumn<PitStopsRow>[] = [
         new ReportColumn('stopNumber', 'reports.race.pitStops.stopNumber'),
         new ReportColumn('driverNumber', 'reports.race.pitStops.driverNumber'),
         new ReportColumn('driver', 'reports.race.pitStops.driver'),
         new ReportColumn('constructor', 'reports.race.pitStops.constructor'),
         new ReportColumn('lap', 'reports.race.pitStops.lap'),
         new ReportColumn('time', 'reports.race.pitStops.time'),
-        new ReportColumn('averageSpeed', 'reports.race.pitStops.total'),
+        new ReportColumn('total', 'reports.race.pitStops.total'),
     ];
 
     public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {

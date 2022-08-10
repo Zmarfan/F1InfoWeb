@@ -33,24 +33,24 @@ export class RaceReportComponent implements OnInit {
     public filterLoading: boolean = true;
     public loading: boolean = false;
 
-    public overviewSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.ASCENDING };
-    public overviewSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    public overviewSortSetting: SortSetting<RaceOverviewRow> = { columnName: 'date', direction: SortDirection.ASCENDING };
+    public overviewSortConfig: ReportSortConfig<RaceOverviewRow> = {
+        sortCallback: (sortObject: SortSetting<RaceOverviewRow>) => this.sort(sortObject),
         defaultSortSetting: this.overviewSortSetting,
     };
-    public raceResultSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
-    public raceResultSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    public raceResultSortSetting: SortSetting<RaceResultRow> = { columnName: 'position', direction: SortDirection.ASCENDING };
+    public raceResultSortConfig: ReportSortConfig<RaceResultRow> = {
+        sortCallback: (sortObject: SortSetting<RaceResultRow>) => this.sort(sortObject),
         defaultSortSetting: this.raceResultSortSetting,
     };
-    public fastestLapsSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
-    public fastestLapsSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    public fastestLapsSortSetting: SortSetting<FastestLapsRow> = { columnName: 'position', direction: SortDirection.ASCENDING };
+    public fastestLapsSortConfig: ReportSortConfig<FastestLapsRow> = {
+        sortCallback: (sortObject: SortSetting<FastestLapsRow>) => this.sort(sortObject),
         defaultSortSetting: this.fastestLapsSortSetting,
     };
-    public pitStopsSortSetting: SortSetting = { columnName: 'lap', direction: SortDirection.ASCENDING };
-    public pitStopsSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    public pitStopsSortSetting: SortSetting<PitStopsRow> = { columnName: 'lap', direction: SortDirection.ASCENDING };
+    public pitStopsSortConfig: ReportSortConfig<PitStopsRow> = {
+        sortCallback: (sortObject: SortSetting<PitStopsRow>) => this.sort(sortObject),
         defaultSortSetting: this.pitStopsSortSetting,
     };
 
@@ -127,7 +127,7 @@ export class RaceReportComponent implements OnInit {
         this.raceCategoryOptions = RaceReportData.getRaceCategoryOptions(raceData !== undefined);
     }
 
-    private sort(sortSetting: SortSetting) {
+    private sort(sortSetting: SortSetting<any>) {
         switch (this.reportType) {
         case RaceReport.OVERVIEW: this.overviewSortSetting = sortSetting; break;
         case RaceReport.RACE_RESULT: this.raceResultSortSetting = sortSetting; break;

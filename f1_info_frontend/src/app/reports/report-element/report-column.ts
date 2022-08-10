@@ -1,6 +1,6 @@
-export class ReportColumn {
+export class ReportColumn<T> {
     public constructor(
-        public entryName: string,
+        public entryName: keyof T,
         public key: string
     ) {
     }

@@ -7,14 +7,14 @@ export enum SortDirection {
     DESCENDING = 'desc',
 }
 
-export interface SortSetting {
+export interface SortSetting<T> {
     direction: SortDirection;
-    columnName: string;
+    columnName: keyof T;
 }
 
-export interface ReportSortConfig {
-    sortCallback: (sortObject: SortSetting) => void;
-    defaultSortSetting: SortSetting;
+export interface ReportSortConfig<T> {
+    sortCallback: (sortObject: SortSetting<T>) => void;
+    defaultSortSetting: SortSetting<T>;
 }
 
 export interface ReportParameters {
@@ -23,7 +23,7 @@ export interface ReportParameters {
 }
 
 export interface ReportElementConfig<T> {
-    columns: ReportColumn[];
+    columns: ReportColumn<T>[];
     rows: T[];
 }
 
@@ -34,13 +34,13 @@ export interface ReportElementConfig<T> {
 })
 export class ReportElementComponent<T> implements OnInit, OnChanges {
     @Input() public loading: boolean = false;
-    @Input() public columns!: ReportColumn[];
+    @Input() public columns!: ReportColumn<T>[];
     @Input() public rows!: T[];
-    @Input() public sortConfig?: ReportSortConfig;
+    @Input() public sortConfig?: ReportSortConfig<T>;
 
     public table!: ReportElementConfig<any>;
     public loadingOffset: LoadingElementOffset = LoadingElementOffset.TOP;
-    private mSortingColumn: string = '';
+    private mSortingColumn!: keyof T;
     private mSortingDirection: SortDirection = SortDirection.ASCENDING;
 
     public ngOnInit() {
@@ -57,14 +57,14 @@ export class ReportElementComponent<T> implements OnInit, OnChanges {
         };
     }
 
-    public sortColumn(column: ReportColumn) {
+    public sortColumn(column: ReportColumn<T>) {
         this.setSortingState(column);
         if (this.sortConfig !== undefined) {
             this.sortConfig.sortCallback({ columnName: this.mSortingColumn, direction: this.mSortingDirection });
         }
     }
 
-    public sortableColumnClass(column: ReportColumn): string {
+    public sortableColumnClass(column: ReportColumn<T>): string {
         if (this.mSortingColumn === column.entryName) {
             return this.mSortingDirection === SortDirection.ASCENDING ? 'main-table__sortable-column--ascending' : 'main-table__sortable-column--descending';
         }
@@ -75,7 +75,7 @@ export class ReportElementComponent<T> implements OnInit, OnChanges {
         return entry.viewModel;
     }
 
-    private setSortingState(column: ReportColumn) {
+    private setSortingState(column: ReportColumn<T>) {
         if (this.mSortingColumn !== column.entryName) {
             this.mSortingColumn = column.entryName;
             this.mSortingDirection = SortDirection.ASCENDING;

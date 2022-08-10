@@ -21,8 +21,8 @@ export class DriverReportComponent implements OnInit {
     public roundOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;
 
-    public allReportColumns: ReportColumn[] = DriverReportData.allReportColumns;
-    public driverReportColumns: ReportColumn[] = DriverReportData.driverReportColumns;
+    public allReportColumns: ReportColumn<AllDriverRow>[] = DriverReportData.allReportColumns;
+    public driverReportColumns: ReportColumn<IndividualDriverRow>[] = DriverReportData.driverReportColumns;
 
     public allRows: AllDriverRow[] = [];
     public individualRows: IndividualDriverRow[] = [];
@@ -34,14 +34,14 @@ export class DriverReportComponent implements OnInit {
     private mSelectedRaceType: RaceType = RaceType.RACE;
     private mSelectedDriver: string | null = null;
 
-    private mAllSortSetting: SortSetting = { columnName: 'position', direction: SortDirection.ASCENDING };
-    private mDriverSortSetting: SortSetting = { columnName: 'date', direction: SortDirection.DESCENDING };
-    private mAllSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    private mAllSortSetting: SortSetting<AllDriverRow> = { columnName: 'position', direction: SortDirection.ASCENDING };
+    private mDriverSortSetting: SortSetting<IndividualDriverRow> = { columnName: 'date', direction: SortDirection.DESCENDING };
+    private mAllSortConfig: ReportSortConfig<AllDriverRow> = {
+        sortCallback: (sortObject: SortSetting<AllDriverRow>) => this.sort(sortObject),
         defaultSortSetting: this.mAllSortSetting,
     };
-    private mDriverSortConfig: ReportSortConfig = {
-        sortCallback: (sortObject: SortSetting) => this.sort(sortObject),
+    private mDriverSortConfig: ReportSortConfig<IndividualDriverRow> = {
+        sortCallback: (sortObject: SortSetting<IndividualDriverRow>) => this.sort(sortObject),
         defaultSortSetting: this.mDriverSortSetting,
     };
     private mCurrentSeasonMaxRound: number = 1;
@@ -58,11 +58,11 @@ export class DriverReportComponent implements OnInit {
         return this.mSelectedDriver === null;
     }
 
-    public get allSortConfig(): ReportSortConfig {
+    public get allSortConfig(): ReportSortConfig<AllDriverRow> {
         return this.mAllSortConfig;
     }
 
-    public get driverSortConfig(): ReportSortConfig {
+    public get driverSortConfig(): ReportSortConfig<IndividualDriverRow> {
         return this.mDriverSortConfig;
     }
 
@@ -74,7 +74,7 @@ export class DriverReportComponent implements OnInit {
         this.fetchAndAssignFilterValues();
     }
 
-    public sort(sortSetting: SortSetting) {
+    public sort(sortSetting: SortSetting<any>) {
         if (this.showAllReport) {
             this.mAllSortSetting = sortSetting;
         } else {
