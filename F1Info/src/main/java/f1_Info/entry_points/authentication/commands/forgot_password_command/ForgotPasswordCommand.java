@@ -27,11 +27,6 @@ public class ForgotPasswordCommand implements Command {
     private final ClientUriFactory mClientUriFactory;
 
     @Override
-    public String getAction() {
-        return String.format("Forgot password reset for email: %s", mEmail.read());
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         final Optional<F1UserDetails> userDetails = getUserDetails();
         if (userDetails.isEmpty()) {

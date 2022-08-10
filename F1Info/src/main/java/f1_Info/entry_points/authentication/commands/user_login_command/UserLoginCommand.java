@@ -24,11 +24,6 @@ public class UserLoginCommand implements Command {
     private final AuthenticationService mAuthenticationService;
 
     @Override
-    public String getAction() {
-        return String.format("Login user with email: %s and password: *****", mEmail.read());
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         final String ip = InterceptorUtil.getIp(mRequest);
         try {

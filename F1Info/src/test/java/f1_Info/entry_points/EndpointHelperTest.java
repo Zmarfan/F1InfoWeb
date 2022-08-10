@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -98,21 +99,21 @@ class EndpointHelperTest {
     }
 
     @Test
-    void should_return_internal_server_error_if_exception_occurs_while_executing_command() throws Exception {
+    void should_return_internal_server_error_if_sql_exception_occurs_while_executing_command() throws Exception {
         when(mRequest.getSession(false)).thenReturn(mHttpSession);
         when(mHttpSession.getAttribute(SessionAttributes.USER_ID)).thenReturn(USER_ID);
 
-        when(mTestCommand.execute()).thenThrow(new Exception());
+        when(mTestCommand.execute()).thenThrow(new SQLException());
 
         assertEquals(internalServerError(), mEndpointHelper.runCommand(mRequest, (userId) -> mTestCommand));
     }
 
     @Test
-    void should_log_severe_if_exception_occurs_while_executing_command() throws Exception {
+    void should_log_severe_if_sql_exception_occurs_while_executing_command() throws Exception {
         when(mRequest.getSession(false)).thenReturn(mHttpSession);
         when(mHttpSession.getAttribute(SessionAttributes.USER_ID)).thenReturn(USER_ID);
 
-        when(mTestCommand.execute()).thenThrow(new Exception());
+        when(mTestCommand.execute()).thenThrow(new SQLException());
 
         mEndpointHelper.runCommand(mRequest, (userId) -> mTestCommand);
 

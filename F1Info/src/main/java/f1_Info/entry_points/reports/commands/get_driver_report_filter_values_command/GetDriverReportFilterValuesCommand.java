@@ -4,6 +4,7 @@ import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static f1_Info.configuration.web.ResponseUtil.ok;
@@ -14,12 +15,7 @@ public class GetDriverReportFilterValuesCommand implements Command {
     private final Database mDatabase;
 
     @Override
-    public String getAction() {
-        return String.format("Fetch driver report filter values from season %d", mSeason);
-    }
-
-    @Override
-    public ResponseEntity<?> execute() throws Exception {
+    public ResponseEntity<?> execute() throws SQLException {
         final List<DriverEntry> driverEntries= mDatabase.getDriversFromSeason(mSeason).stream().map(DriverEntry::new).toList();
         final SeasonInfoRecord seasonInfo = mDatabase.getSeasonInfo(mSeason);
 

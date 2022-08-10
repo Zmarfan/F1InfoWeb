@@ -26,11 +26,6 @@ public class EnableUserCommand implements Command {
     private final AuthenticationService mAuthenticationService;
 
     @Override
-    public String getAction() {
-        return "enable user with token";
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         final Optional<UserInformation> user = mTokenService.findUserFromToken(mToken);
         if (user.isEmpty()) {

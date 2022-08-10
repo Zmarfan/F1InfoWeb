@@ -4,6 +4,8 @@ import f1_Info.entry_points.helper.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
+
 import static f1_Info.configuration.web.ResponseUtil.badRequest;
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
@@ -14,12 +16,7 @@ public class UpdateUserSettingsCommand implements Command {
     private final Database mDatabase;
 
     @Override
-    public String getAction() {
-        return String.format("Update user settings with data: %s", mNewUserSettings);
-    }
-
-    @Override
-    public ResponseEntity<?> execute() throws Exception {
+    public ResponseEntity<?> execute() throws SQLException {
         final CurrentUserSettingsRecord currentSettings = mDatabase.getCurrentUserSettings(mUserId);
         if (!UserSettingsValidator.userSettingsAreValid(currentSettings, mNewUserSettings)) {
             return badRequest();

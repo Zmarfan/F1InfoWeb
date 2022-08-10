@@ -7,6 +7,8 @@ import f1_Info.entry_points.reports.commands.get_race_report_commands.Database;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
+
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
@@ -18,12 +20,7 @@ public class GetRaceOverviewReportCommand implements Command {
     private final Database mDatabase;
 
     @Override
-    public String getAction() {
-        return String.format("Fetch overview race report: season: %s, direction: %s, sortColumn: %s", mSeason, mSortDirection.getDirection(), mSortColumn);
-    }
-
-    @Override
-    public ResponseEntity<?> execute() throws Exception {
+    public ResponseEntity<?> execute() throws SQLException {
         return ok(mDatabase.getOverviewReportRows(mSeason, mResultType, mSortDirection, mSortColumn).stream().map(OverviewRaceReportResponse::new).toList());
     }
 }

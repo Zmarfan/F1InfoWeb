@@ -16,11 +16,6 @@ public class LogoutUserCommand implements Command {
     HttpServletRequest mRequest;
 
     @Override
-    public String getAction() {
-        return String.format("Logout user %d", mUserId);
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         try {
             mRequest.logout();

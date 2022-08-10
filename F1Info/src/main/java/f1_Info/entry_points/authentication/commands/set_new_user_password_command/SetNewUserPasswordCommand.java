@@ -29,11 +29,6 @@ public class SetNewUserPasswordCommand implements Command {
     private final AuthenticationService mAuthenticationService;
 
     @Override
-    public String getAction() {
-        return "Set new password for user";
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         final Optional<UserInformation> user = mTokenService.findUserFromToken(mToken);
         if (user.isEmpty()) {

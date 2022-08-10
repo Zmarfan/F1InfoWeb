@@ -72,7 +72,7 @@ public class EndpointHelper {
             mLogger.severe(
                 "execute",
                 command.getClass(),
-                String.format("Internal server error occurred in command for user: %d while: %s", userId, command.getAction()),
+                String.format("Internal server error occurred in command %s for user: %d", command.getClass().getName(), userId),
                 e
             );
             return internalServerError();

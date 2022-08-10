@@ -7,6 +7,8 @@ import f1_Info.entry_points.reports.commands.get_driver_report_commands.Database
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.SQLException;
+
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
@@ -19,17 +21,7 @@ public class GetIndividualDriverReportCommand implements Command {
     private final Database mDatabase;
 
     @Override
-    public String getAction() {
-        return String.format(
-            "Fetch individual driver report with parameters: season: %d, driverId: %s, sortDirection: %s, sortColumn: %s",
-            mSeason,
-            mDriverIdentifier,
-            mSortDirection,
-            mSortColumn
-        );
-    }
-    @Override
-    public ResponseEntity<?> execute() throws Exception {
+    public ResponseEntity<?> execute() throws SQLException {
         return ok(
             mDatabase.getIndividualReportRows(mSeason, mDriverIdentifier, mResultType, mSortDirection, mSortColumn)
                 .stream()

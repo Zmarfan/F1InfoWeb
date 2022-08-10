@@ -30,11 +30,6 @@ public class UserRegisterCommand implements Command {
     private final ClientUriFactory mClientUriFactory;
 
     @Override
-    public String getAction() {
-        return String.format("Register email: %s with password: *****", mEmail);
-    }
-
-    @Override
     public ResponseEntity<?> execute() {
         try {
             final long userId = mUserManager.registerUser(F1UserDetails.createNewUser(mEmail, mPasswordEncoder.encode(mPassword)));
