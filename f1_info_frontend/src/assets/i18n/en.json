@@ -147,7 +147,7 @@
         "qualifying": "Qualifying Results",
         "sprint": "Sprint Results",
         "sprintGrid": "Sprint Grid",
-        "practice": "Practice {{round}}"
+        "fastestLapsSprint": "Sprint Fastest Laps"
       },
       "overview": {
         "grandPrix": "Grand Prix",

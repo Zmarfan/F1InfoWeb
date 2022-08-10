@@ -10,8 +10,8 @@ import {
     RaceOverviewRow,
     RaceReport,
     RaceReportData,
-    RaceSeasonRoundTypeReportParameters,
     RaceResultRow,
+    RaceSeasonRoundTypeReportParameters,
     StartingGridRow,
 } from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
@@ -154,6 +154,7 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.OVERVIEW: this.overviewSortSetting = sortSetting; break;
         case RaceReport.SPRINT:
         case RaceReport.RACE_RESULT: this.raceResultSortSetting = sortSetting; break;
+        case RaceReport.FASTEST_LAPS_SPRINT:
         case RaceReport.FASTEST_LAPS: this.fastestLapsSortSetting = sortSetting; break;
         case RaceReport.PIT_STOPS: this.pitStopsSortSetting = sortSetting; break;
         case RaceReport.QUALIFYING: this.qualifyingSortSetting = sortSetting; break;
@@ -211,6 +212,15 @@ export class RaceReportComponent implements OnInit {
             (response) => RaceReportData.raceResultToView(response)
         ); break;
         case RaceReport.SPRINT_GRID: break;
+        case RaceReport.FASTEST_LAPS_SPRINT: this.mReportHelper.runReport(
+            (rows: FastestLapsRow[]) => {
+                this.fastestLapsRows = rows;
+            },
+            this.loadingCallback,
+            this.createSeasonRoundTypeParameters(RaceType.SPRINT, this.fastestLapsSortSetting),
+            (params) => this.mRaceReportService.getFastestLapsReport(params),
+            (response) => RaceReportData.fastestLapsToView(response)
+        ); break;
         }
     }
 

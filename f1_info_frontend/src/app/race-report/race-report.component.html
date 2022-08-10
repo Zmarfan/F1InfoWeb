@@ -32,7 +32,7 @@
 
 <app-report-element *ngIf="reportType === raceReportEnum.OVERVIEW" [loading]="loading" [columns]="reportData.overviewReportColumns" [rows]="overviewRows" [sortConfig]="overviewSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.RACE_RESULT || reportType === raceReportEnum.SPRINT" [loading]="loading" [columns]="reportData.raceResultReportColumns" [rows]="raceResultRows" [sortConfig]="raceResultSortConfig"></app-report-element>
-<app-report-element *ngIf="reportType === raceReportEnum.FASTEST_LAPS" [loading]="loading" [columns]="reportData.fastestLapsReportColumns" [rows]="fastestLapsRows" [sortConfig]="fastestLapsSortConfig"></app-report-element>
+<app-report-element *ngIf="reportType === raceReportEnum.FASTEST_LAPS || reportType === raceReportEnum.FASTEST_LAPS_SPRINT" [loading]="loading" [columns]="reportData.fastestLapsReportColumns" [rows]="fastestLapsRows" [sortConfig]="fastestLapsSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.PIT_STOPS" [loading]="loading" [columns]="reportData.pitStopsReportColumns" [rows]="pitStopsRows" [sortConfig]="pitStopsSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.STARTING_GRID || reportType === raceReportEnum.SPRINT_GRID" [loading]="loading" [columns]="reportData.startingGridReportColumns" [rows]="startingGridRows" [sortConfig]="startingGridSortConfig"></app-report-element>
 <app-report-element *ngIf="reportType === raceReportEnum.QUALIFYING" [loading]="loading" [columns]="reportData.qualifyingReportColumns" [rows]="qualifyingRows" [sortConfig]="qualifyingSortConfig"></app-report-element>

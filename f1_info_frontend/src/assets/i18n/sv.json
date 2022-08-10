@@ -147,7 +147,7 @@
         "qualifying": "Kvalresultat",
         "sprint": "Sprintresultat",
         "sprintGrid": "Sprintplatser",
-        "practice": "Träning {{round}}"
+        "fastestLapsSprint": "Sprint Snabbaste varv"
       },
       "overview": {
         "grandPrix": "Grand Prix",
