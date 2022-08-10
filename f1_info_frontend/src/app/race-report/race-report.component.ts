@@ -77,12 +77,14 @@ export class RaceReportComponent implements OnInit {
 
     public seasonFilterChanged = (newSeason: number) => {
         this.mSelectedSeason = newSeason;
+        this.reportType = RaceReport.OVERVIEW;
         this.fetchAndAssignFilterValues();
     };
 
     public raceFilterChanged = (newRace: number | null) => {
         this.mSelectedRaceRound = newRace;
         this.reportType = this.mSelectedRaceRound === null ? RaceReport.OVERVIEW : RaceReport.RACE_RESULT;
+        this.populateRaceCategoryFilter();
 
         this.runReport();
     };
