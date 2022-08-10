@@ -171,6 +171,7 @@
         "position": "Pos.",
         "driverNumber": "No.",
         "driver": "Driver",
+        "nationality": "Nationality",
         "constructor": "Constructor",
         "lap": "Lap",
         "time": "Time",

@@ -1,7 +1,7 @@
 import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
-import {OverviewRaceReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
+import {FastestLapsReportResponse, OverviewRaceReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
 import {RaceType} from '../driver-report/driver-report-data';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 
@@ -40,10 +40,11 @@ export interface FastestLapsRow {
     position: number;
     driverNumber: number;
     driver: string;
+    nationality: CountryEntry;
     constructor: string;
     lap: number;
     time: string;
-    averageSpeed: number;
+    averageSpeed: string;
 }
 
 export interface PitStopsRow {
@@ -79,7 +80,7 @@ export interface OverviewRaceReportParameters extends ReportParameters{
     raceType: RaceType;
 }
 
-export interface RaceResultReportParameters extends ReportParameters{
+export interface RaceSeasonRoundTypeReportParameters extends ReportParameters{
     season: number;
     round: number;
     type: RaceType;
@@ -110,10 +111,11 @@ export class RaceReportData {
         new ReportColumn('position', 'reports.race.fastestLaps.position'),
         new ReportColumn('driverNumber', 'reports.race.fastestLaps.driverNumber', true),
         new ReportColumn('driver', 'reports.race.fastestLaps.driver'),
+        new ReportColumn('nationality', 'reports.race.fastestLaps.nationality', true),
         new ReportColumn('constructor', 'reports.race.fastestLaps.constructor'),
-        new ReportColumn('lap', 'reports.race.fastestLaps.lap'),
+        new ReportColumn('lap', 'reports.race.fastestLaps.lap', true),
         new ReportColumn('time', 'reports.race.fastestLaps.time'),
-        new ReportColumn('averageSpeed', 'reports.race.fastestLaps.averageSpeed'),
+        new ReportColumn('averageSpeed', 'reports.race.fastestLaps.averageSpeed', true),
     ];
 
     public static readonly pitStopsReportColumns: ReportColumn<PitStopsRow>[] = [
@@ -143,10 +145,14 @@ export class RaceReportData {
         new ReportColumn('q3', 'reports.race.qualifying.q3'),
     ];
 
-    public static getRaceCategoryOptions(raceHasSprint: boolean): DropdownOption[] {
+    private static readonly FIRST_SEASON_FASTEST_LAPS: number = 2004;
+
+    public static getRaceCategoryOptions(raceHasSprint: boolean, season: number): DropdownOption[] {
         return [
             { displayValue: 'reports.race.raceCategory.raceResult', value: RaceReport.RACE_RESULT },
-            { displayValue: 'reports.race.raceCategory.fastestLaps', value: RaceReport.FASTEST_LAPS },
+            ...(season >= RaceReportData.FIRST_SEASON_FASTEST_LAPS
+                ? [{ displayValue: 'reports.race.raceCategory.fastestLaps', value: RaceReport.FASTEST_LAPS }]
+                : []),
             { displayValue: 'reports.race.raceCategory.pitStops', value: RaceReport.PIT_STOPS },
             { displayValue: 'reports.race.raceCategory.startingGrid', value: RaceReport.STARTING_GRID },
             { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
@@ -176,6 +182,19 @@ export class RaceReportData {
             laps: response.laps,
             timeRetired: response.timeRetired,
             points: response.points,
+        };
+    }
+
+    public static fastestLapsToView(response: FastestLapsReportResponse): FastestLapsRow {
+        return {
+            position: response.position ?? '-',
+            driverNumber: response.driverNumber ?? '-',
+            driver: response.driver,
+            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
+            constructor: response.constructor,
+            lap: response.lap ?? '-',
+            time: response.time ?? '-',
+            averageSpeed: response.averageSpeed ?? '-',
         };
     }
 }

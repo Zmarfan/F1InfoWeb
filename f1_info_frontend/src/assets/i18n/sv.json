@@ -171,6 +171,7 @@
         "position": "Pos.",
         "driverNumber": "No.",
         "driver": "Förare",
+        "nationality": "Nationalitet",
         "constructor": "Konstruktör",
         "lap": "Varv",
         "time": "Tid",

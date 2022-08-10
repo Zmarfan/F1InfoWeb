@@ -28,5 +28,6 @@ export class Endpoints {
         getRaceReportFilterValues: `${Endpoints.REPORTS_BASE}race-report-filter-values/{season}`,
         getOverviewRaceReport: `${Endpoints.REPORTS_BASE}get-overview-race-report/{season}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getRaceResultReport: `${Endpoints.REPORTS_BASE}get-race-result-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getFastestLapsReport: `${Endpoints.REPORTS_BASE}get-fastest-laps-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 }

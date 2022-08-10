@@ -10,7 +10,7 @@ import {
     RaceOverviewRow,
     RaceReport,
     RaceReportData,
-    RaceResultReportParameters,
+    RaceSeasonRoundTypeReportParameters,
     RaceResultRow,
     StartingGridRow,
 } from './race-report-data';
@@ -146,7 +146,7 @@ export class RaceReportComponent implements OnInit {
 
     private populateRaceCategoryFilter() {
         const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === Number(this.mSelectedRaceRound));
-        this.raceCategoryOptions = RaceReportData.getRaceCategoryOptions(raceData !== undefined);
+        this.raceCategoryOptions = RaceReportData.getRaceCategoryOptions(raceData !== undefined, this.mSelectedSeason);
     }
 
     private sort(sortSetting: SortSetting<any>) {
@@ -185,11 +185,19 @@ export class RaceReportComponent implements OnInit {
                 this.raceResultRows = rows;
             },
             this.loadingCallback,
-            this.createResultParameters(RaceType.RACE),
+            this.createSeasonRoundTypeParameters(RaceType.RACE, this.raceResultSortSetting),
             (params) => this.mRaceReportService.getRaceResultReport(params),
             (response) => RaceReportData.raceResultToView(response)
         ); break;
-        case RaceReport.FASTEST_LAPS: break;
+        case RaceReport.FASTEST_LAPS: this.mReportHelper.runReport(
+            (rows: FastestLapsRow[]) => {
+                this.fastestLapsRows = rows;
+            },
+            this.loadingCallback,
+            this.createSeasonRoundTypeParameters(RaceType.RACE, this.fastestLapsSortSetting),
+            (params) => this.mRaceReportService.getFastestLapsReport(params),
+            (response) => RaceReportData.fastestLapsToView(response)
+        ); break;
         case RaceReport.PIT_STOPS: break;
         case RaceReport.STARTING_GRID: break;
         case RaceReport.QUALIFYING: break;
@@ -198,7 +206,7 @@ export class RaceReportComponent implements OnInit {
                 this.raceResultRows = rows;
             },
             this.loadingCallback,
-            this.createResultParameters(RaceType.SPRINT),
+            this.createSeasonRoundTypeParameters(RaceType.SPRINT, this.raceResultSortSetting),
             (params) => this.mRaceReportService.getRaceResultReport(params),
             (response) => RaceReportData.raceResultToView(response)
         ); break;
@@ -210,13 +218,13 @@ export class RaceReportComponent implements OnInit {
         this.loading = loading;
     };
 
-    private createResultParameters(raceType: RaceType): RaceResultReportParameters {
+    private createSeasonRoundTypeParameters(raceType: RaceType, sortSettings: SortSetting<any>): RaceSeasonRoundTypeReportParameters {
         return {
             season: this.mSelectedSeason,
             round: this.mSelectedRaceRound!,
             type: raceType,
-            sortColumn: this.raceResultSortSetting.columnName,
-            sortDirection: this.raceResultSortSetting.direction,
+            sortColumn: sortSettings.columnName as any,
+            sortDirection: sortSettings.direction,
         };
     }
 }

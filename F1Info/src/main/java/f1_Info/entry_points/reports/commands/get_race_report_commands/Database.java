@@ -5,6 +5,8 @@ import common.constants.f1.ResultType;
 import common.logger.Logger;
 import f1_Info.background.TaskDatabase;
 import f1_Info.entry_points.reports.SortDirection;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps.FastestLapsRecord;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps.GetFastestLapsReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetOverviewReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.RaceOverviewRecord;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportRowsQueryData;
@@ -43,5 +45,15 @@ public class Database extends TaskDatabase {
         final String sortColumn
     ) throws SQLException {
         return executeListQuery(new GetRaceResultReportRowsQueryData(season, round, resultType.getStringCode(), sortDirection.getDirection(), sortColumn));
+    }
+
+    public List<FastestLapsRecord> getFastestLapsReportRows(
+        final int season,
+        final int round,
+        final ResultType resultType,
+        final SortDirection sortDirection,
+        final String sortColumn
+    ) throws SQLException {
+        return executeListQuery(new GetFastestLapsReportRowsQueryData(season, round, resultType.getStringCode(), sortDirection.getDirection(), sortColumn));
     }
 }

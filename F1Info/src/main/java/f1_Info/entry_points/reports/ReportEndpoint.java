@@ -9,6 +9,7 @@ import f1_Info.entry_points.reports.commands.get_driver_report_commands.all.GetA
 import f1_Info.entry_points.reports.commands.get_driver_report_commands.individual.GetIndividualDriverReportCommand;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.Database;
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps.GetFastestLapsReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetRaceOverviewReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.GetRaceReportFilterValuesCommand;
@@ -129,6 +130,30 @@ public class ReportEndpoint {
             }
 
             return new GetRaceResultReportCommand(
+                season,
+                round,
+                ResultType.fromStringCode(resultType),
+                SortDirection.fromString(sortDirection),
+                sortColumn,
+                mRaceReportDatabase
+            );
+        });
+    }
+
+    @GetMapping("/get-fastest-laps-report/{season}/{round}/{type}")
+    public ResponseEntity<?> getFastestLapsReport(
+        @PathVariable("season") final int season,
+        @PathVariable("round") final int round,
+        @PathVariable("type") final String resultType,
+        @RequestParam("sortColumn") final String sortColumn,
+        @RequestParam("sortDirection") final String sortDirection
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() || round <= 0) {
+                throw new BadRequestException();
+            }
+
+            return new GetFastestLapsReportCommand(
                 season,
                 round,
                 ResultType.fromStringCode(resultType),
