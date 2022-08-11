@@ -1,5 +1,5 @@
 <app-loading-element [loading]="loading" [offset]="loadingOffset">
-    <table class="main-table">
+    <table *ngIf="rows.length > 0; else noData" class="main-table">
         <tr>
             <ng-container *ngFor="let column of table.columns">
                 <th class="{{column.onlyDesktop ? 'desktop' : ''}}">
@@ -21,4 +21,8 @@
             </ng-container>
         </tr>
     </table>
+
+    <ng-template #noData>
+        <div class="no-data-message">{{'reports.noData' | translate}}</div>
+    </ng-template>
 </app-loading-element>

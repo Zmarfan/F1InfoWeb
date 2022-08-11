@@ -45,3 +45,9 @@
     }
   }
 }
+
+.no-data-message {
+  border-top: var(--bkg-shadow-color) dashed 1px;
+  padding: 3rem;
+  text-align: center;
+}
