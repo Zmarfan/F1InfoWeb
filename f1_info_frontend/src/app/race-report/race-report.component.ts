@@ -166,7 +166,19 @@ export class RaceReportComponent implements OnInit {
 
     private runReport() {
         switch (this.reportType) {
-        case RaceReport.OVERVIEW: this.mReportHelper.runReport(
+        case RaceReport.OVERVIEW: this.runOverviewReport(); break;
+        case RaceReport.RACE_RESULT: this.runResultReport(RaceType.RACE); break;
+        case RaceReport.FASTEST_LAPS: this.runFastestLapsReport(); break;
+        case RaceReport.PIT_STOPS: break;
+        case RaceReport.STARTING_GRID: break;
+        case RaceReport.QUALIFYING: break;
+        case RaceReport.SPRINT: this.runResultReport(RaceType.SPRINT); break;
+        case RaceReport.SPRINT_GRID: break;
+        }
+    }
+
+    private runOverviewReport() {
+        this.mReportHelper.runReport(
             (rows: RaceOverviewRow[]) => {
                 this.overviewRows = rows;
             },
@@ -179,15 +191,7 @@ export class RaceReportComponent implements OnInit {
             },
             (params) => this.mRaceReportService.getOverviewReport(params),
             (response) => RaceReportData.overviewToView(response)
-        ); break;
-        case RaceReport.RACE_RESULT: this.runResultReport(RaceType.RACE); break;
-        case RaceReport.FASTEST_LAPS: this.runFastestLapsReport(); break;
-        case RaceReport.PIT_STOPS: break;
-        case RaceReport.STARTING_GRID: break;
-        case RaceReport.QUALIFYING: break;
-        case RaceReport.SPRINT: this.runResultReport(RaceType.SPRINT); break;
-        case RaceReport.SPRINT_GRID: break;
-        }
+        );
     }
 
     private runResultReport(raceType: RaceType) {
