@@ -49,7 +49,7 @@ public class FetchPitStopsTask extends TaskWrapper {
         }
 
         final List<PitStopData> pitStops = mErgastProxy.fetchPitStopsForRace(raceRecord.get());
-        if (pitStops != null) {
+        if (!pitStops.isEmpty()) {
             mergeIntoDatabase(pitStops, raceRecord.get());
         }
     }
