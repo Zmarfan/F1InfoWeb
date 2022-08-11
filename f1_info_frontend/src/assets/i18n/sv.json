@@ -116,7 +116,7 @@
       "title": "Förarställning",
       "driverLabel": "Förare:",
       "raceTypeLabel": "Typ:",
-      "roundLabel": "Runda:",
+      "raceLabel": "Race:",
       "roundEntry": "Runda {{round}}",
       "race": "Race",
       "sprint": "Sprint",

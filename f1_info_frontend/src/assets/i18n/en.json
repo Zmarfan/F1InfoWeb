@@ -116,7 +116,7 @@
       "title": "Driver Standings",
       "driverLabel": "Driver:",
       "raceTypeLabel": "Type:",
-      "roundLabel": "Round:",
+      "raceLabel": "Race:",
       "roundEntry": "Round {{round}}",
       "race": "Race",
       "sprint": "Sprint",

@@ -18,7 +18,7 @@ export class DriverReportComponent implements OnInit {
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();
     public driverOptions: DropdownOption[] = [];
-    public roundOptions: DropdownOption[] = [];
+    public racesOptions: DropdownOption[] = [];
     public filterLoading: boolean = true;
 
     public allReportColumns: ReportColumn<AllDriverRow>[] = DriverReportData.allReportColumns;
@@ -113,7 +113,7 @@ export class DriverReportComponent implements OnInit {
                 this.filterLoading = false;
                 this.mSeasonHasSprints = response.seasonHasSprints;
                 this.populateDriverFilter(response);
-                this.populateRoundFilter(response);
+                this.populateRacesFilter(response);
                 this.runReport();
             },
             error: (error) => {
@@ -129,11 +129,11 @@ export class DriverReportComponent implements OnInit {
             .map((driver) => ({ displayValue: driver.fullName, value: driver.driverIdentifier }));
     }
 
-    private populateRoundFilter(response: DriverReportFilterResponse) {
+    private populateRacesFilter(response: DriverReportFilterResponse) {
         this.mCurrentSeasonMaxRound = response.races.length;
         this.selectedRound = this.mCurrentSeasonMaxRound;
 
-        this.roundOptions = response.races.map((race) => ({ displayValue: race.name, value: race.round }));
+        this.racesOptions = response.races.map((race) => ({ displayValue: race.name, value: race.round }));
     }
 
     private runReport() {

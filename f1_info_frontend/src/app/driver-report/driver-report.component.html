@@ -16,8 +16,8 @@
     <app-drop-down-filter
         *ngIf="showAllReport"
         [loading]="filterLoading"
-        [options]="roundOptions"
-        [labelKey]="'reports.driver.roundLabel'"
+        [options]="racesOptions"
+        [labelKey]="'reports.driver.raceLabel'"
         [allOption]="false"
         [selectedValue]="selectedRound"
         [valueChanged]="roundFilterChanged"
