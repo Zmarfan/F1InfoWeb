@@ -57,6 +57,7 @@ create procedure get_race_result_report(
 begin
   select
     stats.position,
+    stats.start_position,
     stats.driver_number,
     stats.first_name,
     stats.last_name,
@@ -68,6 +69,7 @@ begin
   from (
      select
        results.finish_position_order as position,
+       results.starting_position as start_position,
        drivers.number as driver_number,
        drivers.first_name,
        drivers.last_name,
@@ -100,6 +102,7 @@ begin
   ) stats
   order by
     (case when p_sort_column = 'position' and p_sort_direction = 'asc' then stats.position end),
+    (case when p_sort_column = 'startPosition' and p_sort_direction = 'asc' then stats.start_position end),
     (case when p_sort_column = 'driverNumber' and p_sort_direction = 'driverNumber' then stats.driver_number end),
     (case when p_sort_column = 'driver' and p_sort_direction = 'asc' then stats.first_name end),
     (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
@@ -109,6 +112,7 @@ begin
     (case when p_sort_column = 'points' and p_sort_direction = 'asc' then stats.points end),
 
     (case when p_sort_column = 'position' and p_sort_direction = 'desc' then stats.position end) desc,
+    (case when p_sort_column = 'startPosition' and p_sort_direction = 'desc' then stats.start_position end) desc,
     (case when p_sort_column = 'driverNumber' and p_sort_direction = 'desc' then stats.driver_number end) desc,
     (case when p_sort_column = 'driver' and p_sort_direction = 'desc' then stats.first_name end) desc,
     (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,

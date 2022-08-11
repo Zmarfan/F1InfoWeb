@@ -158,6 +158,7 @@
       },
       "raceResult": {
         "position": "Pos.",
+        "startPosition": "Utgångs Pos.",
         "driverNumber": "No.",
         "driver": "Förare",
         "nationality": "Nationalitet",

@@ -158,6 +158,7 @@
       },
       "raceResult": {
         "position": "Pos.",
+        "startPosition": "Start Pos.",
         "driverNumber": "No.",
         "driver": "Driver",
         "nationality": "Nationality",

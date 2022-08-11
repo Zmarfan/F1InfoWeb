@@ -25,6 +25,7 @@ export interface RaceOverviewRow {
 
 export interface RaceResultRow {
     position: number;
+    startPosition: number;
     driverNumber: number;
     driver: string;
     nationality: CountryEntry;
@@ -84,6 +85,7 @@ export class RaceReportData {
 
     public static readonly raceResultReportColumns: ReportColumn<RaceResultRow>[] = [
         new ReportColumn('position', 'reports.race.raceResult.position'),
+        new ReportColumn('startPosition', 'reports.race.raceResult.startPosition', true),
         new ReportColumn('driverNumber', 'reports.race.raceResult.driverNumber', true),
         new ReportColumn('driver', 'reports.race.raceResult.driver'),
         new ReportColumn('nationality', 'reports.race.raceResult.nationality', true),
@@ -152,6 +154,7 @@ export class RaceReportData {
     public static raceResultToView(response: RaceResultReportResponse): RaceResultRow {
         return {
             position: response.position,
+            startPosition: response.startPosition,
             driverNumber: response.driverNumber ?? '-',
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
