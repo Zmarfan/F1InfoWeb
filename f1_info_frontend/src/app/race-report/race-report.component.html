@@ -16,6 +16,7 @@
     <app-drop-down-filter
         *ngIf="reportType !== raceReportEnum.OVERVIEW"
         [loading]="filterLoading"
+        [selectedValue]="reportType"
         [options]="raceCategoryOptions"
         [allOption]="false"
         [labelKey]="'reports.race.raceCategory.label'"

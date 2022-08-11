@@ -243,4 +243,65 @@ begin
     (case when p_sort_column = 'duration' and p_sort_direction = 'desc' then stats.duration end) desc;
 end;
 
-select * from fastest_laps;
+drop procedure if exists get_qualifying_report;
+create procedure get_qualifying_report(
+  in p_season int,
+  in p_round int,
+  in p_sort_direction varchar(5),
+  in p_sort_column varchar(30)
+)
+begin
+  select
+    stats.position,
+    stats.driver_number,
+    stats.first_name,
+    stats.last_name,
+    stats.driver_country,
+    stats.constructor,
+    stats.q1,
+    stats.q2,
+    stats.q3
+  from (
+    select
+      qualifying.position,
+      drivers.number as driver_number,
+      drivers.first_name,
+      drivers.last_name,
+      drivers.country_code as driver_country,
+      countries.country_ico_code,
+      constructors.name as constructor,
+      if(qualifying.q1_time = '', null, qualifying.q1_time) as q1,
+      qualifying.q1_time_in_seconds,
+      if(qualifying.q2_time = '', null, qualifying.q2_time) as q2,
+      qualifying.q2_time_in_seconds,
+      if(qualifying.q3_time = '', null, qualifying.q3_time) as q3,
+      qualifying.q3_time_in_seconds
+    from
+      races
+      inner join results on results.race_id = races.id
+      inner join drivers on drivers.id = results.driver_id
+      inner join countries on countries.country_code = drivers.country_code
+      inner join constructors on constructors.id = results.constructor_id
+      inner join qualifying on qualifying.race_id = races.id and qualifying.driver_id = drivers.id
+    where
+      results.result_type = 'race' and races.year = p_season and races.round = p_round
+  ) stats
+  order by
+    (case when p_sort_column = 'position' and p_sort_direction = 'asc' then stats.position end),
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'asc' then stats.driver_number end),
+    (case when p_sort_column = 'driver' and p_sort_direction = 'asc' then stats.first_name end),
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
+    (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
+    (case when p_sort_column = 'q1' and p_sort_direction = 'asc' then -stats.q1_time_in_seconds end) desc,
+    (case when p_sort_column = 'q2' and p_sort_direction = 'asc' then -stats.q2_time_in_seconds end) desc,
+    (case when p_sort_column = 'q3' and p_sort_direction = 'asc' then -stats.q3_time_in_seconds end) desc,
+
+    (case when p_sort_column = 'position' and p_sort_direction = 'desc' then stats.position end) desc,
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'desc' then stats.driver_number end) desc,
+    (case when p_sort_column = 'driver' and p_sort_direction = 'desc' then stats.first_name end) desc,
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
+    (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
+    (case when p_sort_column = 'q1' and p_sort_direction = 'desc' then -stats.q1_time_in_seconds end),
+    (case when p_sort_column = 'q2' and p_sort_direction = 'desc' then -stats.q2_time_in_seconds end),
+    (case when p_sort_column = 'q3' and p_sort_direction = 'desc' then -stats.q3_time_in_seconds end);
+end;

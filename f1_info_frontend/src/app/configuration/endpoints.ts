@@ -30,5 +30,6 @@ export class Endpoints {
         getRaceResultReport: `${Endpoints.REPORTS_BASE}get-race-result-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getFastestLapsReport: `${Endpoints.REPORTS_BASE}get-fastest-laps-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getPitStopsReport: `${Endpoints.REPORTS_BASE}get-pit-stops-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getQualifyingReport: `${Endpoints.REPORTS_BASE}get-qualifying-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 }

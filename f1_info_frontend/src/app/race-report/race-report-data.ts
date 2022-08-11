@@ -1,7 +1,13 @@
 import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
-import {FastestLapsReportResponse, OverviewRaceReportResponse, PitStopsReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
+import {
+    FastestLapsReportResponse,
+    OverviewRaceReportResponse,
+    PitStopsReportResponse,
+    QualifyingReportResponse,
+    RaceResultReportResponse
+} from '../../generated/server-responses';
 import {RaceType} from '../driver-report/driver-report-data';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 
@@ -66,7 +72,6 @@ export interface QualifyingRow {
     q1: string;
     q2: string;
     q3: string;
-    laps: string;
 }
 
 export interface RaceReportParameters extends ReportParameters{
@@ -185,13 +190,26 @@ export class RaceReportData {
     public static pitStopsToView(response: PitStopsReportResponse): PitStopsRow {
         return {
             stopNumber: response.stopNumber,
-            driverNumber: response.driverNumber,
+            driverNumber: response.driverNumber ?? '-',
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             lap: response.lap,
             time: response.time,
             duration: response.duration,
+        };
+    }
+
+    public static qualifyingToView(response: QualifyingReportResponse): QualifyingRow {
+        return {
+            position: response.position,
+            driverNumber: response.driverNumber ?? '-',
+            driver: response.driver,
+            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
+            constructor: response.constructor,
+            q1: response.q1 ?? '-',
+            q2: response.q2 ?? '-',
+            q3: response.q3 ?? '-',
         };
     }
 }

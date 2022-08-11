@@ -5,9 +5,9 @@ import {Endpoints} from '../configuration/endpoints';
 import {
     FastestLapsReportResponse,
     OverviewRaceReportResponse,
-    PitStopsReportResponse,
+    PitStopsReportResponse, QualifyingReportResponse,
     RaceReportFilterResponse,
-    RaceResultReportResponse
+    RaceResultReportResponse,
 } from '../../generated/server-responses';
 import {RaceReportParameters} from './race-report-data';
 
@@ -38,5 +38,9 @@ export class RaceReportService {
 
     public getPitStopsReport(params: RaceReportParameters) {
         return this.mHttpClient.get<PitStopsReportResponse[]>(parseTemplate(Endpoints.REPORTS.getPitStopsReport).expand({ ...params }));
+    }
+
+    public getQualifyingReport(params: RaceReportParameters) {
+        return this.mHttpClient.get<QualifyingReportResponse[]>(parseTemplate(Endpoints.REPORTS.getQualifyingReport).expand({ ...params }));
     }
 }

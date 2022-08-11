@@ -3,16 +3,7 @@ import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filt
 import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {
-    FastestLapsRow,
-    PitStopsRow,
-    QualifyingRow,
-    RaceOverviewRow,
-    RaceReport,
-    RaceReportData,
-    RaceReportParameters,
-    RaceResultRow
-} from './race-report-data';
+import {FastestLapsRow, PitStopsRow, QualifyingRow, RaceOverviewRow, RaceReport, RaceReportData, RaceReportParameters, RaceResultRow} from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
@@ -98,8 +89,8 @@ export class RaceReportComponent implements OnInit {
 
     public raceFilterChanged = (newRace: number | null) => {
         this.mSelectedRaceRound = newRace;
-        this.reportType = this.mSelectedRaceRound === null ? RaceReport.OVERVIEW : RaceReport.RACE_RESULT;
         this.populateRaceCategoryFilter();
+        this.reportType = this.newReportTypeOnRaceChange();
 
         this.runReport();
     };
@@ -161,7 +152,7 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.RACE_RESULT: this.runResultReport(RaceType.RACE); break;
         case RaceReport.FASTEST_LAPS: this.runFastestLapsReport(); break;
         case RaceReport.PIT_STOPS: this.runPitStopsReport(); break;
-        case RaceReport.QUALIFYING: break;
+        case RaceReport.QUALIFYING: this.runQualifyingReport(); break;
         case RaceReport.SPRINT: this.runResultReport(RaceType.SPRINT); break;
         }
     }
@@ -214,6 +205,18 @@ export class RaceReportComponent implements OnInit {
         );
     }
 
+    private runQualifyingReport() {
+        this.mReportHelper.runReport(
+            (rows: QualifyingRow[]) => {
+                this.qualifyingRows = rows;
+            },
+            this.loadingCallback,
+            this.createReportParameters(RaceType.RACE, this.qualifyingSortSetting),
+            (params) => this.mRaceReportService.getQualifyingReport(params),
+            (response) => RaceReportData.qualifyingToView(response)
+        );
+    }
+
     private loadingCallback = (loading: boolean) => {
         this.loading = loading;
     };
@@ -226,5 +229,16 @@ export class RaceReportComponent implements OnInit {
             sortColumn: sortSettings.columnName as any,
             sortDirection: sortSettings.direction,
         };
+    }
+
+    private newReportTypeOnRaceChange(): RaceReport {
+        if (this.mSelectedRaceRound === null) {
+            return RaceReport.OVERVIEW;
+        }
+
+        if (this.raceCategoryOptions.filter((category) => category.value === this.reportType).length > 0) {
+            return this.reportType;
+        }
+        return RaceReport.RACE_RESULT;
     }
 }
