@@ -24,7 +24,11 @@ public class Database extends TaskDatabase {
         return executeListQuery(new GetDriversFromSeasonQueryData(season));
     }
 
-    public SeasonInfoRecord getSeasonInfo(final int season) throws SQLException {
-        return executeQuery(new GetSeasonInfoQueryData(season));
+    public List<RaceFromSeasonRecord> getRacesFromSeason(final int season) throws SQLException {
+        return executeListQuery(new GetRacesFromSeasonQueryData(season));
+    }
+
+    public boolean getSeasonHasSprint(final int season) throws SQLException {
+        return executeBasicQuery(new GetSeasonHasSprintQueryData(season));
     }
 }

@@ -17,8 +17,9 @@ public class GetDriverReportFilterValuesCommand implements Command {
     @Override
     public ResponseEntity<?> execute() throws SQLException {
         final List<DriverEntry> driverEntries= mDatabase.getDriversFromSeason(mSeason).stream().map(DriverEntry::new).toList();
-        final SeasonInfoRecord seasonInfo = mDatabase.getSeasonInfo(mSeason);
+        final List<RaceEntry> races = mDatabase.getRacesFromSeason(mSeason).stream().map(RaceEntry::new).toList();
+        final boolean seasonHasSprints = mDatabase.getSeasonHasSprint(mSeason);
 
-        return ok(new DriverReportFilterResponse(driverEntries, seasonInfo.getAmountOfRounds(), seasonInfo.getHasSprints()));
+        return ok(new DriverReportFilterResponse(driverEntries, races, seasonHasSprints));
     }
 }

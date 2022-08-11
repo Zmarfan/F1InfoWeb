@@ -7,6 +7,6 @@ import java.util.List;
 @Value
 public class DriverReportFilterResponse {
     List<DriverEntry> mDrivers;
-    int mAmountOfRounds;
+    List<RaceEntry> mRaces;
     boolean mSeasonHasSprints;
 }

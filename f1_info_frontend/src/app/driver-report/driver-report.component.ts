@@ -130,14 +130,10 @@ export class DriverReportComponent implements OnInit {
     }
 
     private populateRoundFilter(response: DriverReportFilterResponse) {
-        this.mCurrentSeasonMaxRound = response.amountOfRounds;
+        this.mCurrentSeasonMaxRound = response.races.length;
+        this.selectedRound = this.mCurrentSeasonMaxRound;
 
-        const options: DropdownOption[] = [];
-        for (let round = 1; round <= response.amountOfRounds; round++) {
-            options.push({ displayValue: 'reports.driver.roundEntry', value: round, translateParams: { round } });
-        }
-        this.roundOptions = options;
-        this.selectedRound = response.amountOfRounds;
+        this.roundOptions = response.races.map((race) => ({ displayValue: race.name, value: race.round }));
     }
 
     private runReport() {
