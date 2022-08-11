@@ -132,7 +132,7 @@ create table fastest_laps(
   id int not null auto_increment,
   lap_achieved int,
   lap_rank int,
-  time_in_seconds int,
+  time_in_seconds float,
   display_time varchar(255),
   speed_unit varchar(3),
   speed varchar(255),
