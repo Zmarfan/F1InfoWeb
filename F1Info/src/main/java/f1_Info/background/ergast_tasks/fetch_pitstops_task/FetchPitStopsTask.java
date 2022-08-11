@@ -8,14 +8,20 @@ import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import static java.util.Collections.emptyList;
 
 @Component
 public class FetchPitStopsTask extends TaskWrapper {
+    static final Set<Pair<Integer, Integer>> RACES_WITH_NO_PIT_STOPS = Set.of(Pair.of(2021, 12));
+
     private final ErgastProxy mErgastProxy;
     private final Database mDatabase;
 
@@ -37,8 +43,13 @@ public class FetchPitStopsTask extends TaskWrapper {
             return;
         }
 
+        if (isRaceWithZeroPitStops(raceRecord.get())) {
+            mergeIntoDatabase(emptyList(), raceRecord.get());
+            return;
+        }
+
         final List<PitStopData> pitStops = mErgastProxy.fetchPitStopsForRace(raceRecord.get());
-        if (!pitStops.isEmpty()) {
+        if (pitStops != null) {
             mergeIntoDatabase(pitStops, raceRecord.get());
         }
     }
@@ -46,6 +57,10 @@ public class FetchPitStopsTask extends TaskWrapper {
     @Override
     protected Tasks getTaskType() {
         return Tasks.FETCH_PIT_STOPS_TASK;
+    }
+
+    private boolean isRaceWithZeroPitStops(final RaceRecord raceRecord) {
+        return RACES_WITH_NO_PIT_STOPS.contains(Pair.of(raceRecord.getSeason(), raceRecord.getRound()));
     }
 
     private void mergeIntoDatabase(final List<PitStopData> pitStops, final RaceRecord raceRecord) throws SQLException {

@@ -97,6 +97,17 @@ class FetchPitStopsTaskTest {
         verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
 
+    @Test
+    void should_merge_in_zero_rows_if_race_to_fetch_has_zero_pit_stops() throws SQLException {
+        final RaceRecord raceWithZeroPitStops = new RaceRecord(2021, 12, 1204);
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(raceWithZeroPitStops));
+
+        mFetchPitStopsTask.run();
+
+        verify(mDatabase).mergeIntoPitStopsData(emptyList(), raceWithZeroPitStops);
+        verify(mDatabase).setLastFetchedRaceInHistory(raceWithZeroPitStops);
+    }
+
     private List<PitStopData> getPitstopData() {
         return List.of(
             new PitStopData("driver_id1", 23, 1, "12:32:14Z", "4.5"),
