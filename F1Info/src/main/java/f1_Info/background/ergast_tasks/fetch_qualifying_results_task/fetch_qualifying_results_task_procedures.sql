@@ -45,7 +45,7 @@ begin
 
   set v_race_id := (select id from races where year = p_season and round = p_round);
   set v_driver_id := (select id from drivers where driver_identifier = p_driver_identifier);
-  set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from results where race_id = v_race_id and driver_id = v_driver_id);
+  set v_exists_in_table := (select if(count(*) = 1, 'Y', 'N') from qualifying where race_id = v_race_id and driver_id = v_driver_id);
 
   if (v_exists_in_table = 'N') then
     set v_constructor_id := (select id from constructors where constructor_identifier = p_constructor_identifier);
