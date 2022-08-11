@@ -457,8 +457,8 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException, ParseException {
-        final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", BigDecimal.TEN));
+    void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException {
+        final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", "23.021"));
 
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mParser.parsePitStopResponseToObjects(any())).thenReturn(new ErgastResponse<>(

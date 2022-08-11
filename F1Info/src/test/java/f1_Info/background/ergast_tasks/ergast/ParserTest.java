@@ -281,7 +281,7 @@ class ParserTest {
                                         "lap": "11",
                                         "stop": "1",
                                         "time": "18:21:54",
-                                        "duration": "25.201"
+                                        "duration": "1:25.201"
                                     },
                                     {
                                         "driverId": "alonso",
@@ -930,10 +930,10 @@ class ParserTest {
     }
 
     @Test
-    void should_parse_valid_pitstops_json_to_correct_pitstop_object_list() throws IOException, ParseException {
+    void should_parse_valid_pitstops_json_to_correct_pitstop_object_list() throws IOException {
         final List<PitStopData> expectedData = List.of(
-            new PitStopData("hamilton", 11, 1, "18:21:54", BigDecimal.valueOf(25.201)),
-            new PitStopData("alonso", 11, 1, "18:22:10", BigDecimal.valueOf(25.365))
+            new PitStopData("hamilton", 11, 1, "18:21:54", "1:25.201"),
+            new PitStopData("alonso", 11, 1, "18:22:10", "25.365")
         );
         final ErgastResponse<PitStopDataHolder> parsedData = new Parser().parsePitStopResponseToObjects(TEST_PITSTOP_JSON);
         assertEquals(singletonList(new PitStopDataHolder(expectedData)), parsedData.getData());

@@ -1,19 +1,17 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
+import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
-import common.logger.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +55,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_merge_in_pitstop_data_sent_from_ergast_to_database() throws SQLException, ParseException {
+    void should_merge_in_pitstop_data_sent_from_ergast_to_database() throws SQLException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
@@ -67,7 +65,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_log_severe_if_exception_is_thrown() throws SQLException, ParseException {
+    void should_log_severe_if_exception_is_thrown() throws SQLException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
@@ -78,7 +76,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_set_last_fetched_race_after_merging_pitstops() throws SQLException, ParseException {
+    void should_set_last_fetched_race_after_merging_pitstops() throws SQLException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
@@ -89,7 +87,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_not_set_last_fetched_race_after_merging_pitstops_if_it_throws() throws SQLException, ParseException {
+    void should_not_set_last_fetched_race_after_merging_pitstops_if_it_throws() throws SQLException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
@@ -99,11 +97,11 @@ class FetchPitStopsTaskTest {
         verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
 
-    private List<PitStopData> getPitstopData() throws ParseException {
+    private List<PitStopData> getPitstopData() {
         return List.of(
-            new PitStopData("driver_id1", 23, 1, "12:32:14Z", BigDecimal.valueOf(4.5)),
-            new PitStopData("driver_id2", 33, 2, "12:52:14Z", BigDecimal.valueOf(5.5)),
-            new PitStopData("driver_id3", 5, 1, "11:52:14Z", BigDecimal.valueOf(6.5))
+            new PitStopData("driver_id1", 23, 1, "12:32:14Z", "4.5"),
+            new PitStopData("driver_id2", 33, 2, "12:52:14Z", "5.5"),
+            new PitStopData("driver_id3", 5, 1, "11:52:14Z", "6.5")
         );
     }
 }

@@ -20,12 +20,20 @@ public class PitStopData {
         @JsonProperty("lap") int lap,
         @JsonProperty("stop") int stop,
         @JsonProperty("time") String time,
-        @JsonProperty("duration") BigDecimal durationInSeconds
+        @JsonProperty("duration") String duration
     ) {
         mDriverIdentification = driverIdentification;
         mLap = lap;
         mStop = stop;
         mTime = DateUtils.parseTime(time);
-        mDurationInSeconds = durationInSeconds;
+        mDurationInSeconds = readDurationAsSeconds(duration);
+    }
+
+    private BigDecimal readDurationAsSeconds(final String duration) {
+        if (duration.contains(":")) {
+            final String[] parts = duration.split(":");
+            return new BigDecimal(parts[0]).multiply(BigDecimal.valueOf(60)).add(new BigDecimal(parts[1]));
+        }
+        return new BigDecimal(duration);
     }
 }
