@@ -185,12 +185,6 @@
         "time": "Tid",
         "total": "Total"
       },
-      "startingGrid": {
-        "position": "Pos.",
-        "driverNumber": "No.",
-        "driver": "Förare",
-        "constructor": "Konstruktör"
-      },
       "qualifying": {
         "position": "Pos.",
         "driverNumber": "No.",

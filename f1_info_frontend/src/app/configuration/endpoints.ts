@@ -26,7 +26,7 @@ export class Endpoints {
         getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getRaceReportFilterValues: `${Endpoints.REPORTS_BASE}race-report-filter-values/{season}`,
-        getOverviewRaceReport: `${Endpoints.REPORTS_BASE}get-overview-race-report/{season}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getOverviewRaceReport: `${Endpoints.REPORTS_BASE}get-overview-race-report/{season}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getRaceResultReport: `${Endpoints.REPORTS_BASE}get-race-result-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getFastestLapsReport: `${Endpoints.REPORTS_BASE}get-fastest-laps-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };

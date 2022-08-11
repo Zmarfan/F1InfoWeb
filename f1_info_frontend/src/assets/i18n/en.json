@@ -185,12 +185,6 @@
         "time": "Time",
         "total": "Total"
       },
-      "startingGrid": {
-        "position": "Pos.",
-        "driverNumber": "No.",
-        "driver": "Driver",
-        "constructor": "Constructor"
-      },
       "qualifying": {
         "position": "Pos.",
         "driverNumber": "No.",

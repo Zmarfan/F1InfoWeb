@@ -94,10 +94,10 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-overview-race-report/{season}/{raceType}")
+    @GetMapping("/get-overview-race-report/{season}/{type}")
     public ResponseEntity<?> getOverviewRaceResultReport(
         @PathVariable("season") final int season,
-        @PathVariable("raceType") final String raceType,
+        @PathVariable("type") final String resultType,
         @RequestParam("sortColumn") final String sortColumn,
         @RequestParam("sortDirection") final String sortDirection
     ) {
@@ -108,7 +108,7 @@ public class ReportEndpoint {
 
             return new GetRaceOverviewReportCommand(
                 season,
-                ResultType.fromStringCode(raceType),
+                ResultType.fromStringCode(resultType),
                 SortDirection.fromString(sortDirection),
                 sortColumn,
                 mRaceReportDatabase

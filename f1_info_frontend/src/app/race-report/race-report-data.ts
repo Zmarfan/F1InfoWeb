@@ -10,10 +10,8 @@ export enum RaceReport {
     RACE_RESULT = 2,
     FASTEST_LAPS = 3,
     PIT_STOPS = 4,
-    STARTING_GRID = 5,
-    QUALIFYING = 6,
-    SPRINT = 7,
-    SPRINT_GRID = 8,
+    QUALIFYING = 5,
+    SPRINT = 6,
 }
 
 export interface RaceOverviewRow {
@@ -57,13 +55,6 @@ export interface PitStopsRow {
     total: number;
 }
 
-export interface StartingGridRow {
-    position: number;
-    driverNumber: number;
-    driver: string;
-    constructor: string;
-}
-
 export interface QualifyingRow {
     position: number;
     driverNumber: number;
@@ -75,20 +66,10 @@ export interface QualifyingRow {
     laps: string;
 }
 
-export interface OverviewRaceReportParameters extends ReportParameters{
-    season: number;
-    raceType: RaceType;
-}
-
-export interface RaceResultReportParameters extends ReportParameters{
+export interface RaceReportParameters extends ReportParameters{
     season: number;
     round: number;
     type: RaceType;
-}
-
-export interface FastestLapsReportParameters extends ReportParameters{
-    season: number;
-    round: number;
 }
 
 export class RaceReportData {
@@ -133,13 +114,6 @@ export class RaceReportData {
         new ReportColumn('total', 'reports.race.pitStops.total'),
     ];
 
-    public static readonly startingGridReportColumns: ReportColumn<StartingGridRow>[] = [
-        new ReportColumn('position', 'reports.race.startingGrid.position'),
-        new ReportColumn('driverNumber', 'reports.race.startingGrid.driverNumber', true),
-        new ReportColumn('driver', 'reports.race.startingGrid.driver'),
-        new ReportColumn('constructor', 'reports.race.startingGrid.constructor'),
-    ];
-
     public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
         new ReportColumn('position', 'reports.race.qualifying.position'),
         new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
@@ -159,10 +133,8 @@ export class RaceReportData {
                 ? [{ displayValue: 'reports.race.raceCategory.fastestLaps', value: RaceReport.FASTEST_LAPS }]
                 : []),
             { displayValue: 'reports.race.raceCategory.pitStops', value: RaceReport.PIT_STOPS },
-            { displayValue: 'reports.race.raceCategory.startingGrid', value: RaceReport.STARTING_GRID },
-            { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprint', value: RaceReport.SPRINT }] : []),
-            ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprintGrid', value: RaceReport.SPRINT_GRID }] : []),
+            { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
         ];
     }
 

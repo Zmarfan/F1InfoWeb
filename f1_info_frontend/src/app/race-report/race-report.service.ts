@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {parseTemplate} from 'url-template';
 import {Endpoints} from '../configuration/endpoints';
 import {FastestLapsReportResponse, OverviewRaceReportResponse, RaceReportFilterResponse, RaceResultReportResponse} from '../../generated/server-responses';
-import {FastestLapsReportParameters, OverviewRaceReportParameters, RaceResultReportParameters} from './race-report-data';
+import {RaceReportParameters} from './race-report-data';
 
 @Injectable({
     providedIn: 'root',
@@ -18,15 +18,15 @@ export class RaceReportService {
         return this.mHttpClient.get<RaceReportFilterResponse>(parseTemplate(Endpoints.REPORTS.getRaceReportFilterValues).expand({ season }));
     }
 
-    public getOverviewReport(params: OverviewRaceReportParameters) {
+    public getOverviewReport(params: RaceReportParameters) {
         return this.mHttpClient.get<OverviewRaceReportResponse[]>(parseTemplate(Endpoints.REPORTS.getOverviewRaceReport).expand({ ...params }));
     }
 
-    public getRaceResultReport(params: RaceResultReportParameters) {
+    public getRaceResultReport(params: RaceReportParameters) {
         return this.mHttpClient.get<RaceResultReportResponse[]>(parseTemplate(Endpoints.REPORTS.getRaceResultReport).expand({ ...params }));
     }
 
-    public getFastestLapsReport(params: FastestLapsReportParameters) {
+    public getFastestLapsReport(params: RaceReportParameters) {
         return this.mHttpClient.get<FastestLapsReportResponse[]>(parseTemplate(Endpoints.REPORTS.getFastestLapsReport).expand({ ...params }));
     }
 }
