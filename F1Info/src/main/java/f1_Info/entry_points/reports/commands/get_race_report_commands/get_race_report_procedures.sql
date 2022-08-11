@@ -151,6 +151,7 @@ begin
       constructors.name as constructor,
       fastest_laps.lap_achieved as lap,
       fastest_laps.display_time as time,
+      fastest_laps.time_in_seconds,
       fastest_laps.speed as average_speed
     from
       races
@@ -169,7 +170,7 @@ begin
     (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
     (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
     (case when p_sort_column = 'lap' and p_sort_direction = 'asc' then -stats.lap end) desc,
-    (case when p_sort_column = 'time' and p_sort_direction = 'asc' then -stats.time end) desc,
+    (case when p_sort_column = 'time' and p_sort_direction = 'asc' then -stats.time_in_seconds end) desc,
     (case when p_sort_column = 'averageSpeed' and p_sort_direction = 'asc' then -stats.average_speed end) desc,
 
     (case when p_sort_column = 'position' and p_sort_direction = 'desc' then -stats.position end),
@@ -178,6 +179,6 @@ begin
     (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
     (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
     (case when p_sort_column = 'lap' and p_sort_direction = 'desc' then -stats.lap end),
-    (case when p_sort_column = 'time' and p_sort_direction = 'desc' then -stats.time end),
+    (case when p_sort_column = 'time' and p_sort_direction = 'desc' then -stats.time_in_seconds end),
     (case when p_sort_column = 'averageSpeed' and p_sort_direction = 'desc' then -stats.average_speed end);
 end;
