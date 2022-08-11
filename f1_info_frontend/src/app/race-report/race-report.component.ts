@@ -58,7 +58,7 @@ export class RaceReportComponent implements OnInit {
         sortCallback: (sortObject: SortSetting<FastestLapsRow>) => this.sort(sortObject),
         defaultSortSetting: this.fastestLapsSortSetting,
     };
-    public pitStopsSortSetting: SortSetting<PitStopsRow> = { columnName: 'lap', direction: SortDirection.ASCENDING };
+    public pitStopsSortSetting: SortSetting<PitStopsRow> = { columnName: 'time', direction: SortDirection.ASCENDING };
     public pitStopsSortConfig: ReportSortConfig<PitStopsRow> = {
         sortCallback: (sortObject: SortSetting<PitStopsRow>) => this.sort(sortObject),
         defaultSortSetting: this.pitStopsSortSetting,
@@ -160,7 +160,7 @@ export class RaceReportComponent implements OnInit {
         case RaceReport.OVERVIEW: this.runOverviewReport(); break;
         case RaceReport.RACE_RESULT: this.runResultReport(RaceType.RACE); break;
         case RaceReport.FASTEST_LAPS: this.runFastestLapsReport(); break;
-        case RaceReport.PIT_STOPS: break;
+        case RaceReport.PIT_STOPS: this.runPitStopsReport(); break;
         case RaceReport.QUALIFYING: break;
         case RaceReport.SPRINT: this.runResultReport(RaceType.SPRINT); break;
         }
@@ -199,6 +199,18 @@ export class RaceReportComponent implements OnInit {
             this.createReportParameters(RaceType.RACE, this.fastestLapsSortSetting),
             (params) => this.mRaceReportService.getFastestLapsReport(params),
             (response) => RaceReportData.fastestLapsToView(response)
+        );
+    }
+
+    private runPitStopsReport() {
+        this.mReportHelper.runReport(
+            (rows: PitStopsRow[]) => {
+                this.pitStopsRows = rows;
+            },
+            this.loadingCallback,
+            this.createReportParameters(RaceType.RACE, this.pitStopsSortSetting),
+            (params) => this.mRaceReportService.getPitStopsReport(params),
+            (response) => RaceReportData.pitStopsToView(response)
         );
     }
 

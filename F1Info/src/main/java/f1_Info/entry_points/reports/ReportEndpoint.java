@@ -11,6 +11,7 @@ import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_com
 import f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command.GetDriverReportFilterValuesCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps.GetFastestLapsReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetRaceOverviewReportCommand;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.pit_stops.GetPitStopsReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportCommand;
 import f1_Info.entry_points.reports.commands.get_race_report_filter_values_command.GetRaceReportFilterValuesCommand;
 import lombok.AllArgsConstructor;
@@ -153,6 +154,22 @@ public class ReportEndpoint {
             }
 
             return new GetFastestLapsReportCommand(season, round, SortDirection.fromString(sortDirection), sortColumn, mRaceReportDatabase);
+        });
+    }
+
+    @GetMapping("/get-pit-stops-report/{season}/{round}")
+    public ResponseEntity<?> getPitStopsReport(
+        @PathVariable("season") final int season,
+        @PathVariable("round") final int round,
+        @RequestParam("sortColumn") final String sortColumn,
+        @RequestParam("sortDirection") final String sortDirection
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (!seasonIsValid(season) || sortColumn == null || sortColumn.isEmpty() || round <= 0) {
+                throw new BadRequestException();
+            }
+
+            return new GetPitStopsReportCommand(season, round, SortDirection.fromString(sortDirection), sortColumn, mRaceReportDatabase);
         });
     }
 

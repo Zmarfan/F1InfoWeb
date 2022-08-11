@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {parseTemplate} from 'url-template';
 import {Endpoints} from '../configuration/endpoints';
-import {FastestLapsReportResponse, OverviewRaceReportResponse, RaceReportFilterResponse, RaceResultReportResponse} from '../../generated/server-responses';
+import {
+    FastestLapsReportResponse,
+    OverviewRaceReportResponse,
+    PitStopsReportResponse,
+    RaceReportFilterResponse,
+    RaceResultReportResponse
+} from '../../generated/server-responses';
 import {RaceReportParameters} from './race-report-data';
 
 @Injectable({
@@ -28,5 +34,9 @@ export class RaceReportService {
 
     public getFastestLapsReport(params: RaceReportParameters) {
         return this.mHttpClient.get<FastestLapsReportResponse[]>(parseTemplate(Endpoints.REPORTS.getFastestLapsReport).expand({ ...params }));
+    }
+
+    public getPitStopsReport(params: RaceReportParameters) {
+        return this.mHttpClient.get<PitStopsReportResponse[]>(parseTemplate(Endpoints.REPORTS.getPitStopsReport).expand({ ...params }));
     }
 }

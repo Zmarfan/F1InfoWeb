@@ -9,6 +9,8 @@ import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_la
 import f1_Info.entry_points.reports.commands.get_race_report_commands.fastest_laps.GetFastestLapsReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.GetOverviewReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.overview.RaceOverviewRecord;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.pit_stops.GetPitStopsReportRowsQueryData;
+import f1_Info.entry_points.reports.commands.get_race_report_commands.pit_stops.PitStopRecord;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.GetRaceResultReportRowsQueryData;
 import f1_Info.entry_points.reports.commands.get_race_report_commands.race_result.RaceResultRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,14 @@ public class Database extends TaskDatabase {
         final String sortColumn
     ) throws SQLException {
         return executeListQuery(new GetFastestLapsReportRowsQueryData(season, round, sortDirection.getDirection(), sortColumn));
+    }
+
+    public List<PitStopRecord> getPitStopReportRows(
+        final int season,
+        final int round,
+        final SortDirection sortDirection,
+        final String sortColumn
+    ) throws SQLException {
+        return executeListQuery(new GetPitStopsReportRowsQueryData(season, round, sortDirection.getDirection(), sortColumn));
     }
 }

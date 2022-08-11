@@ -182,3 +182,65 @@ begin
     (case when p_sort_column = 'time' and p_sort_direction = 'desc' then -stats.time_in_seconds end),
     (case when p_sort_column = 'averageSpeed' and p_sort_direction = 'desc' then -stats.average_speed end);
 end;
+
+drop procedure if exists get_pit_stops_report;
+create procedure get_pit_stops_report(
+  in p_season int,
+  in p_round int,
+  in p_sort_direction varchar(5),
+  in p_sort_column varchar(30)
+)
+begin
+  select
+    stats.stop_number,
+    stats.driver_number,
+    stats.first_name,
+    stats.last_name,
+    stats.driver_country,
+    stats.constructor,
+    stats.lap,
+    stats.time,
+    stats.duration
+  from (
+    select
+      pit_stops.stop as stop_number,
+      drivers.number as driver_number,
+      drivers.first_name,
+      drivers.last_name,
+      drivers.country_code as driver_country,
+      countries.country_ico_code,
+      constructors.name as constructor,
+      pit_stops.lap,
+      pit_stops.time,
+      pit_stops.length_in_seconds as duration
+    from
+      races
+      inner join results on results.race_id = races.id
+      inner join drivers on drivers.id = results.driver_id
+      inner join countries on countries.country_code = drivers.country_code
+      inner join constructors on constructors.id = results.constructor_id
+      inner join pit_stops on pit_stops.race_id = races.id and pit_stops.driver_id = drivers.id
+    where
+      results.result_type = 'race' and races.year = p_season and races.round = p_round
+  ) stats
+  order by
+    (case when p_sort_column = 'stopNumber' and p_sort_direction = 'asc' then stats.stop_number end),
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'asc' then stats.driver_number end),
+    (case when p_sort_column = 'driver' and p_sort_direction = 'asc' then stats.first_name end),
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
+    (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
+    (case when p_sort_column = 'lap' and p_sort_direction = 'asc' then stats.lap end),
+    (case when p_sort_column = 'time' and p_sort_direction = 'asc' then stats.time end),
+    (case when p_sort_column = 'duration' and p_sort_direction = 'asc' then stats.duration end),
+
+    (case when p_sort_column = 'stopNumber' and p_sort_direction = 'desc' then stats.stop_number end) desc,
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'desc' then stats.driver_number end) desc,
+    (case when p_sort_column = 'driver' and p_sort_direction = 'desc' then stats.first_name end) desc,
+    (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
+    (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
+    (case when p_sort_column = 'lap' and p_sort_direction = 'desc' then stats.lap end) desc,
+    (case when p_sort_column = 'time' and p_sort_direction = 'desc' then stats.time end) desc,
+    (case when p_sort_column = 'duration' and p_sort_direction = 'desc' then stats.duration end) desc;
+end;
+
+select * from fastest_laps;

@@ -1,7 +1,7 @@
 import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
-import {FastestLapsReportResponse, OverviewRaceReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
+import {FastestLapsReportResponse, OverviewRaceReportResponse, PitStopsReportResponse, RaceResultReportResponse} from '../../generated/server-responses';
 import {RaceType} from '../driver-report/driver-report-data';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 
@@ -50,16 +50,18 @@ export interface PitStopsRow {
     stopNumber: number;
     driverNumber: number;
     driver: string;
+    nationality: CountryEntry;
     constructor: string;
     lap: number;
     time: string;
-    total: number;
+    duration: number;
 }
 
 export interface QualifyingRow {
     position: number;
     driverNumber: number;
     driver: string;
+    nationality: CountryEntry;
     constructor: string;
     q1: string;
     q2: string;
@@ -110,16 +112,18 @@ export class RaceReportData {
         new ReportColumn('stopNumber', 'reports.race.pitStops.stopNumber'),
         new ReportColumn('driverNumber', 'reports.race.pitStops.driverNumber', true),
         new ReportColumn('driver', 'reports.race.pitStops.driver'),
+        new ReportColumn('nationality', 'reports.race.pitStops.nationality', true),
         new ReportColumn('constructor', 'reports.race.pitStops.constructor'),
         new ReportColumn('lap', 'reports.race.pitStops.lap'),
-        new ReportColumn('time', 'reports.race.pitStops.time'),
-        new ReportColumn('total', 'reports.race.pitStops.total'),
+        new ReportColumn('time', 'reports.race.pitStops.time', true),
+        new ReportColumn('duration', 'reports.race.pitStops.duration'),
     ];
 
     public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
         new ReportColumn('position', 'reports.race.qualifying.position'),
         new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
         new ReportColumn('driver', 'reports.race.qualifying.driver'),
+        new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
         new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
         new ReportColumn('q1', 'reports.race.qualifying.q1'),
         new ReportColumn('q2', 'reports.race.qualifying.q2'),
@@ -175,6 +179,19 @@ export class RaceReportData {
             lap: response.lap ?? '-',
             time: response.time ?? '-',
             averageSpeed: response.averageSpeed ?? '-',
+        };
+    }
+
+    public static pitStopsToView(response: PitStopsReportResponse): PitStopsRow {
+        return {
+            stopNumber: response.stopNumber,
+            driverNumber: response.driverNumber,
+            driver: response.driver,
+            nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
+            constructor: response.constructor,
+            lap: response.lap,
+            time: response.time,
+            duration: response.duration,
         };
     }
 }
