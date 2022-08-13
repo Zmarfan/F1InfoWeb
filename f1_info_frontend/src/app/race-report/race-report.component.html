@@ -24,6 +24,7 @@
     ></app-drop-down-filter>
     <app-drop-down-filter
         *ngIf="seasonHasSprints && reportType === raceReportEnum.OVERVIEW"
+        [loading]="filterLoading"
         [options]="raceTypeOptions"
         [labelKey]="'reports.driver.raceTypeLabel'"
         [allOption]="false"
