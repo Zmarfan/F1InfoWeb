@@ -109,7 +109,7 @@
     "successUpdate": "User settings has been updated!"
   },
   "reports": {
-    "noData": "Currently no data available to display! Please try again later!",
+    "noData": "Currently no data available to display!",
     "seasonDropdown": {
       "label": "Season:"
     },

@@ -109,7 +109,7 @@
     "successUpdate": "Användarinställningar har uppdaterats!"
   },
   "reports": {
-    "noData": "För närvarande finns ingen tillgänglig data att visa! Vänligen försök igen senare!",
+    "noData": "För närvarande finns ingen tillgänglig data att visa!",
     "seasonDropdown": {
       "label": "Säsong:"
     },
