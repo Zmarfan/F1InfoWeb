@@ -2,9 +2,11 @@ import {ReportColumn} from '../reports/report-element/report-column';
 import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
 import {AllDriverReportResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
+import {PositionMoveEntry} from '../reports/entry/position-move-entry/position-move-entry';
 
 export interface AllDriverRow {
-    position: number;
+    position: PositionMoveEntry;
+    driverNumber: number;
     driver: string;
     nationality: CountryEntry;
     constructor: string;
@@ -38,6 +40,7 @@ export interface IndividualDriverReportParameters extends ReportParameters{
 export class DriverReportData {
     public static readonly allReportColumns: ReportColumn<AllDriverRow>[] = [
         new ReportColumn('position', 'reports.driver.all.position'),
+        new ReportColumn('driverNumber', 'reports.driver.all.driverNumber', true),
         new ReportColumn('driver', 'reports.driver.all.driver'),
         new ReportColumn('nationality', 'reports.driver.all.nationality'),
         new ReportColumn('constructor', 'reports.driver.all.constructor'),
@@ -54,7 +57,8 @@ export class DriverReportData {
 
     public static allToView(response: AllDriverReportResponse): AllDriverRow {
         return {
-            position: response.position,
+            position: new PositionMoveEntry({ position: response.position, move: response.positionMove }),
+            driverNumber: response.driverNumber,
             driver: response.driverFullName,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,

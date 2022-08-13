@@ -123,6 +123,7 @@
       "sprint": "Sprint",
       "all": {
         "position": "Pos.",
+        "driverNumber": "No.",
         "driver": "Förare",
         "nationality": "Nationalitet",
         "constructor": "Konstruktör",

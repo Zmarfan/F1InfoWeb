@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 @Value
 public class AllDriverReportResponse {
     int mPosition;
+    PositionMove mPositionMove;
+    Integer mDriverNumber;
     String mDriverFullName;
     CountryCodes mCountryCodes;
     String mConstructor;
@@ -15,6 +17,8 @@ public class AllDriverReportResponse {
 
     public AllDriverReportResponse(final AllDriverReportRecord reportRecord) {
         mPosition = reportRecord.getPosition();
+        mPositionMove = reportRecord.getPositionMove();
+        mDriverNumber = reportRecord.getDriverNumber();
         mDriverFullName = String.format("%s %s", reportRecord.getFirstName(), reportRecord.getLastName());
         mCountryCodes = CountryCodes.fromCountry(reportRecord.getDriverCountry());
         mConstructor = reportRecord.getConstructor();

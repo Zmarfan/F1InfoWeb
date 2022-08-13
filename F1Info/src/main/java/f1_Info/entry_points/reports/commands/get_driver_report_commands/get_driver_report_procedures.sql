@@ -3,6 +3,8 @@ create procedure get_all_driver_report_get_rows(in p_season int, in p_round int,
 begin
   select
     stats.position,
+    stats.position_move_id,
+    stats.driver_number,
     stats.first_name,
     stats.last_name,
     stats.driver_country,
@@ -10,7 +12,13 @@ begin
     stats.points
   from (
      select
-       row_number() over (order by driver_standings.points desc) as position,
+       driver_standings.position,
+       case
+         when driver_standings.position < last_race.position then 1
+         when driver_standings.position > last_race.position then 2
+         when driver_standings.position = last_race.position then 3
+       end as position_move_id,
+       drivers.number as driver_number,
        drivers.first_name,
        drivers.last_name,
        drivers.country_code as driver_country,
@@ -23,19 +31,31 @@ begin
        inner join countries on countries.country_code = drivers.country_code
        inner join constructors on constructors.id = driver_standings.constructor_id
        inner join races on races.id = driver_standings.race_id
+       left join (
+         select
+           races.year,
+           races.round,
+           driver_standings.driver_id,
+           driver_standings.position
+         from
+           races
+           inner join driver_standings on driver_standings.race_id = races.id
+       ) last_race on last_race.year = races.year and last_race.round = races.round - 1 and last_race.driver_id = drivers.id
      where
-         races.year = p_season and round = p_round
+         races.year = p_season and races.round = p_round
      group by
        drivers.first_name, drivers.last_name
   ) stats
   order by
     (case when p_sort_column = 'position' and p_sort_direction = 'asc' then stats.position end),
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'asc' then stats.driver_number end),
     (case when p_sort_column = 'driver' and p_sort_direction = 'asc' then stats.first_name end),
     (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
     (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
     (case when p_sort_column = 'points' and p_sort_direction = 'asc' then stats.points end),
 
     (case when p_sort_column = 'position' and p_sort_direction = 'desc' then stats.position end) desc,
+    (case when p_sort_column = 'driverNumber' and p_sort_direction = 'desc' then stats.driver_number end) desc,
     (case when p_sort_column = 'driver' and p_sort_direction = 'desc' then stats.first_name end) desc,
     (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
     (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,

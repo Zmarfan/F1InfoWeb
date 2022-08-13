@@ -124,6 +124,7 @@
       "all": {
         "position": "Pos.",
         "driver": "Driver",
+        "driverNumber": "No.",
         "nationality": "Nationality",
         "constructor": "Constructor",
         "points": "Points"

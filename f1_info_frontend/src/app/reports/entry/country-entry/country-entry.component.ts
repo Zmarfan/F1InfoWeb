@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Compose} from '../../../../core/compose/compose.component';
-import {CountryCodes} from '../../../../generated/server-responses';
 
 export interface CountryEntryItem {
     isoCode: string;
