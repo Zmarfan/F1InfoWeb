@@ -8,6 +8,7 @@ import {RaceData, RaceReportFilterResponse} from '../../generated/server-respons
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
 import {RaceType} from '../driver-report/driver-report-data';
+import {ReportColumn} from '../reports/report-element/report-column';
 
 @Component({
     selector: 'app-race-report',
@@ -25,6 +26,8 @@ export class RaceReportComponent implements OnInit {
     public fastestLapsRows: FastestLapsRow[] = [];
     public pitStopsRows: PitStopsRow[] = [];
     public qualifyingRows: QualifyingRow[] = [];
+
+    public qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [];
 
     public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
     public raceOptions: DropdownOption[] = [];
@@ -101,7 +104,7 @@ export class RaceReportComponent implements OnInit {
     };
 
     public raceCategoryFilterChanged = (newRaceCategory: RaceReport) => {
-        this.reportType = Number(newRaceCategory);
+        this.reportType = newRaceCategory;
         this.runReport();
     };
 
@@ -129,7 +132,7 @@ export class RaceReportComponent implements OnInit {
     }
 
     private populateRaceCategoryFilter() {
-        const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === Number(this.mSelectedRaceRound));
+        const raceData: RaceData | undefined = this.mRacesWithSprints.find((race) => race.round === this.mSelectedRaceRound);
         this.raceCategoryOptions = RaceReportData.getRaceCategoryOptions(raceData !== undefined, this.mSelectedSeason);
     }
 
@@ -147,6 +150,8 @@ export class RaceReportComponent implements OnInit {
     }
 
     private runReport() {
+        this.calculateQualifyingColumns();
+
         switch (this.reportType) {
         case RaceReport.OVERVIEW: this.runOverviewReport(); break;
         case RaceReport.RACE_RESULT: this.runResultReport(RaceType.RACE); break;
@@ -240,5 +245,9 @@ export class RaceReportComponent implements OnInit {
             return this.reportType;
         }
         return RaceReport.RACE_RESULT;
+    }
+
+    private calculateQualifyingColumns() {
+        this.qualifyingReportColumns = RaceReportData.getQualifyingColumnsBySeasonAndRound(this.mSelectedSeason, this.mSelectedRaceRound);
     }
 }

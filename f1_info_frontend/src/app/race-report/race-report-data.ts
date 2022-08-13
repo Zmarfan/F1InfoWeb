@@ -124,7 +124,26 @@ export class RaceReportData {
         new ReportColumn('duration', 'reports.race.pitStops.duration'),
     ];
 
-    public static readonly qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
+    public static readonly onePartQualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
+        new ReportColumn('position', 'reports.race.qualifying.position'),
+        new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
+        new ReportColumn('driver', 'reports.race.qualifying.driver'),
+        new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
+        new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
+        new ReportColumn('q1', 'reports.race.qualifying.q1'),
+    ];
+
+    public static readonly twoPartQualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
+        new ReportColumn('position', 'reports.race.qualifying.position'),
+        new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
+        new ReportColumn('driver', 'reports.race.qualifying.driver'),
+        new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
+        new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
+        new ReportColumn('q1', 'reports.race.qualifying.q1'),
+        new ReportColumn('q2', 'reports.race.qualifying.q2'),
+    ];
+
+    public static readonly threePartQualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
         new ReportColumn('position', 'reports.race.qualifying.position'),
         new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
         new ReportColumn('driver', 'reports.race.qualifying.driver'),
@@ -147,6 +166,21 @@ export class RaceReportData {
             ...(raceHasSprint ? [{ displayValue: 'reports.race.raceCategory.sprint', value: RaceReport.SPRINT }] : []),
             { displayValue: 'reports.race.raceCategory.qualifying', value: RaceReport.QUALIFYING },
         ];
+    }
+
+    public static getQualifyingColumnsBySeasonAndRound(season: number, round: number | null) {
+        if (round === null) {
+            return [];
+        }
+
+        if (season === 2005 && round <= 6) {
+            return RaceReportData.twoPartQualifyingReportColumns;
+        }
+        if (season >= 2006) {
+            return RaceReportData.threePartQualifyingReportColumns;
+        }
+
+        return RaceReportData.onePartQualifyingReportColumns;
     }
 
     public static overviewToView(response: OverviewRaceReportResponse): RaceOverviewRow {

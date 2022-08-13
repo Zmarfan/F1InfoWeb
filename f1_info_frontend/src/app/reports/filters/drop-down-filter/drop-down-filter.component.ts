@@ -24,6 +24,16 @@ export class DropDownFilterComponent implements OnChanges {
     public selectedOption!: string | number | null;
     public uniqueLabel: string = `dropDownFilter${Math.random()}`;
 
+    private static formatValue(rawValue: string): string | number | null {
+        if (rawValue === 'null') {
+            return null;
+        }
+        if(!isNaN(Number(rawValue))) {
+            return Number(rawValue);
+        }
+        return rawValue;
+    }
+
     public ngOnChanges() {
         if (this.allOption) {
             this.options = this.options.filter((option) => option.value !== null);
@@ -41,7 +51,7 @@ export class DropDownFilterComponent implements OnChanges {
     }
 
     public onValueChanged(target: EventTarget | null) {
-        const value: string = (target as HTMLInputElement).value;
-        this.valueChanged(value === 'null' ? null : value);
+        const rawValue: string = (target as HTMLInputElement).value;
+        this.valueChanged(DropDownFilterComponent.formatValue(rawValue));
     }
 }
