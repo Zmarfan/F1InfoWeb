@@ -16,7 +16,7 @@
             <ng-container *ngFor="let column of table.columns">
                 <td class="{{column.onlyDesktop ? 'desktop' : ''}}">
                     <app-compose *ngIf="rowEntryHasViewModel(row[column.entryName]); else basicEntry" [item]="row[column.entryName]"></app-compose>
-                    <ng-template #basicEntry>{{row[column.entryName]}}</ng-template>
+                    <ng-template #basicEntry>{{row[column.entryName] ?? '-'}}</ng-template>
                 </td>
             </ng-container>
         </tr>

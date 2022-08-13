@@ -207,7 +207,7 @@ export class RaceReportData {
         return {
             position: response.position,
             startPosition: response.startPosition,
-            driverNumber: response.driverNumber ?? '-',
+            driverNumber: response.driverNumber,
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
@@ -219,21 +219,21 @@ export class RaceReportData {
 
     public static fastestLapsToView(response: FastestLapsReportResponse): FastestLapsRow {
         return {
-            position: response.position ?? '-',
-            driverNumber: response.driverNumber ?? '-',
+            position: response.position,
+            driverNumber: response.driverNumber,
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
-            lap: response.lap ?? '-',
-            time: response.time ?? '-',
-            averageSpeed: response.averageSpeed ?? '-',
+            lap: response.lap,
+            time: response.time,
+            averageSpeed: response.averageSpeed,
         };
     }
 
     public static pitStopsToView(response: PitStopsReportResponse): PitStopsRow {
         return {
             stopNumber: response.stopNumber,
-            driverNumber: response.driverNumber ?? '-',
+            driverNumber: response.driverNumber,
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
@@ -246,16 +246,16 @@ export class RaceReportData {
     public static qualifyingToView(response: QualifyingReportResponse): QualifyingRow {
         return {
             position: response.position,
-            driverNumber: response.driverNumber ?? '-',
+            driverNumber: response.driverNumber,
             driver: response.driver,
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
-            q1: response.q1 ?? '-',
-            q1Time: response.q1Time ?? '-',
-            q2: response.q2 ?? '-',
-            q2Time: response.q2Time ?? '-',
-            q3: response.q3 ?? '-',
-            q3Time: response.q3Time ?? '-',
+            q1: response.q1,
+            q1Time: response.q1Time,
+            q2: response.q2,
+            q2Time: response.q2Time,
+            q3: response.q3,
+            q3Time: response.q3Time,
         };
     }
 }

@@ -71,8 +71,8 @@ export class ReportElementComponent<T> implements OnInit, OnChanges {
         return '';
     }
 
-    public rowEntryHasViewModel(entry: any): boolean {
-        return entry.viewModel;
+    public rowEntryHasViewModel(entry: any | null): boolean {
+        return entry?.viewModel;
     }
 
     private setSortingState(column: ReportColumn<T>) {
