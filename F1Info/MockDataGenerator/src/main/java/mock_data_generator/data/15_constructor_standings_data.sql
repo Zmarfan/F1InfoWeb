@@ -1,4 +1,4 @@
-insert into constructor_standings_fetching_history (season, round, is_active) values (1975, 4, 'Y')
+insert into constructor_standings_fetching_history (season, round, is_active) values (1975, 4, 'Y');
 
 insert into constructor_standings (id, race_id, constructor_id, points, position, position_type, win_amount) values (1, 65, 41, 8, 1, 'finished', 1);
 insert into constructor_standings (id, race_id, constructor_id, points, position, position_type, win_amount) values (2, 65, 75, 6, 2, 'finished', 0);

@@ -15,7 +15,7 @@ import {ConstructorReportFilterResponse} from '../../generated/server-responses'
     styleUrls: ['./../reports/report-styling.scss'],
 })
 export class ConstructorReportComponent implements OnInit {
-    public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+    public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions(DropDownFilterProvider.FIRST_CONSTRUCTOR_STANDINGS_F1_SEASON);
     public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();
     public constructorOptions: DropdownOption[] = [];
     public racesOptions: DropdownOption[] = [];

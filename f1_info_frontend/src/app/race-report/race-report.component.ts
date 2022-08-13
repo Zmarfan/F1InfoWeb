@@ -28,7 +28,7 @@ export class RaceReportComponent implements OnInit {
 
     public qualifyingReportColumns: ReportColumn<QualifyingRow>[] = [];
 
-    public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions();
+    public seasonsOptions: DropdownOption[] = DropDownFilterProvider.createSeasonOptions(DropDownFilterProvider.FIRST_F1_SEASON);
     public raceOptions: DropdownOption[] = [];
     public raceCategoryOptions: DropdownOption[] = [];
     public raceTypeOptions: DropdownOption[] = DropDownFilterProvider.createRaceTypeOptions();

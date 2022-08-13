@@ -6,12 +6,13 @@ export enum RaceType {
 }
 
 export class DropDownFilterProvider {
-    private static readonly FIRST_F1_SEASON: number = 1950;
+    public static readonly FIRST_F1_SEASON: number = 1950;
+    public static readonly FIRST_CONSTRUCTOR_STANDINGS_F1_SEASON: number = 1958;
 
-    public static createSeasonOptions(): DropdownOption[] {
+    public static createSeasonOptions(startSeason: number): DropdownOption[] {
         const currentYear: number = new Date().getFullYear();
         const options: DropdownOption[] = [];
-        for (let season = currentYear; season >= DropDownFilterProvider.FIRST_F1_SEASON; season--) {
+        for (let season = currentYear; season >= startSeason; season--) {
             options.push({ displayValue: season, value: season });
         }
         return options;

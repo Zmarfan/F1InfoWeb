@@ -9,6 +9,13 @@
     margin-bottom: 2rem;
   }
 
+  &--wide {
+    @media(max-width: 1300px) {
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+  }
+
   h1 {
     color: var(--primary-color-text);
     margin: 2rem;

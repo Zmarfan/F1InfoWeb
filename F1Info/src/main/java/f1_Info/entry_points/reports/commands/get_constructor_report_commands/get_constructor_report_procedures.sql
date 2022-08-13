@@ -70,7 +70,7 @@ begin
        races.name as race_name,
        circuits.country_code as race_country,
        if(p_result_type = 'race', race_date.date, sprint_date.date) as date,
-       results.points
+       sum(results.points) as points
      from
        constructor_standings
        inner join constructors on constructors.id = constructor_standings.constructor_id
@@ -81,6 +81,8 @@ begin
        left join time_and_dates sprint_date on sprint_date.id = races.sprint_time_and_date_id
      where
        results.result_type = p_result_type and races.year = p_season and constructors.constructor_identifier = p_constructor_identifier
+     group by
+       races.id
   ) stats
   order by
     (case when p_sort_column = 'grandPrix' and p_sort_direction = 'asc' then stats.race_name end),
