@@ -7,7 +7,7 @@ import {
     OverviewRaceReportResponse,
     PitStopsReportResponse, QualifyingReportResponse,
     RaceReportFilterResponse,
-    RaceResultReportResponse,
+    RaceResultReportResponse
 } from '../../generated/server-responses';
 import {RaceReportParameters} from './race-report-data';
 
