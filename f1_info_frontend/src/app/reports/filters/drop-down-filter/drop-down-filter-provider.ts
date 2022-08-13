@@ -1,5 +1,9 @@
 import {DropdownOption} from './drop-down-filter.component';
-import {RaceType} from '../../../driver-report/driver-report-data';
+
+export enum RaceType {
+    RACE = 'race',
+    SPRINT = 'sprint',
+}
 
 export class DropDownFilterProvider {
     private static readonly FIRST_F1_SEASON: number = 1950;

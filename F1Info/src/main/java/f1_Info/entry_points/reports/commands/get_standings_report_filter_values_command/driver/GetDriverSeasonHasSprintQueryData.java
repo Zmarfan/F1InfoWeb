@@ -1,10 +1,10 @@
-package f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command;
+package f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver;
 
 import database.IQueryData;
 import lombok.Value;
 
 @Value
-public class GetSeasonHasSprintQueryData implements IQueryData<Boolean> {
+public class GetDriverSeasonHasSprintQueryData implements IQueryData<Boolean> {
     int mSeason;
 
     @Override

@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ReportColumn} from '../reports/report-element/report-column';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
-import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
+import {DropDownFilterProvider, RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {DriverReportService} from './driver-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {DriverReportFilterResponse} from '../../generated/server-responses';
-import {AllDriverRow, DriverReportData, IndividualDriverRow, RaceType} from './driver-report-data';
+import {AllDriverRow, DriverReportData, IndividualDriverRow} from './driver-report-data';
 import {ReportHelperService} from '../reports/report-helper.service';
 
 @Component({

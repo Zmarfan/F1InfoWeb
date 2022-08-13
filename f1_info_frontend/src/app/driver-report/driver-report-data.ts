@@ -3,6 +3,7 @@ import {CountryEntry} from '../reports/entry/country-entry/country-entry';
 import {ReportParameters} from '../reports/report-element/report-element.component';
 import {AllDriverReportResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
 import {PositionMoveEntry} from '../reports/entry/position-move-entry/position-move-entry';
+import {RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 
 export interface AllDriverRow {
     position: PositionMoveEntry;
@@ -19,11 +20,6 @@ export interface IndividualDriverRow {
     constructor: string;
     racePosition: string;
     points: number;
-}
-
-export enum RaceType {
-    RACE = 'race',
-    SPRINT = 'sprint',
 }
 
 export interface AllDriverReportParameters extends ReportParameters{

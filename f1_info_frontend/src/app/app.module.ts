@@ -31,6 +31,7 @@ import { DropDownFilterComponent } from './reports/filters/drop-down-filter/drop
 import { CountryEntryComponent } from './reports/entry/country-entry/country-entry.component';
 import { RaceReportComponent } from './race-report/race-report.component';
 import { PositionMoveEntryComponent } from './reports/entry/position-move-entry/position-move-entry.component';
+import { ConstructorReportComponent } from './constructor-report/constructor-report.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -72,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CountryEntryComponent,
         RaceReportComponent,
         PositionMoveEntryComponent,
+        ConstructorReportComponent,
     ],
     providers: [
         {

@@ -30,6 +30,7 @@
     "route": {
       "homepage": "Hem",
       "driverReport": "Förarställning",
+      "constructorReport": "Konstruktörställning",
       "raceReport": "Raceresultat"
     },
     "profile": {
@@ -201,6 +202,22 @@
         "q2Time": "Q2 Tid",
         "q3": "Q3",
         "q3Time": "Q3 Tid"
+      }
+    },
+    "constructor": {
+      "title": "Konstruktörställning",
+      "raceLabel": "Race:",
+      "constructorLabel": "Konstruktör:",
+      "overview": {
+        "position": "Pos.",
+        "constructor": "Konstruktör",
+        "nationality": "Nationalitet",
+        "points": "Poäng"
+      },
+      "individual": {
+        "grandPrix": "Grand Prix",
+        "date": "Datum",
+        "points": "Poäng"
       }
     }
   }

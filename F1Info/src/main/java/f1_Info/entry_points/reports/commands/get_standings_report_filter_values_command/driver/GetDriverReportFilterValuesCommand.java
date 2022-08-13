@@ -1,6 +1,8 @@
-package f1_Info.entry_points.reports.commands.get_driver_report_filter_values_command;
+package f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver;
 
 import f1_Info.entry_points.helper.Command;
+import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.Database;
+import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.RaceEntry;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
@@ -17,8 +19,8 @@ public class GetDriverReportFilterValuesCommand implements Command {
     @Override
     public ResponseEntity<?> execute() throws SQLException {
         final List<DriverEntry> driverEntries= mDatabase.getDriversFromSeason(mSeason).stream().map(DriverEntry::new).toList();
-        final List<RaceEntry> races = mDatabase.getRacesFromSeason(mSeason).stream().map(RaceEntry::new).toList();
-        final boolean seasonHasSprints = mDatabase.getSeasonHasSprint(mSeason);
+        final List<RaceEntry> races = mDatabase.getDriverRacesFromSeason(mSeason).stream().map(RaceEntry::new).toList();
+        final boolean seasonHasSprints = mDatabase.getDriverSeasonHasSprint(mSeason);
 
         return ok(new DriverReportFilterResponse(driverEntries, races, seasonHasSprints));
     }

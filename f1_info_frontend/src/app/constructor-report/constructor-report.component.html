@@ -1,0 +1,36 @@
+<section class="report-header">
+    <h1>{{'reports.constructor.title' | translate}}</h1>
+
+    <app-drop-down-filter
+        [options]="seasonsOptions"
+        [labelKey]="'reports.seasonDropdown.label'"
+        [allOption]="false"
+        [valueChanged]="seasonFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
+        [loading]="filterLoading"
+        [options]="constructorOptions"
+        [labelKey]="'reports.constructor.constructorLabel'"
+        [valueChanged]="constructorFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
+        *ngIf="showOverviewReport"
+        [loading]="filterLoading"
+        [options]="racesOptions"
+        [labelKey]="'reports.constructor.raceLabel'"
+        [allOption]="false"
+        [selectedValue]="selectedRound"
+        [valueChanged]="roundFilterChanged"
+    ></app-drop-down-filter>
+    <app-drop-down-filter
+        *ngIf="showRaceTypeFilter"
+        [options]="raceTypeOptions"
+        [labelKey]="'reports.constructor.raceTypeLabel'"
+        [allOption]="false"
+        [valueChanged]="raceTypeFilterChanged"
+    ></app-drop-down-filter>
+
+</section>
+
+<app-report-element *ngIf="showOverviewReport" [loading]="loading" [columns]="overviewReportColumns" [rows]="overviewRows" [sortConfig]="overviewSortConfig"></app-report-element>
+<app-report-element *ngIf="!showOverviewReport" [loading]="loading" [columns]="individualReportColumns" [rows]="individualRows" [sortConfig]="individualSortConfig"></app-report-element>

@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
-import {DropDownFilterProvider} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
+import {DropDownFilterProvider, RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 import {RaceReportService} from './race-report.service';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {FastestLapsRow, PitStopsRow, QualifyingRow, RaceOverviewRow, RaceReport, RaceReportData, RaceReportParameters, RaceResultRow} from './race-report-data';
 import {RaceData, RaceReportFilterResponse} from '../../generated/server-responses';
 import {ReportSortConfig, SortDirection, SortSetting} from '../reports/report-element/report-element.component';
 import {ReportHelperService} from '../reports/report-helper.service';
-import {RaceType} from '../driver-report/driver-report-data';
 import {ReportColumn} from '../reports/report-element/report-column';
 
 @Component({

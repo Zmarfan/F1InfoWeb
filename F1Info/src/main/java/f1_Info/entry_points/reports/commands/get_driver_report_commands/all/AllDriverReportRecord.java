@@ -19,7 +19,8 @@ public class AllDriverReportRecord {
     public AllDriverReportRecord(
         final int position,
         final Integer positionMoveId,
-        final Integer driverNumber, final String firstName,
+        final Integer driverNumber,
+        final String firstName,
         final String lastName,
         final Country driverCountry,
         final String constructor,

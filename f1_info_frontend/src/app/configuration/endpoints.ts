@@ -31,5 +31,8 @@ export class Endpoints {
         getFastestLapsReport: `${Endpoints.REPORTS_BASE}get-fastest-laps-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getPitStopsReport: `${Endpoints.REPORTS_BASE}get-pit-stops-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getQualifyingReport: `${Endpoints.REPORTS_BASE}get-qualifying-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getConstructorReportFilterValues: `${Endpoints.REPORTS_BASE}constructor-report-filter-values/{season}`,
+        getOverviewConstructorReport: `${Endpoints.REPORTS_BASE}get-overview-constructor-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getIndividualConstructorReport: `${Endpoints.REPORTS_BASE}get-individual-constructor-report/{season}/{constructorIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 }

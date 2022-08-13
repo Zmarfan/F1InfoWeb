@@ -8,8 +8,8 @@ import {
     QualifyingReportResponse,
     RaceResultReportResponse
 } from '../../generated/server-responses';
-import {RaceType} from '../driver-report/driver-report-data';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
+import {RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
 
 export enum RaceReport {
     OVERVIEW = 1,

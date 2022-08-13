@@ -33,7 +33,8 @@ public class Database extends TaskDatabase {
     public List<IndividualDriverReportRecord> getIndividualReportRows(
         final int season,
         final String driverIdentifier,
-        final ResultType resultType, final SortDirection sortDirection,
+        final ResultType resultType,
+        final SortDirection sortDirection,
         final String sortColumn
     ) throws SQLException {
         return executeListQuery(new GetIndividualDriverReportRowsQueryData(
@@ -41,7 +42,7 @@ public class Database extends TaskDatabase {
             driverIdentifier,
             resultType.getStringCode(),
             sortDirection.getDirection(),
-            sortColumn)
-        );
+            sortColumn
+        ));
     }
 }

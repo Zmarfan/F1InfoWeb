@@ -30,6 +30,7 @@
     "route": {
       "homepage": "Homepage",
       "driverReport": "Driver Standings",
+      "constructorReport": "Constructor Standings",
       "raceReport": "Race Results"
     },
     "profile": {
@@ -201,6 +202,22 @@
         "q2Time": "Q2 Time",
         "q3": "Q3",
         "q3Time": "Q3 Time"
+      }
+    },
+    "constructor": {
+      "title": "Constructor Results",
+      "raceLabel": "Race:",
+      "constructorLabel": "Constructor:",
+      "overview": {
+        "position": "Pos.",
+        "constructor": "Constructor",
+        "nationality": "Nationality",
+        "points": "Points"
+      },
+      "individual": {
+        "grandPrix": "Grand Prix",
+        "date": "Date",
+        "points": "Points"
       }
     }
   }
