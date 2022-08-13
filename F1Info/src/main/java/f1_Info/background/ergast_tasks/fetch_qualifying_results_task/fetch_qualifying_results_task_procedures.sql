@@ -16,8 +16,12 @@ end;
 drop procedure if exists tasks_set_last_fetched_season_for_qualifying_results_fetching;
 create procedure tasks_set_last_fetched_season_for_qualifying_results_fetching(in p_last_fetched_season int)
 begin
-  update qualifying_results_fetching_history set is_active = 'N' where is_active = 'Y';
-  insert qualifying_results_fetching_history (season, is_active) values (p_last_fetched_season, 'Y');
+  declare p_previous_fetched_season int;
+  set p_previous_fetched_season = (select season from qualifying_results_fetching_history where is_active = 'Y');
+  if (p_last_fetched_season != p_previous_fetched_season) then
+    update qualifying_results_fetching_history set is_active = 'N' where is_active = 'Y';
+    insert qualifying_results_fetching_history (season, is_active) values (p_last_fetched_season, 'Y');
+  end if;
 end;
 
 
