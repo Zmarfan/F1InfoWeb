@@ -7,7 +7,7 @@ export interface TranslateItem {
 }
 
 @Component({
-    selector: 'app-data-report-entry',
+    selector: 'app-translate-entry',
     template: '<div>{{ data.key | translate: data.params }}</div>',
 })
 export class TranslateEntryComponent implements Compose<TranslateItem> {
