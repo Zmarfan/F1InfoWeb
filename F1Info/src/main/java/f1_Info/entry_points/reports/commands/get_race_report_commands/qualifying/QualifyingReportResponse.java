@@ -11,8 +11,11 @@ public class QualifyingReportResponse {
     CountryCodes mCountryCodes;
     String mConstructor;
     String mQ1;
+    String mQ1Time;
     String mQ2;
+    String mQ2Time;
     String mQ3;
+    String mQ3Time;
 
     public QualifyingReportResponse(final QualifyingRecord qualifyingRecord) {
         mPosition = qualifyingRecord.getPosition();
@@ -20,8 +23,21 @@ public class QualifyingReportResponse {
         mDriver = String.format("%s %s", qualifyingRecord.getFirstName(), qualifyingRecord.getLastName());
         mCountryCodes = CountryCodes.fromCountry(qualifyingRecord.getDriverCountry());
         mConstructor = qualifyingRecord.getConstructor();
-        mQ1 = qualifyingRecord.getQ1();
-        mQ2 = qualifyingRecord.getQ2();
-        mQ3 = qualifyingRecord.getQ3();
+        mQ1 = formatDiff(qualifyingRecord.getQ1Diff(), qualifyingRecord.getQ1Time());
+        mQ1Time = qualifyingRecord.getQ1Time();
+        mQ2 = formatDiff(qualifyingRecord.getQ2Diff(), qualifyingRecord.getQ2Time());
+        mQ2Time = qualifyingRecord.getQ2Time();
+        mQ3 = formatDiff(qualifyingRecord.getQ3Diff(), qualifyingRecord.getQ3Time());
+        mQ3Time = qualifyingRecord.getQ3Time();
+    }
+
+    private String formatDiff(final String diff, final String time) {
+        if (diff == null) {
+            return null;
+        }
+        if (Float.parseFloat(diff) == 0) {
+            return time;
+        }
+        return String.format("+%s", diff);
     }
 }

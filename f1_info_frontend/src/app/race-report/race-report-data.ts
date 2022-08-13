@@ -70,8 +70,11 @@ export interface QualifyingRow {
     nationality: CountryEntry;
     constructor: string;
     q1: string;
+    q1Time: string;
     q2: string;
+    q2Time: string;
     q3: string;
+    q3Time: string;
 }
 
 export interface RaceReportParameters extends ReportParameters{
@@ -131,6 +134,7 @@ export class RaceReportData {
         new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
         new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
         new ReportColumn('q1', 'reports.race.qualifying.q1'),
+        new ReportColumn('q1Time', 'reports.race.qualifying.q1Time', true),
     ];
 
     public static readonly twoPartQualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
@@ -140,7 +144,9 @@ export class RaceReportData {
         new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
         new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
         new ReportColumn('q1', 'reports.race.qualifying.q1'),
+        new ReportColumn('q1Time', 'reports.race.qualifying.q1Time', true),
         new ReportColumn('q2', 'reports.race.qualifying.q2'),
+        new ReportColumn('q2Time', 'reports.race.qualifying.q2Time', true),
     ];
 
     public static readonly threePartQualifyingReportColumns: ReportColumn<QualifyingRow>[] = [
@@ -148,10 +154,13 @@ export class RaceReportData {
         new ReportColumn('driverNumber', 'reports.race.qualifying.driverNumber', true),
         new ReportColumn('driver', 'reports.race.qualifying.driver'),
         new ReportColumn('nationality', 'reports.race.qualifying.nationality', true),
-        new ReportColumn('constructor', 'reports.race.qualifying.constructor'),
+        new ReportColumn('constructor', 'reports.race.qualifying.constructor', true),
         new ReportColumn('q1', 'reports.race.qualifying.q1'),
+        new ReportColumn('q1Time', 'reports.race.qualifying.q1Time', true),
         new ReportColumn('q2', 'reports.race.qualifying.q2'),
+        new ReportColumn('q2Time', 'reports.race.qualifying.q2Time', true),
         new ReportColumn('q3', 'reports.race.qualifying.q3'),
+        new ReportColumn('q3Time', 'reports.race.qualifying.q3Time', true),
     ];
 
     private static readonly FIRST_SEASON_FASTEST_LAPS: number = 2004;
@@ -242,8 +251,11 @@ export class RaceReportData {
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             q1: response.q1 ?? '-',
+            q1Time: response.q1Time ?? '-',
             q2: response.q2 ?? '-',
+            q2Time: response.q2Time ?? '-',
             q3: response.q3 ?? '-',
+            q3Time: response.q3Time ?? '-',
         };
     }
 }

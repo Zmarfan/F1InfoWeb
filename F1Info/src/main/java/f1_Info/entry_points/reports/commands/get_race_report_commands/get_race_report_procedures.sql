@@ -258,11 +258,17 @@ begin
     stats.last_name,
     stats.driver_country,
     stats.constructor,
+    stats.q1_diff,
     stats.q1,
+    stats.q2_diff,
     stats.q2,
+    stats.q3_diff,
     stats.q3
   from (
     select
+      round(qualifying.q1_time_in_seconds - fastest_q_times.fastest_q1, 3) as q1_diff,
+      round(qualifying.q2_time_in_seconds - fastest_q_times.fastest_q2, 3) as q2_diff,
+      round(qualifying.q3_time_in_seconds - fastest_q_times.fastest_q3, 3) as q3_diff,
       qualifying.position,
       drivers.number as driver_number,
       drivers.first_name,
@@ -283,6 +289,17 @@ begin
       inner join countries on countries.country_code = drivers.country_code
       inner join constructors on constructors.id = results.constructor_id
       inner join qualifying on qualifying.race_id = races.id and qualifying.driver_id = drivers.id
+      left join (
+        select
+          qualifying.race_id,
+          min(qualifying.q1_time_in_seconds) as fastest_q1,
+          min(qualifying.q2_time_in_seconds) as fastest_q2,
+          min(qualifying.q3_time_in_seconds) as fastest_q3
+        from
+          qualifying
+        group by
+          qualifying.race_id
+      ) fastest_q_times on fastest_q_times.race_id = races.id
     where
       results.result_type = 'race' and races.year = p_season and races.round = p_round
   ) stats
@@ -293,8 +310,11 @@ begin
     (case when p_sort_column = 'nationality' and p_sort_direction = 'asc' then stats.country_ico_code end),
     (case when p_sort_column = 'constructor' and p_sort_direction = 'asc' then stats.constructor end),
     (case when p_sort_column = 'q1' and p_sort_direction = 'asc' then -stats.q1_time_in_seconds end) desc,
+    (case when p_sort_column = 'q1Time' and p_sort_direction = 'asc' then -stats.q1_time_in_seconds end) desc,
     (case when p_sort_column = 'q2' and p_sort_direction = 'asc' then -stats.q2_time_in_seconds end) desc,
+    (case when p_sort_column = 'q2Time' and p_sort_direction = 'asc' then -stats.q2_time_in_seconds end) desc,
     (case when p_sort_column = 'q3' and p_sort_direction = 'asc' then -stats.q3_time_in_seconds end) desc,
+    (case when p_sort_column = 'q3Time' and p_sort_direction = 'asc' then -stats.q3_time_in_seconds end) desc,
 
     (case when p_sort_column = 'position' and p_sort_direction = 'desc' then stats.position end) desc,
     (case when p_sort_column = 'driverNumber' and p_sort_direction = 'desc' then stats.driver_number end) desc,
@@ -302,6 +322,9 @@ begin
     (case when p_sort_column = 'nationality' and p_sort_direction = 'desc' then stats.country_ico_code end) desc,
     (case when p_sort_column = 'constructor' and p_sort_direction = 'desc' then stats.constructor end) desc,
     (case when p_sort_column = 'q1' and p_sort_direction = 'desc' then -stats.q1_time_in_seconds end),
+    (case when p_sort_column = 'q1Time' and p_sort_direction = 'desc' then -stats.q1_time_in_seconds end),
     (case when p_sort_column = 'q2' and p_sort_direction = 'desc' then -stats.q2_time_in_seconds end),
-    (case when p_sort_column = 'q3' and p_sort_direction = 'desc' then -stats.q3_time_in_seconds end);
+    (case when p_sort_column = 'q2Time' and p_sort_direction = 'desc' then -stats.q2_time_in_seconds end),
+    (case when p_sort_column = 'q3' and p_sort_direction = 'desc' then -stats.q3_time_in_seconds end),
+    (case when p_sort_column = 'q3Time' and p_sort_direction = 'desc' then -stats.q3_time_in_seconds end);
 end;

@@ -11,7 +11,10 @@ public class QualifyingRecord {
     String mLastName;
     Country mDriverCountry;
     String mConstructor;
-    String mQ1;
-    String mQ2;
-    String mQ3;
+    String mQ1Diff;
+    String mQ1Time;
+    String mQ2Diff;
+    String mQ2Time;
+    String mQ3Diff;
+    String mQ3Time;
 }
