@@ -1,12 +1,18 @@
-<section class="report-header">
-    <h1>{{'driverProfile.title' | translate}}</h1>
+<article class="structure">
+    <section class="report-header">
+        <h1>{{'driverProfile.title' | translate}}</h1>
 
-    <app-drop-down-filter
-        [options]="driverOptions"
-        [labelKey]="'driverProfile.driverLabel'"
-        [allOption]="false"
-        [valueChanged]="driverFilterChanged"
-        [selectedValue]="selectedDriverIdentifier"
-        [loading]="filterLoading"
-    ></app-drop-down-filter>
-</section>
+        <app-drop-down-filter
+            [options]="driverOptions"
+            [labelKey]="'driverProfile.driverLabel'"
+            [allOption]="false"
+            [valueChanged]="driverFilterChanged"
+            [selectedValue]="selectedDriverIdentifier"
+            [loading]="filterLoading"
+        ></app-drop-down-filter>
+    </section>
+
+    <app-loading-element [loading]="loading">
+        <app-driver-profile-info *ngIf="driverInfo" [info]="driverInfo"></app-driver-profile-info>
+    </app-loading-element>
+</article>

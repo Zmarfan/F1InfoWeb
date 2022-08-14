@@ -1,1 +1,4 @@
-<p>driver-profile-info works!</p>
+<section class="info-holder">
+    <img *ngIf="imageSrc" [src]="imageSrc">
+    <p *ngIf="summary">{{summary}}</p>
+</section>

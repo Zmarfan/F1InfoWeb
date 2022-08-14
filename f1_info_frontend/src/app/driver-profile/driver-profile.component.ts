@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {DriverProfileFilterResponse, DriverProfileService} from './driver-profile.service';
+import {DriverProfileResponse, DriverProfileService} from './driver-profile.service';
+import {DriverProfileFilterResponse} from '../../generated/server-responses';
 
 @Component({
     selector: 'app-driver-profile',
@@ -12,7 +13,10 @@ import {DriverProfileFilterResponse, DriverProfileService} from './driver-profil
 export class DriverProfileComponent implements OnInit {
     public driverOptions: DropdownOption[] = [];
     public selectedDriverIdentifier: string | null = null;
+    public loading: boolean = false;
     public filterLoading: boolean = false;
+
+    public driverInfo!: DriverProfileResponse;
 
     public constructor(
         private mRoute: ActivatedRoute,
@@ -52,6 +56,16 @@ export class DriverProfileComponent implements OnInit {
     }
 
     private runReport() {
-
+        this.loading = true;
+        this.mDriverProfileService.getProfileInfo().subscribe({
+            next: (response) => {
+                this.loading = false;
+                this.driverInfo = response;
+            },
+            error: (error) => {
+                this.loading = false;
+                this.mMessageService.addHttpError(error);
+            },
+        });
     }
 }
