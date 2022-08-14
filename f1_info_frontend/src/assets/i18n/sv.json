@@ -29,6 +29,7 @@
   "navigation": {
     "route": {
       "homepage": "Hem",
+      "driverProfile": "Förarprofiler",
       "standings": "Ställningar",
       "driverReport": "Förarställning",
       "constructorReport": "Konstruktörställning",

@@ -32,6 +32,7 @@ import { CountryEntryComponent } from './reports/entry/country-entry/country-ent
 import { RaceReportComponent } from './race-report/race-report.component';
 import { PositionMoveEntryComponent } from './reports/entry/position-move-entry/position-move-entry.component';
 import { ConstructorReportComponent } from './constructor-report/constructor-report.component';
+import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -74,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         RaceReportComponent,
         PositionMoveEntryComponent,
         ConstructorReportComponent,
+        DriverProfileComponent,
     ],
     providers: [
         {

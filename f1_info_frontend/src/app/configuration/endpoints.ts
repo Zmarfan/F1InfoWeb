@@ -5,6 +5,7 @@ export class Endpoints {
     private static readonly BASE_URL: string = environment.baseUrl;
     private static readonly AUTHENTICATION_BASE: string = Endpoints.BASE_URL + 'Authentication/';
     private static readonly USER_BASE: string = Endpoints.BASE_URL + 'User/';
+    private static readonly DRIVER_BASE: string = Endpoints.BASE_URL + 'Drivers/';
     private static readonly REPORTS_BASE: string = Endpoints.BASE_URL + 'Reports/';
 
     public static readonly AUTHENTICATION = {
@@ -19,6 +20,10 @@ export class Endpoints {
 
     public static readonly USER = {
         updateSettings: `${Endpoints.USER_BASE}update-settings`,
+    };
+
+    public static readonly DRIVERS = {
+        getAllDrivers: `${Endpoints.DRIVER_BASE}all-drivers`,
     };
 
     public static readonly REPORTS = {

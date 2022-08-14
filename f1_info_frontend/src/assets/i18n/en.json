@@ -29,6 +29,7 @@
   "navigation": {
     "route": {
       "homepage": "Homepage",
+      "driverProfile": "Driver Profiles",
       "standings": "Standings",
       "driverReport": "Driver Standings",
       "constructorReport": "Constructor Standings",

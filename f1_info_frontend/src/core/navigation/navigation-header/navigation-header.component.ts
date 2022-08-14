@@ -39,6 +39,7 @@ export interface RouteItem {
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true },
+        { route: RouteHolder.DRIVER_PROFILE, key: 'navigation.route.driverProfile', icon: faPerson },
         {
             key: 'navigation.route.standings',
             icon: faRankingStar,
@@ -74,7 +75,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
         this.mRouteChangeSubscription = this.mRouter.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
                 const subItems = this.routeItems.filter((route) => route.subItems).flatMap((route) => route.subItems);
-                this.setNewRoute([...this.routeItems, ...subItems].find((item) => val.urlAfterRedirects.endsWith(item?.route ?? '--')));
+                this.setNewRoute([...this.routeItems, ...subItems].find((item) => val.urlAfterRedirects.includes(item?.route ?? '--')));
             }
         });
 

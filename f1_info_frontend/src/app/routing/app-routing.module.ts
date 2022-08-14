@@ -11,6 +11,7 @@ import {SessionGuard} from './session-guard';
 import {AnonymousGuard} from './anonymous-guard';
 import {RaceReportComponent} from '../race-report/race-report.component';
 import {ConstructorReportComponent} from '../constructor-report/constructor-report.component';
+import {DriverProfileComponent} from '../driver-profile/driver-profile.component';
 
 const routes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: RouteHolder.FORGOT_PASSWORD_PAGE, component: ForgotPasswordComponent, canActivate: [AnonymousGuard] },
     { path: RouteHolder.LOGIN_PAGE, component: LoginComponent },
     { path: RouteHolder.RESET_PASSWORD_PAGE, component: ResetPasswordComponent },
+    { path: RouteHolder.DRIVER_PROFILE, component: DriverProfileComponent },
     { path: RouteHolder.DRIVER_REPORT, component: DriverReportComponent },
     { path: RouteHolder.CONSTRUCTOR_REPORT, component: ConstructorReportComponent },
     { path: RouteHolder.RACE_REPORT, component: RaceReportComponent },

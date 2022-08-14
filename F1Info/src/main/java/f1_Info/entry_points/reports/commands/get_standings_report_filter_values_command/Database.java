@@ -7,10 +7,10 @@ import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.constructor.GetConstructorRacesFromSeasonQueryData;
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.constructor.GetConstructorSeasonHasSprintQueryData;
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.constructor.GetConstructorsFromSeasonQueryData;
-import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver.DriverFromSeasonRecord;
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver.GetDriverRacesFromSeasonQueryData;
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver.GetDriverSeasonHasSprintQueryData;
 import f1_Info.entry_points.reports.commands.get_standings_report_filter_values_command.driver.GetDriversFromSeasonQueryData;
+import f1_Info.entry_points.shared_data_holders.DriverRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +28,7 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public List<DriverFromSeasonRecord> getDriversFromSeason(final int season) throws SQLException {
+    public List<DriverRecord> getDriversFromSeason(final int season) throws SQLException {
         return executeListQuery(new GetDriversFromSeasonQueryData(season));
     }
 

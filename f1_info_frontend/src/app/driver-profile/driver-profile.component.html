@@ -1,0 +1,12 @@
+<section class="report-header">
+    <h1>{{'driverProfile.title' | translate}}</h1>
+
+    <app-drop-down-filter
+        [options]="driverOptions"
+        [labelKey]="'driverProfile.driverLabel'"
+        [allOption]="false"
+        [valueChanged]="driverFilterChanged"
+        [selectedValue]="selectedDriverIdentifier"
+        [loading]="filterLoading"
+    ></app-drop-down-filter>
+</section>
