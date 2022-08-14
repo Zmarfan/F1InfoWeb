@@ -29,6 +29,7 @@
   "navigation": {
     "route": {
       "homepage": "Homepage",
+      "standings": "Standings",
       "driverReport": "Driver Standings",
       "constructorReport": "Constructor Standings",
       "raceReport": "Race Results"

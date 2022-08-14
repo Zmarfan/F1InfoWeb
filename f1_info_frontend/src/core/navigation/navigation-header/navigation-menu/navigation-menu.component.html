@@ -7,10 +7,23 @@
                 [class.route-item--selectable]="!item.selected"
                 [class.route-item--selected]="item.selected"
             >
-                <fa-icon [icon]="item.icon"></fa-icon>
-                <span class="route-item__text">
-                {{ item.key | translate }}
-            </span>
+                <div class="route-item__name-and-icon">
+                    <fa-icon *ngIf="item.icon" [icon]="item.icon"></fa-icon>
+                    <span class="route-item__text">{{ item.key | translate }}</span>
+                </div>
+                <fa-icon *ngIf="item.subItems" class="route-item__holder-icon" [icon]="item.showSubItems ? 'caret-up' : 'caret-down'"></fa-icon>
+            </div>
+            <div *ngIf="item.showSubItems" class="sub-routes-holder" @subItemOpenClose>
+                <ng-container *ngFor="let subItem of item.subItems">
+                    <div
+                        class="route-item route-item--sub-item"
+                        (click)="navigationItemClicked(subItem)"
+                        [class.route-item--selectable]="!subItem.selected"
+                        [class.route-item--sub-item-selected]="subItem.selected"
+                    >
+                        <span class="route-item__text route-item__text--sub-item">{{ subItem.key | translate }}</span>
+                    </div>
+                </ng-container>
             </div>
         </ng-container>
     </div>

@@ -1,19 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faBars, faCar, faHouseChimney, faPerson, faTimes, faWarehouse} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faCar, faHouseChimney, faPerson, faRankingStar, faTimes, faWarehouse} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {RouteHolder} from '../../../app/routing/route-holder';
-import {faCircleHalfStroke} from '@fortawesome/free-solid-svg-icons/faCircleHalfStroke';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {Session} from '../../../app/configuration/session';
 
 export interface RouteItem {
-    route: string;
+    route?: string;
     key: string;
-    icon: IconDefinition;
-    selected: boolean;
-    loggedIn: boolean;
+    subItems?: RouteItem[];
+    showSubItems?: boolean;
+    icon?: IconDefinition;
+    selected?: boolean;
+    loggedIn?: boolean;
 }
 
 @Component({
@@ -37,10 +38,16 @@ export interface RouteItem {
 })
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public routeItems: RouteItem[] = [
-        { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true, loggedIn: false },
-        { route: RouteHolder.DRIVER_REPORT, key: 'navigation.route.driverReport', icon: faPerson, selected: false, loggedIn: false },
-        { route: RouteHolder.CONSTRUCTOR_REPORT, key: 'navigation.route.constructorReport', icon: faWarehouse, selected: false, loggedIn: false },
-        { route: RouteHolder.RACE_REPORT, key: 'navigation.route.raceReport', icon: faCar, selected: false, loggedIn: false },
+        { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true },
+        {
+            key: 'navigation.route.standings',
+            icon: faRankingStar,
+            subItems: [
+                { route: RouteHolder.DRIVER_REPORT, key: 'navigation.route.driverReport', icon: faPerson },
+                { route: RouteHolder.CONSTRUCTOR_REPORT, key: 'navigation.route.constructorReport', icon: faWarehouse },
+            ],
+        },
+        { route: RouteHolder.RACE_REPORT, key: 'navigation.route.raceReport', icon: faCar },
     ];
 
     public mobileNavigationOpened: boolean = false;
@@ -66,7 +73,8 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     public ngOnInit() {
         this.mRouteChangeSubscription = this.mRouter.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
-                this.setNewRoute(this.routeItems.find((item) => val.urlAfterRedirects.endsWith(item.route)));
+                const subItems = this.routeItems.filter((route) => route.subItems).flatMap((route) => route.subItems);
+                this.setNewRoute([...this.routeItems, ...subItems].find((item) => val.urlAfterRedirects.endsWith(item?.route ?? '--')));
             }
         });
 
@@ -85,16 +93,30 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     }
 
     public navigationItemClicked = (item: RouteItem) => {
-        this.mRouter.navigateByUrl(item.route).then();
-        this.mobileNavigationOpened = false;
+        if (item.route !== undefined) {
+            this.mRouter.navigateByUrl(item.route).then();
+            this.mobileNavigationOpened = false;
+        } else {
+            item.showSubItems = !item.showSubItems;
+        }
     };
 
     private setNewRoute(item: RouteItem | undefined) {
         this.routeItems.forEach((routeItem) => {
             routeItem.selected = false;
+            if (routeItem.subItems) {
+                routeItem.subItems.forEach((subItem) => {
+                    subItem.selected = false;
+                });
+            }
         });
         if (item !== undefined) {
             item.selected = true;
+            this.routeItems.forEach((holderItem) => {
+                if (holderItem.subItems?.includes(item)) {
+                    holderItem.selected = true;
+                }
+            });
         }
     }
 }
