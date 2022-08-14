@@ -1,5 +1,6 @@
 package f1_Info.background.ergast_tasks.fetch_pitstops_task;
 
+import common.helpers.Pair;
 import common.logger.Logger;
 import common.utils.ListUtils;
 import f1_Info.background.TaskWrapper;
@@ -8,7 +9,6 @@ import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
