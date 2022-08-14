@@ -29,7 +29,7 @@ export class DriverProfileInfoComponent implements OnChanges {
             this.imageSrc = src;
         });
         this.mWikipediaFetcher.getWikipediaSummary(this.info.wikipediaTitle).subscribe((summary) => {
-            this.summary = summary;
+            this.summary = summary.replace(/(?:\r\n|\r|\n)/g, '<br>');
         });
     }
 }

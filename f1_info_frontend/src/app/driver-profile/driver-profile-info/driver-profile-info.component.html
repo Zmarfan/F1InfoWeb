@@ -1,4 +1,5 @@
-<section class="info-holder">
+<div class="main-area">
     <img *ngIf="imageSrc" [src]="imageSrc">
-    <p *ngIf="summary">{{summary}}</p>
-</section>
+</div>
+
+<p *ngIf="summary" class="summary" [innerHTML]="summary"></p>
