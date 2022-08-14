@@ -45,7 +45,7 @@ export class DropDownFilterComponent implements OnChanges {
             setTimeout(() => {
                 this.selectedOption = this.selectedValue;
             });
-        } else {
+        } else if (this.options.length > 0) {
             this.selectedOption = this.options[0].value;
         }
     }
