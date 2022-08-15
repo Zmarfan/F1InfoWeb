@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class PitStopsReportResponse {
+    String mDriverIdentifier;
     int mStopNumber;
     Integer mDriverNumber;
     String mDriver;
@@ -17,6 +18,7 @@ public class PitStopsReportResponse {
     BigDecimal mDuration;
 
     public PitStopsReportResponse(final PitStopRecord pitStopRecord) {
+        mDriverIdentifier = pitStopRecord.getDriverIdentifier();
         mStopNumber = pitStopRecord.getStopNumber();
         mDriverNumber = pitStopRecord.getDriverNumber();
         mDriver = String.format("%s %s", pitStopRecord.getFirstName(), pitStopRecord.getLastName());

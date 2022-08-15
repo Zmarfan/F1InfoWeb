@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 public class FastestLapsRecord {
+    String mDriverIdentifier;
     Integer mPosition;
     Integer mDriverNumber;
     String mFirstName;

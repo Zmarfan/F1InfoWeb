@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 public class QualifyingReportResponse {
+    String mDriverIdentifier;
     int mPosition;
     Integer mDriverNumber;
     String mDriver;
@@ -18,6 +19,7 @@ public class QualifyingReportResponse {
     String mQ3Time;
 
     public QualifyingReportResponse(final QualifyingRecord qualifyingRecord) {
+        mDriverIdentifier = qualifyingRecord.getDriverIdentifier();
         mPosition = qualifyingRecord.getPosition();
         mDriverNumber = qualifyingRecord.getDriverNumber();
         mDriver = String.format("%s %s", qualifyingRecord.getFirstName(), qualifyingRecord.getLastName());

@@ -58,6 +58,7 @@ create procedure get_race_result_report(
 )
 begin
   select
+    stats.driver_identifier,
     stats.position,
     stats.start_position,
     stats.driver_number,
@@ -70,6 +71,7 @@ begin
     stats.points
   from (
      select
+       drivers.driver_identifier,
        results.finish_position_order as position,
        results.starting_position as start_position,
        drivers.number as driver_number,
@@ -133,6 +135,7 @@ create procedure get_fastest_laps_report(
 )
 begin
   select
+    stats.driver_identifier,
     stats.position,
     stats.driver_number,
     stats.first_name,
@@ -144,6 +147,7 @@ begin
     stats.average_speed
   from (
     select
+      drivers.driver_identifier,
       fastest_laps.lap_rank as position,
       drivers.number as driver_number,
       drivers.first_name,
@@ -194,6 +198,7 @@ create procedure get_pit_stops_report(
 )
 begin
   select
+    stats.driver_identifier,
     stats.stop_number,
     stats.driver_number,
     stats.first_name,
@@ -205,6 +210,7 @@ begin
     stats.duration
   from (
     select
+      drivers.driver_identifier,
       pit_stops.stop as stop_number,
       drivers.number as driver_number,
       drivers.first_name,
@@ -254,6 +260,7 @@ create procedure get_qualifying_report(
 )
 begin
   select
+    stats.driver_identifier,
     stats.position,
     stats.driver_number,
     stats.first_name,
@@ -268,6 +275,7 @@ begin
     stats.q3
   from (
     select
+      drivers.driver_identifier,
       round(qualifying.q1_time_in_seconds - fastest_q_times.fastest_q1, 3) as q1_diff,
       round(qualifying.q2_time_in_seconds - fastest_q_times.fastest_q2, 3) as q2_diff,
       round(qualifying.q3_time_in_seconds - fastest_q_times.fastest_q3, 3) as q3_diff,

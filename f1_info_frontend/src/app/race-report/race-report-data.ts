@@ -34,7 +34,7 @@ export interface RaceResultRow {
     position: number;
     startPosition: number;
     driverNumber: number;
-    driver: string;
+    driver: DriverEntry;
     nationality: CountryEntry;
     constructor: string;
     laps: number;
@@ -45,7 +45,7 @@ export interface RaceResultRow {
 export interface FastestLapsRow {
     position: number;
     driverNumber: number;
-    driver: string;
+    driver: DriverEntry;
     nationality: CountryEntry;
     constructor: string;
     lap: number;
@@ -56,7 +56,7 @@ export interface FastestLapsRow {
 export interface PitStopsRow {
     stopNumber: number;
     driverNumber: number;
-    driver: string;
+    driver: DriverEntry;
     nationality: CountryEntry;
     constructor: string;
     lap: number;
@@ -67,7 +67,7 @@ export interface PitStopsRow {
 export interface QualifyingRow {
     position: number;
     driverNumber: number;
-    driver: string;
+    driver: DriverEntry;
     nationality: CountryEntry;
     constructor: string;
     q1: string;
@@ -209,7 +209,7 @@ export class RaceReportData {
             position: response.position,
             startPosition: response.startPosition,
             driverNumber: response.driverNumber,
-            driver: response.driver,
+            driver: new DriverEntry({ name: response.driver, driverIdentifier: response.driverIdentifier }),
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             laps: response.laps,
@@ -222,7 +222,7 @@ export class RaceReportData {
         return {
             position: response.position,
             driverNumber: response.driverNumber,
-            driver: response.driver,
+            driver: new DriverEntry({ name: response.driver, driverIdentifier: response.driverIdentifier }),
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             lap: response.lap,
@@ -235,7 +235,7 @@ export class RaceReportData {
         return {
             stopNumber: response.stopNumber,
             driverNumber: response.driverNumber,
-            driver: response.driver,
+            driver: new DriverEntry({ name: response.driver, driverIdentifier: response.driverIdentifier }),
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             lap: response.lap,
@@ -248,7 +248,7 @@ export class RaceReportData {
         return {
             position: response.position,
             driverNumber: response.driverNumber,
-            driver: response.driver,
+            driver: new DriverEntry({ name: response.driver, driverIdentifier: response.driverIdentifier }),
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             q1: response.q1,

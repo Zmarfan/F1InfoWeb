@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class RaceResultReportResponse {
+    String mDriverIdentifier;
     int mPosition;
     int mStartPosition;
     Integer mDriverNumber;
@@ -18,6 +19,7 @@ public class RaceResultReportResponse {
     BigDecimal mPoints;
 
     public RaceResultReportResponse(final RaceResultRecord raceRecord) {
+        mDriverIdentifier = raceRecord.getDriverIdentifier();
         mPosition = raceRecord.getPosition();
         mStartPosition = raceRecord.getStartPosition();
         mDriverNumber = raceRecord.getDriverNumber();

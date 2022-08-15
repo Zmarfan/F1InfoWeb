@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 public class FastestLapsReportResponse {
+    String mDriverIdentifier;
     Integer mPosition;
     Integer mDriverNumber;
     String mDriver;
@@ -15,6 +16,7 @@ public class FastestLapsReportResponse {
     String mAverageSpeed;
 
     public FastestLapsReportResponse(final FastestLapsRecord fastestLapRecord) {
+        mDriverIdentifier = fastestLapRecord.getDriverIdentifier();
         mPosition = fastestLapRecord.getPosition();
         mDriverNumber = fastestLapRecord.getDriverNumber();
         mDriver = String.format("%s %s", fastestLapRecord.getFirstName(), fastestLapRecord.getLastName());

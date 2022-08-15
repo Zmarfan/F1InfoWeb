@@ -5,6 +5,7 @@ import lombok.Value;
 
 @Value
 public class QualifyingRecord {
+    String mDriverIdentifier;
     int mPosition;
     Integer mDriverNumber;
     String mFirstName;

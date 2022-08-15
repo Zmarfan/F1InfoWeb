@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class PitStopRecord {
+    String mDriverIdentifier;
     int mStopNumber;
     Integer mDriverNumber;
     String mFirstName;

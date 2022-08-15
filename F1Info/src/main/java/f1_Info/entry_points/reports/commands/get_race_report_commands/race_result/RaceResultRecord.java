@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class RaceResultRecord {
+    String mDriverIdentifier;
     int mPosition;
     int mStartPosition;
     Integer mDriverNumber;
