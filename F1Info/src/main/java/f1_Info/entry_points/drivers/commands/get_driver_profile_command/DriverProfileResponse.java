@@ -4,10 +4,12 @@ import lombok.Value;
 
 @Value
 public class DriverProfileResponse {
+    String mFullName;
     String mWikipediaTitle;
     String mWikipediaUrl;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
+        mFullName = String.format("%s %s", driverRecord.getFirstName(), driverRecord.getLastName());
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
         mWikipediaUrl = driverRecord.getWikipediaUrl();
     }

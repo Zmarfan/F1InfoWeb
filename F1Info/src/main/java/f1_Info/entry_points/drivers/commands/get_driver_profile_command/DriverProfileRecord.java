@@ -4,5 +4,7 @@ import lombok.Value;
 
 @Value
 public class DriverProfileRecord {
+    String mFirstName;
+    String mLastName;
     String mWikipediaUrl;
 }

@@ -4,7 +4,7 @@
             <img *ngIf="imageSrc" [src]="imageSrc">
             <img *ngIf="!imageSrc" src="/assets/images/driver-profile/shadow-driver.png">
         </app-loading-element>
-        <h2>Alexander Albon</h2>
+        <h2>{{info.fullName}}</h2>
     </div>
 </div>
 
