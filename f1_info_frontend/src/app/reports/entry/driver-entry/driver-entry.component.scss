@@ -1,0 +1,10 @@
+a {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+
+  fa-icon {
+    color: var(--light-primary-color);
+    font-size: 0.75rem;
+  }
+}

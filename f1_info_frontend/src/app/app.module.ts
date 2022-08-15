@@ -34,6 +34,7 @@ import { PositionMoveEntryComponent } from './reports/entry/position-move-entry/
 import { ConstructorReportComponent } from './constructor-report/constructor-report.component';
 import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 import { DriverProfileInfoComponent } from './driver-profile/driver-profile-info/driver-profile-info.component';
+import { DriverEntryComponent } from './reports/entry/driver-entry/driver-entry.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -78,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ConstructorReportComponent,
         DriverProfileComponent,
         DriverProfileInfoComponent,
+        DriverEntryComponent,
     ],
     providers: [
         {

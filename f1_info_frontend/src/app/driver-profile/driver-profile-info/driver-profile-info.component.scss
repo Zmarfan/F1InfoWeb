@@ -33,14 +33,4 @@
   font-size: 0.925rem;
   line-height: 1.6rem;
   margin: 2rem 3rem 0 3rem;
-
-  a {
-    cursor: pointer;
-    color: var(--primary-color-text);
-
-    &:hover {
-      color: var(--dark-primary-color);
-      font-weight: 500;
-    }
-  }
 }

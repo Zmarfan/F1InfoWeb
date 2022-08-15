@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class AllDriverReportRecord {
+    String mDriverIdentifier;
     int mPosition;
     PositionMove mPositionMove;
     Integer mDriverNumber;
@@ -17,6 +18,7 @@ public class AllDriverReportRecord {
     BigDecimal mPoints;
 
     public AllDriverReportRecord(
+        final String driverIdentifier,
         final int position,
         final Integer positionMoveId,
         final Integer driverNumber,
@@ -26,6 +28,7 @@ public class AllDriverReportRecord {
         final String constructor,
         final BigDecimal points
     ) {
+        mDriverIdentifier = driverIdentifier;
         mPosition = position;
         mPositionMove = positionMoveId != null ? PositionMove.fromId(positionMoveId) : null;
         mDriverNumber = driverNumber;

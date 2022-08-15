@@ -10,6 +10,7 @@ import {
 } from '../../generated/server-responses';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
+import {DriverEntry} from '../reports/entry/driver-entry/driver-entry';
 
 export enum RaceReport {
     OVERVIEW = 1,
@@ -23,7 +24,7 @@ export enum RaceReport {
 export interface RaceOverviewRow {
     grandPrix: CountryEntry;
     date: string;
-    winner: string;
+    winner: DriverEntry;
     constructor: string;
     laps: number;
     time: string;
@@ -196,7 +197,7 @@ export class RaceReportData {
         return {
             grandPrix: new CountryEntry({ displayValue: response.raceName, isoCode: response.raceIsoCode }),
             date: response.date,
-            winner: response.winner,
+            winner: new DriverEntry({ name: response.winner, driverIdentifier: response.driverIdentifier }),
             constructor: response.constructor,
             laps: response.laps,
             time: response.time,

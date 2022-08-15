@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Value
 public class RaceOverviewRecord {
+    String mDriverIdentifier;
     String mRaceName;
     Country mCountry;
     LocalDate mDate;

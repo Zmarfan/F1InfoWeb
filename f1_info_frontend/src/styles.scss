@@ -16,3 +16,13 @@ div .mat-dialog-container {
   color: var(--text-color);
   padding: 0;
 }
+
+a {
+  cursor: pointer;
+  color: var(--dark-primary-color-text);
+
+  &:hover {
+    color: var(--primary-color-text);
+    font-weight: 500;
+  }
+}

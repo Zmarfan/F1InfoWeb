@@ -4,6 +4,7 @@ import lombok.Value;
 
 @Value
 public class OverviewRaceReportResponse {
+    String mDriverIdentifier;
     String mRaceName;
     String mRaceIsoCode;
     String mDate;
@@ -13,6 +14,7 @@ public class OverviewRaceReportResponse {
     String mTime;
 
     public OverviewRaceReportResponse(final RaceOverviewRecord overviewRecord) {
+        mDriverIdentifier = overviewRecord.getDriverIdentifier();
         mRaceName = overviewRecord.getRaceName();
         mRaceIsoCode = overviewRecord.getCountry().getCode();
         mDate = overviewRecord.getDate().toString();

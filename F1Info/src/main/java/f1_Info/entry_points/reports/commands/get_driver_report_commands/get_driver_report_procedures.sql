@@ -2,6 +2,7 @@ drop procedure if exists get_all_driver_report_get_rows;
 create procedure get_all_driver_report_get_rows(in p_season int, in p_round int, in p_sort_direction varchar(5), in p_sort_column varchar(30))
 begin
   select
+    stats.driver_identifier,
     stats.position,
     stats.position_move_id,
     stats.driver_number,
@@ -12,6 +13,7 @@ begin
     stats.points
   from (
      select
+       drivers.driver_identifier,
        driver_standings.position,
        case
          when driver_standings.position < last_race.position then 1

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 @Value
 public class AllDriverReportResponse {
+    String mDriverIdentifier;
     int mPosition;
     PositionMove mPositionMove;
     Integer mDriverNumber;
@@ -16,6 +17,7 @@ public class AllDriverReportResponse {
     BigDecimal mPoints;
 
     public AllDriverReportResponse(final AllDriverReportRecord reportRecord) {
+        mDriverIdentifier = reportRecord.getDriverIdentifier();
         mPosition = reportRecord.getPosition();
         mPositionMove = reportRecord.getPositionMove();
         mDriverNumber = reportRecord.getDriverNumber();

@@ -4,11 +4,12 @@ import {ReportParameters} from '../reports/report-element/report-element.compone
 import {AllDriverReportResponse, IndividualDriverReportResponse} from '../../generated/server-responses';
 import {PositionMoveEntry} from '../reports/entry/position-move-entry/position-move-entry';
 import {RaceType} from '../reports/filters/drop-down-filter/drop-down-filter-provider';
+import {DriverEntry} from '../reports/entry/driver-entry/driver-entry';
 
 export interface AllDriverRow {
     position: PositionMoveEntry;
     driverNumber: number;
-    driver: string;
+    driver: DriverEntry;
     nationality: CountryEntry;
     constructor: string;
     points: number;
@@ -55,7 +56,7 @@ export class DriverReportData {
         return {
             position: new PositionMoveEntry({ position: response.position, move: response.positionMove }),
             driverNumber: response.driverNumber,
-            driver: response.driverFullName,
+            driver: new DriverEntry({ name: response.driverFullName, driverIdentifier: response.driverIdentifier }),
             nationality: new CountryEntry({ displayValue: response.countryCodes.icoCode, isoCode: response.countryCodes.isoCode }),
             constructor: response.constructor,
             points: response.points,

@@ -210,6 +210,7 @@
       "title": "Konstruktörställning",
       "raceLabel": "Race:",
       "constructorLabel": "Konstruktör:",
+      "raceTypeLabel": "Typ:",
       "overview": {
         "position": "Pos.",
         "constructor": "Konstruktör",

@@ -210,6 +210,7 @@
       "title": "Constructor Results",
       "raceLabel": "Race:",
       "constructorLabel": "Constructor:",
+      "raceTypeLabel": "Type:",
       "overview": {
         "position": "Pos.",
         "constructor": "Constructor",

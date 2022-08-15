@@ -12,7 +12,7 @@ import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generate
 })
 export class DriverProfileComponent implements OnInit {
     public driverOptions: DropdownOption[] = [];
-    public selectedDriverIdentifier: string | null = null;
+    public selectedDriverIdentifier: string = 'max_verstappen';
     public loading: boolean = false;
     public filterLoading: boolean = false;
 
@@ -61,7 +61,7 @@ export class DriverProfileComponent implements OnInit {
 
     private runReport() {
         this.loading = true;
-        this.mDriverProfileService.getProfileInfo(this.selectedDriverIdentifier || '').subscribe({
+        this.mDriverProfileService.getProfileInfo(this.selectedDriverIdentifier).subscribe({
             next: (response) => {
                 this.loading = false;
                 this.driverInfo = response;

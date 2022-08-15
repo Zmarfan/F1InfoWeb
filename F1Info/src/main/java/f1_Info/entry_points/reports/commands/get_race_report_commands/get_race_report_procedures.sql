@@ -2,6 +2,7 @@ drop procedure if exists get_race_report_overview;
 create procedure get_race_report_overview(in p_season int, in p_result_type varchar(10), in p_sort_direction varchar(5), in p_sort_column varchar(30))
 begin
   select
+    stats.driver_identifier,
     stats.race_name,
     stats.country,
     stats.date,
@@ -12,6 +13,7 @@ begin
     stats.time
   from (
      select
+       drivers.driver_identifier,
        races.name as race_name,
        circuits.country_code as country,
        race_times.date,
