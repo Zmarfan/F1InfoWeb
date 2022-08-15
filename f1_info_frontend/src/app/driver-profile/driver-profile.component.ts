@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
-import {DriverProfileResponse, DriverProfileService} from './driver-profile.service';
-import {DriverProfileFilterResponse} from '../../generated/server-responses';
+import {DriverProfileService} from './driver-profile.service';
+import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
 
 @Component({
     selector: 'app-driver-profile',
@@ -34,6 +34,7 @@ export class DriverProfileComponent implements OnInit {
 
     public driverFilterChanged = (newDriver: string) => {
         this.selectedDriverIdentifier = newDriver;
+        this.runReport();
     };
 
     private fetchAndAssignFilterValues() {
@@ -53,11 +54,14 @@ export class DriverProfileComponent implements OnInit {
 
     private populateDriverFilter(response: DriverProfileFilterResponse) {
         this.driverOptions = response.drivers.map((driver) => ({ displayValue: driver.fullName, value: driver.driverIdentifier }));
+        if (this.driverOptions.filter((driver) => driver.value === this.selectedDriverIdentifier).length === 0) {
+            this.selectedDriverIdentifier = this.driverOptions[0].value!.toString();
+        }
     }
 
     private runReport() {
         this.loading = true;
-        this.mDriverProfileService.getProfileInfo().subscribe({
+        this.mDriverProfileService.getProfileInfo(this.selectedDriverIdentifier || '').subscribe({
             next: (response) => {
                 this.loading = false;
                 this.driverInfo = response;

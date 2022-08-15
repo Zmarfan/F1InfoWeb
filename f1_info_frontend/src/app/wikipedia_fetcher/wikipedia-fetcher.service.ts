@@ -15,7 +15,7 @@ export class WikipediaFetcherService {
     }
 
     private static createImageCallUrl(title: string, size: number): string {
-        return `https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=pageimages&format=json&pithumbsize=${size}&titles=${title}`;
+        return `https://en.wikipedia.org/w/api.php?origin=*&redirects=1&action=query&prop=pageimages&format=json&pithumbsize=${size}&titles=${title}`;
     }
 
     private static createSummaryUrl(title: string): string {
@@ -37,12 +37,13 @@ export class WikipediaFetcherService {
             );
     }
 
-    public getWikipediaSummary(title: string): Observable<string> {
+    public getWikipediaSummary(title: string): Observable<string[]> {
         return this.mHttpClient.get(WikipediaFetcherService.createSummaryUrl(title))
             .pipe(
                 map((response: any) => {
-                    return WikipediaFetcherService.getPageObject(response).extract;
-                })
+                    return WikipediaFetcherService.getPageObject(response).extract as string;
+                }),
+                map((rawText) => rawText.split(/(?:\r\n|\r|\n)/g).filter((paragraph) => paragraph.length > 0))
             );
     }
 }

@@ -1,5 +1,11 @@
 <div class="main-area">
-    <img *ngIf="imageSrc" [src]="imageSrc">
+    <app-loading-element [loading]="wikipediaImageLoading">
+        <img *ngIf="imageSrc" [src]="imageSrc">
+    </app-loading-element>
 </div>
 
-<p *ngIf="summary" class="summary" [innerHTML]="summary"></p>
+<app-loading-element [loading]="wikipediaSummaryLoading">
+    <div class="summary">
+        <p *ngFor="let paragraph of summaryParagraphs">{{paragraph}}</p>
+    </div>
+</app-loading-element>

@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from '../configuration/endpoints';
-import {DriverProfileFilterResponse} from '../../generated/server-responses';
-import {Observable, of} from 'rxjs';
-
-export interface DriverProfileResponse {
-    wikipediaTitle: string;
-}
+import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
+import {parseTemplate} from 'url-template';
 
 @Injectable({
     providedIn: 'root',
@@ -21,9 +17,8 @@ export class DriverProfileService {
         return this.mHttpClient.get<DriverProfileFilterResponse>(Endpoints.DRIVERS.getAllDrivers);
     }
 
-    public getProfileInfo(): Observable<DriverProfileResponse> {
-        return of({
-            wikipediaTitle: 'Alex_Albon',
-        });
+    public getProfileInfo(driverIdentifier: string) {
+        return this.mHttpClient.get<DriverProfileResponse>(parseTemplate(Endpoints.DRIVERS.getDriverProfile).expand({ driverIdentifier }));
+
     }
 }

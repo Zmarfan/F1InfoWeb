@@ -24,6 +24,7 @@ export class Endpoints {
 
     public static readonly DRIVERS = {
         getAllDrivers: `${Endpoints.DRIVER_BASE}all-drivers`,
+        getDriverProfile: `${Endpoints.DRIVER_BASE}driver-profile/{driverIdentifier}`,
     };
 
     public static readonly REPORTS = {
