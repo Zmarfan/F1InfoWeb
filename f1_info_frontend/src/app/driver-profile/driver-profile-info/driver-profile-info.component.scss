@@ -5,14 +5,27 @@
   border-bottom: var(--bkg-shadow-color) dashed 1px;
   background: var(--global-message-bkg-info);
   padding: 1rem 3rem 1rem 3rem;
+  min-height: 10rem;
 
-  img {
-    max-width: 15rem;
-    max-height: 15rem;
-    object-fit: fill;
-    border: solid 5px var(--dark-primary-color);
-    border-radius: 20px 5px 20px 5px;
-    box-shadow: var(--bkg-shadow-color) 0 0 20px;
+  &__driver-portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      max-width: 15rem;
+      max-height: 15rem;
+      object-fit: fill;
+      border: solid 5px var(--dark-primary-color);
+      border-radius: 20px 5px 20px 5px;
+      box-shadow: var(--bkg-shadow-color) 0 0 20px;
+    }
+
+    h2 {
+      color: var(--primary-color-text);
+      font-size: 1.75rem;
+      margin: 0.5rem;
+    }
   }
 }
 
@@ -20,4 +33,14 @@
   font-size: 0.925rem;
   line-height: 1.6rem;
   margin: 2rem 3rem 0 3rem;
+
+  a {
+    cursor: pointer;
+    color: var(--primary-color-text);
+
+    &:hover {
+      color: var(--dark-primary-color);
+      font-weight: 500;
+    }
+  }
 }

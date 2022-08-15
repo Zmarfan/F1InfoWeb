@@ -222,5 +222,10 @@
         "points": "Points"
       }
     }
+  },
+  "driverProfile": {
+    "title": "Driver Profiles",
+    "driverLabel": "Driver",
+    "readMore": "Read more"
   }
 }

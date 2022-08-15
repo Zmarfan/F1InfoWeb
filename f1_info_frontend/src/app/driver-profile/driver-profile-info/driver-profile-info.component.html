@@ -1,11 +1,16 @@
 <div class="main-area">
-    <app-loading-element [loading]="wikipediaImageLoading">
-        <img *ngIf="imageSrc" [src]="imageSrc">
-    </app-loading-element>
+    <div class="main-area__driver-portrait">
+        <app-loading-element [loading]="wikipediaImageLoading">
+            <img *ngIf="imageSrc" [src]="imageSrc">
+            <img *ngIf="!imageSrc" src="/assets/images/driver-profile/shadow-driver.png">
+        </app-loading-element>
+        <h2>Alexander Albon</h2>
+    </div>
 </div>
 
 <app-loading-element [loading]="wikipediaSummaryLoading">
-    <div class="summary">
+    <div *ngIf="summaryParagraphs.length > 0" class="summary">
         <p *ngFor="let paragraph of summaryParagraphs">{{paragraph}}</p>
+        <a [href]="info.wikipediaUrl" target="_blank">{{'driverProfile.readMore' | translate}}</a>
     </div>
 </app-loading-element>

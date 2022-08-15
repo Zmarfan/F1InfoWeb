@@ -222,5 +222,10 @@
         "points": "Poäng"
       }
     }
+  },
+  "driverProfile": {
+    "title": "Förarprofiler",
+    "driverLabel": "Förare",
+    "readMore": "Läs vidare"
   }
 }
