@@ -227,6 +227,31 @@
   "driverProfile": {
     "title": "Förarprofiler",
     "driverLabel": "Förare",
-    "readMore": "Läs vidare"
+    "readMore": "Läs vidare",
+    "info": {
+      "age": "Ålder",
+      "country": "Land",
+      "dateOfBirth": "Födelsedag",
+      "team": "Lag",
+      "championships": "Världsmästerskap",
+      "runnerUpChampionships": "Tvåa i Världsmästerskapet",
+      "firstGrandPrix": "Första Grand Prix",
+      "lastGrandPrix": "Sista Grand Prix",
+      "yearsInF1": "År i F1",
+      "grandPrixEntered": "Totala Grand Prix",
+      "highestFinish": "Högsta Raceposition",
+      "highestGrid": "Högsta Kvalposition",
+      "noTeammates": "Antal lagkamrater",
+      "lapsLed": "Varv i ledning",
+      "podiums": "Antal Podium",
+      "pitStops": "Antal Depåstopp",
+      "pointsEarned": "Total antal Poäng",
+      "pointsPerRace": "Poäng per Race",
+      "pointsPerSeason": "Poäng per Säsong",
+      "lapsRaced": "Körda Varv",
+      "retirements": "Antal Avbrutna race",
+      "averageFinish": "Genomsnittlig Slutposition",
+      "averageStarting": "Genomsnittlig Startposition"
+    }
   }
 }

@@ -227,6 +227,31 @@
   "driverProfile": {
     "title": "Driver Profiles",
     "driverLabel": "Driver",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "info": {
+      "age": "Age",
+      "country": "Country",
+      "dateOfBirth": "Date of Birth",
+      "team": "Team",
+      "championships": "World Championships",
+      "runnerUpChampionships": "Runner up World Championships",
+      "firstGrandPrix": "First Grand Prix",
+      "lastGrandPrix": "Last Grand Prix",
+      "yearsInF1": "Years in F1",
+      "grandPrixEntered": "Grand Prix Entered",
+      "highestFinish": "Highest Race Finish",
+      "highestGrid": "Highest Grid Position",
+      "noTeammates": "Amount of Teammates",
+      "lapsLed": "Laps Led",
+      "podiums": "Podiums",
+      "pitStops": "Amount of Pit Stops",
+      "pointsEarned": "Points Earned",
+      "pointsPerRace": "Points per Race",
+      "pointsPerSeason": "Points per Season",
+      "lapsRaced": "Laps Raced",
+      "retirements": "Retirements",
+      "averageFinish": "Average Finish",
+      "averageStarting": "Average Starting"
+    }
   }
 }

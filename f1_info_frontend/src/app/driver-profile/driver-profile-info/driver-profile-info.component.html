@@ -1,11 +1,48 @@
 <div class="main-area">
     <div class="main-area__driver-portrait">
+        <h2>{{info.fullName}}</h2>
         <app-loading-element [loading]="wikipediaImageLoading">
             <img *ngIf="imageSrc" [src]="imageSrc">
             <img *ngIf="!imageSrc" src="/assets/images/driver-profile/shadow-driver.png">
         </app-loading-element>
-        <h2>{{info.fullName}}</h2>
     </div>
+    <section class="main-area__info">
+        <div class="table-info">
+            <table>
+                <tr><th>{{'driverProfile.info.age' | translate}}</th><td>25</td></tr>
+                <tr><th>{{'driverProfile.info.country' | translate}}</th><td class="table-info__flag"><span>SWE</span><img src="/assets/images/flags/ac.svg"></td></tr>
+                <tr><th>{{'driverProfile.info.dateOfBirth' | translate}}</th><td>1997-03-01</td></tr>
+                <tr><th>{{'driverProfile.info.team' | translate}}</th><td>Red Bull Racing</td></tr>
+                <tr><th>{{'driverProfile.info.championships' | translate}}</th><td>1</td></tr>
+                <tr><th>{{'driverProfile.info.runnerUpChampionships' | translate}}</th><td>3</td></tr>
+                <tr><th>{{'driverProfile.info.firstGrandPrix' | translate}}</th><td>Spanish Grand Prix 2020</td>
+                <tr><th>{{'driverProfile.info.lastGrandPrix' | translate}}</th><td>French Grand Prix 2022</td>
+            </table>
+        </div>
+        <div class="table-info">
+            <table>
+                <tr><th>{{'driverProfile.info.yearsInF1' | translate}}</th><td>7</td></tr>
+                <tr><th>{{'driverProfile.info.grandPrixEntered' | translate}}</th><td>152</td></tr>
+                <tr><th>{{'driverProfile.info.highestFinish' | translate}}</th><td>1(x12)</td></tr>
+                <tr><th>{{'driverProfile.info.highestGrid' | translate}}</th><td>1 (x5)</td></tr>
+                <tr><th>{{'driverProfile.info.noTeammates' | translate}}</th><td>6</td></tr>
+                <tr><th>{{'driverProfile.info.lapsLed' | translate}}</th><td>220</td></tr>
+                <tr><th>{{'driverProfile.info.podiums' | translate}}</th><td>40</td></tr>
+                <tr><th>{{'driverProfile.info.pitStops' | translate}}</th><td>70</td></tr>
+            </table>
+        </div>
+        <div class="table-info">
+            <table>
+                <tr><th>{{'driverProfile.info.pointsEarned' | translate}}</th><td>9102</td></tr>
+                <tr><th>{{'driverProfile.info.pointsPerRace' | translate}}</th><td>14.2</td></tr>
+                <tr><th>{{'driverProfile.info.pointsPerSeason' | translate}}</th><td>290</td></tr>
+                <tr><th>{{'driverProfile.info.lapsRaced' | translate}}</th><td>1235</td></tr>
+                <tr><th>{{'driverProfile.info.retirements' | translate}}</th><td>12(20%)</td></tr>
+                <tr><th>{{'driverProfile.info.averageFinish' | translate}}</th><td>9</td></tr>
+                <tr><th>{{'driverProfile.info.averageStarting' | translate}}</th><td>12</td></tr>
+            </table>
+        </div>
+    </section>
 </div>
 
 <app-loading-element [loading]="wikipediaSummaryLoading">
