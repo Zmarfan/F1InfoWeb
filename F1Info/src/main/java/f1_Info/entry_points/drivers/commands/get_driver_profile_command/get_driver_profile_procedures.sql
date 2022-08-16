@@ -22,7 +22,8 @@ begin
     race_starts.best_position,
     race_starts.amount_of_best_position,
     race_starts.best_start_position,
-    race_starts.amount_of_best_start_position
+    race_starts.amount_of_best_start_position,
+    race_starts.teammates
   from
     drivers
     left join (
@@ -90,11 +91,14 @@ begin
         aggregated_results.best_start_position,
         sum(if(results.starting_position = aggregated_results.best_start_position, 1, 0)) as amount_of_best_start_position,
         count(*) as race_starts,
-        count(distinct races.year) as years_in_f1
+        count(distinct races.year) as years_in_f1,
+        count(distinct teammate_results.driver_id) - 1 as teammates
       from
         results
         inner join races on races.id = results.race_id
         inner join drivers on drivers.id = results.driver_id
+        inner join constructors on constructors.id = results.constructor_id
+        left join results teammate_results on teammate_results.race_id = races.id and teammate_results.constructor_id = constructors.id
         inner join (
           select
             results.driver_id,
@@ -113,5 +117,3 @@ begin
   where
     drivers.driver_identifier = p_driver_identifier;
 end;
-
-select * from results where starting_position = 0;
