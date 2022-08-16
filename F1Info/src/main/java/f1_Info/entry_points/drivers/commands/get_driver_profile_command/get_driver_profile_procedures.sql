@@ -23,7 +23,7 @@ begin
     race_starts.amount_of_best_position,
     race_starts.best_start_position,
     race_starts.amount_of_best_start_position,
-    race_starts.teammates
+    teammate_aggregation.teammates
   from
     drivers
     left join (
@@ -44,7 +44,6 @@ begin
       from
         races
         inner join driver_standings on driver_standings.race_id = races.id
-        inner join drivers on drivers.id = driver_standings.driver_id
         inner join (
           select
             max(round) as round,
@@ -85,20 +84,16 @@ begin
     ) first_and_last_races on first_and_last_races.driver_id = drivers.id
     inner join (
       select
-        drivers.id as driver_id,
+        results.driver_id,
         aggregated_results.best_position,
         sum(if(results.finish_position_order = aggregated_results.best_position, 1, 0)) as amount_of_best_position,
         aggregated_results.best_start_position,
         sum(if(results.starting_position = aggregated_results.best_start_position, 1, 0)) as amount_of_best_start_position,
         count(*) as race_starts,
-        count(distinct races.year) as years_in_f1,
-        count(distinct teammate_results.driver_id) - 1 as teammates
+        count(distinct races.year) as years_in_f1
       from
         results
         inner join races on races.id = results.race_id
-        inner join drivers on drivers.id = results.driver_id
-        inner join constructors on constructors.id = results.constructor_id
-        left join results teammate_results on teammate_results.race_id = races.id and teammate_results.constructor_id = constructors.id
         inner join (
           select
             results.driver_id,
@@ -110,10 +105,20 @@ begin
             results.result_type = 'race'
           group by
             results.driver_id
-        ) aggregated_results on aggregated_results.driver_id = drivers.id
+        ) aggregated_results on aggregated_results.driver_id = results.driver_id
       group by
-        drivers.id
+        results.driver_id
     ) race_starts on race_starts.driver_id = drivers.id
+    inner join (
+      select
+        results.driver_id,
+        count(distinct teammate_results.driver_id) - 1 as teammates
+      from
+        results
+          inner join results teammate_results on teammate_results.race_id = results.race_id and teammate_results.constructor_id = results.constructor_id
+      group by
+        results.driver_id
+    ) teammate_aggregation on teammate_aggregation.driver_id = drivers.id
   where
     drivers.driver_identifier = p_driver_identifier;
 end;
