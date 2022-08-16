@@ -13,4 +13,12 @@ public class DriverProfileRecord {
     LocalDate mDateOfBirth;
     Country mCountry;
     String mConstructor;
+    int mAmountOfChampionships;
+    int mAmountOfRunnerUpChampionships;
+    String mFirstRaceName;
+    String mLastRaceName;
+    int mYearsInF1;
+    int mRaceStarts;
+    int mBestPosition;
+    int mAmountOfBestPosition;
 }

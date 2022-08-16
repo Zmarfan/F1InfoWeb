@@ -19,17 +19,17 @@
                 </tr>
                 <tr><th>{{'driverProfile.info.dateOfBirth' | translate}}</th><td>{{info.dateOfBirth}}</td></tr>
                 <tr><th>{{'driverProfile.info.team' | translate}}</th><td>{{info.constructor}}</td></tr>
-                <tr><th>{{'driverProfile.info.championships' | translate}}</th><td>1</td></tr>
-                <tr><th>{{'driverProfile.info.runnerUpChampionships' | translate}}</th><td>3</td></tr>
-                <tr><th>{{'driverProfile.info.firstGrandPrix' | translate}}</th><td>Spanish Grand Prix 2020</td>
-                <tr><th>{{'driverProfile.info.lastGrandPrix' | translate}}</th><td>French Grand Prix 2022</td>
+                <tr><th>{{'driverProfile.info.championships' | translate}}</th><td>{{info.amountOfChampionships}}</td></tr>
+                <tr><th>{{'driverProfile.info.runnerUpChampionships' | translate}}</th><td>{{info.amountOfRunnerUpChampionships}}</td></tr>
+                <tr><th>{{'driverProfile.info.firstGrandPrix' | translate}}</th><td>{{info.firstRaceName}}</td>
+                <tr><th>{{'driverProfile.info.lastGrandPrix' | translate}}</th><td>{{info.lastRaceName}}</td>
             </table>
         </div>
         <div class="table-info">
             <table>
-                <tr><th>{{'driverProfile.info.yearsInF1' | translate}}</th><td>7</td></tr>
-                <tr><th>{{'driverProfile.info.grandPrixEntered' | translate}}</th><td>152</td></tr>
-                <tr><th>{{'driverProfile.info.highestFinish' | translate}}</th><td>1(x12)</td></tr>
+                <tr><th>{{'driverProfile.info.yearsInF1' | translate}}</th><td>{{info.yearsInF1}}</td></tr>
+                <tr><th>{{'driverProfile.info.grandPrixEntered' | translate}}</th><td>{{info.raceStarts}}</td></tr>
+                <tr><th>{{'driverProfile.info.highestFinish' | translate}}</th><td>{{info.highestFinish}}</td></tr>
                 <tr><th>{{'driverProfile.info.highestGrid' | translate}}</th><td>1 (x5)</td></tr>
                 <tr><th>{{'driverProfile.info.noTeammates' | translate}}</th><td>6</td></tr>
                 <tr><th>{{'driverProfile.info.lapsLed' | translate}}</th><td>220</td></tr>

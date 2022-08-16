@@ -15,6 +15,13 @@ public class DriverProfileResponse {
     String mDateOfBirth;
     CountryCodes mCountryCodes;
     String mConstructor;
+    int mAmountOfChampionships;
+    int mAmountOfRunnerUpChampionships;
+    String mFirstRaceName;
+    String mLastRaceName;
+    int mYearsInF1;
+    int mRaceStarts;
+    String mHighestFinish;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -24,5 +31,12 @@ public class DriverProfileResponse {
         mDateOfBirth = driverRecord.getDateOfBirth().toString();
         mCountryCodes = CountryCodes.fromCountry(driverRecord.getCountry());
         mConstructor = driverRecord.getConstructor() != null ? driverRecord.getConstructor() : "N/A";
+        mAmountOfChampionships = driverRecord.getAmountOfChampionships();
+        mAmountOfRunnerUpChampionships = driverRecord.getAmountOfRunnerUpChampionships();
+        mFirstRaceName = driverRecord.getFirstRaceName();
+        mLastRaceName = driverRecord.getLastRaceName();
+        mYearsInF1 = driverRecord.getYearsInF1();
+        mRaceStarts = driverRecord.getRaceStarts();
+        mHighestFinish = String.format("%d (x%d)", driverRecord.getBestPosition(), driverRecord.getAmountOfBestPosition());
     }
 }
