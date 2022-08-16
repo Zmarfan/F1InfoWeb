@@ -9,10 +9,16 @@
     <section class="main-area__info">
         <div class="table-info">
             <table>
-                <tr><th>{{'driverProfile.info.age' | translate}}</th><td>25</td></tr>
-                <tr><th>{{'driverProfile.info.country' | translate}}</th><td class="table-info__flag"><span>SWE</span><img src="/assets/images/flags/ac.svg"></td></tr>
-                <tr><th>{{'driverProfile.info.dateOfBirth' | translate}}</th><td>1997-03-01</td></tr>
-                <tr><th>{{'driverProfile.info.team' | translate}}</th><td>Red Bull Racing</td></tr>
+                <tr><th>{{'driverProfile.info.age' | translate}}</th><td>{{info.age}}</td></tr>
+                <tr>
+                    <th>{{'driverProfile.info.country' | translate}}</th>
+                    <td class="table-info__flag">
+                        <span>{{info.countryCodes.icoCode}}</span>
+                        <img src="{{'/assets/images/flags/' + info.countryCodes.isoCode + '.svg'}}">
+                    </td>
+                </tr>
+                <tr><th>{{'driverProfile.info.dateOfBirth' | translate}}</th><td>{{info.dateOfBirth}}</td></tr>
+                <tr><th>{{'driverProfile.info.team' | translate}}</th><td>{{info.constructor}}</td></tr>
                 <tr><th>{{'driverProfile.info.championships' | translate}}</th><td>1</td></tr>
                 <tr><th>{{'driverProfile.info.runnerUpChampionships' | translate}}</th><td>3</td></tr>
                 <tr><th>{{'driverProfile.info.firstGrandPrix' | translate}}</th><td>Spanish Grand Prix 2020</td>
