@@ -21,4 +21,6 @@ public class DriverProfileRecord {
     int mRaceStarts;
     int mBestPosition;
     int mAmountOfBestPosition;
+    int mBestStartPosition;
+    int mAmountOfBestStartPosition;
 }

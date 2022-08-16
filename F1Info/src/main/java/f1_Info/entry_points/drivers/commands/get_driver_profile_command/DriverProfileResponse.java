@@ -22,6 +22,7 @@ public class DriverProfileResponse {
     int mYearsInF1;
     int mRaceStarts;
     String mHighestFinish;
+    String mHighestStartFinish;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -37,6 +38,11 @@ public class DriverProfileResponse {
         mLastRaceName = driverRecord.getLastRaceName();
         mYearsInF1 = driverRecord.getYearsInF1();
         mRaceStarts = driverRecord.getRaceStarts();
-        mHighestFinish = String.format("%d (x%d)", driverRecord.getBestPosition(), driverRecord.getAmountOfBestPosition());
+        mHighestFinish = valueWithAmount(driverRecord.getBestPosition(), driverRecord.getAmountOfBestPosition());
+        mHighestStartFinish = valueWithAmount(driverRecord.getBestStartPosition(), driverRecord.getAmountOfBestStartPosition());
+    }
+
+    private String valueWithAmount(final int value, final int amount) {
+        return String.format("%d (x%d)", value, amount);
     }
 }
