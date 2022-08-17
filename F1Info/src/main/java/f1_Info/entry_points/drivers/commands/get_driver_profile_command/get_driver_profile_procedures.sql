@@ -30,7 +30,9 @@ begin
     season_finish_positions.amount_of_points,
     lap_data.laps_raced,
     race_starts.retirements,
-    race_starts.disqualifications
+    race_starts.disqualifications,
+    race_starts.average_finish_position,
+    race_starts.average_start_position
   from
     drivers
     left join (
@@ -104,7 +106,9 @@ begin
           and results.position_type != 'excluded'
           and results.position_type != 'withdrawn'
           and results.position_type != 'failed to qualify', 1, 0)) as retirements,
-        sum(if(results.position_type = 'disqualified', 1, 0)) as disqualifications
+        sum(if(results.position_type = 'disqualified', 1, 0)) as disqualifications,
+        avg(results.finish_position_order) as average_finish_position,
+        avg(nullif(results.starting_position, 0)) as average_start_position
       from
         results
         inner join races on races.id = results.race_id

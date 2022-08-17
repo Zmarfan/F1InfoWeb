@@ -31,4 +31,6 @@ public class DriverProfileRecord {
     Integer mLapsRaced;
     Integer mRetirements;
     Integer mDisqualifications;
+    Integer mAverageFinishPosition;
+    Integer mAverageStartPosition;
 }

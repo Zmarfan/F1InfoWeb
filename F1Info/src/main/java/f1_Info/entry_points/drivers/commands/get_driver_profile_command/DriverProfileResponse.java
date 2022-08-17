@@ -35,6 +35,8 @@ public class DriverProfileResponse {
     Integer mLapsRaced;
     String mRetirements;
     String mDisqualifications;
+    Integer mAverageFinishPosition;
+    Integer mAverageStartPosition;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -62,6 +64,8 @@ public class DriverProfileResponse {
         mLapsRaced = driverRecord.getLapsRaced();
         mRetirements = formatPercentageValues(driverRecord.getRetirements(), driverRecord.getRaceStarts());
         mDisqualifications = formatPercentageValues(driverRecord.getDisqualifications(), driverRecord.getRaceStarts());
+        mAverageFinishPosition = driverRecord.getAverageFinishPosition();
+        mAverageStartPosition = driverRecord.getAverageStartPosition();
     }
 
     private BigDecimal calculatePointsPerUnit(final Integer amountOfPoints, final Integer unit) {
