@@ -24,6 +24,8 @@ public class DriverProfileResponse {
     String mHighestFinish;
     String mHighestStartFinish;
     int mTeammates;
+    int mLapsLed;
+    int mLapsRaced;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -42,6 +44,8 @@ public class DriverProfileResponse {
         mHighestFinish = valueWithAmount(driverRecord.getBestPosition(), driverRecord.getAmountOfBestPosition());
         mHighestStartFinish = valueWithAmount(driverRecord.getBestStartPosition(), driverRecord.getAmountOfBestStartPosition());
         mTeammates = driverRecord.getTeammates();
+        mLapsLed = driverRecord.getLapsLed();
+        mLapsRaced = driverRecord.getLapsRaced();
     }
 
     private String valueWithAmount(final int value, final int amount) {

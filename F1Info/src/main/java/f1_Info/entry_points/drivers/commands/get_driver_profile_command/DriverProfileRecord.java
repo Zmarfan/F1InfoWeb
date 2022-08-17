@@ -24,4 +24,6 @@ public class DriverProfileRecord {
     int mBestStartPosition;
     int mAmountOfBestStartPosition;
     int mTeammates;
+    int mLapsLed;
+    int mLapsRaced;
 }

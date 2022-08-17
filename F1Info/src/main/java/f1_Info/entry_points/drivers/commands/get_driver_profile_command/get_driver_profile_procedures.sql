@@ -23,7 +23,9 @@ begin
     race_starts.amount_of_best_position,
     race_starts.best_start_position,
     race_starts.amount_of_best_start_position,
-    teammate_aggregation.teammates
+    teammate_aggregation.teammates,
+    lap_data.laps_led,
+    lap_data.laps_raced
   from
     drivers
     left join (
@@ -119,6 +121,17 @@ begin
       group by
         results.driver_id
     ) teammate_aggregation on teammate_aggregation.driver_id = drivers.id
+    inner join (
+      select
+        drivers.id as driver_id,
+        sum(if(lap_times.position is not null, 1, 0)) as laps_raced,
+        sum(if(lap_times.position = 1, 1, 0)) as laps_led
+      from
+        drivers
+        left join lap_times on lap_times.driver_id = drivers.id
+      group by
+        drivers.id
+    ) lap_data on lap_data.driver_id = drivers.id
   where
     drivers.driver_identifier = p_driver_identifier;
 end;
