@@ -34,12 +34,12 @@
                 <tr><th>{{'driverProfile.info.noTeammates' | translate}}</th><td>{{info.teammates ?? '-'}}</td></tr>
                 <tr><th>{{'driverProfile.info.lapsLed' | translate}}</th><td>{{info.lapsLed ?? '-'}}</td></tr>
                 <tr><th>{{'driverProfile.info.podiums' | translate}}</th><td>{{info.amountOfPodiums ?? '-'}}</td></tr>
-                <tr><th>{{'driverProfile.info.pitStops' | translate}}</th><td>{{info.amountOfPitStops}}</td></tr>
+                <tr><th>{{'driverProfile.info.pitStops' | translate}}</th><td>{{info.amountOfPitStops ?? '-'}}</td></tr>
             </table>
         </div>
         <div class="table-info">
             <table>
-                <tr><th>{{'driverProfile.info.pointsEarned' | translate}}</th><td>9102</td></tr>
+                <tr><th>{{'driverProfile.info.pointsEarned' | translate}}</th><td>{{info.amountOfPoints ?? '-'}}</td></tr>
                 <tr><th>{{'driverProfile.info.pointsPerRace' | translate}}</th><td>14.2</td></tr>
                 <tr><th>{{'driverProfile.info.pointsPerSeason' | translate}}</th><td>290</td></tr>
                 <tr><th>{{'driverProfile.info.lapsRaced' | translate}}</th><td>{{info.lapsRaced ?? '-'}}</td></tr>

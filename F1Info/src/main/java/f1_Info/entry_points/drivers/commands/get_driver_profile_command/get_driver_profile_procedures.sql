@@ -27,6 +27,7 @@ begin
     lap_data.laps_led,
     race_starts.amount_of_podiums,
     pit_stop_data.amount_of_pit_stops,
+    season_finish_positions.amount_of_points,
     lap_data.laps_raced
   from
     drivers
@@ -43,8 +44,9 @@ begin
     left join (
       select
         driver_standings.driver_id,
-        sum(if(driver_standings.position = 1, 1, 0)) as amount_of_championships,
-        sum(if(driver_standings.position = 2, 1, 0)) as amount_of_runner_up_championships
+        sum(if(driver_standings.position = 1 and races.round = (select max(round) from races where races.year = last_race_per_year.year), 1, 0)) as amount_of_championships,
+        sum(if(driver_standings.position = 2 and races.round = (select max(round) from races where races.year = last_race_per_year.year), 1, 0)) as amount_of_runner_up_championships,
+        sum(driver_standings.points) as amount_of_points
       from
         races
         inner join driver_standings on driver_standings.race_id = races.id
@@ -58,8 +60,6 @@ begin
           group by
             races.year
         ) last_race_per_year on last_race_per_year.year = races.year and last_race_per_year.round = races.round
-      where
-        races.round = (select max(round) from races where races.year = last_race_per_year.year)
       group by
         driver_standings.driver_id
     ) season_finish_positions on season_finish_positions.driver_id = drivers.id
