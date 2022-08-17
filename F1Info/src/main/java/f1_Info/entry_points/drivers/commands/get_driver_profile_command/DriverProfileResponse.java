@@ -11,22 +11,22 @@ public class DriverProfileResponse {
     String mWikipediaTitle;
     String mWikipediaUrl;
     String mFullName;
-    long mAge;
+    Long mAge;
     String mDateOfBirth;
     CountryCodes mCountryCodes;
     String mConstructor;
-    int mAmountOfChampionships;
-    int mAmountOfRunnerUpChampionships;
+    Integer mAmountOfChampionships;
+    Integer mAmountOfRunnerUpChampionships;
     String mFirstRaceName;
     String mLastRaceName;
-    int mYearsInF1;
-    int mRaceStarts;
+    Integer mYearsInF1;
+    Integer mRaceStarts;
     String mHighestFinish;
     String mHighestStartFinish;
-    int mTeammates;
-    int mLapsLed;
-    int mAmountOfPodiums;
-    int mLapsRaced;
+    Integer mTeammates;
+    Integer mLapsLed;
+    Integer mAmountOfPodiums;
+    Integer mLapsRaced;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -50,7 +50,11 @@ public class DriverProfileResponse {
         mLapsRaced = driverRecord.getLapsRaced();
     }
 
-    private String valueWithAmount(final int value, final int amount) {
+    private String valueWithAmount(final Integer value, final Integer amount) {
+        if (value == null || amount == null) {
+            return null;
+        }
+
         return String.format("%d (x%d)", value, amount);
     }
 }

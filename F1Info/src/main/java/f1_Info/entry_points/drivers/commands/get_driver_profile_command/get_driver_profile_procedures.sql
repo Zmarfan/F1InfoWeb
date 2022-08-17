@@ -39,7 +39,7 @@ begin
       where
         driver_standings.race_id = v_current_race_id
     ) current_constructor on current_constructor.driver_id = drivers.id
-    inner join (
+    left join (
       select
         driver_standings.driver_id,
         sum(if(driver_standings.position = 1, 1, 0)) as amount_of_championships,
@@ -62,7 +62,7 @@ begin
       group by
         driver_standings.driver_id
     ) season_finish_positions on season_finish_positions.driver_id = drivers.id
-    inner join (
+    left join (
       select
         drivers.id as driver_id,
         concat(first_race.name, ' ', first_race.year) as first_race_name,
@@ -85,7 +85,7 @@ begin
         inner join races first_race on first_race.id = race_ids_first_and_last_race.first_race_id
         inner join races last_race on last_race.id = race_ids_first_and_last_race.latest_race_id
     ) first_and_last_races on first_and_last_races.driver_id = drivers.id
-    inner join (
+    left join (
       select
         results.driver_id,
         aggregated_results.best_position,
@@ -113,7 +113,7 @@ begin
       group by
         results.driver_id
     ) race_starts on race_starts.driver_id = drivers.id
-    inner join (
+    left join (
       select
         results.driver_id,
         count(distinct teammate_results.driver_id) - 1 as teammates
@@ -123,16 +123,15 @@ begin
       group by
         results.driver_id
     ) teammate_aggregation on teammate_aggregation.driver_id = drivers.id
-    inner join (
+    left join (
       select
-        drivers.id as driver_id,
-        sum(if(lap_times.position is not null, 1, 0)) as laps_raced,
+        lap_times.driver_id,
+        count(*) as laps_raced,
         sum(if(lap_times.position = 1, 1, 0)) as laps_led
       from
-        drivers
-        left join lap_times on lap_times.driver_id = drivers.id
+        lap_times
       group by
-        drivers.id
+        lap_times.driver_id
     ) lap_data on lap_data.driver_id = drivers.id
   where
     drivers.driver_identifier = p_driver_identifier;
