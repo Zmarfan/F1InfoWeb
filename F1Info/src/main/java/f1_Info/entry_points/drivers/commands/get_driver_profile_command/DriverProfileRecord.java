@@ -29,4 +29,6 @@ public class DriverProfileRecord {
     Integer mAmountOfPitStops;
     Integer mAmountOfPoints;
     Integer mLapsRaced;
+    Integer mRetirements;
+    Integer mDisqualifications;
 }

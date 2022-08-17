@@ -33,6 +33,8 @@ public class DriverProfileResponse {
     BigDecimal mPointsPerRace;
     BigDecimal mPointsPerSeason;
     Integer mLapsRaced;
+    String mRetirements;
+    String mDisqualifications;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
         mWikipediaTitle = driverRecord.getWikipediaUrl().substring(driverRecord.getWikipediaUrl().lastIndexOf("/") + 1);
@@ -58,6 +60,8 @@ public class DriverProfileResponse {
         mPointsPerRace = calculatePointsPerUnit(driverRecord.getAmountOfPoints(), driverRecord.getRaceStarts());
         mPointsPerSeason = calculatePointsPerUnit(driverRecord.getAmountOfPoints(), driverRecord.getYearsInF1());
         mLapsRaced = driverRecord.getLapsRaced();
+        mRetirements = formatPercentageValues(driverRecord.getRetirements(), driverRecord.getRaceStarts());
+        mDisqualifications = formatPercentageValues(driverRecord.getDisqualifications(), driverRecord.getRaceStarts());
     }
 
     private BigDecimal calculatePointsPerUnit(final Integer amountOfPoints, final Integer unit) {
@@ -73,5 +77,14 @@ public class DriverProfileResponse {
         }
 
         return String.format("%d (x%d)", value, amount);
+    }
+
+    private String formatPercentageValues(final Integer retirements, final Integer raceStarts) {
+        if (retirements == null || raceStarts == null) {
+            return null;
+        }
+
+        final BigDecimal ratio = BigDecimalUtils.divide(BigDecimal.valueOf(retirements), BigDecimal.valueOf(raceStarts));
+        return String.format("%d (%s%%)", retirements, ratio.multiply(BigDecimal.valueOf(100)).stripTrailingZeros());
     }
 }

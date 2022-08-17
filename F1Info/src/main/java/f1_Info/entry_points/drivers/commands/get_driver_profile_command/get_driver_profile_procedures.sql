@@ -28,7 +28,9 @@ begin
     race_starts.amount_of_podiums,
     pit_stop_data.amount_of_pit_stops,
     season_finish_positions.amount_of_points,
-    lap_data.laps_raced
+    lap_data.laps_raced,
+    race_starts.retirements,
+    race_starts.disqualifications
   from
     drivers
     left join (
@@ -95,7 +97,14 @@ begin
         aggregated_results.best_start_position,
         sum(if(results.starting_position = aggregated_results.best_start_position, 1, 0)) as amount_of_best_start_position,
         count(*) as race_starts,
-        count(distinct races.year) as years_in_f1
+        count(distinct races.year) as years_in_f1,
+        sum(if(
+          results.position_type != 'finished'
+          and results.position_type != 'disqualified'
+          and results.position_type != 'excluded'
+          and results.position_type != 'withdrawn'
+          and results.position_type != 'failed to qualify', 1, 0)) as retirements,
+        sum(if(results.position_type = 'disqualified', 1, 0)) as disqualifications
       from
         results
         inner join races on races.id = results.race_id
