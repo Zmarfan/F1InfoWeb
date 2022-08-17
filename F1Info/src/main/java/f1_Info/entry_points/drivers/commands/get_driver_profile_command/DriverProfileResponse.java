@@ -1,8 +1,10 @@
 package f1_Info.entry_points.drivers.commands.get_driver_profile_command;
 
 import common.constants.CountryCodes;
+import common.utils.BigDecimalUtils;
 import lombok.Value;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -28,6 +30,8 @@ public class DriverProfileResponse {
     Integer mAmountOfPodiums;
     Integer mAmountOfPitStops;
     Integer mAmountOfPoints;
+    BigDecimal mPointsPerRace;
+    BigDecimal mPointsPerSeason;
     Integer mLapsRaced;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
@@ -51,7 +55,16 @@ public class DriverProfileResponse {
         mAmountOfPodiums = driverRecord.getAmountOfPodiums();
         mAmountOfPitStops = driverRecord.getAmountOfPitStops();
         mAmountOfPoints = driverRecord.getAmountOfPoints();
+        mPointsPerRace = calculatePointsPerUnit(driverRecord.getAmountOfPoints(), driverRecord.getRaceStarts());
+        mPointsPerSeason = calculatePointsPerUnit(driverRecord.getAmountOfPoints(), driverRecord.getYearsInF1());
         mLapsRaced = driverRecord.getLapsRaced();
+    }
+
+    private BigDecimal calculatePointsPerUnit(final Integer amountOfPoints, final Integer unit) {
+        if (amountOfPoints == null || unit == null) {
+            return null;
+        }
+        return BigDecimalUtils.divide(BigDecimal.valueOf(amountOfPoints), BigDecimal.valueOf(unit));
     }
 
     private String valueWithAmount(final Integer value, final Integer amount) {
