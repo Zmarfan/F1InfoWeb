@@ -26,6 +26,7 @@ public class DriverProfileResponse {
     Integer mTeammates;
     Integer mLapsLed;
     Integer mAmountOfPodiums;
+    Integer mAmountOfPitStops;
     Integer mLapsRaced;
 
     public DriverProfileResponse(final DriverProfileRecord driverRecord) {
@@ -47,6 +48,7 @@ public class DriverProfileResponse {
         mTeammates = driverRecord.getTeammates();
         mLapsLed = driverRecord.getLapsLed();
         mAmountOfPodiums = driverRecord.getAmountOfPodiums();
+        mAmountOfPitStops = driverRecord.getAmountOfPitStops();
         mLapsRaced = driverRecord.getLapsRaced();
     }
 

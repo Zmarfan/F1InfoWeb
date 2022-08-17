@@ -26,6 +26,7 @@ begin
     teammate_aggregation.teammates,
     lap_data.laps_led,
     race_starts.amount_of_podiums,
+    pit_stop_data.amount_of_pit_stops,
     lap_data.laps_raced
   from
     drivers
@@ -133,6 +134,15 @@ begin
       group by
         lap_times.driver_id
     ) lap_data on lap_data.driver_id = drivers.id
+    left join (
+      select
+        pit_stops.driver_id,
+        count(*) as amount_of_pit_stops
+      from
+        pit_stops
+      group by
+        pit_stops.driver_id
+    ) pit_stop_data on pit_stop_data.driver_id = drivers.id
   where
     drivers.driver_identifier = p_driver_identifier;
 end;

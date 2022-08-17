@@ -26,5 +26,6 @@ public class DriverProfileRecord {
     Integer mTeammates;
     Integer mLapsLed;
     Integer mAmountOfPodiums;
+    Integer mAmountOfPitStops;
     Integer mLapsRaced;
 }
