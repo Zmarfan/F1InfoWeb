@@ -25,6 +25,7 @@ begin
     race_starts.amount_of_best_start_position,
     teammate_aggregation.teammates,
     lap_data.laps_led,
+    race_starts.amount_of_podiums,
     lap_data.laps_raced
   from
     drivers
@@ -89,6 +90,7 @@ begin
         results.driver_id,
         aggregated_results.best_position,
         sum(if(results.finish_position_order = aggregated_results.best_position, 1, 0)) as amount_of_best_position,
+        sum(if(results.finish_position_order >= 1 and results.finish_position_order <= 3, 1, 0)) as amount_of_podiums,
         aggregated_results.best_start_position,
         sum(if(results.starting_position = aggregated_results.best_start_position, 1, 0)) as amount_of_best_start_position,
         count(*) as race_starts,
