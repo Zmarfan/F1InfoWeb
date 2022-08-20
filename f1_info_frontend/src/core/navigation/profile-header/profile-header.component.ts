@@ -14,6 +14,7 @@ import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
 import {map, Observable, shareReplay, Subscription} from 'rxjs';
 import {UserSettingsComponent} from '../user-settings/user-settings.component';
+import {ThemeService} from '../../../app/theme.service';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -27,7 +28,6 @@ export interface MenuItem {
     templateUrl: './profile-header.component.html',
 })
 export class ProfileHeaderComponent implements OnDestroy {
-    private static readonly DARK_THEME_CLASS = 'dark-theme';
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
 
@@ -46,7 +46,7 @@ export class ProfileHeaderComponent implements OnDestroy {
     public get menuItems(): MenuItem[] {
         const items: MenuItem[] = [
             { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ProfileHeaderComponent.toggleDarkMode() },
+            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ThemeService.toggleDarkMode() },
         ];
 
         pushIfTrue(
@@ -67,10 +67,6 @@ export class ProfileHeaderComponent implements OnDestroy {
         );
 
         return items;
-    }
-
-    private static toggleDarkMode() {
-        document.body.classList.toggle(ProfileHeaderComponent.DARK_THEME_CLASS);
     }
 
     public ngOnDestroy() {

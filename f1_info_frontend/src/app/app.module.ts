@@ -35,6 +35,8 @@ import { ConstructorReportComponent } from './constructor-report/constructor-rep
 import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 import { DriverProfileInfoComponent } from './driver-profile/driver-profile-info/driver-profile-info.component';
 import { DriverEntryComponent } from './reports/entry/driver-entry/driver-entry.component';
+import {NgChartsModule} from 'ng2-charts';
+import { DriverProfileChartsComponent } from './driver-profile/driver-profile-charts/driver-profile-charts.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -58,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
+        NgChartsModule,
     ],
     declarations: [
         AppComponent,
@@ -80,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DriverProfileComponent,
         DriverProfileInfoComponent,
         DriverEntryComponent,
+        DriverProfileChartsComponent,
     ],
     providers: [
         {

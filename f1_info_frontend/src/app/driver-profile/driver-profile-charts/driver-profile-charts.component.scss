@@ -1,0 +1,31 @@
+@import "src/styles/responsiveness.scss";
+
+.holder {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 3rem;
+  border-top: var(--bkg-shadow-color) dashed 1px;
+  border-bottom: var(--bkg-shadow-color) dashed 1px;
+  background: var(--global-message-bkg-info);
+
+  @media(max-width: $mobile-max-width) {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  div {
+    user-select: none;
+    position: relative;
+    box-sizing: border-box;
+    width: 45%;
+    min-height: 20rem;
+    background: var(--bkg-color-light-accent);
+    padding: 1rem;
+    border-radius: 20px 5px 20px 5px;
+    @media(max-width: $mobile-max-width) {
+      width: 100%;
+    }
+  }
+}
