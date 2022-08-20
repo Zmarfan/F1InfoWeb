@@ -89,6 +89,6 @@ public class DriverProfileResponse {
         }
 
         final BigDecimal ratio = BigDecimalUtils.divide(BigDecimal.valueOf(retirements), BigDecimal.valueOf(raceStarts));
-        return String.format("%d (%s%%)", retirements, ratio.multiply(BigDecimal.valueOf(100)).stripTrailingZeros());
+        return String.format("%d (%s%%)", retirements, ratio.multiply(BigDecimal.valueOf(100)).stripTrailingZeros().toPlainString());
     }
 }
