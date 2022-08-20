@@ -1,7 +1,7 @@
 import {ChartConfiguration, ChartDataset} from 'chart.js';
 import {TranslateService} from '@ngx-translate/core';
 import {Injectable} from '@angular/core';
-import {DriverChartInfoResponse} from '../../../generated/server-responses';
+import {DriverChartInfoResponse, StartPosition} from '../../../generated/server-responses';
 
 interface ChartColorScheme {
     color: string;
@@ -32,7 +32,7 @@ export class DriverProfileChartFactoryService {
         return DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES[index % DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES.length];
     }
 
-    private static createDataSetEntry(index: number, label: string, data: number[]): ChartDataset<'line'> {
+    private static createLineDataSetEntry(index: number, label: string, data: number[]): ChartDataset<'line'> {
         const colorScheme: ChartColorScheme = DriverProfileChartFactoryService.getColorTheme(index);
         return {
             label,
@@ -51,7 +51,7 @@ export class DriverProfileChartFactoryService {
         years.forEach((year, index) => {
             const pointsPerRound: number[] = chartInfo.pointsPerSeasons[year];
             mostRoundsInAnySeason = pointsPerRound.length > mostRoundsInAnySeason ? pointsPerRound.length : mostRoundsInAnySeason;
-            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, pointsPerRound));
+            datasets.push(DriverProfileChartFactoryService.createLineDataSetEntry(index, year, pointsPerRound));
         });
 
         const labels: string[] = [];
@@ -62,7 +62,21 @@ export class DriverProfileChartFactoryService {
         return { labels, datasets };
     }
 
-    public createChartOptions(titleKey: string, xTextKey: string, yTextKey: string, textColor: string): ChartConfiguration<'line'>['options'] {
+    public createStartData(chartInfo: DriverChartInfoResponse): ChartConfiguration<'bar'>['data'] {
+        const positions: StartPosition[] = chartInfo.startPositions.sort((p1, p2) => p1.position < p2.position ? 1 : -1);
+
+        return {
+            labels: positions.map((position) => position.position === 0 ? 'Pit Lane' : position.position),
+            datasets: [
+                {
+                    label: 'Test Label',
+                    data: chartInfo.startPositions.map((position) => position.amount),
+                },
+            ],
+        };
+    }
+
+    public createChartOptions(titleKey: string, xTextKey: string, yTextKey: string, textColor: string): ChartConfiguration<any>['options'] {
         return {
             color: textColor,
             plugins: {

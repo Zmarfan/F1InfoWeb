@@ -17,6 +17,9 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
     public pointsPerSeasonData!: ChartConfiguration<'line'>['data'];
     public pointsPerSeasonOptions: ChartConfiguration<'line'>['options'];
 
+    public startData!: ChartConfiguration<'bar'>['data'];
+    public startOptions: ChartConfiguration<'bar'>['options'];
+
     private mIsDarkMode: boolean = false;
     private mLanguageSubscription!: Subscription;
     private mThemeSubscription!: Subscription;
@@ -48,12 +51,22 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
     }
 
     private refreshCharts() {
+        const textColor: string = this.mIsDarkMode ? '#dadada' : '#080808';
+
         this.pointsPerSeasonData = this.mChartFactory.createPointsPerSeasonData(this.chartInfo);
         this.pointsPerSeasonOptions = this.mChartFactory.createChartOptions(
             'driverProfile.charts.seasonPoints.title',
             'driverProfile.charts.seasonPoints.xTitle',
             'driverProfile.charts.seasonPoints.yTitle',
-            this.mIsDarkMode ? '#dadada' : '#080808'
+            textColor
+        );
+
+        this.startData = this.mChartFactory.createStartData(this.chartInfo);
+        this.startOptions = this.mChartFactory.createChartOptions(
+            'driverProfile.charts.qualifying.title',
+            'driverProfile.charts.qualifying.xTitle',
+            'driverProfile.charts.qualifying.yTitle',
+            textColor
         );
     }
 }

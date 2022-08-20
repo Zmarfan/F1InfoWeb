@@ -12,3 +12,15 @@ begin
   where
       drivers.driver_identifier = p_driver_identifier;
 end;
+
+drop procedure if exists get_driver_chart_info_get_all_start_positions;
+create procedure get_driver_chart_info_get_all_start_positions(in p_driver_identifier varchar(100))
+begin
+  select
+    results.starting_position
+  from
+    drivers
+    inner join results on results.driver_id = drivers.id
+  where
+    results.result_type = 'race' and drivers.driver_identifier = p_driver_identifier;
+end;
