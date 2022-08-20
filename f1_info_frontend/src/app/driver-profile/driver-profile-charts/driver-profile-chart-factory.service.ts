@@ -13,14 +13,14 @@ interface ChartColorScheme {
 })
 export class DriverProfileChartFactoryService {
     private static readonly CHART_LINE_COLOR_THEMES: ChartColorScheme[] = [
-        { color: '#b55851', altColor: '#d7a5a1' },
-        { color: '#5179b5', altColor: '#a9c2da' },
-        { color: '#67b551', altColor: '#b3d7a9' },
-        { color: '#9c51b5', altColor: '#d0b6da' },
+        { color: '#b5517b', altColor: '#dab0cd' },
+        { color: '#b2b551', altColor: '#c9c3a6' },
         { color: '#51a9b5', altColor: '#a5cbd3' },
         { color: '#b58a51', altColor: '#d5c5af' },
-        { color: '#b2b551', altColor: '#c9c3a6' },
-        { color: '#b5517b', altColor: '#dab0cd' },
+        { color: '#9c51b5', altColor: '#d0b6da' },
+        { color: '#67b551', altColor: '#b3d7a9' },
+        { color: '#5179b5', altColor: '#a9c2da' },
+        { color: '#b55851', altColor: '#d7a5a1' },
     ];
 
     public constructor(
@@ -52,7 +52,7 @@ export class DriverProfileChartFactoryService {
         years.forEach((year, index) => {
             const pointsPerRound: number[] = chartInfo.pointsPerSeasons[year];
             mostRoundsInAnySeason = pointsPerRound.length > mostRoundsInAnySeason ? pointsPerRound.length : mostRoundsInAnySeason;
-            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, pointsPerRound, index !== years.length - 1));
+            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, pointsPerRound, index < years.length - 3));
         });
 
         const labels: string[] = [];
@@ -136,8 +136,9 @@ export class DriverProfileChartFactoryService {
             for (let i = worstStartPosition; i >= 0; i--) {
                 positionAmounts.push(startPositions.find((position) => position.position === i)?.amount ?? 0);
             }
+            positionAmounts.unshift(positionAmounts.pop() as number);
 
-            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, positionAmounts, index !== years.length - 1));
+            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, positionAmounts, index < years.length - 3));
         });
 
         return datasets;
@@ -145,10 +146,10 @@ export class DriverProfileChartFactoryService {
 
     private calculateStartPositionLabels(worstStartPosition: number) {
         const labels: string[] = [];
+        labels.push('Pit Lane');
         for (let i = worstStartPosition; i > 0; i--) {
             labels.push(i.toString());
         }
-        labels.push('Pit Lane');
         return labels;
     }
 }
