@@ -14,7 +14,7 @@ import {DriverChartInfoResponse} from '../../../generated/server-responses';
 export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChanges {
     @Input() public chartInfo!: DriverChartInfoResponse;
 
-    public pointsPerSeasonData: ChartConfiguration<'line'>['data'] = this.mChartFactory.createChartData();
+    public pointsPerSeasonData!: ChartConfiguration<'line'>['data'];
     public pointsPerSeasonOptions: ChartConfiguration<'line'>['options'];
 
     private mIsDarkMode: boolean = false;
@@ -44,10 +44,11 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
     }
 
     public ngOnChanges() {
-        console.log(this.chartInfo);
+        this.refreshCharts();
     }
 
     private refreshCharts() {
+        this.pointsPerSeasonData = this.mChartFactory.createPointsPerSeasonData(this.chartInfo);
         this.pointsPerSeasonOptions = this.mChartFactory.createChartOptions(
             'driverProfile.charts.seasonPoints.title',
             'driverProfile.charts.seasonPoints.xTitle',

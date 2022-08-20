@@ -1,38 +1,65 @@
-import {ChartConfiguration} from 'chart.js';
+import {ChartConfiguration, ChartDataset} from 'chart.js';
 import {TranslateService} from '@ngx-translate/core';
 import {Injectable} from '@angular/core';
+import {DriverChartInfoResponse} from '../../../generated/server-responses';
+
+interface ChartColorScheme {
+    color: string;
+    altColor: string;
+}
 
 @Injectable({
     providedIn: 'root',
 })
 export class DriverProfileChartFactoryService {
+    private static readonly CHART_LINE_COLOR_THEMES: ChartColorScheme[] = [
+        { color: '#b55851', altColor: '#d7a5a1' },
+        { color: '#5179b5', altColor: '#a9c2da' },
+        { color: '#67b551', altColor: '#b3d7a9' },
+        { color: '#9c51b5', altColor: '#d0b6da' },
+        { color: '#51a9b5', altColor: '#a5cbd3' },
+        { color: '#b58a51', altColor: '#d5c5af' },
+        { color: '#b2b551', altColor: '#c9c3a6' },
+        { color: '#b5517b', altColor: '#dab0cd' },
+    ];
+
     public constructor(
         private mTranslate: TranslateService
     ) {
     }
 
-    public createChartData(): ChartConfiguration<'line'>['data'] {
+    private static getColorTheme(index: number): ChartColorScheme {
+        return DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES[index % DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES.length];
+    }
+
+    private static createDataSetEntry(index: number, label: string, data: number[]): ChartDataset<'line'> {
+        const colorScheme: ChartColorScheme = DriverProfileChartFactoryService.getColorTheme(index);
         return {
-            labels: ['Race1', 'Race2', 'Race3', 'Race4', 'Race5', 'Race6'],
-            datasets: [
-                {
-                    label: '2020',
-                    data: [0, 12, 20, 20, 21, 30],
-                },
-                {
-                    label: '2021',
-                    data: [0, 22, 15, 26, 10, 5],
-                },
-                {
-                    label: '2022',
-                    data: [10, 25, 10, 1, 4, 20],
-                },
-                {
-                    label: '2023',
-                    data: [0, 12, 14, 15, 15, 15],
-                },
-            ],
+            label,
+            data,
+            borderColor: colorScheme.color,
+            pointBackgroundColor: colorScheme.color,
+            backgroundColor: colorScheme.altColor,
         };
+    }
+
+    public createPointsPerSeasonData(chartInfo: DriverChartInfoResponse): ChartConfiguration<'line'>['data'] {
+        const years: string[] = Object.keys(chartInfo.pointsPerSeasons).sort();
+        const datasets: ChartDataset<'line'>[] = [];
+        let mostRoundsInAnySeason: number = 0;
+
+        years.forEach((year, index) => {
+            const pointsPerRound: number[] = chartInfo.pointsPerSeasons[year];
+            mostRoundsInAnySeason = pointsPerRound.length > mostRoundsInAnySeason ? pointsPerRound.length : mostRoundsInAnySeason;
+            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, pointsPerRound));
+        });
+
+        const labels: string[] = [];
+        for (let i = 1; i < mostRoundsInAnySeason; i++) {
+            labels.push(i.toString());
+        }
+
+        return { labels, datasets };
     }
 
     public createChartOptions(titleKey: string, xTextKey: string, yTextKey: string, textColor: string): ChartConfiguration<'line'>['options'] {
@@ -55,12 +82,12 @@ export class DriverProfileChartFactoryService {
                         color: textColor,
                     },
                     ticks: {
-                        maxTicksLimit: 3,
                         autoSkip: true,
                         color: textColor,
                     },
                 },
                 y: {
+                    min: 0,
                     title: {
                         display: true,
                         text: this.mTranslate.instant(yTextKey),
