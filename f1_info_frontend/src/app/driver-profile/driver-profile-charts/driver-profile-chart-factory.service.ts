@@ -32,9 +32,10 @@ export class DriverProfileChartFactoryService {
         return DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES[index % DriverProfileChartFactoryService.CHART_LINE_COLOR_THEMES.length];
     }
 
-    private static createLineDataSetEntry(index: number, label: string, data: number[]): ChartDataset<'line'> {
+    private static createDataSetEntry(index: number, label: string, data: number[], hidden: boolean): ChartDataset<any> {
         const colorScheme: ChartColorScheme = DriverProfileChartFactoryService.getColorTheme(index);
         return {
+            hidden,
             label,
             data,
             borderColor: colorScheme.color,
@@ -51,7 +52,7 @@ export class DriverProfileChartFactoryService {
         years.forEach((year, index) => {
             const pointsPerRound: number[] = chartInfo.pointsPerSeasons[year];
             mostRoundsInAnySeason = pointsPerRound.length > mostRoundsInAnySeason ? pointsPerRound.length : mostRoundsInAnySeason;
-            datasets.push(DriverProfileChartFactoryService.createLineDataSetEntry(index, year, pointsPerRound));
+            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, pointsPerRound, index !== years.length - 1));
         });
 
         const labels: string[] = [];
@@ -63,20 +64,15 @@ export class DriverProfileChartFactoryService {
     }
 
     public createStartData(chartInfo: DriverChartInfoResponse): ChartConfiguration<'bar'>['data'] {
-        const positions: StartPosition[] = chartInfo.startPositions.sort((p1, p2) => p1.position < p2.position ? 1 : -1);
+        const years: string[] = Object.keys(chartInfo.startPositionsPerSeason).sort();
+        const worstStartPosition: number = this.findWorstStartPositionsAcrossAllSeasons(years, chartInfo);
+        const datasets: ChartDataset<'bar'>[] = this.calculateDatasetsForStartingPositions(years, worstStartPosition, chartInfo);
+        const labels: string[] = this.calculateStartPositionLabels(worstStartPosition);
 
-        return {
-            labels: positions.map((position) => position.position === 0 ? 'Pit Lane' : position.position),
-            datasets: [
-                {
-                    label: 'Test Label',
-                    data: chartInfo.startPositions.map((position) => position.amount),
-                },
-            ],
-        };
+        return { labels, datasets };
     }
 
-    public createChartOptions(titleKey: string, xTextKey: string, yTextKey: string, textColor: string): ChartConfiguration<any>['options'] {
+    public createChartOptions(titleKey: string, xTextKey: string, yTextKey: string, textColor: string, yStepSize: number): ChartConfiguration<any>['options'] {
         return {
             color: textColor,
             plugins: {
@@ -108,10 +104,51 @@ export class DriverProfileChartFactoryService {
                         color: textColor,
                     },
                     ticks: {
+                        stepSize: yStepSize,
                         color: textColor,
                     },
                 },
             },
         };
+    }
+
+    private findWorstStartPositionsAcrossAllSeasons(years: string[], chartInfo: DriverChartInfoResponse): number {
+        let worstQualifyingPosition: number = 0;
+
+        years.forEach((year) => {
+            const startPositions: StartPosition[] = this.getSortedPositionsForSeason(year, chartInfo);
+            worstQualifyingPosition = startPositions[0].position > worstQualifyingPosition ? startPositions[0].position : worstQualifyingPosition;
+        });
+        return worstQualifyingPosition;
+    }
+
+    private getSortedPositionsForSeason(year: string, chartInfo: DriverChartInfoResponse): StartPosition[] {
+        return chartInfo.startPositionsPerSeason[year].sort((p1, p2) => p1.position < p2.position ? 1 : -1);
+    }
+
+    private calculateDatasetsForStartingPositions(years: string[], worstStartPosition: number, chartInfo: DriverChartInfoResponse) {
+        const datasets: ChartDataset<'bar'>[] = [];
+
+        years.forEach((year, index) => {
+            const startPositions: StartPosition[] = this.getSortedPositionsForSeason(year, chartInfo);
+
+            const positionAmounts: number[] = [];
+            for (let i = worstStartPosition; i >= 0; i--) {
+                positionAmounts.push(startPositions.find((position) => position.position === i)?.amount ?? 0);
+            }
+
+            datasets.push(DriverProfileChartFactoryService.createDataSetEntry(index, year, positionAmounts, index !== years.length - 1));
+        });
+
+        return datasets;
+    }
+
+    private calculateStartPositionLabels(worstStartPosition: number) {
+        const labels: string[] = [];
+        for (let i = worstStartPosition; i > 0; i--) {
+            labels.push(i.toString());
+        }
+        labels.push('Pit Lane');
+        return labels;
     }
 }

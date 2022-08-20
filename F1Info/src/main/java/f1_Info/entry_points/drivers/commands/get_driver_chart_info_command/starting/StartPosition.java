@@ -1,4 +1,4 @@
-package f1_Info.entry_points.drivers.commands.get_driver_chart_info_command.qualifying;
+package f1_Info.entry_points.drivers.commands.get_driver_chart_info_command.starting;
 
 import lombok.Value;
 

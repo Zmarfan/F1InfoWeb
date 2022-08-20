@@ -58,15 +58,17 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
             'driverProfile.charts.seasonPoints.title',
             'driverProfile.charts.seasonPoints.xTitle',
             'driverProfile.charts.seasonPoints.yTitle',
-            textColor
+            textColor,
+            25
         );
 
         this.startData = this.mChartFactory.createStartData(this.chartInfo);
         this.startOptions = this.mChartFactory.createChartOptions(
-            'driverProfile.charts.qualifying.title',
-            'driverProfile.charts.qualifying.xTitle',
-            'driverProfile.charts.qualifying.yTitle',
-            textColor
+            'driverProfile.charts.seasonStarts.title',
+            'driverProfile.charts.seasonStarts.xTitle',
+            'driverProfile.charts.seasonStarts.yTitle',
+            textColor,
+            1
         );
     }
 }
