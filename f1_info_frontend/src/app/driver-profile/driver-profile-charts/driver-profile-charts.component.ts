@@ -1,18 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {ChartConfiguration} from 'chart.js';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription, tap} from 'rxjs';
 import {ThemeService} from '../../theme.service';
 import {DriverProfileChartFactoryService} from './driver-profile-chart-factory.service';
+import {DriverChartInfoResponse} from '../../../generated/server-responses';
 
 @Component({
     selector: 'app-driver-profile-charts',
     templateUrl: './driver-profile-charts.component.html',
     styleUrls: ['./driver-profile-charts.component.scss'],
 })
-export class DriverProfileChartsComponent implements OnInit, OnDestroy {
-    public pointsPerSeasonData: ChartConfiguration<'line'>['data'] = this.mChartFactory.createChartData();
+export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChanges {
+    @Input() public chartInfo!: DriverChartInfoResponse;
 
+    public pointsPerSeasonData: ChartConfiguration<'line'>['data'] = this.mChartFactory.createChartData();
     public pointsPerSeasonOptions: ChartConfiguration<'line'>['options'];
 
     private mIsDarkMode: boolean = false;
@@ -39,6 +41,10 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy {
     public ngOnDestroy() {
         this.mLanguageSubscription.unsubscribe();
         this.mThemeSubscription.unsubscribe();
+    }
+
+    public ngOnChanges() {
+        console.log(this.chartInfo);
     }
 
     private refreshCharts() {

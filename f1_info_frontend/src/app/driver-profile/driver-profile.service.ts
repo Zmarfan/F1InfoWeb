@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from '../configuration/endpoints';
-import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
+import {DriverChartInfoResponse, DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
 import {parseTemplate} from 'url-template';
 
 @Injectable({
@@ -19,6 +19,9 @@ export class DriverProfileService {
 
     public getProfileInfo(driverIdentifier: string) {
         return this.mHttpClient.get<DriverProfileResponse>(parseTemplate(Endpoints.DRIVERS.getDriverProfile).expand({ driverIdentifier }));
+    }
 
+    public getChartInfo(driverIdentifier: string) {
+        return this.mHttpClient.get<DriverChartInfoResponse>(parseTemplate(Endpoints.DRIVERS.getDriverChartInfo).expand({ driverIdentifier }));
     }
 }

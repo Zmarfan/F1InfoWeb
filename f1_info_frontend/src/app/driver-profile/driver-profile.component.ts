@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DropdownOption} from '../reports/filters/drop-down-filter/drop-down-filter.component';
 import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 import {DriverProfileService} from './driver-profile.service';
-import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
+import {DriverChartInfoResponse, DriverProfileFilterResponse, DriverProfileResponse} from '../../generated/server-responses';
 
 @Component({
     selector: 'app-driver-profile',
@@ -13,10 +13,12 @@ import {DriverProfileFilterResponse, DriverProfileResponse} from '../../generate
 export class DriverProfileComponent implements OnInit {
     public driverOptions: DropdownOption[] = [];
     public selectedDriverIdentifier: string = 'max_verstappen';
-    public loading: boolean = false;
+    public driverInfoLoading: boolean = false;
+    public driverChartInfoLoading: boolean = false;
     public filterLoading: boolean = false;
 
     public driverInfo!: DriverProfileResponse;
+    public driverChartInfo!: DriverChartInfoResponse;
 
     public constructor(
         private mRoute: ActivatedRoute,
@@ -60,14 +62,33 @@ export class DriverProfileComponent implements OnInit {
     }
 
     private runReport() {
-        this.loading = true;
+        this.fetchDriverInfo();
+        this.fetchDriverChartInfo();
+    }
+
+    private fetchDriverInfo() {
+        this.driverInfoLoading = true;
         this.mDriverProfileService.getProfileInfo(this.selectedDriverIdentifier).subscribe({
             next: (response) => {
-                this.loading = false;
+                this.driverInfoLoading = false;
                 this.driverInfo = response;
             },
             error: (error) => {
-                this.loading = false;
+                this.driverInfoLoading = false;
+                this.mMessageService.addHttpError(error);
+            },
+        });
+    }
+
+    private fetchDriverChartInfo() {
+        this.driverChartInfoLoading = true;
+        this.mDriverProfileService.getChartInfo(this.selectedDriverIdentifier).subscribe({
+            next: (response) => {
+                this.driverChartInfoLoading = false;
+                this.driverChartInfo = response;
+            },
+            error: (error) => {
+                this.driverChartInfoLoading = false;
                 this.mMessageService.addHttpError(error);
             },
         });

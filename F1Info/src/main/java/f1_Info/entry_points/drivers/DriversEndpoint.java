@@ -2,6 +2,7 @@ package f1_Info.entry_points.drivers;
 
 import f1_Info.entry_points.drivers.commands.get_all_drivers_command.Database;
 import f1_Info.entry_points.drivers.commands.get_all_drivers_command.GetAllDriversCommand;
+import f1_Info.entry_points.drivers.commands.get_driver_chart_info_command.GetDriverChartInfoCommand;
 import f1_Info.entry_points.drivers.commands.get_driver_profile_command.GetDriverProfileCommand;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
@@ -23,6 +24,7 @@ public class DriversEndpoint {
     private final HttpServletRequest mHttpServletRequest;
     private final Database mDatabase;
     private final f1_Info.entry_points.drivers.commands.get_driver_profile_command.Database mGetDriverProfileDatabase;
+    private final f1_Info.entry_points.drivers.commands.get_driver_chart_info_command.Database mGetDriverChartInfoDatabase;
 
     @GetMapping("/all-drivers")
     public ResponseEntity<?> getAllDrivers() {
@@ -39,6 +41,19 @@ public class DriversEndpoint {
             }
 
             return new GetDriverProfileCommand(driverIdentifier, mGetDriverProfileDatabase);
+        });
+    }
+
+    @GetMapping("/driver-chart-info/{driverIdentifier}")
+    public ResponseEntity<?> getDriverChartInfo(
+        @PathVariable("driverIdentifier") final String driverIdentifier
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (driverIdentifier == null || driverIdentifier.isEmpty()) {
+                throw new BadRequestException();
+            }
+
+            return new GetDriverChartInfoCommand(driverIdentifier, mGetDriverChartInfoDatabase);
         });
     }
 }

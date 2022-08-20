@@ -12,8 +12,11 @@
         ></app-drop-down-filter>
     </section>
 
-    <app-loading-element [loading]="loading">
+    <app-loading-element [loading]="driverInfoLoading">
         <app-driver-profile-info *ngIf="driverInfo" [info]="driverInfo"></app-driver-profile-info>
-        <app-driver-profile-charts></app-driver-profile-charts>
+    </app-loading-element>
+
+    <app-loading-element [loading]="driverChartInfoLoading">
+        <app-driver-profile-charts *ngIf="driverChartInfo" [chartInfo]="driverChartInfo"></app-driver-profile-charts>
     </app-loading-element>
 </article>
