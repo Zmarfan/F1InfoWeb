@@ -29,6 +29,10 @@ export class DriverProfileInfoComponent implements OnChanges {
         this.fetchWikipediaInfo();
     }
 
+    public displayValue(value: string | number | undefined) {
+        return value ?? '-';
+    }
+
     private resetValues() {
         this.imageSrc = undefined;
         this.summaryParagraphs = [];
