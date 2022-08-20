@@ -11,27 +11,7 @@ import {DriverProfileChartFactoryService} from './driver-profile-chart-factory.s
     styleUrls: ['./driver-profile-charts.component.scss'],
 })
 export class DriverProfileChartsComponent implements OnInit, OnDestroy {
-    public pointsPerSeason: ChartConfiguration<'line'>['data'] = {
-        labels: ['Race1', 'Race2', 'Race3', 'Race4', 'Race5', 'Race6'],
-        datasets: [
-            {
-                label: '2020',
-                data: [0, 12, 20, 20, 21, 30],
-            },
-            {
-                label: '2021',
-                data: [0, 22, 15, 26, 10, 5],
-            },
-            {
-                label: '2022',
-                data: [10, 25, 10, 1, 4, 20],
-            },
-            {
-                label: '2023',
-                data: [0, 12, 14, 15, 15, 15],
-            },
-        ],
-    };
+    public pointsPerSeasonData: ChartConfiguration<'line'>['data'] = this.mChartFactory.createChartData();
 
     public pointsPerSeasonOptions: ChartConfiguration<'line'>['options'];
 
