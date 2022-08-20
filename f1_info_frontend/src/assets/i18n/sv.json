@@ -253,6 +253,13 @@
       "disqualifications": "Diskvalifikationer",
       "averageFinish": "Genomsnittlig Slutposition",
       "averageStarting": "Genomsnittlig Startposition"
+    },
+    "charts": {
+      "seasonPoints": {
+        "title": "Poäng per Säsong",
+        "xTitle": "Runda",
+        "yTitle": "Poäng"
+      }
     }
   }
 }

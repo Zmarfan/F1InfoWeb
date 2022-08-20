@@ -253,6 +253,13 @@
       "disqualifications": "Disqualifications",
       "averageFinish": "Average Finish",
       "averageStarting": "Average Starting"
+    },
+    "charts": {
+      "seasonPoints": {
+        "title": "Points per Season",
+        "xTitle": "Round",
+        "yTitle": "Points"
+      }
     }
   }
 }
