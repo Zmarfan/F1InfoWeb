@@ -146,7 +146,7 @@ export class DriverProfileChartFactoryService {
 
     private calculateStartPositionLabels(worstStartPosition: number) {
         const labels: string[] = [];
-        labels.push('Pit Lane');
+        labels.push(this.mTranslate.instant('driverProfile.charts.seasonStarts.pitLane'));
         for (let i = worstStartPosition; i > 0; i--) {
             labels.push(i.toString());
         }

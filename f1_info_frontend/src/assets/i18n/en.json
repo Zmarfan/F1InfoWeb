@@ -259,6 +259,12 @@
         "title": "Points per Season",
         "xTitle": "Round",
         "yTitle": "Points"
+      },
+      "seasonStarts": {
+        "title": "Start Positions per Season",
+        "xTitle": "Position",
+        "yTitle": "Amount",
+        "pitLane": "Pit Lane"
       }
     }
   }

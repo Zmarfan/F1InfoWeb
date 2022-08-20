@@ -259,6 +259,12 @@
         "title": "Poäng per Säsong",
         "xTitle": "Runda",
         "yTitle": "Poäng"
+      },
+      "seasonStarts": {
+        "title": "Startpositioner per Säsong",
+        "xTitle": "Position",
+        "yTitle": "Antal",
+        "pitLane": "Depå"
       }
     }
   }
