@@ -1,32 +1,37 @@
 @import "src/styles/responsiveness.scss";
 
-.holder {
-  display: flex;
-  justify-content: space-around;
-  gap: 2rem;
+.main {
   margin-top: 2rem;
-  padding: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-top: var(--bkg-shadow-color) dashed 1px;
   border-bottom: var(--bkg-shadow-color) dashed 1px;
   background: var(--global-message-bkg-info);
+}
+
+.chart-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
   @media(max-width: $mobile-max-width) {
     flex-direction: column;
-    padding: 1rem;
   }
 
   .chart-holder {
     user-select: none;
     position: relative;
+    box-shadow: var(--bkg-shadow-color) 0 0 10px;
     box-sizing: border-box;
-    width: 45%;
+    width: 47%;
     min-height: 25rem;
     background: var(--bkg-color-light-accent);
     padding: 1rem;
+    margin: 1rem;
     border-radius: 20px 5px 20px 5px;
 
     @media(max-width: $mobile-max-width) {
-      width: 100%;
+      width: 90%;
     }
   }
 }

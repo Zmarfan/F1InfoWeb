@@ -59,7 +59,7 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
             'driverProfile.charts.seasonPoints.xTitle',
             'driverProfile.charts.seasonPoints.yTitle',
             textColor,
-            25
+            10
         );
 
         this.startData = this.mChartFactory.createStartData(this.chartInfo);
