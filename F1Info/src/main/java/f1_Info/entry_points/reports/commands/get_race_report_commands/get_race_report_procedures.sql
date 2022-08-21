@@ -87,9 +87,8 @@ begin
            when results.finish_status_type like '+% Lap%' then results.finish_status_type
            when results.position_type = 'retired' then 'DNF'
            when results.position_type = 'not classified' then 'DNF'
-           when results.position_type = 'Not classified' then 'DNF'
            when results.position_type = 'disqualified' then 'DSQ'
-           when results.position_type = 'excluded' then 'DNS'
+           when results.position_type = 'excluded' then 'EXC'
            when results.position_type = 'withdrawn' then 'DNS'
            when results.position_type = 'failed to qualify' then 'DNS'
            else 'DNF' end
