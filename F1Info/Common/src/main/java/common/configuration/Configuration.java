@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @Component
 public class Configuration {
-    private static final String RULES_LOCATION = "Common/src/main/java/common/configuration/configuration.json";
+    private static final String RULES_LOCATION = "../configuration/configuration.json";
 
     private final ObjectMapper mObjectMapper = new ObjectMapper();
     @Getter
