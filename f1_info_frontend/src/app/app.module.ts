@@ -37,6 +37,7 @@ import { DriverProfileInfoComponent } from './driver-profile/driver-profile-info
 import { DriverEntryComponent } from './reports/entry/driver-entry/driver-entry.component';
 import {NgChartsModule} from 'ng2-charts';
 import { DriverProfileChartsComponent } from './driver-profile/driver-profile-charts/driver-profile-charts.component';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -90,6 +91,10 @@ export function HttpLoaderFactory(http: HttpClient) {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
             multi: true,
+        },
+        {
+            provide: LocationStrategy,
+            useClass: HashLocationStrategy,
         },
         Session,
         SessionGuard,
