@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faBars, faCar, faHouseChimney, faPerson, faRankingStar, faTimes, faWarehouse} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faBookOpen, faCar, faHouseChimney, faPerson, faRankingStar, faTimes, faWarehouse} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {RouteHolder} from '../../../app/routing/route-holder';
 import {Subscription} from 'rxjs';
@@ -49,6 +49,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
             ],
         },
         { route: RouteHolder.RACE_REPORT, key: 'navigation.route.raceReport', icon: faCar },
+        { route: RouteHolder.CHANGE_LOG, key: 'navigation.route.changeLog', icon: faBookOpen },
     ];
 
     public mobileNavigationOpened: boolean = false;

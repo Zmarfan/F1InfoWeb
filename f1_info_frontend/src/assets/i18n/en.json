@@ -33,7 +33,8 @@
       "standings": "Standings",
       "driverReport": "Driver Standings",
       "constructorReport": "Constructor Standings",
-      "raceReport": "Race Results"
+      "raceReport": "Race Results",
+      "changeLog": "Change Log"
     },
     "profile": {
       "anonymousUser": "Anonymous User",

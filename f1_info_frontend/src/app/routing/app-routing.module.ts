@@ -12,6 +12,7 @@ import {AnonymousGuard} from './anonymous-guard';
 import {RaceReportComponent} from '../race-report/race-report.component';
 import {ConstructorReportComponent} from '../constructor-report/constructor-report.component';
 import {DriverProfileComponent} from '../driver-profile/driver-profile.component';
+import {ChangeLogComponent} from '../change-log/change-log.component';
 
 const routes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: RouteHolder.DRIVER_REPORT, component: DriverReportComponent },
     { path: RouteHolder.CONSTRUCTOR_REPORT, component: ConstructorReportComponent },
     { path: RouteHolder.RACE_REPORT, component: RaceReportComponent },
+    { path: RouteHolder.CHANGE_LOG, component: ChangeLogComponent },
     { path: '**', redirectTo: RouteHolder.HOMEPAGE },
 ];
 

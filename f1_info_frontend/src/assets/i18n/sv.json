@@ -33,7 +33,8 @@
       "standings": "Ställningar",
       "driverReport": "Förarställning",
       "constructorReport": "Konstruktörställning",
-      "raceReport": "Raceresultat"
+      "raceReport": "Raceresultat",
+      "changeLog": "Ändringslogg"
     },
     "profile": {
       "anonymousUser": "Anonym Användare",
