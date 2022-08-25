@@ -24,7 +24,8 @@
     box-shadow: var(--bkg-shadow-color) 0 0 10px;
     box-sizing: border-box;
     width: 47%;
-    min-height: 25rem;
+    min-height: min(25rem, 75vh);
+    max-height: 75vh;
     background: var(--bkg-color-light-accent);
     padding: 1rem;
     margin: 1rem;
