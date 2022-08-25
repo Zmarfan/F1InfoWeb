@@ -6,6 +6,7 @@ import {RouteHolder} from '../../../app/routing/route-holder';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {Session} from '../../../app/configuration/session';
+import {ThemeService} from '../../../app/theme.service';
 
 export interface RouteItem {
     route?: string;
@@ -91,13 +92,13 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     }
 
     public openMobileNavigation() {
-        this.mobileNavigationOpened = !this.mobileNavigationOpened;
+        this.toggleMobileNavigation(!this.mobileNavigationOpened);
     }
 
     public navigationItemClicked = (item: RouteItem) => {
         if (item.route !== undefined) {
             this.mRouter.navigateByUrl(item.route).then();
-            this.mobileNavigationOpened = false;
+            this.toggleMobileNavigation(false);
         } else {
             item.showSubItems = !item.showSubItems;
         }
@@ -120,5 +121,10 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
                 }
             });
         }
+    }
+
+    private toggleMobileNavigation(opened: boolean) {
+        this.mobileNavigationOpened = opened;
+        ThemeService.toggleBodyScroll(!opened);
     }
 }

@@ -5,6 +5,7 @@ import {faCircleUser, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {Observable} from 'rxjs';
 import {Session, User} from '../../../../app/configuration/session';
+import {ThemeService} from '../../../../app/theme.service';
 
 @Component({
     selector: 'app-mobile-profile-header',
@@ -40,11 +41,16 @@ export class MobileProfileHeaderComponent {
     }
 
     public toggleProfileHeader() {
-        this.headerOpen = !this.headerOpen;
+        this.toggleOpen(!this.headerOpen);
     }
 
     public menuItemClicked(item: MenuItem) {
-        this.headerOpen = false;
+        this.toggleOpen(false);
         item.clickCallback();
+    }
+
+    private toggleOpen(isOpen: boolean) {
+        this.headerOpen = isOpen;
+        ThemeService.toggleBodyScroll(!isOpen);
     }
 }
