@@ -7,6 +7,7 @@ export class Endpoints {
     private static readonly USER_BASE: string = Endpoints.BASE_URL + 'User/';
     private static readonly DRIVER_BASE: string = Endpoints.BASE_URL + 'Drivers/';
     private static readonly REPORTS_BASE: string = Endpoints.BASE_URL + 'Reports/';
+    private static readonly CHANGE_LOG_BASE: string = Endpoints.BASE_URL + 'ChangeLog/';
 
     public static readonly AUTHENTICATION = {
         getUser: `${Endpoints.AUTHENTICATION_BASE}getUser`,
@@ -41,5 +42,9 @@ export class Endpoints {
         getConstructorReportFilterValues: `${Endpoints.REPORTS_BASE}constructor-report-filter-values/{season}`,
         getOverviewConstructorReport: `${Endpoints.REPORTS_BASE}get-overview-constructor-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getIndividualConstructorReport: `${Endpoints.REPORTS_BASE}get-individual-constructor-report/{season}/{constructorIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+    };
+
+    public static readonly CHANGE_LOG = {
+        getChangeLogItems: `${Endpoints.CHANGE_LOG_BASE}get-change-log-items`,
     };
 }

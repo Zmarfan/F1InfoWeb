@@ -1,0 +1,33 @@
+.holder {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem;
+
+  h1 {
+    color: var(--primary-color-text);
+    font-weight: 500;
+    font-size: 2.25rem;
+  }
+
+  &__item {
+    padding: 1rem;
+    border-radius: 20px 5px 20px 5px;
+    background: var(--global-message-bkg-info);
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    span {
+      color: var(--primary-color-text);
+    }
+  }
+}

@@ -268,5 +268,8 @@
         "pitLane": "Pit Lane"
       }
     }
+  },
+  "changeLog": {
+    "title": "Change Log"
   }
 }

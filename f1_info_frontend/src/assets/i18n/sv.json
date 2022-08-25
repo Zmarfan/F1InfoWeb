@@ -268,5 +268,8 @@
         "pitLane": "Depå"
       }
     }
+  },
+  "changeLog": {
+    "title": "Ändringslogg"
   }
 }

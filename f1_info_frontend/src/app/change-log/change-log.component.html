@@ -1,1 +1,5 @@
-<p>change-log works!</p>
+<section class="holder">
+    <h1>{{'changeLog.title' | translate}}</h1>
+
+    <div *ngFor="let item of items$ | async" class="holder__item" [innerHTML]="item"></div>
+</section>
