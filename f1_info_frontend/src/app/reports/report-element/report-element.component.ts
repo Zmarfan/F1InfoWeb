@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ReportColumn} from './report-column';
 import {LoadingElementOffset} from '../../../core/loading/loading-element/loading-element.component';
+import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
+import {faCaretDown, faCaretUp} from '@fortawesome/free-solid-svg-icons';
 
 export enum SortDirection {
     ASCENDING = 'asc',
@@ -64,11 +66,12 @@ export class ReportElementComponent<T> implements OnInit, OnChanges {
         }
     }
 
-    public sortableColumnClass(column: ReportColumn<T>): string {
-        if (this.mSortingColumn === column.entryName) {
-            return this.mSortingDirection === SortDirection.ASCENDING ? 'main-table__sortable-column--ascending' : 'main-table__sortable-column--descending';
-        }
-        return '';
+    public columnIsCurrentlySorting(column: ReportColumn<T>): boolean {
+        return this.mSortingColumn === column.entryName;
+    }
+
+    public sortableColumnIcon(column: ReportColumn<T>): IconDefinition {
+        return this.mSortingDirection === SortDirection.ASCENDING ? faCaretUp : faCaretDown;
     }
 
     public rowEntryHasViewModel(entry: any | null): boolean {

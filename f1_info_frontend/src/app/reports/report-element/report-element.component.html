@@ -6,8 +6,9 @@
                     <span
                         *ngIf="sortConfig; else normalColumn"
                         (click)="sortColumn(column)"
-                        class="main-table__sortable-column {{sortableColumnClass(column)}}"
+                        class="main-table__sortable-column"
                     >{{column.key | translate}}</span>
+                    <fa-icon *ngIf="columnIsCurrentlySorting(column)" [icon]="sortableColumnIcon(column)"></fa-icon>
                     <ng-template #normalColumn>{{column.key | translate}}</ng-template>
                 </th>
             </ng-container>
