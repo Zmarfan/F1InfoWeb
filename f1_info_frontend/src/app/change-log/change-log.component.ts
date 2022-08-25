@@ -9,7 +9,7 @@ import {ChangeLogService} from './change-log.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class ChangeLogComponent implements OnInit {
-    public items$!: Observable<string[]>;
+    public items$: Observable<string[]> | undefined = undefined;
 
     public constructor(
         private mChangeLogService: ChangeLogService

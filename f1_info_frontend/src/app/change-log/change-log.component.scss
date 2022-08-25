@@ -1,7 +1,4 @@
-.holder {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.main {
   margin: 2rem;
 
   h1 {
@@ -9,6 +6,13 @@
     font-weight: 500;
     font-size: 2.25rem;
   }
+}
+
+.holder {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  gap: 1rem;
 
   &__item {
     padding: 1rem;

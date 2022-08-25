@@ -16,7 +16,7 @@ export enum LoadingElementOffset {
     styleUrls: ['./loading-element.component.scss'],
 })
 export class LoadingElementComponent {
-    @Input() public loading: boolean = false;
+    @Input() public loading: any = false;
     @Input() public size: LoadingSpinnerSize = LoadingSpinnerSize.NORMAL;
     @Input() public offset: LoadingElementOffset = LoadingElementOffset.CENTER;
 
