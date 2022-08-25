@@ -2,8 +2,8 @@
     <h1>{{'changeLog.title' | translate}}</h1>
 
     <app-loading-element [loading]="(items$ | async) === null">
-        <div class="holder">
-            <div *ngFor="let item of items$ | async" class="holder__item" [innerHTML]="item"></div>
+        <div class="change-log-holder">
+            <div *ngFor="let item of items$ | async" class="change-log-holder__item" [innerHTML]="item"></div>
         </div>
     </app-loading-element>
 </section>
