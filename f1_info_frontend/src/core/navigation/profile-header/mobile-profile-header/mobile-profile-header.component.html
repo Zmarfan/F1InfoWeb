@@ -1,4 +1,4 @@
-<section class="header">
+<section *ngIf="!navigationState.NAVIGATION_MENU_OPEN" class="header">
     <fa-icon (click)="toggleProfileHeader()" [icon]="icon"></fa-icon>
 </section>
 

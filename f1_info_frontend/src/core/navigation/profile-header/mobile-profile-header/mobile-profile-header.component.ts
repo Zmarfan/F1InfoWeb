@@ -6,6 +6,7 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
 import {Observable} from 'rxjs';
 import {Session, User} from '../../../../app/configuration/session';
 import {ThemeService} from '../../../../app/theme.service';
+import {NavigationStateService} from '../../../../app/navigation-state.service';
 
 @Component({
     selector: 'app-mobile-profile-header',
@@ -29,6 +30,7 @@ import {ThemeService} from '../../../../app/theme.service';
 export class MobileProfileHeaderComponent {
     @Input() public menuItems!: MenuItem[];
 
+    public navigationState = NavigationStateService;
     public headerOpen: boolean = false;
 
     public constructor(
@@ -55,6 +57,7 @@ export class MobileProfileHeaderComponent {
 
     private toggleOpen(isOpen: boolean) {
         this.headerOpen = isOpen;
+        NavigationStateService.PROFILE_MENU_OPEN = isOpen;
         ThemeService.toggleBodyScroll(!isOpen);
     }
 }

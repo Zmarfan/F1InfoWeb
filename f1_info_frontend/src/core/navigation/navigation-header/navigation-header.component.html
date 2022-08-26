@@ -2,7 +2,7 @@
     <img src="https://picsum.photos/600/200">
 </div>
 
-<section class="mobile mobile-navigation-header">
+<section *ngIf="!navigationState.PROFILE_MENU_OPEN" class="mobile mobile-navigation-header">
     <fa-icon (click)="openMobileNavigation()" [icon]="mobileIcon"></fa-icon>
 </section>
 

@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {Session} from '../../../app/configuration/session';
 import {ThemeService} from '../../../app/theme.service';
+import {NavigationStateService} from '../../../app/navigation-state.service';
 
 export interface RouteItem {
     route?: string;
@@ -38,6 +39,8 @@ export interface RouteItem {
     ],
 })
 export class NavigationHeaderComponent implements OnInit, OnDestroy {
+    public navigationState = NavigationStateService;
+
     public routeItems: RouteItem[] = [
         { route: RouteHolder.HOMEPAGE, key: 'navigation.route.homepage', icon: faHouseChimney, selected: true },
         { route: RouteHolder.DRIVER_PROFILE, key: 'navigation.route.driverProfile', icon: faPerson },
@@ -129,6 +132,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
 
     private toggleMobileNavigation(opened: boolean) {
         this.mobileNavigationOpened = opened;
+        NavigationStateService.NAVIGATION_MENU_OPEN = opened;
         ThemeService.toggleBodyScroll(!opened);
     }
 }
