@@ -17,10 +17,23 @@
   width: 100%;
   height: 4rem;
   background: var(--primary-color);
-  box-shadow: var(--bkg-shadow-color) 0 0 5px;
   color: #d5d5d5;
   display: flex;
   justify-content: space-between;
+
+  &--show {
+    @media(max-width: $mobile-max-width) {
+      animation: 0.75s ease-in-out showHeader forwards;
+      box-shadow: var(--bkg-shadow-color) 0 0 5px;
+    }
+  }
+
+  &--hide {
+    @media(max-width: $mobile-max-width) {
+      animation: 0.75s ease-in-out hideHeader forwards;
+      box-shadow: none;
+    }
+  }
 }
 
 .mobile-image {
@@ -29,4 +42,22 @@
   left: 50%;
   transform: translateX(-50%);
   width: 6rem;
+}
+
+@keyframes showHeader {
+  0% {
+    top: -4rem;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes hideHeader {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -4rem;
+  }
 }
