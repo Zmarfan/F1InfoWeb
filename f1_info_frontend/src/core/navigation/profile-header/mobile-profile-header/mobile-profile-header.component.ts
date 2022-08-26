@@ -44,6 +44,10 @@ export class MobileProfileHeaderComponent {
         this.toggleOpen(!this.headerOpen);
     }
 
+    public clickedOutsideOfMenu() {
+        this.toggleOpen(false);
+    }
+
     public menuItemClicked(item: MenuItem) {
         this.toggleOpen(false);
         item.clickCallback();

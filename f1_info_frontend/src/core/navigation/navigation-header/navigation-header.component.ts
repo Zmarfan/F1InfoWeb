@@ -104,6 +104,10 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
         }
     };
 
+    public clickedOutsideOfMenu() {
+        this.toggleMobileNavigation(false);
+    }
+
     private setNewRoute(item: RouteItem | undefined) {
         this.routeItems.forEach((routeItem) => {
             routeItem.selected = false;

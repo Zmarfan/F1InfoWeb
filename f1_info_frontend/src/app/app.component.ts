@@ -8,8 +8,8 @@ import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 export class AppComponent {
     @ViewChild('scrollBody') public scrollBody!: ElementRef;
 
-    private mShowHeader: boolean = false;
-    private mLastYPosition: number = 1000;
+    private mShowHeader: boolean = true;
+    private mLastYPosition: number = 0;
 
     public get hideHeaderClass(): string {
         return this.mShowHeader ? 'header--show' : 'header--hide';

@@ -87,3 +87,22 @@
     }
   }
 }
+
+.mobile-shadow {
+  z-index: -5;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  animation: ease-in-out 0.25s showShadow forwards;
+}
+
+@keyframes showShadow {
+  0% {
+    background: transparent;
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.34);
+  }
+}
