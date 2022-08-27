@@ -1,7 +1,6 @@
 import {Component, ElementRef, HostListener, Input} from '@angular/core';
 import {MenuItem} from '../profile-header.component';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {Observable} from 'rxjs';
 import {Session} from '../../../../app/configuration/session';
 
 @Component({
@@ -24,6 +23,7 @@ import {Session} from '../../../../app/configuration/session';
 export class DesktopProfileHeaderComponent {
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
     @Input() public menuItems!: MenuItem[];
+    @Input() public infoButtonCallback!: () => void;
 
     public menuOpen: boolean = false;
     private mLastTimeStamp: number = 0;

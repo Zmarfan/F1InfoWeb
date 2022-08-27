@@ -13,8 +13,7 @@
         </div>
 
         <div class="profile-header__icons">
-            <fa-icon [icon]="['far', 'bell']"></fa-icon>
-            <fa-icon [icon]="['far', 'question-circle']"></fa-icon>
+            <fa-icon (click)="infoButtonCallback()" [icon]="['far', 'question-circle']"></fa-icon>
         </div>
     </div>
 

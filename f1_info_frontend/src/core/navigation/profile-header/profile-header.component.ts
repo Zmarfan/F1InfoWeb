@@ -15,6 +15,7 @@ import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.compo
 import {map, Observable, shareReplay, Subscription} from 'rxjs';
 import {UserSettingsComponent} from '../user-settings/user-settings.component';
 import {ThemeService} from '../../../app/theme.service';
+import {WebsiteInfoComponent} from './website-info/website-info.component';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -72,6 +73,10 @@ export class ProfileHeaderComponent implements OnDestroy {
     public ngOnDestroy() {
         this.mSubscription.unsubscribe();
     }
+
+    public infoButtonCallback = () => {
+        this.mDialog.open(WebsiteInfoComponent);
+    };
 
     private openUserSettingsDialog() {
         this.mDialog.open(UserSettingsComponent, { disableClose: true });

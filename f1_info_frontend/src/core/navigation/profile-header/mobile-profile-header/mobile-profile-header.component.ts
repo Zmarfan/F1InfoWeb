@@ -29,6 +29,7 @@ import {NavigationStateService} from '../../../../app/navigation-state.service';
 })
 export class MobileProfileHeaderComponent {
     @Input() public menuItems!: MenuItem[];
+    @Input() public infoButtonCallback!: () => void;
 
     public navigationState = NavigationStateService;
     public headerOpen: boolean = false;

@@ -1,6 +1,5 @@
 <section class="profile-header">
-    <fa-icon [icon]="['far', 'bell']" class="regular-icon"></fa-icon>
-    <fa-icon [icon]="['far', 'question-circle']" class="regular-icon"></fa-icon>
+    <fa-icon (click)="infoButtonCallback()" [icon]="['far', 'question-circle']" class="regular-icon"></fa-icon>
 
     <div class="user-section">
         <div (click)="menuToggle($event)" class="user-section__menu">

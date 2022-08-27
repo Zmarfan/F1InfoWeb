@@ -26,6 +26,12 @@
     "english": "English",
     "swedish": "Swedish"
   },
+  "websiteInfo": {
+    "title": "Data Information",
+    "paragraph1": "The earliest qualifying data is from 1994",
+    "paragraph2": "The earliest lap time data is from 1996",
+    "paragraph3": "The earliest pit stop data is from 2012"
+  },
   "navigation": {
     "route": {
       "homepage": "Homepage",

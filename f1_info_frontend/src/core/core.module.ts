@@ -21,6 +21,7 @@ import { DesktopProfileHeaderComponent } from './navigation/profile-header/deskt
 import { MobileProfileHeaderComponent } from './navigation/profile-header/mobile-profile-header/mobile-profile-header.component';
 import { UserSettingsComponent } from './navigation/user-settings/user-settings.component';
 import { GlobalMessageDisplayComponent } from './information/global-message-display/global-message-display.component';
+import { WebsiteInfoComponent } from './navigation/profile-header/website-info/website-info.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { GlobalMessageDisplayComponent } from './information/global-message-disp
         MobileProfileHeaderComponent,
         UserSettingsComponent,
         GlobalMessageDisplayComponent,
+        WebsiteInfoComponent,
     ],
     imports: [
         CommonModule,

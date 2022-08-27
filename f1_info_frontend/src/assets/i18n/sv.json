@@ -26,6 +26,12 @@
     "english": "Engelska",
     "swedish": "Svenska"
   },
+  "websiteInfo": {
+    "title": "Datainformation",
+    "paragraph1": "De tidigaste kvaluppgifterna är från 1994",
+    "paragraph2": "De tidigaste varvtidsuppgifterna är från 1996",
+    "paragraph3": "De tidigaste depåstoppuppgifterna är från 2012"
+  },
   "navigation": {
     "route": {
       "homepage": "Hem",
