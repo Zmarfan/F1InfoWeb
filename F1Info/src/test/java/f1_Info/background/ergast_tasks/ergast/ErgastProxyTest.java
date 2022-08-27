@@ -36,6 +36,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -518,7 +519,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_not_fetch_driver_standings_data_from_ergast_if_running_mock_configuration() throws IOException {
+    void should_not_fetch_driver_standings_data_from_ergast_if_running_mock_configuration() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD);
@@ -527,13 +528,13 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_return_empty_list_of_driver_standings_data_if_running_mock_configuration() {
+    void should_return_empty_list_of_driver_standings_data_if_running_mock_configuration() throws NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
     }
 
     @Test
-    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
@@ -541,7 +542,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_log_severe_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException {
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_driver_standings() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
@@ -551,7 +552,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_return_formatted_data_from_parser_when_fetching_driver_standings() throws IOException, ParseException {
+    void should_return_formatted_data_from_parser_when_fetching_driver_standings() throws IOException, ParseException, NoDataAvailableYetException {
         final List<DriverStandingsData> expectedReturnData = singletonList(
             new DriverStandingsData(1, "1", BigDecimal.ONE, 2, new DriverData(
                 "driverId",
@@ -572,6 +573,14 @@ class ErgastProxyTest {
         );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_throw_no_data_available_yet_exception_if_no_data_is_available_for_driver_standings() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
+        when(mParser.parseStandingsResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, emptyList()));
+
+        assertThrows(NoDataAvailableYetException.class, () -> mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD));
     }
 
     @Test

@@ -6,6 +6,7 @@ import f1_Info.background.TaskWrapper;
 import f1_Info.background.Tasks;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
+import f1_Info.background.ergast_tasks.ergast.NoDataAvailableYetException;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,9 +43,12 @@ public class FetchDriverStandingsTask extends TaskWrapper {
             return;
         }
 
-        final List<DriverStandingsData> driverStandings = mErgastProxy.fetchDriverStandingsForRace(raceRecord.get());
-        if (!driverStandings.isEmpty()) {
-            mergeIntoDatabase(driverStandings, raceRecord.get());
+        try {
+            final List<DriverStandingsData> driverStandings = mErgastProxy.fetchDriverStandingsForRace(raceRecord.get());
+            if (!driverStandings.isEmpty()) {
+                mergeIntoDatabase(driverStandings, raceRecord.get());
+            }
+        } catch (final NoDataAvailableYetException ignore) {
         }
     }
 

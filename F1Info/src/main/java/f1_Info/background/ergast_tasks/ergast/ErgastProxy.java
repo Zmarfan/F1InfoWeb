@@ -11,6 +11,7 @@ import f1_Info.background.ergast_tasks.ergast.responses.race.RaceData;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import common.configuration.Configuration;
 import common.logger.Logger;
+import f1_Info.background.ergast_tasks.ergast.responses.standings.StandingsDataHolder;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -140,14 +141,20 @@ public class ErgastProxy {
         return emptyList();
     }
 
-    public List<DriverStandingsData> fetchDriverStandingsForRace(final RaceRecord raceRecord) {
+    public List<DriverStandingsData> fetchDriverStandingsForRace(final RaceRecord raceRecord) throws NoDataAvailableYetException {
         try {
             if (isProduction()) {
-                return getData(
+                final List<StandingsDataHolder> standingsHolder = getData(
                     String.format(FETCH_DRIVER_STANDINGS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseStandingsResponseToObjects)
-                ).get(0).getDriverStandingsData();
+                );
+                if (standingsHolder.isEmpty()) {
+                    throw new NoDataAvailableYetException();
+                }
+                return standingsHolder.get(0).getDriverStandingsData();
             }
+        } catch (final NoDataAvailableYetException e) {
+            throw e;
         } catch (final Exception e) {
             mLogger.severe(
                 "fetchDriverStandingsForRace",
