@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.fetch_lap_times_task;
 
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
+import f1_Info.background.ergast_tasks.ergast.NoDataAvailableYetException;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimeData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.TimingData;
 import f1_Info.background.ergast_tasks.RaceRecord;
@@ -39,7 +40,7 @@ class FetchLapTimesTaskTest {
     FetchLapTimesTask mFetchLapTimesTask;
 
     @Test
-    void should_not_call_ergast_for_lap_times_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
+    void should_not_call_ergast_for_lap_times_data_if_there_is_no_next_race_to_fetch_for() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.empty());
 
         mFetchLapTimesTask.run();
@@ -48,7 +49,7 @@ class FetchLapTimesTaskTest {
     }
 
     @Test
-    void should_not_attempt_to_merge_in_lap_times_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
+    void should_not_attempt_to_merge_in_lap_times_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(emptyList());
 
@@ -58,7 +59,7 @@ class FetchLapTimesTaskTest {
     }
 
     @Test
-    void should_merge_in_lap_times_data_sent_from_ergast_to_database() throws SQLException, ParseException {
+    void should_merge_in_lap_times_data_sent_from_ergast_to_database() throws SQLException, ParseException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
 
@@ -68,7 +69,7 @@ class FetchLapTimesTaskTest {
     }
 
     @Test
-    void should_log_severe_if_exception_is_thrown() throws SQLException, ParseException {
+    void should_log_severe_if_exception_is_thrown() throws SQLException, ParseException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
@@ -79,7 +80,7 @@ class FetchLapTimesTaskTest {
     }
 
     @Test
-    void should_set_last_fetched_race_after_merging_lap_times() throws SQLException, ParseException {
+    void should_set_last_fetched_race_after_merging_lap_times() throws SQLException, ParseException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
 
@@ -90,7 +91,7 @@ class FetchLapTimesTaskTest {
     }
 
     @Test
-    void should_not_set_last_fetched_race_after_merging_lap_times_if_it_throws() throws SQLException, ParseException {
+    void should_not_set_last_fetched_race_after_merging_lap_times_if_it_throws() throws SQLException, ParseException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenReturn(getLapTimesData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoLapTimesData(anyList(), eq(RACE_RECORD));
@@ -99,6 +100,17 @@ class FetchLapTimesTaskTest {
 
         verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
+
+    @Test
+    void should_not_attempt_to_merge_in_lap_time_data_to_database_if_no_data_is_yet_available() throws SQLException, NoDataAvailableYetException {
+        when(mDatabase.getNextRaceToFetchLapTimesFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchLapTimesForRace(RACE_RECORD)).thenThrow(new NoDataAvailableYetException());
+
+        mFetchLapTimesTask.run();
+
+        verify(mDatabase, never()).mergeIntoLapTimesData(anyList(), any(RaceRecord.class));
+    }
+
 
     private List<LapTimeData> getLapTimesData() throws ParseException {
         return List.of(

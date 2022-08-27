@@ -2,6 +2,7 @@ package f1_Info.background.ergast_tasks.ergast;
 
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
+import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimesDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
@@ -122,14 +123,20 @@ public class ErgastProxy {
         return emptyList();
     }
 
-    public List<LapTimeData> fetchLapTimesForRace(final RaceRecord raceRecord) {
+    public List<LapTimeData> fetchLapTimesForRace(final RaceRecord raceRecord) throws NoDataAvailableYetException {
         try {
             if (isProduction()) {
-                return getData(
+                final List<LapTimesDataHolder> lapTimeHolder = getData(
                     String.format(FETCH_LAP_TIMES_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseLapTimesResponseToObjects)
-                ).get(0).getLapTimeData();
+                );
+                if (lapTimeHolder.isEmpty()) {
+                    throw new NoDataAvailableYetException();
+                }
+                return lapTimeHolder.get(0).getLapTimeData();
             }
+        } catch (final NoDataAvailableYetException e) {
+            throw e;
         } catch (final Exception e) {
             mLogger.severe(
                 "fetchLapTimesFromRoundAndSeason",
