@@ -3,6 +3,7 @@ package f1_Info.background.ergast_tasks.ergast;
 import f1_Info.background.ergast_tasks.ergast.responses.*;
 import f1_Info.background.ergast_tasks.ergast.responses.circuit.CircuitData;
 import f1_Info.background.ergast_tasks.ergast.responses.lap_times.LapTimesDataHolder;
+import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.results.ResultDataHolder;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
@@ -104,14 +105,21 @@ public class ErgastProxy {
         }
     }
 
-    public List<PitStopData> fetchPitStopsForRace(final RaceRecord raceRecord) {
+    public List<PitStopData> fetchPitStopsForRace(final RaceRecord raceRecord) throws NoDataAvailableYetException {
         try {
             if (isProduction()) {
-                return getData(
+                final List<PitStopDataHolder> pitStopHolder = getData(
                     String.format(FETCH_PIT_STOPS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parsePitStopResponseToObjects)
-                ).get(0).getPitStopData();
+                );
+
+                if (pitStopHolder.isEmpty()) {
+                    throw new NoDataAvailableYetException();
+                }
+                return pitStopHolder.get(0).getPitStopData();
             }
+        } catch (final NoDataAvailableYetException e) {
+            throw e;
         } catch (final Exception e) {
             mLogger.severe(
                 "fetchPitStopsFromRoundAndSeason",

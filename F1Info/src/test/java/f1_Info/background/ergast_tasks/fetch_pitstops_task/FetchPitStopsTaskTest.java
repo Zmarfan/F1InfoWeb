@@ -4,6 +4,7 @@ import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
+import f1_Info.background.ergast_tasks.ergast.NoDataAvailableYetException;
 import f1_Info.background.ergast_tasks.ergast.responses.pit_stop.PitStopData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +37,7 @@ class FetchPitStopsTaskTest {
     FetchPitStopsTask mFetchPitStopsTask;
 
     @Test
-    void should_not_call_ergast_for_pitstop_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
+    void should_not_call_ergast_for_pitstop_data_if_there_is_no_next_race_to_fetch_for() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.empty());
 
         mFetchPitStopsTask.run();
@@ -45,7 +46,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_not_attempt_to_merge_in_pitstop_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
+    void should_not_attempt_to_merge_in_pitstop_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(emptyList());
 
@@ -55,7 +56,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_merge_in_pitstop_data_sent_from_ergast_to_database() throws SQLException {
+    void should_merge_in_pitstop_data_sent_from_ergast_to_database() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
@@ -65,7 +66,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_log_severe_if_exception_is_thrown() throws SQLException {
+    void should_log_severe_if_exception_is_thrown() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
@@ -76,7 +77,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_set_last_fetched_race_after_merging_pitstops() throws SQLException {
+    void should_set_last_fetched_race_after_merging_pitstops() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
 
@@ -87,7 +88,7 @@ class FetchPitStopsTaskTest {
     }
 
     @Test
-    void should_not_set_last_fetched_race_after_merging_pitstops_if_it_throws() throws SQLException {
+    void should_not_set_last_fetched_race_after_merging_pitstops_if_it_throws() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenReturn(getPitstopData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoPitStopsData(anyList(), eq(RACE_RECORD));
@@ -107,6 +108,17 @@ class FetchPitStopsTaskTest {
         verify(mDatabase).mergeIntoPitStopsData(emptyList(), raceWithZeroPitStops);
         verify(mDatabase).setLastFetchedRaceInHistory(raceWithZeroPitStops);
     }
+
+    @Test
+    void should_not_attempt_to_merge_in_pit_stop_data_to_database_if_no_data_is_yet_available() throws SQLException, NoDataAvailableYetException {
+        when(mDatabase.getNextRaceToFetchPitStopsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchPitStopsForRace(RACE_RECORD)).thenThrow(new NoDataAvailableYetException());
+
+        mFetchPitStopsTask.run();
+
+        verify(mDatabase, never()).mergeIntoPitStopsData(anyList(), any(RaceRecord.class));
+    }
+
 
     private List<PitStopData> getPitstopData() {
         return List.of(

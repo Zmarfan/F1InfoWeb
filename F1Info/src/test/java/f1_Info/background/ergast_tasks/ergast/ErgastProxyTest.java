@@ -425,7 +425,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException {
+    void should_not_fetch_pitstop_data_from_ergast_if_running_mock_configuration() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
 
         mErgastProxy.fetchPitStopsForRace(RACE_RECORD);
@@ -434,13 +434,13 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() {
+    void should_return_empty_list_of_pitstop_data_if_running_mock_configuration() throws NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createMockConfiguration());
         assertEquals(emptyList(), mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
-    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
+    void should_return_empty_list_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
@@ -448,7 +448,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_log_severe_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException {
+    void should_log_severe_if_ioexception_gets_thrown_while_fetching_pitstops() throws IOException, NoDataAvailableYetException {
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
         when(mFetcher.readDataAsJsonStringFromUri(anyString())).thenThrow(new IOException());
 
@@ -458,7 +458,7 @@ class ErgastProxyTest {
     }
 
     @Test
-    void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException {
+    void should_return_formatted_data_from_parser_when_fetching_pitstops() throws IOException, NoDataAvailableYetException {
         final List<PitStopData> expectedReturnData = singletonList(new PitStopData("dId", 43, 2, "12:21:35Z", "23.021"));
 
         when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
@@ -468,6 +468,14 @@ class ErgastProxyTest {
         );
 
         assertEquals(expectedReturnData, mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
+    }
+
+    @Test
+    void should_throw_no_data_available_yet_exception_if_no_data_is_available_for_pit_stops() throws IOException {
+        when(mConfiguration.getRules()).thenReturn(createLiveConfiguration());
+        when(mParser.parsePitStopResponseToObjects(any())).thenReturn(new ErgastResponse<>(RESPONSE_HEADER, emptyList()));
+
+        assertThrows(NoDataAvailableYetException.class, () -> mErgastProxy.fetchPitStopsForRace(RACE_RECORD));
     }
 
     @Test
