@@ -9,7 +9,6 @@ import f1_Info.background.ergast_tasks.ergast.NoDataAvailableYetException;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.DriverData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.DriverStandingsData;
-import f1_Info.configuration.web.users.exceptions.UnableToRegisterUserException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -67,7 +66,7 @@ class FetchDriverStandingsTaskTest {
     @Test
     void should_not_attempt_to_merge_in_driver_standings_data_to_database_if_no_data_is_yet_available() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchDriverStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
-        when(mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD)).thenThrow(new UnableToRegisterUserException());
+        when(mErgastProxy.fetchDriverStandingsForRace(RACE_RECORD)).thenThrow(new NoDataAvailableYetException());
 
         mFetchDriverStandingsTask.run();
 

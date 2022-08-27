@@ -5,6 +5,7 @@ import common.logger.Logger;
 import f1_Info.background.TaskWrapper;
 import f1_Info.background.ergast_tasks.RaceRecord;
 import f1_Info.background.ergast_tasks.ergast.ErgastProxy;
+import f1_Info.background.ergast_tasks.ergast.NoDataAvailableYetException;
 import f1_Info.background.ergast_tasks.ergast.responses.ConstructorData;
 import f1_Info.background.ergast_tasks.ergast.responses.standings.ConstructorStandingsData;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class FetchConstructorStandingsTaskTest {
     FetchConstructorStandingsTask mFetchConstructorStandingsTask;
 
     @Test
-    void should_not_call_ergast_for_constructor_standings_data_if_there_is_no_next_race_to_fetch_for() throws SQLException {
+    void should_not_call_ergast_for_constructor_standings_data_if_there_is_no_next_race_to_fetch_for() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.empty());
 
         mFetchConstructorStandingsTask.run();
@@ -51,7 +52,7 @@ class FetchConstructorStandingsTaskTest {
     }
 
     @Test
-    void should_not_attempt_to_merge_in_constructor_standings_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException {
+    void should_not_attempt_to_merge_in_constructor_standings_data_to_database_if_no_data_was_returned_from_ergast() throws SQLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenReturn(emptyList());
 
@@ -61,7 +62,7 @@ class FetchConstructorStandingsTaskTest {
     }
 
     @Test
-    void should_merge_in_constructor_standings_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException {
+    void should_merge_in_constructor_standings_data_sent_from_ergast_to_database() throws SQLException, MalformedURLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenReturn(getConstructorStandingsData());
 
@@ -71,7 +72,7 @@ class FetchConstructorStandingsTaskTest {
     }
 
     @Test
-    void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException {
+    void should_log_severe_if_exception_is_thrown() throws SQLException, MalformedURLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenReturn(getConstructorStandingsData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoConstructorStandingsData(anyList(), eq(RACE_RECORD));
@@ -82,7 +83,7 @@ class FetchConstructorStandingsTaskTest {
     }
 
     @Test
-    void should_set_last_fetched_race_after_merging_constructor_standings() throws SQLException, MalformedURLException {
+    void should_set_last_fetched_race_after_merging_constructor_standings() throws SQLException, MalformedURLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenReturn(getConstructorStandingsData());
 
@@ -93,7 +94,7 @@ class FetchConstructorStandingsTaskTest {
     }
 
     @Test
-    void should_not_set_last_fetched_race_after_merging_constructor_standings_if_it_throws() throws SQLException, MalformedURLException {
+    void should_not_set_last_fetched_race_after_merging_constructor_standings_if_it_throws() throws SQLException, MalformedURLException, NoDataAvailableYetException {
         when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
         when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenReturn(getConstructorStandingsData());
         doThrow(new SQLException("error")).when(mDatabase).mergeIntoConstructorStandingsData(anyList(), eq(RACE_RECORD));
@@ -102,6 +103,17 @@ class FetchConstructorStandingsTaskTest {
 
         verify(mDatabase, never()).setLastFetchedRaceInHistory(any(RaceRecord.class));
     }
+
+    @Test
+    void should_not_attempt_to_merge_in_constructor_standings_data_to_database_if_no_data_is_yet_available() throws SQLException, NoDataAvailableYetException {
+        when(mDatabase.getNextRaceToFetchConstructorStandingsFor()).thenReturn(Optional.of(RACE_RECORD));
+        when(mErgastProxy.fetchConstructorStandingsForRace(RACE_RECORD)).thenThrow(new NoDataAvailableYetException());
+
+        mFetchConstructorStandingsTask.run();
+
+        verify(mDatabase, never()).mergeIntoConstructorStandingsData(anyList(), any(RaceRecord.class));
+    }
+
 
     private List<ConstructorStandingsData> getConstructorStandingsData() throws MalformedURLException {
         return singletonList(

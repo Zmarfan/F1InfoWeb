@@ -166,14 +166,20 @@ public class ErgastProxy {
         return emptyList();
     }
 
-    public List<ConstructorStandingsData> fetchConstructorStandingsForRace(final RaceRecord raceRecord) {
+    public List<ConstructorStandingsData> fetchConstructorStandingsForRace(final RaceRecord raceRecord) throws NoDataAvailableYetException {
         try {
             if (isProduction()) {
-                return getData(
+                final List<StandingsDataHolder> standingsHolder = getData(
                     String.format(FETCH_CONSTRUCTOR_STANDINGS_PART, raceRecord.getSeason(), raceRecord.getRound()),
                     wrapper(mParser::parseStandingsResponseToObjects)
-                ).get(0).getConstructorStandingsData();
+                );
+                if (standingsHolder.isEmpty()) {
+                    throw new NoDataAvailableYetException();
+                }
+                return standingsHolder.get(0).getConstructorStandingsData();
             }
+        } catch (final NoDataAvailableYetException e) {
+            throw e;
         } catch (final Exception e) {
             mLogger.severe(
                 "fetchConstructorStandingsForRace",
