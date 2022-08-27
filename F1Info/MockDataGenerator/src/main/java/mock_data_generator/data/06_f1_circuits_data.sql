@@ -15,7 +15,7 @@ insert into circuits (circuit_identifier, name, location_name, country_code, lat
 insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
   values ('bahrain', 'Bahrain International Circuit', 'Sakhir', 'bh', 26.0325, 50.5106, 'http://en.wikipedia.org/wiki/Bahrain_International_Circuit');
 insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
-  values ('BAK', 'Baku City Circuit', 'Baku', 'az', 40.3725, 49.8533, 'http://en.wikipedia.org/wiki/Baku_City_Circuit');
+  values ('baku', 'Baku City Circuit', 'Baku', 'az', 40.3725, 49.8533, 'http://en.wikipedia.org/wiki/Baku_City_Circuit');
 insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
   values ('boavista', 'Circuito da Boavista', 'Oporto', 'pt', 41.1705, -8.67325, 'http://en.wikipedia.org/wiki/Circuito_da_Boavista');
 insert into circuits (circuit_identifier, name, location_name, country_code, latitude, longitude, wikipedia_page)
