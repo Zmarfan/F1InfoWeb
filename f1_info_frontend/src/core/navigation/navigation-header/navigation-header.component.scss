@@ -60,7 +60,7 @@
   background: var(--bkg-color);
   padding-top: 2rem;
   box-shadow: var(--bkg-shadow-color) -0.5rem 0 20px;
-  overflow: hidden;
+  overflow: auto;
 
   &--desktop {
     width: 15rem;

@@ -7,5 +7,5 @@ begin
   from
     change_log
   order by
-    change_log.time desc ;
+    change_log.time desc;
 end;

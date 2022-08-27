@@ -22,6 +22,7 @@
   top: 4rem;
   right: 0;
   user-select: none;
+  overflow: auto;
   width: 90%;
   height: calc(100% - 4rem);
   background: var(--bkg-color);
