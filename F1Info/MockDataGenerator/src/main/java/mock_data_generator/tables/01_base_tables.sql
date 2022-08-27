@@ -42,7 +42,7 @@ create table background_jobs(
   task_id int not null,
   start_timestamp timestamp not null,
   done_timestamp timestamp,
-  error_message varchar(255),
+  error_message text,
 
   constraint background_jobs_pk primary key (id, task_id),
   constraint background_jobs_task_id foreign key (task_id) references background_tasks(id)
