@@ -17,6 +17,7 @@ export class FeedbackItemComponent implements OnInit {
     @Input() public toggleLikeCallback!: (itemId: number, liked: boolean) => Observable<void>;
 
     public hasLiked: boolean = false;
+    private mCurrentlyChangingLikeStatus: boolean = false;
 
     public constructor(
         private mDialog: MatDialog,
@@ -37,11 +38,21 @@ export class FeedbackItemComponent implements OnInit {
     }
 
     public toggleOwnLike() {
+        if (this.mCurrentlyChangingLikeStatus) {
+            return;
+        }
+
+        this.mCurrentlyChangingLikeStatus = true;
+        this.hasLiked = !this.hasLiked;
         this.toggleLikeCallback(this.item.feedbackId, this.hasLiked).subscribe({
             next: () => {
-                this.hasLiked = !this.hasLiked;
+                this.mCurrentlyChangingLikeStatus = false;
             },
-            error: (e) => this.mMessageService.addHttpError(e),
+            error: (e) => {
+                this.mMessageService.addHttpError(e);
+                this.hasLiked = !this.hasLiked;
+                this.mCurrentlyChangingLikeStatus = false;
+            },
         });
     }
 }

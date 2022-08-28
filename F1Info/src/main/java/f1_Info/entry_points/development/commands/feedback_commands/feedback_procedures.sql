@@ -34,5 +34,42 @@ end;
 drop procedure if exists delete_feedback_item;
 create procedure delete_feedback_item(in p_item_id int)
 begin
+  delete from feedback_item_likes where feedback_item_id = p_item_id;
   delete from feedback_items where id = p_item_id;
+end;
+
+drop procedure if exists can_like_feedback_item;
+create procedure can_like_feedback_item(in p_user_id int, in p_item_id int)
+begin
+  select
+    if(count(*) = 1 and likes.user_id is null, 'Y', 'N')
+  from
+    feedback_items
+    left join feedback_item_likes likes on likes.feedback_item_id = feedback_items.id and likes.user_id = p_user_id
+  where
+    feedback_items.id = p_item_id;
+end;
+
+drop procedure if exists like_feedback_item;
+create procedure like_feedback_item(in p_user_id int, in p_item_id int)
+begin
+  insert into feedback_item_likes (feedback_item_id, user_id) values (p_item_id, p_user_id);
+end;
+
+drop procedure if exists can_remove_like_from_feedback_item;
+create procedure can_remove_like_from_feedback_item(in p_user_id int, in p_item_id int)
+begin
+  select
+    if(count(*) = 1 and likes.user_id is not null, 'Y', 'N')
+  from
+    feedback_items
+    left join feedback_item_likes likes on likes.feedback_item_id = feedback_items.id and likes.user_id = p_user_id
+  where
+    feedback_items.id = p_item_id;
+end;
+
+drop procedure if exists remove_like_from_feedback_item;
+create procedure remove_like_from_feedback_item(in p_user_id int, in p_item_id int)
+begin
+  delete from feedback_item_likes where user_id = p_user_id and feedback_item_id = p_item_id;
 end;

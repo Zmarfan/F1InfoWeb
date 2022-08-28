@@ -8,6 +8,10 @@ import f1_Info.entry_points.development.commands.feedback_commands.delete_feedba
 import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.IsUserOwnerOfFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.FeedbackItemRecord;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.CanLikeFeedbackItemQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.CanRemoveLikeFromFeedbackItemQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.LikeFeedbackItemQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.RemoveLikeFromFeedbackItemQueryData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +43,21 @@ public class Database extends TaskDatabase {
 
     public void deleteFeedbackItem(final long itemId) throws SQLException {
         executeVoidQuery(new DeleteFeedbackQueryData(itemId));
+    }
+
+    public boolean canLikeFeedbackItem(final long userId, final long itemId) throws SQLException {
+        return executeBasicQuery(new CanLikeFeedbackItemQueryData(userId, itemId));
+    }
+
+    public void likeFeedbackItem(final long userId, final long itemId) throws SQLException {
+        executeVoidQuery(new LikeFeedbackItemQueryData(userId, itemId));
+    }
+
+    public boolean canRemoveLikeFromFeedbackItem(final long userId, final long itemId) throws SQLException {
+        return executeBasicQuery(new CanRemoveLikeFromFeedbackItemQueryData(userId, itemId));
+    }
+
+    public void removeLikeFromFeedbackItem(final long userId, final long itemId) throws SQLException {
+        executeVoidQuery(new RemoveLikeFromFeedbackItemQueryData(userId, itemId));
     }
 }
