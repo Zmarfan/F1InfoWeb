@@ -287,6 +287,7 @@
     "showOnlyMine": "Visa bara egna inlägg",
     "createButtton": "Skapa Inlägg",
     "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?",
+    "successfullyDeleted": "Den angivna återkopplingen har tagits bort",
     "create": {
       "label": "Text",
       "submitLabel": "Vill du skicka in denna återkoppling?"

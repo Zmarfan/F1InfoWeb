@@ -24,3 +24,15 @@ create procedure create_feedback_item(in p_user_id int, in p_text varchar(255))
 begin
   insert into feedback_items (author_user_id, text, date) values (p_user_id, p_text, current_timestamp);
 end;
+
+drop procedure if exists is_user_owner_of_feedback_item;
+create procedure is_user_owner_of_feedback_item(in p_user_id int, in p_item_id int)
+begin
+  select if(count(*) = 0, 'N', 'Y') from feedback_items where author_user_id = p_user_id and id = p_item_id;
+end;
+
+drop procedure if exists delete_feedback_item;
+create procedure delete_feedback_item(in p_item_id int)
+begin
+  delete from feedback_items where id = p_item_id;
+end;

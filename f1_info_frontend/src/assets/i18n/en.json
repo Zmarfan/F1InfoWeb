@@ -287,6 +287,7 @@
     "showOnlyMine": "Show only own posts",
     "createButton": "Create Post",
     "deleteConfirmation": "Are you sure you want to delete this item?",
+    "successfullyDeleted": "The specified feedback has been deleted",
     "create": {
       "label": "Text",
       "submitLabel": "Do you want to submit this feedback?"

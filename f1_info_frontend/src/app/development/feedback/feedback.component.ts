@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CreateFeedbackComponent} from './create-feedback/create-feedback.component';
 import {DialogResult} from '../../../core/dialog/dialog';
 import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-feedback',
@@ -18,6 +19,7 @@ export class FeedbackComponent implements OnInit {
 
     public constructor(
         private mDialog: MatDialog,
+        private mTranslate: TranslateService,
         private mFeedbackService: FeedbackService,
         private mMessageService: GlobalMessageService
     ) {
@@ -45,7 +47,10 @@ export class FeedbackComponent implements OnInit {
 
     public deleteCallback = (itemId: number) => {
         this.mFeedbackService.deleteFeedbackItem(itemId).subscribe({
-            next: () => this.fetchFeedbackItems(),
+            next: () => {
+                this.fetchFeedbackItems();
+                this.mMessageService.addSuccess(this.mTranslate.instant('feedback.successfullyDeleted'));
+            },
             error: (e) => this.mMessageService.addHttpError(e),
         });
     };
