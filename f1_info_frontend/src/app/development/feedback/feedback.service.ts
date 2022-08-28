@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {FeedbackItemResponse} from '../../../generated/server-responses';
 import {Endpoints} from '../../configuration/endpoints';
-import {ChangeLogResponse} from '../../../generated/server-responses';
 
 @Injectable({
     providedIn: 'root',
 })
-export class ChangeLogService {
+export class FeedbackService {
+
     public constructor(
         private mHttpClient: HttpClient
     ) {
     }
 
-    public getChangeLogItems() {
-        return this.mHttpClient.get<ChangeLogResponse>(Endpoints.DEVELOPMENT.getChangeLogItems);
+    public getFeedbackItems() {
+        return this.mHttpClient.get<FeedbackItemResponse[]>(Endpoints.DEVELOPMENT.getFeedbackItems);
     }
 }

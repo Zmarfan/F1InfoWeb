@@ -4,13 +4,17 @@
         <div class="feedback__header-create">
             <div>
                 <label for="createId">{{'feedback.showOnlyMine' | translate}}</label>
-                <input id="createId" type="checkbox">
+                <input [(ngModel)]="showOnlyOwnItems" id="createId" type="checkbox">
             </div>
             <button appPrimaryButton>{{'feedback.create' | translate}}</button>
         </div>
     </div>
 
-    <section class="feedback-holder">
-        <app-feedback-item *ngFor="let item of items" [item]="item"></app-feedback-item>
-    </section>
+    <app-loading-element [loading]="(items$ | async) === null">
+        <section class="feedback-holder">
+            <ng-container *ngFor="let item of items$ | async">
+                <app-feedback-item *ngIf="item.isOwn || !showOnlyOwnItems" [item]="item"></app-feedback-item>
+            </ng-container>
+        </section>
+    </app-loading-element>
 </section>

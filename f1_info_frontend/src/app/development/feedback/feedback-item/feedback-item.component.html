@@ -1,10 +1,13 @@
 <div class="feedback-item">
-    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dignissimos doloremque, facere magni non praesentium.</h3>
+    <fa-icon *ngIf="item.completed" icon="check-circle" class="feedback-item__completed"></fa-icon>
+    <span class="feedback-item__time">{{item.date}}</span>
+
+    <h3>{{item.text}}</h3>
     <div class="feedback-item__info">
-        <h4>Lord_Zmarfan</h4>
-        <div class="feedback-item__voting">
-            <span>3</span>
-            <fa-icon icon="thumbs-up"></fa-icon>
+        <h4>{{item.authorDisplayName}}</h4>
+        <div class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
+            <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
+            <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
         </div>
     </div>
 </div>

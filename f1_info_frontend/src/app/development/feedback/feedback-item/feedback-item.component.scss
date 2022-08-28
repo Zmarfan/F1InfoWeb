@@ -1,11 +1,31 @@
 .feedback-item {
+  position: relative;
   background: var(--global-message-bkg-info);
-  padding: 2rem;
+  padding: 2rem 2rem 2.5rem 2rem;
   border-radius: 20px 5px 20px 5px;
 
   h3 {
     font-size: 1.1rem;
     font-weight: 500;
+  }
+
+  &__completed {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    color: var(--primary-color-text);
+  }
+
+  &__time {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
+    color: var(--primary-color-text);
+    font-size: 0.75rem;
   }
 
   &__info {
@@ -31,6 +51,7 @@
     }
 
     fa-icon {
+      user-select: none;
       cursor: pointer;
       font-size: 2rem;
       transition: transform 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -40,9 +61,16 @@
         color: #9887bd;
       }
     }
-  }
 
-  &--voted {
-    color: var(--light-primary-color);
+    &--voted {
+      color: var(--primary-color);
+
+      fa-icon {
+        &:hover {
+          transform: scale(1.05);
+          color: #655388;
+        }
+      }
+    }
   }
 }

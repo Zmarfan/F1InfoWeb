@@ -1,10 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FeedbackService} from './feedback.service';
+import {FeedbackItemResponse} from '../../../generated/server-responses';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-feedback',
     templateUrl: './feedback.component.html',
     styleUrls: ['./feedback.component.scss'],
 })
-export class FeedbackComponent {
-    public items: any[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+export class FeedbackComponent implements OnInit {
+    public items$!: Observable<FeedbackItemResponse[]>;
+    public showOnlyOwnItems: boolean = false;
+
+    public constructor(
+        private mFeedbackService: FeedbackService
+    ) {
+    }
+
+    public ngOnInit() {
+        this.items$ = this.mFeedbackService.getFeedbackItems();
+    }
 }

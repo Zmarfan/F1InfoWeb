@@ -34,7 +34,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().disable().csrf().disable()
             .authorizeRequests()
-            .antMatchers("/Authentication/**", "/Reports/**", "/ChangeLog/**").permitAll()
+            .antMatchers("/Authentication/**", "/Reports/**", "/Development/**").permitAll()
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.NEVER);
