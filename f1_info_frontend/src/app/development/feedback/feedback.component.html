@@ -6,7 +6,7 @@
                 <label for="createId">{{'feedback.showOnlyMine' | translate}}</label>
                 <input [(ngModel)]="showOnlyOwnItems" id="createId" type="checkbox">
             </div>
-            <button appPrimaryButton>{{'feedback.create' | translate}}</button>
+            <button appPrimaryButton (click)="createFeedbackItem()">{{'feedback.createButton' | translate}}</button>
         </div>
     </div>
 

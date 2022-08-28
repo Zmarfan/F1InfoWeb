@@ -6,9 +6,9 @@ export interface DialogResult<T = any> {
 }
 
 export function cancelDialog<T, R = any>(dialogRef: MatDialogRef<T>, result?: R) {
-    return dialogRef.close({ wasApplied: false, result } as DialogResult);
+    return dialogRef.close({ wasApplied: false, result: result } as DialogResult);
 }
 
 export function closeDialog<T, R = any>(dialogRef: MatDialogRef<T>, result?: R) {
-    return dialogRef.close({ wasApplied: true, result } as DialogResult);
+    return dialogRef.close({ wasApplied: true, result: result } as DialogResult);
 }

@@ -285,7 +285,11 @@
   "feedback": {
     "title": "Feedback",
     "showOnlyMine": "Show only own posts",
-    "create": "Create Post",
-    "deleteConfirmation": "Are you sure you want to delete this item?"
+    "createButton": "Create Post",
+    "deleteConfirmation": "Are you sure you want to delete this item?",
+    "create": {
+      "label": "Text",
+      "submitLabel": "Do you want to submit this feedback?"
+    }
   }
 }

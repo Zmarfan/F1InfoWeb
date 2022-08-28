@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FeedbackService} from './feedback.service';
 import {FeedbackItemResponse} from '../../../generated/server-responses';
 import {Observable} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateFeedbackComponent} from './create-feedback/create-feedback.component';
+import {DialogResult} from '../../../core/dialog/dialog';
+import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
 
 @Component({
     selector: 'app-feedback',
@@ -13,7 +17,9 @@ export class FeedbackComponent implements OnInit {
     public showOnlyOwnItems: boolean = false;
 
     public constructor(
-        private mFeedbackService: FeedbackService
+        private mDialog: MatDialog,
+        private mFeedbackService: FeedbackService,
+        private mMessageService: GlobalMessageService
     ) {
     }
 
@@ -21,13 +27,24 @@ export class FeedbackComponent implements OnInit {
         this.fetchFeedbackItems();
     }
 
+    public createFeedbackItem() {
+        this.mDialog.open(CreateFeedbackComponent).afterClosed().subscribe((result: DialogResult) => {
+            if (result?.wasApplied) {
+                this.mFeedbackService.createFeedbackItem(result.result).subscribe({
+                    error: (e) => this.mMessageService.addHttpError(e),
+                });
+            }
+        });
+    }
+
     public likeCallback = (itemId: number, liked: boolean) => {
         return this.mFeedbackService.toggleLikeFeedbackItem(itemId, liked);
     };
 
     public deleteCallback = (itemId: number) => {
-        this.mFeedbackService.deleteFeedbackItem(itemId).subscribe(() => {
-            this.fetchFeedbackItems();
+        this.mFeedbackService.deleteFeedbackItem(itemId).subscribe({
+            next: () => this.fetchFeedbackItems(),
+            error: (e) => this.mMessageService.addHttpError(e),
         });
     };
 

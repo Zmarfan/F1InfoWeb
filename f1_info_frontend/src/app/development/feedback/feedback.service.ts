@@ -18,6 +18,10 @@ export class FeedbackService {
         return this.mHttpClient.get<FeedbackItemResponse[]>(Endpoints.DEVELOPMENT.getFeedbackItems);
     }
 
+    public createFeedbackItem(text: string) {
+        return this.mHttpClient.post<void>(Endpoints.DEVELOPMENT.createFeedbackItem, { text });
+    }
+
     public toggleLikeFeedbackItem(itemId: number, liked: boolean) {
         return this.mHttpClient.post<void>(parseTemplate(Endpoints.DEVELOPMENT.toggleFeedbackLike).expand({ itemId, liked }), {});
     }

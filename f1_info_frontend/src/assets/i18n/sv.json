@@ -285,7 +285,11 @@
   "feedback": {
     "title": "Återkoppling",
     "showOnlyMine": "Visa bara egna inlägg",
-    "create": "Skapa Inlägg",
-    "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?"
+    "createButtton": "Skapa Inlägg",
+    "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?",
+    "create": {
+      "label": "Text",
+      "submitLabel": "Vill du skicka in denna återkoppling?"
+    }
   }
 }

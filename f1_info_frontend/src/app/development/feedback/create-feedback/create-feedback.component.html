@@ -1,0 +1,19 @@
+<form [formGroup]="formData" (ngSubmit)="submitForm(formData.value)" class="create-feedback">
+    <app-text-input
+        [inputConfig]="{
+            formControl: text,
+            labelKey: 'feedback.create.label',
+            inputType: 'text',
+            isRequired: true
+        }"
+        formControlName="text"
+    ></app-text-input>
+
+    <div class="create-feedback__ending">
+        <span>{{'feedback.create.submitLabel' | translate}}</span>
+        <div class="create-feedback__buttons">
+            <button (click)="cancel()" appButton>{{'buttons.no' | translate}}</button>
+            <button [disabled]="!formData.valid" type="submit" appPrimaryButton>{{'buttons.yes' | translate}}</button>
+        </div>
+    </div>
+</form>

@@ -7,6 +7,7 @@ import {UserSettingsService} from './user-settings.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {GlobalMessageService, GlobalMessageType} from '../../information/global-message-display/global-message.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ValidatorFactory} from '../../utils/validator-factory';
 
 export interface UserSettings {
     displayName: string;
@@ -35,15 +36,10 @@ export class UserSettingsComponent {
     ) {
         this.displayName = new FormControl(mSession.user?.displayName ?? '', [
             Validators.maxLength(UserSettingsComponent.MAX_DISPLAY_NAME_LENGTH),
-            UserSettingsComponent.displayNamePaddingValidator,
+            ValidatorFactory.noPaddingValidator,
             (control) => UserSettingsComponent.displayNameSameValueValidator(control, this.mSession),
         ]);
         this.formData = new FormGroup({ displayName: this.displayName });
-    }
-
-    private static displayNamePaddingValidator(control: AbstractControl): ValidationErrors | null {
-        const onlySpaces = (control.value || '').trim().length === 0;
-        return onlySpaces ? { required: true } : null;
     }
 
     private static displayNameSameValueValidator(control: AbstractControl, session: Session): ValidationErrors | null {

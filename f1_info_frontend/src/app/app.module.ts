@@ -42,6 +42,7 @@ import { ChangeLogComponent } from './development/change-log/change-log.componen
 import { FeedbackComponent } from './development/feedback/feedback.component';
 import { FeedbackItemComponent } from './development/feedback/feedback-item/feedback-item.component';
 import { FeedbackDeleteComponent } from './development/feedback/feedback-item/feedback-delete/feedback-delete.component';
+import { CreateFeedbackComponent } from './development/feedback/create-feedback/create-feedback.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -94,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FeedbackItemComponent,
         FeedbackItemComponent,
         FeedbackDeleteComponent,
+        CreateFeedbackComponent,
     ],
     providers: [
         {
