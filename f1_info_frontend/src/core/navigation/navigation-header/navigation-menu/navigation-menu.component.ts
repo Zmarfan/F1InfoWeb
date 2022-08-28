@@ -25,26 +25,13 @@ import {Subscription} from 'rxjs';
         ]),
     ],
 })
-export class NavigationMenuComponent implements OnInit, OnDestroy {
+export class NavigationMenuComponent {
     @Input() public navigationItemClickedCallback!: (item: RouteItem) => void;
     @Input() public routeItems!: RouteItem[];
-
-    private mLoggedIn: boolean = false;
-    private mLoggedInSubscription!: Subscription;
 
     public constructor(
         private mSession: Session
     ) {
-    }
-
-    public ngOnInit() {
-        this.mLoggedInSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
-            this.mLoggedIn = loggedIn;
-        });
-    }
-
-    public ngOnDestroy() {
-        this.mLoggedInSubscription.unsubscribe();
     }
 
     public navigationItemClicked(item: RouteItem) {
@@ -52,6 +39,6 @@ export class NavigationMenuComponent implements OnInit, OnDestroy {
     }
 
     public canShowRouteItem(routeItem: RouteItem): boolean {
-        return !routeItem.loggedIn || this.mLoggedIn;
+        return !routeItem.loggedIn || this.mSession.user !== null;
     }
 }
