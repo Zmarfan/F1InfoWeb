@@ -82,7 +82,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		mFetchPitStopsTask.run();
 	}
 
-	@Scheduled(cron = "0 0/1 * * * *")
+	@Scheduled(cron = "0 0 1 * * *")
 	public void runFetchLapTimesTask() {
 		mFetchLapTimesTask.run();
 	}
