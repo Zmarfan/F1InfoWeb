@@ -13,7 +13,12 @@
     <app-loading-element [loading]="(items$ | async) === null">
         <section class="feedback-holder">
             <ng-container *ngFor="let item of items$ | async">
-                <app-feedback-item *ngIf="item.isOwn || !showOnlyOwnItems" [item]="item"></app-feedback-item>
+                <app-feedback-item
+                    *ngIf="item.isOwn || !showOnlyOwnItems"
+                    [item]="item"
+                    [deleteCallback]="deleteCallback"
+                    [toggleLikeCallback]="likeCallback"
+                ></app-feedback-item>
             </ng-container>
         </section>
     </app-loading-element>

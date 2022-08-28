@@ -20,4 +20,12 @@ export class FeedbackComponent implements OnInit {
     public ngOnInit() {
         this.items$ = this.mFeedbackService.getFeedbackItems();
     }
+
+    public likeCallback = (itemId: number, liked: boolean) => {
+        console.log(itemId, liked);
+    };
+
+    public deleteCallback = (itemId: number) => {
+        console.log(itemId);
+    };
 }

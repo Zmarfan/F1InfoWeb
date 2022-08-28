@@ -6,6 +6,8 @@
   },
   "buttons": {
     "cancel": "Cancel",
+    "no": "No",
+    "yes": "Yes",
     "apply": "Apply"
   },
   "input": {
@@ -283,6 +285,7 @@
   "feedback": {
     "title": "Feedback",
     "showOnlyMine": "Show only own posts",
-    "create": "Create Post"
+    "create": "Create Post",
+    "deleteConfirmation": "Are you sure you want to delete this item?"
   }
 }

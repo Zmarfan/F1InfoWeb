@@ -1,5 +1,5 @@
 <div class="feedback-item">
-    <fa-icon *ngIf="item.completed" icon="check-circle" class="feedback-item__completed"></fa-icon>
+    <fa-icon *ngIf="item.isOwn" (click)="deleteItem()" icon="times" class="feedback-item__delete"></fa-icon>
     <span class="feedback-item__time">{{item.date}}</span>
 
     <h3>{{item.text}}</h3>

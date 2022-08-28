@@ -1,0 +1,12 @@
+.feedback-delete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}

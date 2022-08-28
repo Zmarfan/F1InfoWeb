@@ -41,6 +41,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ChangeLogComponent } from './development/change-log/change-log.component';
 import { FeedbackComponent } from './development/feedback/feedback.component';
 import { FeedbackItemComponent } from './development/feedback/feedback-item/feedback-item.component';
+import { FeedbackDeleteComponent } from './development/feedback/feedback-item/feedback-delete/feedback-delete.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -92,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FeedbackComponent,
         FeedbackItemComponent,
         FeedbackItemComponent,
+        FeedbackDeleteComponent,
     ],
     providers: [
         {

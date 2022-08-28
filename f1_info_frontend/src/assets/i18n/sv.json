@@ -1,12 +1,14 @@
 {
   "unexpectedError": "Ett oväntat fel har inträffades",
   "genericHttpError": "Ett oväntat fel med felkoden: {{code}} har inträffades",
+  "errors": {
+    "unableToReachServer": "Det går inte att kommunicera med servern just nu, försök igen senare"
+  },
   "buttons": {
     "cancel": "Avbryt",
-    "apply": "Välj",
-    "errors": {
-      "unableToReachServer": "Det går inte att kommunicera med servern just nu, försök igen senare"
-    }
+    "no": "Nej",
+    "yes": "Ja",
+    "apply": "Välj"
   },
   "input": {
     "email": "E-post",
@@ -283,6 +285,7 @@
   "feedback": {
     "title": "Återkoppling",
     "showOnlyMine": "Visa bara egna inlägg",
-    "create": "Skapa Inlägg"
+    "create": "Skapa Inlägg",
+    "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?"
   }
 }

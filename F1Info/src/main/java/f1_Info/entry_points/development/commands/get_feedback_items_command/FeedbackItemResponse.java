@@ -11,5 +11,4 @@ public class FeedbackItemResponse {
     long mAmountOfUpVotesNotYou;
     boolean mIsOwn;
     boolean mHasGivenUpVote;
-    boolean mCompleted;
 }
