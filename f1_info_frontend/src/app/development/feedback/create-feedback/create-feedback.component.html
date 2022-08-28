@@ -12,7 +12,7 @@
     <div class="create-feedback__ending">
         <span>{{'feedback.create.submitLabel' | translate}}</span>
         <div class="create-feedback__buttons">
-            <button (click)="cancel()" appButton>{{'buttons.no' | translate}}</button>
+            <span (click)="cancel()" appButton>{{'buttons.no' | translate}}</span>
             <button [disabled]="!formData.valid" type="submit" appPrimaryButton>{{'buttons.yes' | translate}}</button>
         </div>
     </div>

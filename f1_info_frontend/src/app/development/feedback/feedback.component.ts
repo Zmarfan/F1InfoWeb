@@ -29,8 +29,10 @@ export class FeedbackComponent implements OnInit {
 
     public createFeedbackItem() {
         this.mDialog.open(CreateFeedbackComponent).afterClosed().subscribe((result: DialogResult) => {
+            console.log(result);
             if (result?.wasApplied) {
                 this.mFeedbackService.createFeedbackItem(result.result).subscribe({
+                    next: () => this.fetchFeedbackItems(),
                     error: (e) => this.mMessageService.addHttpError(e),
                 });
             }

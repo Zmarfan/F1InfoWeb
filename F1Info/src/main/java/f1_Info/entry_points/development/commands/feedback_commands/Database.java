@@ -3,6 +3,7 @@ package f1_Info.entry_points.development.commands.feedback_commands;
 import common.configuration.Configuration;
 import common.logger.Logger;
 import f1_Info.background.TaskDatabase;
+import f1_Info.entry_points.development.commands.feedback_commands.create_feedback_item_command.CreateFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.FeedbackItemRecord;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsQueryData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,9 @@ public class Database extends TaskDatabase {
 
     public List<FeedbackItemRecord> getFeedbackItems(final long userId) throws SQLException {
         return executeListQuery(new GetFeedbackItemsQueryData(userId));
+    }
+
+    public void createFeedbackItem(final long userId, final String text) throws SQLException {
+        executeVoidQuery(new CreateFeedbackItemQueryData(userId, text));
     }
 }
