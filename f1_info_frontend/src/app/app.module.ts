@@ -38,7 +38,8 @@ import { DriverEntryComponent } from './reports/entry/driver-entry/driver-entry.
 import {NgChartsModule} from 'ng2-charts';
 import { DriverProfileChartsComponent } from './driver-profile/driver-profile-charts/driver-profile-charts.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import { ChangeLogComponent } from './change-log/change-log.component';
+import { ChangeLogComponent } from './development/change-log/change-log.component';
+import { FeedbackComponent } from './development/feedback/feedback.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -87,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         DriverEntryComponent,
         DriverProfileChartsComponent,
         ChangeLogComponent,
+        FeedbackComponent,
     ],
     providers: [
         {

@@ -40,7 +40,9 @@
       "driverReport": "Driver Standings",
       "constructorReport": "Constructor Standings",
       "raceReport": "Race Results",
-      "changeLog": "Change Log"
+      "development": "Development",
+      "changeLog": "Change Log",
+      "feedback": "Feedback"
     },
     "profile": {
       "anonymousUser": "Anonymous User",

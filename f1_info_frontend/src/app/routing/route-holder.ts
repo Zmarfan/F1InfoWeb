@@ -9,4 +9,5 @@ export class RouteHolder {
     public static readonly CONSTRUCTOR_REPORT: string = 'constructor-report';
     public static readonly RACE_REPORT: string = 'race-report';
     public static readonly CHANGE_LOG: string = 'change-log';
+    public static readonly FEEDBACK: string = 'feedback';
 }

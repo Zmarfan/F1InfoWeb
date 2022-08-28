@@ -40,7 +40,9 @@
       "driverReport": "Förarställning",
       "constructorReport": "Konstruktörställning",
       "raceReport": "Raceresultat",
-      "changeLog": "Ändringslogg"
+      "development": "Utveckling",
+      "changeLog": "Ändringslogg",
+      "feedback": "Återkoppling"
     },
     "profile": {
       "anonymousUser": "Anonym Användare",

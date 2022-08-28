@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Endpoints} from '../configuration/endpoints';
-import {ChangeLogResponse} from '../../generated/server-responses';
+import {Endpoints} from '../../configuration/endpoints';
+import {ChangeLogResponse} from '../../../generated/server-responses';
 
 @Injectable({
     providedIn: 'root',
