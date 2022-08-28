@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faBars, faBookOpen, faCar, faCode, faHouseChimney, faPerson, faRankingStar, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faCar, faCode, faHouseChimney, faPerson, faRankingStar, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {RouteHolder} from '../../../app/routing/route-holder';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
-import {Session} from '../../../app/configuration/session';
 import {ThemeService} from '../../../app/theme.service';
 import {NavigationStateService} from '../../../app/navigation-state.service';
 
@@ -57,7 +56,7 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
             key: 'navigation.route.development',
             icon: faCode,
             subItems: [
-                { route: RouteHolder.FEEDBACK, key: 'navigation.route.feedback' },
+                { route: RouteHolder.FEEDBACK, key: 'navigation.route.feedback', loggedIn: true },
                 { route: RouteHolder.CHANGE_LOG, key: 'navigation.route.changeLog' },
             ],
         },
@@ -65,22 +64,15 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
 
     public mobileNavigationOpened: boolean = false;
 
-    private mLoggedIn: boolean = false;
     private mRouteChangeSubscription!: Subscription;
-    private mLoggedInSubscription!: Subscription;
 
     public constructor(
-        private mRouter: Router,
-        private mSession: Session
+        private mRouter: Router
     ) {
     }
 
     public get mobileIcon(): IconDefinition {
         return this.mobileNavigationOpened ? faTimes : faBars;
-    }
-
-    public get routeItemsToShow(): RouteItem[] {
-        return this.routeItems.filter((item) => !item.loggedIn || this.mLoggedIn);
     }
 
     public ngOnInit() {
@@ -90,15 +82,10 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
                 this.setNewRoute([...this.routeItems, ...subItems].find((item) => val.urlAfterRedirects.includes(item?.route ?? '--')));
             }
         });
-
-        this.mLoggedInSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
-            this.mLoggedIn = loggedIn;
-        });
     }
 
     public ngOnDestroy() {
         this.mRouteChangeSubscription.unsubscribe();
-        this.mLoggedInSubscription.unsubscribe();
     }
 
     public openMobileNavigation() {

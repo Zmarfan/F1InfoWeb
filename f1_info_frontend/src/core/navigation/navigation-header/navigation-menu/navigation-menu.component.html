@@ -1,30 +1,33 @@
 <section class="navigation-menu">
     <div>
         <ng-container *ngFor="let item of routeItems">
-            <div
-                class="route-item"
-                (click)="navigationItemClicked(item)"
-                [class.route-item--selectable]="!item.selected"
-                [class.route-item--selected]="item.selected"
-            >
-                <div class="route-item__name-and-icon">
-                    <fa-icon *ngIf="item.icon" [icon]="item.icon"></fa-icon>
-                    <span class="route-item__text">{{ item.key | translate }}</span>
-                </div>
-                <fa-icon *ngIf="item.subItems" class="route-item__holder-icon" [icon]="item.showSubItems ? 'caret-up' : 'caret-down'"></fa-icon>
-            </div>
-            <div *ngIf="item.showSubItems" class="sub-routes-holder" @subItemOpenClose>
-                <ng-container *ngFor="let subItem of item.subItems">
-                    <div
-                        class="route-item route-item--sub-item"
-                        (click)="navigationItemClicked(subItem)"
-                        [class.route-item--selectable]="!subItem.selected"
-                        [class.route-item--sub-item-selected]="subItem.selected"
-                    >
-                        <span class="route-item__text route-item__text--sub-item">{{ subItem.key | translate }}</span>
+            <ng-container *ngIf="canShowRouteItem(item)">
+                <div
+                    class="route-item"
+                    (click)="navigationItemClicked(item)"
+                    [class.route-item--selectable]="!item.selected"
+                    [class.route-item--selected]="item.selected"
+                >
+                    <div class="route-item__name-and-icon">
+                        <fa-icon *ngIf="item.icon" [icon]="item.icon"></fa-icon>
+                        <span class="route-item__text">{{ item.key | translate }}</span>
                     </div>
-                </ng-container>
-            </div>
+                    <fa-icon *ngIf="item.subItems" class="route-item__holder-icon" [icon]="item.showSubItems ? 'caret-up' : 'caret-down'"></fa-icon>
+                </div>
+                <div *ngIf="item.showSubItems" class="sub-routes-holder" @subItemOpenClose>
+                    <ng-container *ngFor="let subItem of item.subItems">
+                        <div
+                            *ngIf="canShowRouteItem(subItem)"
+                            class="route-item route-item--sub-item"
+                            (click)="navigationItemClicked(subItem)"
+                            [class.route-item--selectable]="!subItem.selected"
+                            [class.route-item--sub-item-selected]="subItem.selected"
+                        >
+                            <span class="route-item__text route-item__text--sub-item">{{ subItem.key | translate }}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
         </ng-container>
     </div>
     <span class="navigation-menu__copyright" >Copyright Filip Petersson</span>

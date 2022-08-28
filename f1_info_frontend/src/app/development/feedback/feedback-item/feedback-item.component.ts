@@ -3,6 +3,7 @@ import {FeedbackItemResponse} from '../../../../generated/server-responses';
 import {MatDialog} from '@angular/material/dialog';
 import {FeedbackDeleteComponent} from './feedback-delete/feedback-delete.component';
 import {DialogResult} from '../../../../core/dialog/dialog';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-feedback-item',
@@ -12,7 +13,7 @@ import {DialogResult} from '../../../../core/dialog/dialog';
 export class FeedbackItemComponent implements OnInit {
     @Input() public item!: FeedbackItemResponse;
     @Input() public deleteCallback!: (itemId: number) => void;
-    @Input() public toggleLikeCallback!: (itemId: number, liked: boolean) => void;
+    @Input() public toggleLikeCallback!: (itemId: number, liked: boolean) => Observable<void>;
 
     public hasLiked: boolean = false;
 
@@ -34,7 +35,8 @@ export class FeedbackItemComponent implements OnInit {
     }
 
     public toggleOwnLike() {
-        this.hasLiked = !this.hasLiked;
-        this.toggleLikeCallback(this.item.feedbackId, this.hasLiked);
+        this.toggleLikeCallback(this.item.feedbackId, this.hasLiked).subscribe(() => {
+            this.hasLiked = !this.hasLiked;
+        });
     }
 }

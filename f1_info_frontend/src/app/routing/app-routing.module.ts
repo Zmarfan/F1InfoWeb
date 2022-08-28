@@ -26,7 +26,7 @@ const routes: Routes = [
     { path: RouteHolder.CONSTRUCTOR_REPORT, component: ConstructorReportComponent },
     { path: RouteHolder.RACE_REPORT, component: RaceReportComponent },
     { path: RouteHolder.CHANGE_LOG, component: ChangeLogComponent },
-    { path: RouteHolder.FEEDBACK, component: FeedbackComponent },
+    { path: RouteHolder.FEEDBACK, component: FeedbackComponent, canActivate: [SessionGuard] },
     { path: '**', redirectTo: RouteHolder.HOMEPAGE },
 ];
 

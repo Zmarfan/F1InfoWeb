@@ -1,7 +1,7 @@
 .feedback-item {
   position: relative;
   background: var(--global-message-bkg-info);
-  padding: 2rem 2rem 2.5rem 2rem;
+  padding: 3rem 2rem 1rem 2rem;
   border-radius: 20px 5px 20px 5px;
 
   h3 {
@@ -25,9 +25,9 @@
 
   &__time {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
     margin-left: 0.5rem;
     color: var(--primary-color-text);
     font-size: 0.75rem;

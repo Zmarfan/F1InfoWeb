@@ -7,11 +7,11 @@
 </section>
 
 <section *ngIf="mobileNavigationOpened" @mobileInOutAnimation class="main-navigation-menu">
-    <app-navigation-menu [routeItems]="routeItemsToShow" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
+    <app-navigation-menu [routeItems]="routeItems" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
 </section>
 <div *ngIf="mobileNavigationOpened" class="mobile mobile-shadow" (click)="clickedOutsideOfMenu()"></div>
 
 
 <section class="desktop main-navigation-menu main-navigation-menu--desktop">
-    <app-navigation-menu [routeItems]="routeItemsToShow" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
+    <app-navigation-menu [routeItems]="routeItems" [navigationItemClickedCallback]="navigationItemClicked"></app-navigation-menu>
 </section>

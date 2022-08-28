@@ -1,6 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {RouteItem} from '../navigation-header.component';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
+import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
+import {fa0} from '@fortawesome/free-solid-svg-icons';
+import {Session} from '../../../../app/configuration/session';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-navigation-menu',
@@ -21,11 +25,33 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
         ]),
     ],
 })
-export class NavigationMenuComponent {
+export class NavigationMenuComponent implements OnInit, OnDestroy {
     @Input() public navigationItemClickedCallback!: (item: RouteItem) => void;
     @Input() public routeItems!: RouteItem[];
 
+    private mLoggedIn: boolean = false;
+    private mLoggedInSubscription!: Subscription;
+
+    public constructor(
+        private mSession: Session
+    ) {
+    }
+
+    public ngOnInit() {
+        this.mLoggedInSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
+            this.mLoggedIn = loggedIn;
+        });
+    }
+
+    public ngOnDestroy() {
+        this.mLoggedInSubscription.unsubscribe();
+    }
+
     public navigationItemClicked(item: RouteItem) {
         this.navigationItemClickedCallback(item);
+    }
+
+    public canShowRouteItem(routeItem: RouteItem): boolean {
+        return !routeItem.loggedIn || this.mLoggedIn;
     }
 }

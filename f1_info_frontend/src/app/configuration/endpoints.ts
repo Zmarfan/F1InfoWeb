@@ -47,5 +47,7 @@ export class Endpoints {
     public static readonly DEVELOPMENT = {
         getChangeLogItems: `${Endpoints.DEVELOPMENT_BASE}get-change-log-items`,
         getFeedbackItems: `${Endpoints.DEVELOPMENT_BASE}get-feedback-items`,
+        toggleFeedbackLike: `${Endpoints.DEVELOPMENT_BASE}toggle-feedback-like/{itemId}/{liked}`,
+        deleteFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}delete-feedback-item/{itemId}`,
     };
 }
