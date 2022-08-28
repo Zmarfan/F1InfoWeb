@@ -279,5 +279,10 @@
   },
   "changeLog": {
     "title": "Change Log"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "showOnlyMine": "Show only own posts",
+    "create": "Create Post"
   }
 }

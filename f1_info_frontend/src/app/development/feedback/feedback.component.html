@@ -1,1 +1,16 @@
-<p>feedback works!</p>
+<section class="feedback">
+    <div class="feedback__header">
+        <h1>{{'feedback.title' | translate}}</h1>
+        <div class="feedback__header-create">
+            <div>
+                <label for="createId">{{'feedback.showOnlyMine' | translate}}</label>
+                <input id="createId" type="checkbox">
+            </div>
+            <button appPrimaryButton>{{'feedback.create' | translate}}</button>
+        </div>
+    </div>
+
+    <section class="feedback-holder">
+        <app-feedback-item *ngFor="let item of items" [item]="item"></app-feedback-item>
+    </section>
+</section>

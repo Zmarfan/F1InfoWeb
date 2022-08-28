@@ -1,0 +1,46 @@
+.feedback {
+  margin: 2rem;
+
+  h1 {
+    color: var(--primary-color-text);
+    font-weight: 500;
+    font-size: 2.25rem;
+  }
+
+  label, input {
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media(max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+
+  &__header-create {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    user-select: none;
+  }
+}
+
+.feedback-holder {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  @media(max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media(max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}

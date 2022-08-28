@@ -1,0 +1,48 @@
+.feedback-item {
+  background: var(--global-message-bkg-info);
+  padding: 2rem;
+  border-radius: 20px 5px 20px 5px;
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h4 {
+      margin: 0;
+      color: var(--primary-color-text);
+      font-weight: 500;
+    }
+  }
+
+  &__voting {
+    display: flex;
+    gap: 0.25rem;
+    color: #a796c9;
+
+    span {
+      align-self: center;
+      font-size: 1.25rem;
+    }
+
+    fa-icon {
+      cursor: pointer;
+      font-size: 2rem;
+      transition: transform 0.15s ease-in-out, color 0.15s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+        color: #9887bd;
+      }
+    }
+  }
+
+  &--voted {
+    color: var(--light-primary-color);
+  }
+}

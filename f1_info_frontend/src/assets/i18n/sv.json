@@ -279,5 +279,10 @@
   },
   "changeLog": {
     "title": "Ändringslogg"
+  },
+  "feedback": {
+    "title": "Återkoppling",
+    "showOnlyMine": "Visa bara egna inlägg",
+    "create": "Skapa Inlägg"
   }
 }
