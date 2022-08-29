@@ -74,3 +74,15 @@ create procedure remove_like_from_feedback_item(in p_user_id int, in p_item_id i
 begin
   delete from feedback_item_likes where user_id = p_user_id and feedback_item_id = p_item_id;
 end;
+
+drop procedure if exists can_mark_feedback_item_as_complete;
+create procedure can_mark_feedback_item_as_complete(in p_item_id int)
+begin
+  select if(count(*) = 1 and completed = 'N', 'Y', 'N') from feedback_items where id = p_item_id;
+end;
+
+drop procedure if exists mark_feedback_item_as_complete;
+create procedure mark_feedback_item_as_complete(in p_item_id int)
+begin
+  update feedback_items set completed = 'Y' where id = p_item_id;
+end;

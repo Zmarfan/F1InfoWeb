@@ -50,5 +50,6 @@ export class Endpoints {
         createFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}create-feedback-item`,
         toggleFeedbackLike: `${Endpoints.DEVELOPMENT_BASE}toggle-feedback-like/{itemId}/{liked}`,
         deleteFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}delete-feedback-item/{itemId}`,
+        markAsComplete: `${Endpoints.DEVELOPMENT_BASE}complete-feedback-item/{itemId}`,
     };
 }

@@ -8,6 +8,7 @@
         <div *ngIf="!item.completed" class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
             <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
             <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
+            <button *ngIf="session.user?.isAdmin" (click)="markItemAsComplete()" appPrimaryButton>{{'feedback.markAsComplete' | translate}}</button>
         </div>
         <fa-icon *ngIf="item.completed" icon="check-circle" class="feedback-item__completed"></fa-icon>
     </div>

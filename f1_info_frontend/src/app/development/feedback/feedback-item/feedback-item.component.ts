@@ -5,6 +5,7 @@ import {FeedbackDeleteComponent} from './feedback-delete/feedback-delete.compone
 import {DialogResult} from '../../../../core/dialog/dialog';
 import {Observable} from 'rxjs';
 import {GlobalMessageService} from '../../../../core/information/global-message-display/global-message.service';
+import {Session} from '../../../configuration/session';
 
 @Component({
     selector: 'app-feedback-item',
@@ -15,11 +16,13 @@ export class FeedbackItemComponent implements OnInit {
     @Input() public item!: FeedbackItemResponse;
     @Input() public deleteCallback!: (itemId: number) => void;
     @Input() public toggleLikeCallback!: (itemId: number, liked: boolean) => Observable<void>;
+    @Input() public markAsComplete!: (itemId: number) => void;
 
     public hasLiked: boolean = false;
     private mCurrentlyChangingLikeStatus: boolean = false;
 
     public constructor(
+        public session: Session,
         private mDialog: MatDialog,
         private mMessageService: GlobalMessageService
     ) {
@@ -54,5 +57,9 @@ export class FeedbackItemComponent implements OnInit {
                 this.mCurrentlyChangingLikeStatus = false;
             },
         });
+    }
+
+    public markItemAsComplete() {
+        this.markAsComplete(this.item.feedbackId);
     }
 }

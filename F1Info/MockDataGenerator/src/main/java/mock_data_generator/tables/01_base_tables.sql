@@ -3,6 +3,7 @@ create table users(
   email varchar(50) not null,
   password varchar(100) not null,
   enabled char not null,
+  is_admin char not null default 'N',
 
   constraint users_pk primary key (id)
 );

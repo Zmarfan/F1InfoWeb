@@ -29,4 +29,8 @@ export class FeedbackService {
     public deleteFeedbackItem(itemId: number) {
         return this.mHttpClient.post<void>(parseTemplate(Endpoints.DEVELOPMENT.deleteFeedbackItem).expand({ itemId }), {});
     }
+
+    public markAsComplete(itemId: number) {
+        return this.mHttpClient.post<void>(parseTemplate(Endpoints.DEVELOPMENT.markAsComplete).expand({ itemId }), {});
+    }
 }

@@ -8,6 +8,8 @@ import f1_Info.entry_points.development.commands.feedback_commands.delete_feedba
 import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.IsUserOwnerOfFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.FeedbackItemRecord;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.CanMarkFeedbackItemAsCompleteQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.MarkFeedbackItemAsCompleteQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.CanLikeFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.CanRemoveLikeFromFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.LikeFeedbackItemQueryData;
@@ -59,5 +61,13 @@ public class Database extends TaskDatabase {
 
     public void removeLikeFromFeedbackItem(final long userId, final long itemId) throws SQLException {
         executeVoidQuery(new RemoveLikeFromFeedbackItemQueryData(userId, itemId));
+    }
+
+    public boolean canMarkFeedbackItemAsComplete(final long itemId) throws SQLException {
+        return executeBasicQuery(new CanMarkFeedbackItemAsCompleteQueryData(itemId));
+    }
+
+    public void markFeedbackItemAsComplete(final long itemId) throws SQLException {
+        executeVoidQuery(new MarkFeedbackItemAsCompleteQueryData(itemId));
     }
 }

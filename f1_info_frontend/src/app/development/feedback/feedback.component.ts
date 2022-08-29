@@ -54,6 +54,16 @@ export class FeedbackComponent implements OnInit {
         });
     };
 
+    public markAsCompleteCallback = (itemId: number) => {
+        this.mFeedbackService.markAsComplete(itemId).subscribe({
+            next: () => {
+                this.fetchFeedbackItems();
+                this.mMessageService.addSuccess(this.mTranslate.instant('feedback.successfullyCompleted'));
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
+        });
+    };
+
     private fetchFeedbackItems() {
         this.items$ = this.mFeedbackService.getFeedbackItems();
     }

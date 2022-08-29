@@ -288,6 +288,8 @@
     "createButtton": "Skapa Inlägg",
     "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?",
     "successfullyDeleted": "Den angivna återkopplingen har tagits bort",
+    "successfullyCompleted": "Den angivna återkopplingen har lösts",
+    "markAsComplete": "Lös",
     "create": {
       "label": "Text",
       "submitLabel": "Vill du skicka in denna återkoppling?"

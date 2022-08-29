@@ -4,6 +4,7 @@ import lombok.Value;
 
 @Value
 public class GetUserRecord {
+    boolean mIsAdmin;
     String mEmail;
     String mDisplayName;
 }

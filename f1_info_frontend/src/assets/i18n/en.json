@@ -288,6 +288,8 @@
     "createButton": "Create Post",
     "deleteConfirmation": "Are you sure you want to delete this item?",
     "successfullyDeleted": "The specified feedback has been deleted",
+    "successfullyCompleted": "The specified feedback has been completed",
+    "markAsComplete": "Complete",
     "create": {
       "label": "Text",
       "submitLabel": "Do you want to submit this feedback?"
