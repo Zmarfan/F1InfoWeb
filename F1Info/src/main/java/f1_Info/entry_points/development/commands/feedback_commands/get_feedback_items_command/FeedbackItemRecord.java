@@ -9,6 +9,7 @@ public class FeedbackItemRecord {
     int mId;
     String mText;
     LocalDateTime mDate;
+    boolean mCompleted;
     String mAuthorDisplayName;
     int mLikesNotFromUser;
     boolean mIsOwn;

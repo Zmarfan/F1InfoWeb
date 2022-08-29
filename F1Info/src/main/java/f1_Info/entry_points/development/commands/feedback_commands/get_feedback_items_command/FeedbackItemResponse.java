@@ -8,6 +8,7 @@ public class FeedbackItemResponse {
     String mText;
     String mAuthorDisplayName;
     String mDate;
+    boolean mCompleted;
     long mAmountOfUpVotesNotYou;
     boolean mIsOwn;
     boolean mHasGivenUpVote;
@@ -17,6 +18,7 @@ public class FeedbackItemResponse {
         mText = feedbackRecord.getText();
         mAuthorDisplayName = feedbackRecord.getAuthorDisplayName();
         mDate = feedbackRecord.getDate().toLocalDate().toString();
+        mCompleted = feedbackRecord.getCompleted();
         mAmountOfUpVotesNotYou = feedbackRecord.getLikesNotFromUser();
         mIsOwn = feedbackRecord.getIsOwn();
         mHasGivenUpVote = feedbackRecord.getLikedByUser();

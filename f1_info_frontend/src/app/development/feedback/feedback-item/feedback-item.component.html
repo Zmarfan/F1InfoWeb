@@ -5,9 +5,10 @@
     <h3>{{item.text}}</h3>
     <div class="feedback-item__info">
         <h4>{{item.authorDisplayName}}</h4>
-        <div class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
+        <div *ngIf="!item.completed" class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
             <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
             <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
         </div>
+        <fa-icon *ngIf="item.completed" icon="check-circle" class="feedback-item__completed"></fa-icon>
     </div>
 </div>
