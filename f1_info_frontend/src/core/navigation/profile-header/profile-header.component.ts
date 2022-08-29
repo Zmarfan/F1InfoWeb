@@ -1,7 +1,6 @@
-import {Component, ElementRef, HostListener, OnDestroy} from '@angular/core';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {Component, ElementRef, OnDestroy} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCircleHalfStroke, faEarthAfrica, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
+import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faFaceSadCry, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
 import {Router} from '@angular/router';
@@ -9,10 +8,10 @@ import {RouteHolder} from '../../../app/routing/route-holder';
 import {DialogResult} from '../../dialog/dialog';
 import {Language} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
-import {Session, User} from '../../../app/configuration/session';
+import {Session} from '../../../app/configuration/session';
 import {pushIfTrue} from '../../utils/list-util';
 import {SignUpComponentType} from '../../../app/login-page/sign-up/sign-up.component';
-import {map, Observable, shareReplay, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {UserSettingsComponent} from '../user-settings/user-settings.component';
 import {ThemeService} from '../../../app/theme.service';
 import {WebsiteInfoComponent} from './website-info/website-info.component';
@@ -24,11 +23,37 @@ export interface MenuItem {
     cssClass?: string;
 }
 
+export interface BellItem {
+    icon: IconDefinition;
+    key: string;
+    opened: boolean;
+    keyParams?: any;
+}
+
 @Component({
     selector: 'app-profile-header',
     templateUrl: './profile-header.component.html',
 })
 export class ProfileHeaderComponent implements OnDestroy {
+    public testBellItems: BellItem[] = [
+        {
+            icon: faFaceLaughBeam,
+            key: 'bellMessages.completeFeedback',
+            opened: false,
+            keyParams: {
+                feedback: 'More padding between rows please :)',
+            },
+        },
+        {
+            icon: faFaceSadCry,
+            key: 'bellMessages.completeFeedback',
+            opened: true,
+            keyParams: {
+                feedback: 'Asså du suger verkligen',
+            },
+        },
+    ];
+
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
 

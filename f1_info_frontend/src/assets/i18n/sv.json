@@ -55,6 +55,9 @@
       "logout": "Logga ut"
     }
   },
+  "bellMessages": {
+    "completeFeedback": "Din återkoppling: <i>\"{{feedback}}\"</i> har blivit implementerad!"
+  },
   "signUpPage": {
     "signUp": "BLI MEDLEM",
     "emailTip": "Ange den e-postadress du vill registrera dig med",

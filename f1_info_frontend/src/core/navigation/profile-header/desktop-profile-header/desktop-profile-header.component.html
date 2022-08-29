@@ -1,4 +1,18 @@
 <section class="profile-header">
+    <span (click)="bellToggle($event)" class="regular-icon">
+        <fa-icon [icon]="['far', 'bell']"></fa-icon>
+        <span *ngIf="amountOfUnOpenedBellItems > 0" class="fa-layers-counter regular-icon__counter">{{amountOfUnOpenedBellItems}}</span>
+
+        <div *ngIf="bellOpen" @bellInOutAnimation class="bell-holder">
+            <ng-container *ngFor="let item of bellItems">
+                <div class="bell-holder__entry" [class.bell-holder__entry--new]="!item.opened">
+                    <fa-icon [icon]="item.icon"></fa-icon>
+                    <span [innerHTML]="item.key | translate:item.keyParams"></span>
+                </div>
+            </ng-container>
+        </div>
+    </span>
+
     <fa-icon (click)="infoButtonCallback()" [icon]="['far', 'question-circle']" class="regular-icon"></fa-icon>
 
     <div class="user-section">

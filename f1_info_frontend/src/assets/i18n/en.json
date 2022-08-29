@@ -55,6 +55,9 @@
       "logout": "Log out"
     }
   },
+  "bellMessages": {
+    "completeFeedback": "Your feedback: <i>\"{{feedback}}\"</i> has been implemented!"
+  },
   "signUpPage": {
     "signUp": "SIGN UP",
     "emailTip": "Enter the email you want to register with",
