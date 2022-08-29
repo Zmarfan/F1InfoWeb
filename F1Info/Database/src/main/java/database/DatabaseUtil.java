@@ -41,8 +41,6 @@ public class DatabaseUtil {
         final Logger logger
     ) throws SQLException {
         try {
-            checkPermissions(queryData);
-
             final List<ValueWithType> sqlParameters = queryDataToSqlParameters(queryData);
             final String procedureCallString = createMySqlProcedureCall(queryData, sqlParameters);
 
@@ -69,10 +67,6 @@ public class DatabaseUtil {
         final Logger logger
     ) throws SQLException {
         try {
-            for (final IQueryData<Void> queryData : queryDataList) {
-                checkPermissions(queryData);
-            }
-
             final String procedureCallString = createMySqlProcedureCall(queryDataList.get(0), queryDataToSqlParameters(queryDataList.get(0)));
             try (final CallableStatement statement = connection.prepareCall(procedureCallString)) {
                 for (final IQueryData<Void> queryData : queryDataList) {
@@ -86,12 +80,6 @@ public class DatabaseUtil {
                 "Unable to execute %d bulk queries for querydata list: %s", queryDataList.size(), ListUtils.listToString(queryDataList, IQueryData::toString)
             ), e);
             throw new SQLException(e);
-        }
-    }
-
-    private static <T> void checkPermissions(final IQueryData<T> queryData) throws SQLException {
-        if (!queryData.userIsUser()) {
-            throw new SQLException("User without permission is making query");
         }
     }
 

@@ -6,10 +6,6 @@ import java.lang.reflect.Type;
 public interface IQueryData<T> {
     String getStoredProcedureName();
 
-    default boolean userIsUser() {
-        return true;
-    }
-
     default Class<T> getRecordClass() {
         final Type[] interfaces = this.getClass().getGenericInterfaces();
         for (final Type interfaceIt : interfaces) {
