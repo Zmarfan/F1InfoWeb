@@ -35,6 +35,7 @@ export class DesktopProfileHeaderComponent {
     @Input() public menuItems!: MenuItem[];
     @Input() public bellItems!: BellItem[];
     @Input() public infoButtonCallback!: () => void;
+    @Input() public bellItemsOpenedCallback!: () => void;
 
     public menuOpen: boolean = false;
     public bellOpen: boolean = false;
@@ -53,7 +54,13 @@ export class DesktopProfileHeaderComponent {
     @HostListener('document:click', ['$event'])
     public mouseClick(event: MouseEvent) {
         if (!this.mElement.nativeElement.contains(event.target)) {
-            this.menuOpen = false;
+            if (this.menuOpen) {
+                this.menuOpen = false;
+            }
+            if (this.bellOpen) {
+                this.setBellMenu(false);
+            }
+
             this.mLastTimeStamp = event.timeStamp;
         }
     }
@@ -61,16 +68,25 @@ export class DesktopProfileHeaderComponent {
     public menuToggle(event: MouseEvent) {
         if (this.mLastTimeStamp + DesktopProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {
             this.menuOpen = !this.menuOpen;
-            this.bellOpen = false;
+            if (this.bellOpen) {
+                this.setBellMenu(false);
+            }
             this.mLastTimeStamp = event.timeStamp;
         }
     }
 
     public bellToggle(event: MouseEvent) {
         if (this.mLastTimeStamp + DesktopProfileHeaderComponent.ANIMATION_LENGTH_MILLISECONDS < event.timeStamp) {
-            this.bellOpen = !this.bellOpen;
+            this.setBellMenu(!this.bellOpen);
             this.menuOpen = false;
             this.mLastTimeStamp = event.timeStamp;
+        }
+    }
+
+    private setBellMenu(open: boolean) {
+        this.bellOpen = open;
+        if (!this.bellOpen && this.bellItems.some((item) => !item.opened)) {
+            this.bellItemsOpenedCallback();
         }
     }
 }

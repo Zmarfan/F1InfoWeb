@@ -1,2 +1,14 @@
-<app-desktop-profile-header class="desktop" [menuItems]="menuItems" [bellItems]="testBellItems" [infoButtonCallback]="infoButtonCallback"></app-desktop-profile-header>
-<app-mobile-profile-header class="mobile" [menuItems]="menuItems" [infoButtonCallback]="infoButtonCallback"></app-mobile-profile-header>
+<app-desktop-profile-header
+    class="desktop"
+    [menuItems]="menuItems"
+    [bellItems]="bellItems"
+    [infoButtonCallback]="infoButtonCallback"
+    [bellItemsOpenedCallback]="bellItemsOpenedCallback"
+></app-desktop-profile-header>
+<app-mobile-profile-header
+    class="mobile"
+    [menuItems]="menuItems"
+    [bellItems]="bellItems"
+    [infoButtonCallback]="infoButtonCallback"
+    [bellItemsOpenedCallback]="bellItemsOpenedCallback"
+></app-mobile-profile-header>

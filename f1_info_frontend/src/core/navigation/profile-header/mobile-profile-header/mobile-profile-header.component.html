@@ -13,12 +13,22 @@
         </div>
 
         <div class="profile-header__icons">
-            <span class="fa-layers profile-header__icon">
+            <span (click)="toggleBellOpen()" class="fa-layers profile-header__icon">
                 <fa-icon [icon]="['far', 'bell']"></fa-icon>
                 <span class="fa-layers-counter profile-header__icon-counter">1</span>
             </span>
             <fa-icon (click)="infoButtonCallback()" [icon]="['far', 'question-circle']" class="profile-header__icon"></fa-icon>
         </div>
+    </div>
+
+    <div *ngIf="bellOpen" @bellInOutAnimation class="bell-container">
+        <ng-container *ngFor="let item of bellItems">
+            <div class="bell-container__entry" [class.bell-container__entry--new]="!item.opened">
+                <fa-icon [icon]="item.icon"></fa-icon>
+                <span [innerHTML]="item.key | translate:item.keyParams"></span>
+            </div>
+        </ng-container>
+        <div *ngIf="bellItems.length === 0" class="bell-container__no-messages">There are no new notifications!</div>
     </div>
 
     <div class="display-menu">

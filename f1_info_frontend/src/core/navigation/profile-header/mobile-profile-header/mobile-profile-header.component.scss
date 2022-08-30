@@ -111,6 +111,35 @@
   animation: ease-in-out 0.25s showShadow forwards;
 }
 
+.bell-container {
+  overflow: auto;
+  transform-origin: top;
+  max-height: 300px;
+  border-bottom: 1px solid var(--primary-color);
+
+  &__entry {
+    color: var(--text-color);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+
+    fa-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    &--new {
+      background: var(--bkg-color-shade);
+    }
+  }
+
+  &__no-messages {
+    padding: 1rem;
+    text-align: center;
+  }
+}
+
 @keyframes showShadow {
   0% {
     background: transparent;

@@ -10,6 +10,7 @@
                     <span [innerHTML]="item.key | translate:item.keyParams"></span>
                 </div>
             </ng-container>
+            <div *ngIf="bellItems.length === 0" class="bell-holder__no-messages">There are no new notifications!</div>
         </div>
     </span>
 

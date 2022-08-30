@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {MenuItem} from '../profile-header.component';
+import {BellItem, MenuItem} from '../profile-header.component';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
 import {faCircleUser, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
@@ -25,14 +25,27 @@ import {NavigationStateService} from '../../../../app/navigation-state.service';
                 animate('0.25s ease-in', style({ transform: 'translateX(100%)', opacity: 0 })),
             ]),
         ]),
+        trigger('bellInOutAnimation', [
+            transition(':enter', [
+                style({ 'max-height': '0', opacity: 0, overflow: 'hidden' }),
+                animate('0.5s ease-out', style({ 'max-height': '300px', opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ 'max-height': '300px', opacity: 1 }),
+                animate('0.5s ease-in', style({ 'max-height': '0', opacity: 0 })),
+            ]),
+        ]),
     ],
 })
 export class MobileProfileHeaderComponent {
     @Input() public menuItems!: MenuItem[];
+    @Input() public bellItems!: BellItem[];
     @Input() public infoButtonCallback!: () => void;
+    @Input() public bellItemsOpenedCallback!: () => void;
 
     public navigationState = NavigationStateService;
     public headerOpen: boolean = false;
+    public bellOpen: boolean = false;
 
     public constructor(
         public session: Session
@@ -54,6 +67,10 @@ export class MobileProfileHeaderComponent {
     public menuItemClicked(item: MenuItem) {
         this.toggleOpen(false);
         item.clickCallback();
+    }
+
+    public toggleBellOpen() {
+        this.bellOpen = !this.bellOpen;
     }
 
     private toggleOpen(isOpen: boolean) {

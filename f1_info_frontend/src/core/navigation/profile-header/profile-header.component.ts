@@ -35,7 +35,7 @@ export interface BellItem {
     templateUrl: './profile-header.component.html',
 })
 export class ProfileHeaderComponent implements OnDestroy {
-    public testBellItems: BellItem[] = [
+    public bellItems: BellItem[] = [
         {
             icon: faFaceLaughBeam,
             key: 'bellMessages.completeFeedback',
@@ -101,6 +101,12 @@ export class ProfileHeaderComponent implements OnDestroy {
 
     public infoButtonCallback = () => {
         this.mDialog.open(WebsiteInfoComponent);
+    };
+
+    public bellItemsOpenedCallback = () => {
+        this.bellItems.forEach((item) => {
+            item.opened = true;
+        });
     };
 
     private openUserSettingsDialog() {
