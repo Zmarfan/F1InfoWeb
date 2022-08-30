@@ -1,4 +1,4 @@
-<section *ngIf="!navigationState.NAVIGATION_MENU_OPEN" class="header">
+<section *ngIf="!navigationState.NAVIGATION_MENU_OPEN" class="header" [class.header--bell-items]="shouldShowMainIconBellNotification">
     <fa-icon (click)="toggleProfileHeader()" [icon]="icon"></fa-icon>
 </section>
 
@@ -15,7 +15,7 @@
         <div class="profile-header__icons">
             <span (click)="toggleBellOpen()" class="fa-layers profile-header__icon">
                 <fa-icon [icon]="['far', 'bell']"></fa-icon>
-                <span class="fa-layers-counter profile-header__icon-counter">1</span>
+                <span *ngIf="amountOfUnOpenedBellItems > 0" class="fa-layers-counter profile-header__icon-counter">{{amountOfUnOpenedBellItems}}</span>
             </span>
             <fa-icon (click)="infoButtonCallback()" [icon]="['far', 'question-circle']" class="profile-header__icon"></fa-icon>
         </div>
@@ -28,7 +28,7 @@
                 <span [innerHTML]="item.key | translate:item.keyParams"></span>
             </div>
         </ng-container>
-        <div *ngIf="bellItems.length === 0" class="bell-container__no-messages">There are no new notifications!</div>
+        <div *ngIf="bellItems.length === 0" class="bell-container__no-messages">{{'navigation.profile.noNewBellNotifications' | translate}}</div>
     </div>
 
     <div class="display-menu">

@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faFaceSadCry, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
+import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
 import {Router} from '@angular/router';
@@ -15,6 +15,9 @@ import {Subscription} from 'rxjs';
 import {UserSettingsComponent} from '../user-settings/user-settings.component';
 import {ThemeService} from '../../../app/theme.service';
 import {WebsiteInfoComponent} from './website-info/website-info.component';
+import {ProfileHeaderService} from './profile-header.service';
+import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
+import {BellNotificationResponse} from '../../../generated/server-responses';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -34,25 +37,12 @@ export interface BellItem {
     selector: 'app-profile-header',
     templateUrl: './profile-header.component.html',
 })
-export class ProfileHeaderComponent implements OnDestroy {
-    public bellItems: BellItem[] = [
-        {
-            icon: faFaceLaughBeam,
-            key: 'bellMessages.completeFeedback',
-            opened: false,
-            keyParams: {
-                feedback: 'More padding between rows please :)',
-            },
-        },
-        {
-            icon: faFaceSadCry,
-            key: 'bellMessages.completeFeedback',
-            opened: true,
-            keyParams: {
-                feedback: 'Asså du suger verkligen',
-            },
-        },
-    ];
+export class ProfileHeaderComponent implements OnInit, OnDestroy {
+    private static BELL_NOTIFICATION_ICON_MAP: Map<string, IconDefinition> = new Map<string, IconDefinition>([
+        ['happy-smiley', faFaceLaughBeam],
+    ]);
+
+    public bellItems: BellItem[] = [];
 
     private mLoggedIn: boolean = false;
     private mSubscription: Subscription;
@@ -62,10 +52,13 @@ export class ProfileHeaderComponent implements OnDestroy {
         private mSession: Session,
         private mDialog: MatDialog,
         private mElement: ElementRef,
-        private mTranslateService: TranslateService
+        private mTranslateService: TranslateService,
+        private mProfileService: ProfileHeaderService,
+        private mMessageService: GlobalMessageService
     ) {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
             this.mLoggedIn = loggedIn;
+            this.fetchBellNotificationsIfNeeded();
         });
     }
 
@@ -93,6 +86,19 @@ export class ProfileHeaderComponent implements OnDestroy {
         );
 
         return items;
+    }
+
+    private static createBellConfigFromResponse(response: BellNotificationResponse): BellItem {
+        return {
+            key: response.translationKey,
+            keyParams: response.parameters,
+            opened: response.opened,
+            icon: ProfileHeaderComponent.BELL_NOTIFICATION_ICON_MAP.get(response.iconType)!,
+        };
+    }
+
+    public ngOnInit() {
+        this.fetchBellNotificationsIfNeeded();
     }
 
     public ngOnDestroy() {
@@ -129,5 +135,18 @@ export class ProfileHeaderComponent implements OnDestroy {
     private logout() {
         this.mSession.logout();
         this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
+    }
+
+    private fetchBellNotificationsIfNeeded() {
+        if (!this.mLoggedIn) {
+            return;
+        }
+
+        this.mProfileService.getBellNotificationsToDisplay().subscribe({
+            next: (bellItems) => {
+                this.bellItems = bellItems.map((response) => ProfileHeaderComponent.createBellConfigFromResponse(response));
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
+        });
     }
 }

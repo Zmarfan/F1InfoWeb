@@ -3,6 +3,7 @@ package common.utils;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -24,5 +25,9 @@ public class ListUtils {
             l.sort(c);
             return l;
         });
+    }
+
+    public static <T> List<T> stringToList(final String string, final String separator, final Function<String, T> mapper) {
+        return Arrays.stream(string.split(separator)).map(mapper).toList();
     }
 }

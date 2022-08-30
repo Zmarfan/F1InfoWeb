@@ -52,7 +52,8 @@
       "darkMode": "Toggle dark mode",
       "userSettings": "Profile Settings",
       "language": "Select language",
-      "logout": "Log out"
+      "logout": "Log out",
+      "noNewBellNotifications": "There are no new notifications!"
     }
   },
   "bellMessages": {

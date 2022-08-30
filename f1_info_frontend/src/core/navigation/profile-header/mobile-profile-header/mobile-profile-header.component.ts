@@ -56,6 +56,14 @@ export class MobileProfileHeaderComponent {
         return this.headerOpen ? faTimes : faCircleUser;
     }
 
+    public get shouldShowMainIconBellNotification(): boolean {
+        return !this.headerOpen && this.amountOfUnOpenedBellItems > 0;
+    }
+
+    public get amountOfUnOpenedBellItems(): number {
+        return this.bellItems.filter((item) => !item.opened).length;
+    }
+
     public toggleProfileHeader() {
         this.toggleOpen(!this.headerOpen);
     }
@@ -70,12 +78,20 @@ export class MobileProfileHeaderComponent {
     }
 
     public toggleBellOpen() {
+        this.sendBellOpenedCallbackIfNeeded();
         this.bellOpen = !this.bellOpen;
     }
 
     private toggleOpen(isOpen: boolean) {
         this.headerOpen = isOpen;
+        this.sendBellOpenedCallbackIfNeeded();
         NavigationStateService.PROFILE_MENU_OPEN = isOpen;
         ThemeService.toggleBodyScroll(!isOpen);
+    }
+
+    private sendBellOpenedCallbackIfNeeded() {
+        if (this.bellOpen && this.amountOfUnOpenedBellItems > 0) {
+            this.bellItemsOpenedCallback();
+        }
     }
 }

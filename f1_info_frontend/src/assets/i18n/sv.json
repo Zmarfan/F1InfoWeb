@@ -52,7 +52,8 @@
       "darkMode": "Växla mörkt tema",
       "userSettings": "Profilinställningar",
       "language": "Välj språk",
-      "logout": "Logga ut"
+      "logout": "Logga ut",
+      "noNewBellNotifications": "Det finns inga nya notifikationer!"
     }
   },
   "bellMessages": {

@@ -85,7 +85,7 @@ export class DesktopProfileHeaderComponent {
 
     private setBellMenu(open: boolean) {
         this.bellOpen = open;
-        if (!this.bellOpen && this.bellItems.some((item) => !item.opened)) {
+        if (!this.bellOpen && this.amountOfUnOpenedBellItems > 0) {
             this.bellItemsOpenedCallback();
         }
     }
