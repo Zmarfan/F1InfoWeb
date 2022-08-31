@@ -5,6 +5,7 @@ import f1_Info.entry_points.development.commands.feedback_commands.create_feedba
 import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.DeleteFeedbackItemCommand;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsCommand;
 import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.MarkFeedbackItemAsCompleteCommand;
+import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.MarkFeedbackItemAsCompleteLogic;
 import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.ToggleFeedbackLikeCommand;
 import f1_Info.entry_points.development.commands.get_change_log_items_command.Database;
 import f1_Info.entry_points.development.commands.get_change_log_items_command.GetChangeLogItemsCommand;
@@ -26,6 +27,7 @@ public class DevelopmentEndpoint {
     private final HttpServletRequest mHttpServletRequest;
     private final Database mDatabase;
     private final f1_Info.entry_points.development.commands.feedback_commands.Database mFeedbackDatabase;
+    private final MarkFeedbackItemAsCompleteLogic mMarkFeedbackItemAsCompleteLogic;
 
     @GetMapping("/get-change-log-items")
     public ResponseEntity<?> getChangeLogItems() {
@@ -77,6 +79,6 @@ public class DevelopmentEndpoint {
             return badRequest();
         }
 
-        return mEndpointHelper.authorizeAndRunAsManager(mHttpServletRequest, userId -> new MarkFeedbackItemAsCompleteCommand(itemId, mFeedbackDatabase));
+        return mEndpointHelper.authorizeAndRunAsManager(mHttpServletRequest, userId -> new MarkFeedbackItemAsCompleteCommand(itemId, mMarkFeedbackItemAsCompleteLogic));
     }
 }

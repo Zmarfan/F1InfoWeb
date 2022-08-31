@@ -128,13 +128,13 @@
 }
 
 .bell-container {
+  color: var(--text-color);
   overflow: auto;
   transform-origin: top;
   max-height: 300px;
   border-bottom: 1px solid var(--primary-color);
 
   &__entry {
-    color: var(--text-color);
     display: flex;
     gap: 1rem;
     align-items: center;
