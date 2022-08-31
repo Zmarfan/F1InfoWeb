@@ -7,7 +7,7 @@
             <ng-container *ngFor="let item of bellItems">
                 <div class="bell-holder__entry" [class.bell-holder__entry--new]="!item.opened">
                     <fa-icon [icon]="item.icon"></fa-icon>
-                    <span [innerHTML]="item.key | translate:item.keyParams"></span>
+                    <span>{{item.key | translate:item.keyParams}}</span>
                 </div>
             </ng-container>
             <div *ngIf="bellItems.length === 0" class="bell-holder__no-messages">{{'navigation.profile.noNewBellNotifications' | translate}}</div>

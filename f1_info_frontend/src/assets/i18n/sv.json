@@ -57,7 +57,7 @@
     }
   },
   "bellMessages": {
-    "completeFeedback": "Din återkoppling: <i>\"{{feedback}}\"</i> har blivit implementerad!"
+    "completeFeedback": "Din återkoppling: \"{{feedback}}\" har blivit implementerad!"
   },
   "signUpPage": {
     "signUp": "BLI MEDLEM",
