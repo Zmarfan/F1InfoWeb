@@ -289,7 +289,7 @@
   "feedback": {
     "title": "Återkoppling",
     "showOnlyMine": "Visa bara egna inlägg",
-    "createButtton": "Skapa Inlägg",
+    "createButton": "Skapa Inlägg",
     "deleteConfirmation": "Är du säker på att du vill radera detta inlägg?",
     "successfullyDeleted": "Den angivna återkopplingen har tagits bort",
     "successfullyCompleted": "Den angivna återkopplingen har lösts",
