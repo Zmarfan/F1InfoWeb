@@ -30,6 +30,8 @@ public class BellNotificationSendOutService {
             .stream()
             .map(entry -> new CreateBellNotificationParameterQueryData(notificationId, entry.getKey(), entry.getValue()))
             .toList();
-        mDatabase.createBellNotificationParameters(parameterQueryDataList);
+        if (!parameterQueryDataList.isEmpty()) {
+            mDatabase.createBellNotificationParameters(parameterQueryDataList);
+        }
     }
 }
