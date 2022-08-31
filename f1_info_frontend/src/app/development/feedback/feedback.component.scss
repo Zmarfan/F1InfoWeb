@@ -37,6 +37,10 @@
   align-items: flex-start;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 
+  app-feedback-item {
+    height: 100%;
+  }
+
   @media(max-width: 800px) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
