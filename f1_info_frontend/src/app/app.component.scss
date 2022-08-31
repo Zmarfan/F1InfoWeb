@@ -3,7 +3,6 @@
 .route-offset {
   position: absolute;
   width: 100%;
-  height: calc(100% - 4rem);
   top: 4rem;
 
   @media(min-width: $mobile-max-width) {
