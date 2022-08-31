@@ -74,12 +74,14 @@ create table event_types(
 
 create table events(
   id int not null auto_increment,
+  user_id int not null,
   entity_id int not null,
   type_id int not null,
   time timestamp,
   comment varchar(255) not null,
 
   constraint events_pk primary key (id),
+  constraint event_user_id foreign key (user_id) references users(id),
   constraint events_entity_id_fk foreign key (entity_id) references event_entities (id),
   constraint events_type_id_fk foreign key (type_id) references event_types (id)
 );

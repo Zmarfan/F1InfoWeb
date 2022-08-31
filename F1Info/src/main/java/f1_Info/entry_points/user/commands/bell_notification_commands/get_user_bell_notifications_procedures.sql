@@ -22,5 +22,5 @@ end;
 drop procedure if exists mark_bell_notifications_as_opened;
 create procedure mark_bell_notifications_as_opened(in p_user_id int, in p_notification_id int)
 begin
-  call insert_bell_notification_open_status(p_notification_id, 'Y', create_event(1, 1001, 'Opened notification normally'), current_timestamp);
+  call insert_bell_notification_open_status(p_notification_id, 'Y', create_event(p_user_id, 1, 1001, 'Opened notification normally'), current_timestamp);
 end;
