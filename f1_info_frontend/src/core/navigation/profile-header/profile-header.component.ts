@@ -44,7 +44,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
     public bellItems: BellItem[] = [];
 
-    private mLoggedIn: boolean = false;
+    public loggedIn: boolean = false;
     private mSubscription: Subscription;
 
     public constructor(
@@ -57,7 +57,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         private mMessageService: GlobalMessageService
     ) {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
-            this.mLoggedIn = loggedIn;
+            this.loggedIn = loggedIn;
             this.fetchBellNotificationsIfNeeded();
         });
     }
@@ -70,18 +70,18 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
         pushIfTrue(
             items,
-            this.mLoggedIn,
+            this.loggedIn,
             { icon: faUserGear, translationKey: 'navigation.profile.userSettings', clickCallback: () => this.openUserSettingsDialog() }
         );
 
         pushIfTrue(
             items,
-            !this.mLoggedIn,
+            !this.loggedIn,
             { icon: faRightToBracket, translationKey: 'navigation.profile.loginOrSignUp', clickCallback: () => this.routeToLogin() }
         );
         pushIfTrue(
             items,
-            this.mLoggedIn,
+            this.loggedIn,
             { icon: faRightToBracket, translationKey: 'navigation.profile.logout', clickCallback: () => this.logout() }
         );
 
@@ -110,8 +110,13 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     };
 
     public bellItemsOpenedCallback = () => {
-        this.bellItems.forEach((item) => {
-            item.opened = true;
+        this.mProfileService.markBellNotificationsAsOpened().subscribe({
+            next: () => {
+                this.bellItems.forEach((item) => {
+                    item.opened = true;
+                });
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
         });
     };
 
@@ -138,7 +143,8 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     }
 
     private fetchBellNotificationsIfNeeded() {
-        if (!this.mLoggedIn) {
+        if (!this.loggedIn) {
+            this.bellItems = [];
             return;
         }
 

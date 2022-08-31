@@ -1,5 +1,5 @@
 <section class="profile-header">
-    <span (click)="bellToggle($event)" class="regular-icon">
+    <span *ngIf="loggedIn" (click)="bellToggle($event)" class="regular-icon">
         <fa-icon [icon]="['far', 'bell']"></fa-icon>
         <span *ngIf="amountOfUnOpenedBellItems > 0" class="fa-layers-counter regular-icon__counter">{{amountOfUnOpenedBellItems}}</span>
 

@@ -16,4 +16,8 @@ export class ProfileHeaderService {
     public getBellNotificationsToDisplay() {
         return this.mHttpClient.get<BellNotificationResponse[]>(Endpoints.USER.getBellNotificationsToDisplay);
     }
+
+    public markBellNotificationsAsOpened() {
+        return this.mHttpClient.post<void>(Endpoints.USER.markBellNotificationsAsOpened, {});
+    }
 }

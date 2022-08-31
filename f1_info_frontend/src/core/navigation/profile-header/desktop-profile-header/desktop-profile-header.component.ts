@@ -32,6 +32,7 @@ import {Session} from '../../../../app/configuration/session';
 })
 export class DesktopProfileHeaderComponent {
     private static readonly ANIMATION_LENGTH_MILLISECONDS = 250;
+    @Input() public loggedIn!: boolean;
     @Input() public menuItems!: MenuItem[];
     @Input() public bellItems!: BellItem[];
     @Input() public infoButtonCallback!: () => void;

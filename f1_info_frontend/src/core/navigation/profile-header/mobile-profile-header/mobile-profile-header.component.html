@@ -13,7 +13,7 @@
         </div>
 
         <div class="profile-header__icons">
-            <span (click)="toggleBellOpen()" class="fa-layers profile-header__icon">
+            <span *ngIf="loggedIn" (click)="toggleBellOpen()" class="fa-layers profile-header__icon">
                 <fa-icon [icon]="['far', 'bell']"></fa-icon>
                 <span *ngIf="amountOfUnOpenedBellItems > 0" class="fa-layers-counter profile-header__icon-counter">{{amountOfUnOpenedBellItems}}</span>
             </span>

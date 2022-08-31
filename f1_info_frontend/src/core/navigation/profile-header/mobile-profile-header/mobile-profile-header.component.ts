@@ -38,6 +38,7 @@ import {NavigationStateService} from '../../../../app/navigation-state.service';
     ],
 })
 export class MobileProfileHeaderComponent {
+    @Input() public loggedIn!: boolean;
     @Input() public menuItems!: MenuItem[];
     @Input() public bellItems!: BellItem[];
     @Input() public infoButtonCallback!: () => void;

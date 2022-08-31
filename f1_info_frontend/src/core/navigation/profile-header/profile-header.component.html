@@ -1,5 +1,6 @@
 <app-desktop-profile-header
     class="desktop"
+    [loggedIn]="loggedIn"
     [menuItems]="menuItems"
     [bellItems]="bellItems"
     [infoButtonCallback]="infoButtonCallback"
@@ -7,6 +8,7 @@
 ></app-desktop-profile-header>
 <app-mobile-profile-header
     class="mobile"
+    [loggedIn]="loggedIn"
     [menuItems]="menuItems"
     [bellItems]="bellItems"
     [infoButtonCallback]="infoButtonCallback"
