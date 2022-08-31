@@ -17,7 +17,7 @@ begin
   group by
     feedback_items.id, feedback_items.text, feedback_items.date, feedback_items.completed
   order by
-    feedback_items.date desc;
+    feedback_items.completed, feedback_items.date desc;
 end;
 
 drop procedure if exists create_feedback_item;
