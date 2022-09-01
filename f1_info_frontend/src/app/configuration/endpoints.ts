@@ -20,9 +20,9 @@ export class Endpoints {
     };
 
     public static readonly USER = {
-        updateSettings: `${Endpoints.USER_BASE}update-settings`,
+        updateSettings: `${Endpoints.USER_BASE}settings`,
         getBellNotificationsToDisplay: `${Endpoints.USER_BASE}bell-notifications`,
-        markBellNotificationsAsOpened: `${Endpoints.USER_BASE}mark-bell-notifications-opened`,
+        markBellNotificationsAsOpened: `${Endpoints.USER_BASE}bell-notifications-opened-state`,
     };
 
     public static readonly DRIVERS = {

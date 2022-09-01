@@ -24,7 +24,7 @@ public class UserEndpoint {
     private final Database mUpdateUserSettingsDatabase;
     private final f1_Info.entry_points.user.commands.bell_notification_commands.Database mBellNotificationDatabase;
 
-    @PostMapping("/update-settings")
+    @PutMapping("/settings")
     public ResponseEntity<?> updateUserSettings(@RequestBody final NewUserSettingsRequestBody newUserSettings) {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> {
             if (newUserSettings == null || !UserSettingsValidator.newUserSettingsAreOfValidFormat(newUserSettings)) {
@@ -40,7 +40,7 @@ public class UserEndpoint {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new GetUserBellNotificationsCommand(userId, mBellNotificationDatabase));
     }
 
-    @PostMapping("/mark-bell-notifications-opened")
+    @PutMapping("/bell-notifications-opened-state")
     public ResponseEntity<?> markBellNotificationsAsOpened() {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new MarkBellNotificationsAsOpenedCommand(userId, mBellNotificationDatabase));
     }

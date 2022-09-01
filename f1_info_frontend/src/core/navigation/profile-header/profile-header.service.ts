@@ -18,6 +18,6 @@ export class ProfileHeaderService {
     }
 
     public markBellNotificationsAsOpened() {
-        return this.mHttpClient.post<void>(Endpoints.USER.markBellNotificationsAsOpened, {});
+        return this.mHttpClient.put<void>(Endpoints.USER.markBellNotificationsAsOpened, {});
     }
 }
