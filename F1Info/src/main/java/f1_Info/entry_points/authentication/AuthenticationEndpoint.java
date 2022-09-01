@@ -44,12 +44,12 @@ public class AuthenticationEndpoint {
     private final Database mGetUserDatabase;
     private final FailedLoginHandler mFailedLoginHandler;
 
-    @GetMapping("/getUser")
+    @GetMapping("/user")
     public ResponseEntity<?> getUser() {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetUserCommand(userId, mGetUserDatabase));
     }
 
-    @PostMapping("/register")
+    @PutMapping("/register")
     public ResponseEntity<?> register(@RequestBody final UserDetailsRequestBody registerBody) {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
             if (mEndpointHelper.isLoggedIn()) {

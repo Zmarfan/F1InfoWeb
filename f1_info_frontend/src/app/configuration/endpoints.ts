@@ -10,7 +10,7 @@ export class Endpoints {
     private static readonly DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'Development/';
 
     public static readonly AUTHENTICATION = {
-        getUser: `${Endpoints.AUTHENTICATION_BASE}getUser`,
+        getUser: `${Endpoints.AUTHENTICATION_BASE}user`,
         login: `${Endpoints.AUTHENTICATION_BASE}login`,
         logout: `${Endpoints.AUTHENTICATION_BASE}logout`,
         register: `${Endpoints.AUTHENTICATION_BASE}register`,

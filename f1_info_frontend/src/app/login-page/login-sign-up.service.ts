@@ -21,7 +21,7 @@ export class LoginSignUpService {
     }
 
     public register(formData: UserDetails): Observable<Object> {
-        return this.mHttpClient.post(Endpoints.AUTHENTICATION.register, formData);
+        return this.mHttpClient.put(Endpoints.AUTHENTICATION.register, formData);
     }
 
     public enableAccount(token: string): Observable<Object> {
