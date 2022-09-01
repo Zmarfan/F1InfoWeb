@@ -43,6 +43,7 @@ import { FeedbackComponent } from './development/feedback/feedback.component';
 import { FeedbackItemComponent } from './development/feedback/feedback-item/feedback-item.component';
 import { FeedbackDeleteComponent } from './development/feedback/feedback-item/feedback-delete/feedback-delete.component';
 import { CreateFeedbackComponent } from './development/feedback/create-feedback/create-feedback.component';
+import {StorageService} from './storage.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -116,11 +117,12 @@ export function HttpLoaderFactory(http: HttpClient) {
 export class AppModule {
     public constructor(
         translateService: TranslateService,
+        storageService: StorageService,
         fontAwesomeConfig: FaConfig,
         fontAwesomeLibrary: FaIconLibrary
     ) {
         translateService.setDefaultLang(Language.ENGLISH);
-        translateService.use(Language.ENGLISH);
+        translateService.use(storageService.getSavedLanguage() ?? Language.ENGLISH);
 
         fontAwesomeLibrary.addIconPacks(fas, far);
         fontAwesomeConfig.defaultPrefix = 'fas';
