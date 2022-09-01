@@ -22,8 +22,12 @@ export class FeedbackService {
         return this.mHttpClient.put<void>(Endpoints.DEVELOPMENT.createFeedbackItem, { text });
     }
 
-    public toggleLikeFeedbackItem(itemId: number, liked: boolean) {
-        return this.mHttpClient.post<void>(parseTemplate(Endpoints.DEVELOPMENT.toggleFeedbackLike).expand({ itemId, liked }), {});
+    public likeFeedbackItem(itemId: number) {
+        return this.mHttpClient.put<void>(parseTemplate(Endpoints.DEVELOPMENT.likeFeedback).expand({ itemId }), {});
+    }
+
+    public removeFeedbackItemLike(itemId: number) {
+        return this.mHttpClient.delete<void>(parseTemplate(Endpoints.DEVELOPMENT.removeFeedbackLike).expand({ itemId }), {});
     }
 
     public deleteFeedbackItem(itemId: number) {

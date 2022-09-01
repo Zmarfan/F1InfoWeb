@@ -41,7 +41,7 @@ export class FeedbackComponent implements OnInit {
     }
 
     public likeCallback = (itemId: number, liked: boolean) => {
-        return this.mFeedbackService.toggleLikeFeedbackItem(itemId, liked);
+        return liked ? this.mFeedbackService.likeFeedbackItem(itemId) : this.mFeedbackService.removeFeedbackItemLike(itemId);
     };
 
     public deleteCallback = (itemId: number) => {

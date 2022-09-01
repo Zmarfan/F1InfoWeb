@@ -1,4 +1,4 @@
-package f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command;
+package f1_Info.entry_points.development.commands.feedback_commands.remove_feedback_item_like_command;
 
 import f1_Info.entry_points.development.commands.feedback_commands.Database;
 import f1_Info.entry_points.helper.Command;
@@ -11,26 +11,18 @@ import static f1_Info.configuration.web.ResponseUtil.badRequest;
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
-public class ToggleFeedbackLikeCommand implements Command {
+public class RemoveFeedbackItemLikeCommand implements Command {
     private final long mUserId;
     private final long mItemId;
-    private final boolean mLiked;
     private final Database mDatabase;
 
     @Override
     public ResponseEntity<?> execute() throws SQLException {
-        if (mLiked) {
-            if (mDatabase.canLikeFeedbackItem(mUserId, mItemId)) {
-                mDatabase.likeFeedbackItem(mUserId, mItemId);
-            } else {
-                return badRequest();
-            }
-        } else if (mDatabase.canRemoveLikeFromFeedbackItem(mUserId, mItemId)) {
-            mDatabase.removeLikeFromFeedbackItem(mUserId, mItemId);
-        } else {
+        if (!mDatabase.canRemoveLikeFromFeedbackItem(mUserId, mItemId)) {
             return badRequest();
         }
 
+        mDatabase.removeLikeFromFeedbackItem(mUserId, mItemId);
         return ok();
     }
 }

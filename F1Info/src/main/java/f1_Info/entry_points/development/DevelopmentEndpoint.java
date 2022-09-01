@@ -4,9 +4,10 @@ import f1_Info.entry_points.development.commands.feedback_commands.create_feedba
 import f1_Info.entry_points.development.commands.feedback_commands.create_feedback_item_command.CreateFeedbackItemRequestBody;
 import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.DeleteFeedbackItemCommand;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsCommand;
+import f1_Info.entry_points.development.commands.feedback_commands.like_feedback_item_command.LikeFeedbackCommand;
 import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.MarkFeedbackItemAsCompleteCommand;
 import f1_Info.entry_points.development.commands.feedback_commands.mark_feedback_item_as_complete_command.MarkFeedbackItemAsCompleteLogic;
-import f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command.ToggleFeedbackLikeCommand;
+import f1_Info.entry_points.development.commands.feedback_commands.remove_feedback_item_like_command.RemoveFeedbackItemLikeCommand;
 import f1_Info.entry_points.development.commands.get_change_log_items_command.Database;
 import f1_Info.entry_points.development.commands.get_change_log_items_command.GetChangeLogItemsCommand;
 import f1_Info.entry_points.helper.EndpointHelper;
@@ -59,16 +60,26 @@ public class DevelopmentEndpoint {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new DeleteFeedbackItemCommand(userId, itemId, mFeedbackDatabase));
     }
 
-    @PostMapping("/toggle-feedback-like/{itemId}/{liked}")
-    public ResponseEntity<?> toggleFeedbackLike(
-        @PathVariable("itemId") final Long itemId,
-        @PathVariable("liked") final Boolean liked
+    @PutMapping("/feedback-item-like/{itemId}")
+    public ResponseEntity<?> likeFeedbackItem(
+        @PathVariable("itemId") final Long itemId
     ) {
-        if (itemId == null || liked == null) {
+        if (itemId == null) {
             return badRequest();
         }
 
-        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new ToggleFeedbackLikeCommand(userId, itemId, liked, mFeedbackDatabase));
+        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new LikeFeedbackCommand(userId, itemId, mFeedbackDatabase));
+    }
+
+    @DeleteMapping("/feedback-item-like/{itemId}")
+    public ResponseEntity<?> removeFeedbackItemLike(
+        @PathVariable("itemId") final Long itemId
+    ) {
+        if (itemId == null) {
+            return badRequest();
+        }
+
+        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new RemoveFeedbackItemLikeCommand(userId, itemId, mFeedbackDatabase));
     }
 
     @PostMapping("/complete-feedback-item/{itemId}")

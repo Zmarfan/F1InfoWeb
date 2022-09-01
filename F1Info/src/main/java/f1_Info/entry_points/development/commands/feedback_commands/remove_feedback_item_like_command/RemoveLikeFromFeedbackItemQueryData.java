@@ -1,4 +1,4 @@
-package f1_Info.entry_points.development.commands.feedback_commands.toggle_feedback_like_command;
+package f1_Info.entry_points.development.commands.feedback_commands.remove_feedback_item_like_command;
 
 import database.IQueryData;
 import lombok.Value;
