@@ -36,7 +36,7 @@ export class UserSettingsComponent {
     ) {
         this.displayName = new FormControl(mSession.user?.displayName ?? '', [
             Validators.maxLength(UserSettingsComponent.MAX_DISPLAY_NAME_LENGTH),
-            ValidatorFactory.noPaddingValidator,
+            ValidatorFactory.notOnlySpaces,
             (control) => UserSettingsComponent.displayNameSameValueValidator(control, this.mSession),
         ]);
         this.formData = new FormGroup({ displayName: this.displayName });

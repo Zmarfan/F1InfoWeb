@@ -12,9 +12,8 @@ import {ValidatorFactory} from '../../../../core/utils/validator-factory';
 export class CreateFeedbackComponent {
     public text: FormControl = new FormControl('', [
         Validators.required,
-        Validators.minLength(10),
+        ValidatorFactory.notOnlySpaces,
         Validators.maxLength(255),
-        ValidatorFactory.noPaddingValidator,
     ]);
 
     public formData: FormGroup = new FormGroup({ text: this.text });
