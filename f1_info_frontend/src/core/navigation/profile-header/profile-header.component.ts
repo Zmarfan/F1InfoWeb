@@ -56,7 +56,8 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         private mTranslateService: TranslateService,
         private mProfileService: ProfileHeaderService,
         private mMessageService: GlobalMessageService,
-        private mStorageService: StorageService
+        private mStorageService: StorageService,
+        private mThemeService: ThemeService
     ) {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
             this.loggedIn = loggedIn;
@@ -67,7 +68,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     public get menuItems(): MenuItem[] {
         const items: MenuItem[] = [
             { icon: faEarthAfrica, translationKey: 'navigation.profile.language', clickCallback: () => this.openLanguageDialog() },
-            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => ThemeService.toggleDarkMode() },
+            { icon: faCircleHalfStroke, translationKey: 'navigation.profile.darkMode', clickCallback: () => this.mThemeService.toggleDarkMode() },
         ];
 
         pushIfTrue(

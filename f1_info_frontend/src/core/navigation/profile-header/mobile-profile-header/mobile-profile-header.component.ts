@@ -49,7 +49,8 @@ export class MobileProfileHeaderComponent {
     public bellOpen: boolean = false;
 
     public constructor(
-        public session: Session
+        public session: Session,
+        private mThemeService: ThemeService
     ) {
     }
 
@@ -87,7 +88,7 @@ export class MobileProfileHeaderComponent {
         this.headerOpen = isOpen;
         this.sendBellOpenedCallbackIfNeeded();
         NavigationStateService.PROFILE_MENU_OPEN = isOpen;
-        ThemeService.toggleBodyScroll(!isOpen);
+        this.mThemeService.toggleBodyScroll(!isOpen);
     }
 
     private sendBellOpenedCallbackIfNeeded() {

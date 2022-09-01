@@ -26,14 +26,15 @@ export class DriverProfileChartsComponent implements OnInit, OnDestroy, OnChange
 
     public constructor(
         private mTranslate: TranslateService,
-        private mChartFactory: DriverProfileChartFactoryService
+        private mChartFactory: DriverProfileChartFactoryService,
+        private mThemeService: ThemeService
     ) {
         setTimeout(() => this.refreshCharts());
     }
 
     public ngOnInit() {
         this.mLanguageSubscription = this.mTranslate.onLangChange.pipe(tap(() => this.refreshCharts())).subscribe();
-        this.mThemeSubscription = ThemeService.onChange().subscribe({
+        this.mThemeSubscription = this.mThemeService.onChange().subscribe({
             next: (isDarkMode) => {
                 this.mIsDarkMode = isDarkMode;
                 this.refreshCharts();

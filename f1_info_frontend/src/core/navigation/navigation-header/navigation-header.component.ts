@@ -67,7 +67,8 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     private mRouteChangeSubscription!: Subscription;
 
     public constructor(
-        private mRouter: Router
+        private mRouter: Router,
+        private mThemeService: ThemeService
     ) {
     }
 
@@ -127,6 +128,6 @@ export class NavigationHeaderComponent implements OnInit, OnDestroy {
     private toggleMobileNavigation(opened: boolean) {
         this.mobileNavigationOpened = opened;
         NavigationStateService.NAVIGATION_MENU_OPEN = opened;
-        ThemeService.toggleBodyScroll(!opened);
+        this.mThemeService.toggleBodyScroll(!opened);
     }
 }
