@@ -10,9 +10,9 @@
         </div>
     </div>
 
-    <app-loading-element [loading]="(items$ | async) === null">
+    <app-loading-element [loading]="loading">
         <section class="feedback-holder">
-            <ng-container *ngFor="let item of items$ | async">
+            <ng-container *ngFor="let item of items">
                 <app-feedback-item
                     *ngIf="item.isOwn || !showOnlyOwnItems"
                     [item]="item"

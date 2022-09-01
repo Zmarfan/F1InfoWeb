@@ -14,7 +14,8 @@ import {TranslateService} from '@ngx-translate/core';
     styleUrls: ['./feedback.component.scss'],
 })
 export class FeedbackComponent implements OnInit {
-    public items$!: Observable<FeedbackItemResponse[]>;
+    public items: FeedbackItemResponse[] = [];
+    public loading: boolean = false;
     public showOnlyOwnItems: boolean = false;
 
     public constructor(
@@ -65,6 +66,13 @@ export class FeedbackComponent implements OnInit {
     };
 
     private fetchFeedbackItems() {
-        this.items$ = this.mFeedbackService.getFeedbackItems();
+        this.loading = true;
+        this.mFeedbackService.getFeedbackItems().subscribe({
+            next: (responses) => {
+                this.loading = false;
+                this.items = responses;
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
+        });
     }
 }
