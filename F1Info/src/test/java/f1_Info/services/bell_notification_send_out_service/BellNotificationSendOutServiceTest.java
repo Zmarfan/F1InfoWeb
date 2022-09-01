@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
@@ -49,19 +48,6 @@ class BellNotificationSendOutServiceTest {
         mService.sendBellNotification(parameters);
 
         verify(mLogger).severe(anyString(), eq(BellNotificationSendOutService.class), anyString(), any(SQLException.class));
-    }
-
-    @Test
-    void should_create_notification_with_as_many_parameters_as_provided() throws SQLException {
-        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, "key", PARAMETERS);
-        when(mDatabase.createBellNotification(parameters)).thenReturn(NOTIFICATION_ID);
-
-        mService.sendBellNotification(parameters);
-
-        verify(mDatabase).createBellNotificationParameters(List.of(
-            new CreateBellNotificationParameterQueryData(NOTIFICATION_ID, "key2", "value2"),
-            new CreateBellNotificationParameterQueryData(NOTIFICATION_ID, "key1", "value1")
-        ));
     }
 
     @Test
