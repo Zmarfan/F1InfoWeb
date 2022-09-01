@@ -243,6 +243,7 @@
     "title": "Förarprofiler",
     "driverLabel": "Förare",
     "readMore": "Läs vidare",
+    "noWikipediaParagraphs": "Det gick inte att hämta förarsammanfattningen på detta språk!",
     "info": {
       "age": "Ålder",
       "country": "Land",

@@ -27,7 +27,14 @@ export class DriverProfileInfoComponent implements OnChanges {
     ) {
     }
 
+    public get wikipediaParagraphsAvailable(): boolean {
+        return this.summaryParagraphs.length > 0;
+    }
+
     public get wikipediaLinkByLanguage(): string {
+        if (!this.wikipediaParagraphsAvailable) {
+            return this.info.wikipediaUrl;
+        }
         return `https://${this.mTranslate.currentLang}${this.info.wikipediaUrl.split('http://en')[1]}`;
     }
 

@@ -243,6 +243,7 @@
     "title": "Driver Profiles",
     "driverLabel": "Driver",
     "readMore": "Read more",
+    "noWikipediaParagraphs": "Unable to fetch driver summary in this language!",
     "info": {
       "age": "Age",
       "country": "Country",
