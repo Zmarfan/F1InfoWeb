@@ -55,6 +55,6 @@
 <app-loading-element [loading]="wikipediaSummaryLoading">
     <div *ngIf="summaryParagraphs.length > 0" class="summary">
         <p *ngFor="let paragraph of summaryParagraphs">{{paragraph}}</p>
-        <a [href]="info.wikipediaUrl" target="_blank">{{'driverProfile.readMore' | translate}}</a>
+        <a [href]="wikipediaLinkByLanguage" target="_blank">{{'driverProfile.readMore' | translate}}</a>
     </div>
 </app-loading-element>

@@ -2,6 +2,8 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {WikipediaFetcherService} from '../../wikipedia_fetcher/wikipedia-fetcher.service';
 import {DriverProfileResponse} from '../../../generated/server-responses';
 import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
+import {TranslateService} from '@ngx-translate/core';
+import {Language} from '../../../common/constants/language';
 
 @Component({
     selector: 'app-driver-profile-info',
@@ -19,9 +21,14 @@ export class DriverProfileInfoComponent implements OnChanges {
     public summaryParagraphs: string[] = [];
 
     public constructor(
+        private mTranslate: TranslateService,
         private mWikipediaFetcher: WikipediaFetcherService,
         private mMessageService: GlobalMessageService
     ) {
+    }
+
+    public get wikipediaLinkByLanguage(): string {
+        return `https://${this.mTranslate.currentLang}${this.info.wikipediaUrl.split('http://en')[1]}`;
     }
 
     public ngOnChanges() {
@@ -54,7 +61,7 @@ export class DriverProfileInfoComponent implements OnChanges {
         this.mWikipediaFetcher.getWikipediaSummary(this.info.wikipediaTitle).subscribe({
             next: (summary) => {
                 this.wikipediaSummaryLoading = false;
-                this.summaryParagraphs = summary;
+                this.summaryParagraphs = summary ?? [];
             },
             error: (error) => {
                 this.wikipediaSummaryLoading = false;
