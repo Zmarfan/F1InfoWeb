@@ -29,17 +29,17 @@ public class DevelopmentEndpoint {
     private final f1_Info.entry_points.development.commands.feedback_commands.Database mFeedbackDatabase;
     private final MarkFeedbackItemAsCompleteLogic mMarkFeedbackItemAsCompleteLogic;
 
-    @GetMapping("/get-change-log-items")
+    @GetMapping("/change-log-items")
     public ResponseEntity<?> getChangeLogItems() {
         return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetChangeLogItemsCommand(mDatabase));
     }
 
-    @GetMapping("/get-feedback-items")
+    @GetMapping("/feedback-items")
     public ResponseEntity<?> getFeedbackItems() {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new GetFeedbackItemsCommand(userId, mFeedbackDatabase));
     }
 
-    @PostMapping("/create-feedback-item")
+    @PutMapping("/feedback-item")
     public ResponseEntity<?> createFeedbackItem(@RequestBody final CreateFeedbackItemRequestBody requestBody) {
         if (requestBody == null || requestBody.getText().length() < 10 || requestBody.getText().length() > 255) {
             return badRequest();
@@ -48,7 +48,7 @@ public class DevelopmentEndpoint {
         return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new CreateFeedbackItemCommand(userId, requestBody.getText(), mFeedbackDatabase));
     }
 
-    @PostMapping("/delete-feedback-item/{itemId}")
+    @DeleteMapping("/feedback-item/{itemId}")
     public ResponseEntity<?> deleteFeedbackItem(
         @PathVariable("itemId") final Long itemId
     ) {

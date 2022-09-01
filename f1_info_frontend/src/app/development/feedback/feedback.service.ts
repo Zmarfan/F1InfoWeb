@@ -19,7 +19,7 @@ export class FeedbackService {
     }
 
     public createFeedbackItem(text: string) {
-        return this.mHttpClient.post<void>(Endpoints.DEVELOPMENT.createFeedbackItem, { text });
+        return this.mHttpClient.put<void>(Endpoints.DEVELOPMENT.createFeedbackItem, { text });
     }
 
     public toggleLikeFeedbackItem(itemId: number, liked: boolean) {
@@ -27,7 +27,7 @@ export class FeedbackService {
     }
 
     public deleteFeedbackItem(itemId: number) {
-        return this.mHttpClient.post<void>(parseTemplate(Endpoints.DEVELOPMENT.deleteFeedbackItem).expand({ itemId }), {});
+        return this.mHttpClient.delete<void>(parseTemplate(Endpoints.DEVELOPMENT.deleteFeedbackItem).expand({ itemId }), {});
     }
 
     public markAsComplete(itemId: number) {

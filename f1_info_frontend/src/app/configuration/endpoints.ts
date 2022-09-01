@@ -47,11 +47,11 @@ export class Endpoints {
     };
 
     public static readonly DEVELOPMENT = {
-        getChangeLogItems: `${Endpoints.DEVELOPMENT_BASE}get-change-log-items`,
-        getFeedbackItems: `${Endpoints.DEVELOPMENT_BASE}get-feedback-items`,
-        createFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}create-feedback-item`,
+        getChangeLogItems: `${Endpoints.DEVELOPMENT_BASE}change-log-items`,
+        getFeedbackItems: `${Endpoints.DEVELOPMENT_BASE}feedback-items`,
+        createFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}feedback-item`,
         toggleFeedbackLike: `${Endpoints.DEVELOPMENT_BASE}toggle-feedback-like/{itemId}/{liked}`,
-        deleteFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}delete-feedback-item/{itemId}`,
+        deleteFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}feedback-item/{itemId}`,
         markAsComplete: `${Endpoints.DEVELOPMENT_BASE}complete-feedback-item/{itemId}`,
     };
 }
