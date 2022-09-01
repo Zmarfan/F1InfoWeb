@@ -33,17 +33,17 @@ export class Endpoints {
 
     public static readonly REPORTS = {
         getDriverReportFilterValues: `${Endpoints.REPORTS_BASE}driver-report-filter-values/{season}`,
-        getAllDriverReport: `${Endpoints.REPORTS_BASE}get-all-driver-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getIndividualDriverReport: `${Endpoints.REPORTS_BASE}get-individual-driver-report/{season}/{driverIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getAllDriverReport: `${Endpoints.REPORTS_BASE}all-driver-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getIndividualDriverReport: `${Endpoints.REPORTS_BASE}individual-driver-report/{season}/{driverIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getRaceReportFilterValues: `${Endpoints.REPORTS_BASE}race-report-filter-values/{season}`,
-        getOverviewRaceReport: `${Endpoints.REPORTS_BASE}get-overview-race-report/{season}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getRaceResultReport: `${Endpoints.REPORTS_BASE}get-race-result-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getFastestLapsReport: `${Endpoints.REPORTS_BASE}get-fastest-laps-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getPitStopsReport: `${Endpoints.REPORTS_BASE}get-pit-stops-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getQualifyingReport: `${Endpoints.REPORTS_BASE}get-qualifying-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getOverviewRaceReport: `${Endpoints.REPORTS_BASE}overview-race-report/{season}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getRaceResultReport: `${Endpoints.REPORTS_BASE}race-result-report/{season}/{round}/{type}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getFastestLapsReport: `${Endpoints.REPORTS_BASE}fastest-laps-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getPitStopsReport: `${Endpoints.REPORTS_BASE}pit-stops-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getQualifyingReport: `${Endpoints.REPORTS_BASE}qualifying-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
         getConstructorReportFilterValues: `${Endpoints.REPORTS_BASE}constructor-report-filter-values/{season}`,
-        getOverviewConstructorReport: `${Endpoints.REPORTS_BASE}get-overview-constructor-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
-        getIndividualConstructorReport: `${Endpoints.REPORTS_BASE}get-individual-constructor-report/{season}/{constructorIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getOverviewConstructorReport: `${Endpoints.REPORTS_BASE}overview-constructor-report/{season}/{round}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
+        getIndividualConstructorReport: `${Endpoints.REPORTS_BASE}individual-constructor-report/{season}/{constructorIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 
     public static readonly DEVELOPMENT = {

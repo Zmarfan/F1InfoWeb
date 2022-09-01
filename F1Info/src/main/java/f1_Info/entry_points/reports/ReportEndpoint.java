@@ -49,7 +49,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-all-driver-report/{season}/{round}")
+    @GetMapping("/all-driver-report/{season}/{round}")
     public ResponseEntity<?> getAllDriverReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
@@ -65,7 +65,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-individual-driver-report/{season}/{driverIdentifier}/{raceType}")
+    @GetMapping("/individual-driver-report/{season}/{driverIdentifier}/{raceType}")
     public ResponseEntity<?> getIndividualDriverReport(
         @PathVariable("season") final int season,
         @PathVariable("driverIdentifier") final String driverIdentifier,
@@ -100,7 +100,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-overview-constructor-report/{season}/{round}")
+    @GetMapping("/overview-constructor-report/{season}/{round}")
     public ResponseEntity<?> getOverviewConstructorReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
@@ -116,7 +116,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-individual-constructor-report/{season}/{constructorIdentifier}/{raceType}")
+    @GetMapping("/individual-constructor-report/{season}/{constructorIdentifier}/{raceType}")
     public ResponseEntity<?> getIndividualConstructorReport(
         @PathVariable("season") final int season,
         @PathVariable("constructorIdentifier") final String constructorIdentifier,
@@ -151,7 +151,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-overview-race-report/{season}/{type}")
+    @GetMapping("/overview-race-report/{season}/{type}")
     public ResponseEntity<?> getOverviewRaceResultReport(
         @PathVariable("season") final int season,
         @PathVariable("type") final String resultType,
@@ -173,7 +173,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-race-result-report/{season}/{round}/{type}")
+    @GetMapping("/race-result-report/{season}/{round}/{type}")
     public ResponseEntity<?> getRaceResultReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
@@ -197,7 +197,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-fastest-laps-report/{season}/{round}")
+    @GetMapping("/fastest-laps-report/{season}/{round}")
     public ResponseEntity<?> getFastestLapsReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
@@ -213,7 +213,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-pit-stops-report/{season}/{round}")
+    @GetMapping("/pit-stops-report/{season}/{round}")
     public ResponseEntity<?> getPitStopsReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
@@ -229,7 +229,7 @@ public class ReportEndpoint {
         });
     }
 
-    @GetMapping("/get-qualifying-report/{season}/{round}")
+    @GetMapping("/qualifying-report/{season}/{round}")
     public ResponseEntity<?> getQualifyingReport(
         @PathVariable("season") final int season,
         @PathVariable("round") final int round,
