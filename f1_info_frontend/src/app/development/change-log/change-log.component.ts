@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {map, Observable} from 'rxjs';
 import {ChangeLogService} from './change-log.service';
+import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
 
 @Component({
     selector: 'app-change-log',
@@ -9,14 +9,23 @@ import {ChangeLogService} from './change-log.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class ChangeLogComponent implements OnInit {
-    public items$: Observable<string[]> | undefined = undefined;
+    public items: string[] = [];
+    public loading: boolean = false;
 
     public constructor(
-        private mChangeLogService: ChangeLogService
+        private mChangeLogService: ChangeLogService,
+        private mMessageService: GlobalMessageService
     ) {
     }
 
     public ngOnInit() {
-        this.items$ = this.mChangeLogService.getChangeLogItems().pipe(map((response) => response.items));
+        this.loading = true;
+        this.mChangeLogService.getChangeLogItems().subscribe({
+            next: (response) => {
+                this.items = response.items;
+                this.loading = false;
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
+        });
     }
 }

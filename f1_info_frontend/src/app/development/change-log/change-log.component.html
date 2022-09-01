@@ -1,9 +1,9 @@
 <section class="change-log">
     <h1>{{'changeLog.title' | translate}}</h1>
 
-    <app-loading-element [loading]="(items$ | async) === null">
+    <app-loading-element [loading]="loading">
         <div class="change-log-holder">
-            <div *ngFor="let item of items$ | async" class="change-log-holder__item" [innerHTML]="item"></div>
+            <div *ngFor="let item of items" class="change-log-holder__item" [innerHTML]="item"></div>
         </div>
     </app-loading-element>
 </section>
