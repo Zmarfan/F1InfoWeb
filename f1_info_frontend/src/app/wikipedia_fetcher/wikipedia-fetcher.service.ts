@@ -21,8 +21,8 @@ export class WikipediaFetcherService {
         return this.mTranslate.currentLang as Language;
     }
 
-    private static createImageCallUrl(title: string, size: number, language: Language): string {
-        return `https://${language}.wikipedia.org/w/api.php?origin=*&redirects=1&action=query&prop=pageimages&format=json&pithumbsize=${size}&titles=${title}`;
+    private static createImageCallUrl(title: string, size: number): string {
+        return `https://en.wikipedia.org/w/api.php?origin=*&redirects=1&action=query&prop=pageimages&format=json&pithumbsize=${size}&titles=${title}`;
     }
 
     private static createSummaryUrl(title: string, language: Language): string {
@@ -36,7 +36,7 @@ export class WikipediaFetcherService {
     }
 
     public getWikipediaImageSrc(title: string, size: number): Observable<string> {
-        return this.mHttpClient.get(WikipediaFetcherService.createImageCallUrl(title, size, this.language))
+        return this.mHttpClient.get(WikipediaFetcherService.createImageCallUrl(title, size))
             .pipe(
                 map((response: any) => {
                     return WikipediaFetcherService.getPageObject(response).thumbnail?.source;

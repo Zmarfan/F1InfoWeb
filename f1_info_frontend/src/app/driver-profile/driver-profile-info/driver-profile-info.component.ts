@@ -1,16 +1,17 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {WikipediaFetcherService} from '../../wikipedia_fetcher/wikipedia-fetcher.service';
 import {DriverProfileResponse} from '../../../generated/server-responses';
 import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Language} from '../../../common/constants/language';
+import {Subscription, tap} from 'rxjs';
 
 @Component({
     selector: 'app-driver-profile-info',
     templateUrl: './driver-profile-info.component.html',
     styleUrls: ['./driver-profile-info.component.scss'],
 })
-export class DriverProfileInfoComponent implements OnChanges {
+export class DriverProfileInfoComponent implements OnInit, OnDestroy, OnChanges {
     private static readonly IMAGE_SIZE_PX = 300;
 
     @Input() public info!: DriverProfileResponse;
@@ -19,6 +20,8 @@ export class DriverProfileInfoComponent implements OnChanges {
     public wikipediaSummaryLoading: boolean = false;
     public imageSrc: string | undefined = undefined;
     public summaryParagraphs: string[] = [];
+
+    private mLanguageSubscription!: Subscription;
 
     public constructor(
         private mTranslate: TranslateService,
@@ -36,6 +39,14 @@ export class DriverProfileInfoComponent implements OnChanges {
             return this.info.wikipediaUrl;
         }
         return `https://${this.mTranslate.currentLang}${this.info.wikipediaUrl.split('http://en')[1]}`;
+    }
+
+    public ngOnInit() {
+        this.mLanguageSubscription = this.mTranslate.onLangChange.pipe(tap(() => this.fetchWikipediaInfo())).subscribe();
+    }
+
+    public ngOnDestroy() {
+        this.mLanguageSubscription.unsubscribe();
     }
 
     public ngOnChanges() {
