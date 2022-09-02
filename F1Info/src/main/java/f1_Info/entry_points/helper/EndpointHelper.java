@@ -6,17 +6,14 @@ import common.logger.Logger;
 import f1_Info.configuration.web.users.Authority;
 import f1_Info.configuration.web.users.SecurityContextWrapper;
 import f1_Info.configuration.web.users.SessionAttributes;
-import f1_Info.entry_points.helper.database.Database;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.function.Function;
 
 import static f1_Info.configuration.web.ResponseUtil.*;
@@ -25,23 +22,7 @@ import static f1_Info.configuration.web.ResponseUtil.*;
 @Component
 public class EndpointHelper {
     private final SecurityContextWrapper mSecurityContextWrapper;
-    private final Database mDatabase;
     private final Logger mLogger;
-
-    public ResponseEntity<?> authorizeAndRun(final HttpServletRequest request, final Function<Long, Command> createCommand) {
-        if (!isLoggedIn()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        return runCommand(request, createCommand);
-    }
-
-    public ResponseEntity<?> authorizeAndRunAsManager(final HttpServletRequest request, final Function<Long, Command> createCommand) {
-        if (!isLoggedIn() || !isUserManager(request)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        return runCommand(request, createCommand);
-    }
 
     public ResponseEntity<?> runCommand(final HttpServletRequest request, final Function<Long, Command> createCommand) {
         final Long userId = getUserIdFromSession(request);
@@ -93,15 +74,5 @@ public class EndpointHelper {
     private Long getUserIdFromSession(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);
         return session != null ? (Long) session.getAttribute(SessionAttributes.USER_ID) : null;
-    }
-
-    private boolean isUserManager(final HttpServletRequest request) {
-        final Long userId = getUserIdFromSession(request);
-        try {
-            return userId != null && mDatabase.isUserManager(userId);
-        } catch (final SQLException e) {
-            mLogger.severe("isUserManager", this.getClass(), String.format("Unable to verify if user %d is manager", userId), e);
-            return false;
-        }
     }
 }

@@ -26,7 +26,7 @@ public class UserEndpoint {
 
     @PutMapping("/settings")
     public ResponseEntity<?> updateUserSettings(@RequestBody final NewUserSettingsRequestBody newUserSettings) {
-        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
             if (newUserSettings == null || !UserSettingsValidator.newUserSettingsAreOfValidFormat(newUserSettings)) {
                 throw new BadRequestException();
             }
@@ -37,11 +37,11 @@ public class UserEndpoint {
 
     @GetMapping("/bell-notifications")
     public ResponseEntity<?> getBellNotifications() {
-        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new GetUserBellNotificationsCommand(userId, mBellNotificationDatabase));
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetUserBellNotificationsCommand(userId, mBellNotificationDatabase));
     }
 
     @PutMapping("/bell-notifications-opened-state")
     public ResponseEntity<?> markBellNotificationsAsOpened() {
-        return mEndpointHelper.authorizeAndRun(mHttpServletRequest, userId -> new MarkBellNotificationsAsOpenedCommand(userId, mBellNotificationDatabase));
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new MarkBellNotificationsAsOpenedCommand(userId, mBellNotificationDatabase));
     }
 }

@@ -8,6 +8,9 @@ export class Endpoints {
     private static readonly DRIVER_BASE: string = Endpoints.BASE_URL + 'Drivers/';
     private static readonly REPORTS_BASE: string = Endpoints.BASE_URL + 'Reports/';
     private static readonly DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'Development/';
+    private static readonly OPEN_DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'OpenDevelopment/';
+
+    private static readonly MANAGER_DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'ManagerDevelopment/';
 
     public static readonly AUTHENTICATION = {
         getUser: `${Endpoints.AUTHENTICATION_BASE}user`,
@@ -46,13 +49,19 @@ export class Endpoints {
         getIndividualConstructorReport: `${Endpoints.REPORTS_BASE}individual-constructor-report/{season}/{constructorIdentifier}/{raceType}?sortDirection={sortDirection}&sortColumn={sortColumn}`,
     };
 
+    public static readonly OPEN_DEVELOPMENT = {
+        getChangeLogItems: `${Endpoints.OPEN_DEVELOPMENT_BASE}change-log-items`,
+    };
+
     public static readonly DEVELOPMENT = {
-        getChangeLogItems: `${Endpoints.DEVELOPMENT_BASE}change-log-items`,
         getFeedbackItems: `${Endpoints.DEVELOPMENT_BASE}feedback-items`,
         createFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}feedback-item`,
         likeFeedback: `${Endpoints.DEVELOPMENT_BASE}feedback-item-like/{itemId}`,
         removeFeedbackLike: `${Endpoints.DEVELOPMENT_BASE}feedback-item-like/{itemId}`,
         deleteFeedbackItem: `${Endpoints.DEVELOPMENT_BASE}feedback-item/{itemId}`,
-        markAsComplete: `${Endpoints.DEVELOPMENT_BASE}complete-feedback-item/{itemId}`,
+    };
+
+    public static readonly MANAGER_DEVELOPMENT = {
+        markAsComplete: `${Endpoints.MANAGER_DEVELOPMENT_BASE}complete-feedback-item/{itemId}`,
     };
 }

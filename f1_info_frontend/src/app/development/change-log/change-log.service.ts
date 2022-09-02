@@ -13,6 +13,6 @@ export class ChangeLogService {
     }
 
     public getChangeLogItems() {
-        return this.mHttpClient.get<ChangeLogResponse>(Endpoints.DEVELOPMENT.getChangeLogItems);
+        return this.mHttpClient.get<ChangeLogResponse>(Endpoints.OPEN_DEVELOPMENT.getChangeLogItems);
     }
 }
