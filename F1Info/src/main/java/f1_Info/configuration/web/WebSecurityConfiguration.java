@@ -14,11 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @EnableWebSecurity
 @AllArgsConstructor(onConstructor=@__({@Autowired}))
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserManager mUserManager;
+    private final CorsConfigurationSource mCorsConfigurationSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,10 +35,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().disable().csrf().disable()
+        http
+            .cors().configurationSource(mCorsConfigurationSource)
+            .and()
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/Authentication/**", "/Reports/**", "/OpenDevelopment/**").permitAll()
-            .antMatchers("/User/**", "/Development/**").hasAnyAuthority(Authority.ADMIN.getAuthority(), Authority.USER.getAuthority())
+            .antMatchers("/User/**", "/Development/**").authenticated()
             .antMatchers("/ManagerDevelopment/**").hasAuthority(Authority.ADMIN.getAuthority())
             .and()
             .sessionManagement()
