@@ -39,7 +39,7 @@ public class DevelopmentEndpoint {
 
     @PutMapping("/feedback-item")
     public ResponseEntity<?> createFeedbackItem(@RequestBody final CreateFeedbackItemRequestBody requestBody) {
-        if (requestBody == null || requestBody.getText().length() < 10 || requestBody.getText().length() > 255) {
+        if (requestBody == null || requestBody.getText().isBlank() || requestBody.getText().length() > 255) {
             return badRequest();
         }
 
