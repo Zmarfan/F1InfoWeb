@@ -29,8 +29,8 @@ public class Database extends TaskDatabase {
         return executeBasicQuery(new CanMarkFeedbackItemAsCompleteQueryData(itemId));
     }
 
-    public void markFeedbackItemAsComplete(final long itemId) throws SQLException {
-        executeVoidQuery(new MarkFeedbackItemAsCompleteQueryData(itemId));
+    public void markFeedbackItemAsComplete(final long userId, final long itemId) throws SQLException {
+        executeVoidQuery(new MarkFeedbackItemAsCompleteQueryData(userId, itemId));
     }
 
     public FeedbackAuthorInfoRecord getFeedbackAuthorInfo(final long itemId) throws SQLException {
@@ -41,7 +41,7 @@ public class Database extends TaskDatabase {
         return executeBasicQuery(new CanMarkItemAsWillNotDo(itemId));
     }
 
-    public void markItemAsWillNotDo(final long itemId) throws SQLException {
-        executeVoidQuery(new MarkItemAsWillNotDo(itemId));
+    public void markItemAsWillNotDo(final long userId, final long itemId) throws SQLException {
+        executeVoidQuery(new MarkItemAsWillNotDo(userId, itemId));
     }
 }

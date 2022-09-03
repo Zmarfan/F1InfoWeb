@@ -5,7 +5,7 @@
     <h3>{{item.text}}</h3>
     <div class="feedback-item__info">
         <h4>{{item.authorDisplayName}}</h4>
-        <ng-container *ngIf="!item.completed && item.open">
+        <ng-container *ngIf="!item.completed && !item.notDoing">
             <div class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
                 <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
                 <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
@@ -16,7 +16,7 @@
             </div>
         </ng-container>
 
-        <span *ngIf="!item.open" class="feedback-item__not-do">
+        <span *ngIf="item.notDoing" class="feedback-item__not-do">
             <span>{{'feedback.willNotDo' | translate}}</span>
             <fa-icon icon="triangle-exclamation"></fa-icon>
         </span>

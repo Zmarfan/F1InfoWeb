@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MarkFeedbackItemAsCompleteLogicTest {
+    private static final long USER_ID = 12;
     private static final long ITEM_ID = 5412;
 
     @Mock
@@ -35,15 +36,15 @@ class MarkFeedbackItemAsCompleteLogicTest {
     void should_throw_bad_request_if_unable_to_mark_feedback_as_complete() throws SQLException {
         when(mDatabase.canMarkFeedbackItemAsComplete(ITEM_ID)).thenReturn(false);
 
-        assertThrows(BadRequestException.class, () -> mLogic.markFeedbackItemAsComplete(ITEM_ID));
+        assertThrows(BadRequestException.class, () -> mLogic.markFeedbackItemAsComplete(USER_ID, ITEM_ID));
     }
 
     @Test
     void should_throw_sql_exception_if_unable_to_mark_feedback_item_as_complete() throws SQLException {
         when(mDatabase.canMarkFeedbackItemAsComplete(ITEM_ID)).thenReturn(true);
-        doThrow(new SQLException()).when(mDatabase).markFeedbackItemAsComplete(ITEM_ID);
+        doThrow(new SQLException()).when(mDatabase).markFeedbackItemAsComplete(USER_ID, ITEM_ID);
 
-        assertThrows(SQLException.class, () -> mLogic.markFeedbackItemAsComplete(ITEM_ID));
+        assertThrows(SQLException.class, () -> mLogic.markFeedbackItemAsComplete(USER_ID, ITEM_ID));
     }
 
     @Test
@@ -51,7 +52,7 @@ class MarkFeedbackItemAsCompleteLogicTest {
         when(mDatabase.canMarkFeedbackItemAsComplete(ITEM_ID)).thenReturn(true);
         doThrow(new SQLException()).when(mDatabase).getFeedbackAuthorInfo(ITEM_ID);
 
-        assertThrows(SQLException.class, () -> mLogic.markFeedbackItemAsComplete(ITEM_ID));
+        assertThrows(SQLException.class, () -> mLogic.markFeedbackItemAsComplete(USER_ID, ITEM_ID));
     }
 
     @Test
@@ -59,10 +60,10 @@ class MarkFeedbackItemAsCompleteLogicTest {
         when(mDatabase.canMarkFeedbackItemAsComplete(ITEM_ID)).thenReturn(true);
         when(mDatabase.getFeedbackAuthorInfo(ITEM_ID)).thenReturn(new FeedbackAuthorInfoRecord(12, "feedback"));
 
-        mLogic.markFeedbackItemAsComplete(ITEM_ID);
+        mLogic.markFeedbackItemAsComplete(USER_ID, ITEM_ID);
 
         final InOrder inOrder = inOrder(mDatabase, mBellNotificationSendOutService);
-        inOrder.verify(mDatabase).markFeedbackItemAsComplete(ITEM_ID);
+        inOrder.verify(mDatabase).markFeedbackItemAsComplete(USER_ID, ITEM_ID);
         inOrder.verify(mBellNotificationSendOutService).sendBellNotification(any(CreateNotificationParameters.class));
     }
 }

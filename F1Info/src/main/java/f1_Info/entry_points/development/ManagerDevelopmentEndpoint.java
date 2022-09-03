@@ -34,7 +34,7 @@ public class ManagerDevelopmentEndpoint {
             return badRequest();
         }
 
-        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new MarkFeedbackItemAsCompleteCommand(itemId, mMarkFeedbackItemAsCompleteLogic));
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new MarkFeedbackItemAsCompleteCommand(userId, itemId, mMarkFeedbackItemAsCompleteLogic));
     }
 
     @PostMapping("/close-feedback-item/{itemId}")
@@ -45,6 +45,6 @@ public class ManagerDevelopmentEndpoint {
             return badRequest();
         }
 
-        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new MarkFeedbackItemAsWillNotDoCommand(itemId, mDatabase));
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new MarkFeedbackItemAsWillNotDoCommand(userId, itemId, mDatabase));
     }
 }

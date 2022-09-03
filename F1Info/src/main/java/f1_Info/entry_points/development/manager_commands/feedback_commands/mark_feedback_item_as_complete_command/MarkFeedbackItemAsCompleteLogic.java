@@ -19,12 +19,12 @@ public class MarkFeedbackItemAsCompleteLogic {
     private final BellNotificationSendOutService mBellNotificationSendOutService;
     private final Database mDatabase;
 
-    public void markFeedbackItemAsComplete(final long itemId) throws SQLException {
+    public void markFeedbackItemAsComplete(final long userId, final long itemId) throws SQLException {
         if (!mDatabase.canMarkFeedbackItemAsComplete(itemId)) {
             throw new BadRequestException();
         }
 
-        mDatabase.markFeedbackItemAsComplete(itemId);
+        mDatabase.markFeedbackItemAsComplete(userId, itemId);
 
         sendBellNotification(itemId);
     }

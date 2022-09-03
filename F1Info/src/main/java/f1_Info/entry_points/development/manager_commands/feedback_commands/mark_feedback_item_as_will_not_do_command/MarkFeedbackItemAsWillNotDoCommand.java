@@ -12,6 +12,7 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
 public class MarkFeedbackItemAsWillNotDoCommand implements Command {
+    private final long mUserId;
     private final long mItemId;
     private final Database mDatabase;
 
@@ -20,7 +21,7 @@ public class MarkFeedbackItemAsWillNotDoCommand implements Command {
         if (!mDatabase.canMarkItemAsWillNotDo(mItemId)) {
             return badRequest();
         }
-        mDatabase.markItemAsWillNotDo(mItemId);
+        mDatabase.markItemAsWillNotDo(mUserId, mItemId);
         return ok();
     }
 }

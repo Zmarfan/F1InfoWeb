@@ -10,12 +10,13 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 
 @AllArgsConstructor
 public class MarkFeedbackItemAsCompleteCommand implements Command {
+    private final long mUserId;
     private final long mItemId;
     private final MarkFeedbackItemAsCompleteLogic mLogicUnit;
 
     @Override
     public ResponseEntity<?> execute() throws SQLException {
-        mLogicUnit.markFeedbackItemAsComplete(mItemId);
+        mLogicUnit.markFeedbackItemAsComplete(mUserId, mItemId);
         return ok();
     }
 }

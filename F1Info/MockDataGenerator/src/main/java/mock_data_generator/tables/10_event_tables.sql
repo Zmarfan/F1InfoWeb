@@ -135,46 +135,46 @@ begin
   insert into feedback_item_like_status_history (feedback_item_id, user_id, liked, from_date, to_date, event_id) values (p_feedback_item_id, p_user_id, p_like_status, p_from, null, p_event_id);
 end;
 
-create table feedback_item_delete_status_history(
+create table feedback_item_status_history(
   feedback_item_id int not null,
-  deleted char not null,
+  type varchar(10) not null,
   from_date timestamp not null,
   to_date timestamp,
   event_id int not null,
 
-  constraint feedback_item_delete_status_history_pk primary key (feedback_item_id, event_id),
-  constraint feedback_item_delete_status_history_feedback_item_id_fk foreign key (feedback_item_id) references feedback_items (id),
-  constraint feedback_item_delete_status_history_fk_event_id_fk foreign key (event_id) references events (id)
+  constraint feedback_item_status_history_pk primary key (feedback_item_id, event_id),
+  constraint feedback_item_status_history_feedback_item_id_fk foreign key (feedback_item_id) references feedback_items (id),
+  constraint feedback_item_status_history_fk_event_id_fk foreign key (event_id) references events (id)
 );
 
-create table feedback_item_delete_status_changes(
+create table feedback_item_status_changes(
   feedback_item_id int not null,
-  deleted char not null,
+  type varchar(10) not null,
   from_date timestamp not null,
   event_id int not null,
 
-  constraint feedback_item_delete_status_changes_pk primary key (feedback_item_id, event_id),
-  constraint feedback_item_delete_status_changes_feedback_item_id_fk foreign key (feedback_item_id) references feedback_items (id),
-  constraint feedback_item_delete_status_changes_event_id_fk foreign key (event_id) references events (id)
+  constraint feedback_item_status_changes_pk primary key (feedback_item_id, event_id),
+  constraint feedback_item_status_changes_feedback_item_id_fk foreign key (feedback_item_id) references feedback_items (id),
+  constraint feedback_item_status_changes_event_id_fk foreign key (event_id) references events (id)
 );
 
-create or replace view latest_feedback_item_delete_status_v as
+create or replace view latest_feedback_item_status_v as
 select
   feedback_item_id,
-  deleted,
+  type,
   from_date,
   event_id
 from
-  feedback_item_delete_status_history
+  feedback_item_status_history
 where
   from_date <= current_timestamp and (to_date is null or to_date > current_timestamp);
 
-drop procedure if exists insert_feedback_item_deleted_status;
-create procedure insert_feedback_item_deleted_status(in p_feedback_item_id int, in p_deleted_status char, in p_event_id int, in p_from timestamp)
+drop procedure if exists insert_feedback_item_status;
+create procedure insert_feedback_item_status(in p_feedback_item_id int, in p_type varchar(10), in p_event_id int, in p_from timestamp)
 begin
-  insert into feedback_item_delete_status_changes (feedback_item_id, deleted, from_date, event_id) values (p_feedback_item_id, p_deleted_status, p_from, p_event_id);
+  insert into feedback_item_status_changes (feedback_item_id, type, from_date, event_id) values (p_feedback_item_id, p_type, p_from, p_event_id);
 
-  delete from feedback_item_delete_status_history where feedback_item_id = p_feedback_item_id and from_date >= p_from;
-  update feedback_item_delete_status_history set to_date = p_from where feedback_item_id = p_feedback_item_id and (to_date is null or to_date > p_from);
-  insert into feedback_item_delete_status_history (feedback_item_id, deleted, from_date, to_date, event_id) values (p_feedback_item_id, p_deleted_status, p_from, null, p_event_id);
+  delete from feedback_item_status_history where feedback_item_id = p_feedback_item_id and from_date >= p_from;
+  update feedback_item_status_history set to_date = p_from where feedback_item_id = p_feedback_item_id and (to_date is null or to_date > p_from);
+  insert into feedback_item_status_history (feedback_item_id, type, from_date, to_date, event_id) values (p_feedback_item_id, p_type, p_from, null, p_event_id);
 end;
