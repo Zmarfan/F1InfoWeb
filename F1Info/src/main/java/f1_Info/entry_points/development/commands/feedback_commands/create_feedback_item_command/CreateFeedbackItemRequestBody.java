@@ -3,6 +3,8 @@ package f1_Info.entry_points.development.commands.feedback_commands.create_feedb
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 
 @Value
 public class CreateFeedbackItemRequestBody {
@@ -12,6 +14,6 @@ public class CreateFeedbackItemRequestBody {
     public CreateFeedbackItemRequestBody(
         @JsonProperty("text") String text
     ) {
-        mText = text;
+        mText = Jsoup.clean(text, Safelist.none());
     }
 }
