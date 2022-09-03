@@ -85,8 +85,26 @@
     }
   }
 
+  &__not-do {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    fa-icon {
+      color: var(--global-message-border-error);
+      font-size: 2rem;
+    }
+  }
+
   &__completed {
     font-size: 2rem;
     color: var(--primary-color);
   }
+}
+
+.manager-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  word-break: break-word;
 }

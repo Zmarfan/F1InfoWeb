@@ -4,6 +4,7 @@ create table feedback_items(
   text varchar(255) not null,
   date timestamp not null,
   completed char default 'N' not null,
+  open char default 'Y' not null,
 
   constraint feedback_items_pk primary key (id),
   constraint feedback_items_author_user_id_fk foreign key (author_user_id) references users(id)

@@ -21,3 +21,15 @@ begin
   where
     feedback_items.id = p_item_id;
 end;
+
+drop procedure if exists can_mark_feedback_item_as_will_not_do;
+create procedure can_mark_feedback_item_as_will_not_do(in p_item_id int)
+begin
+  select if(count(*) = 1 and open = 'Y', 'Y', 'N') from feedback_items where id = p_item_id;
+end;
+
+drop procedure if exists mark_feedback_item_as_will_not_do;
+create procedure mark_feedback_item_as_will_not_do(in p_item_id int)
+begin
+  update feedback_items set open = 'N' where id = p_item_id;
+end;

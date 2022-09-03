@@ -37,4 +37,8 @@ export class FeedbackService {
     public markAsComplete(itemId: number) {
         return this.mHttpClient.post<void>(parseTemplate(Endpoints.MANAGER_DEVELOPMENT.markAsComplete).expand({ itemId }), {});
     }
+
+    public markAsWillNotDo(itemId: number) {
+        return this.mHttpClient.post<void>(parseTemplate(Endpoints.MANAGER_DEVELOPMENT.markAsWillNotDo).expand({ itemId }), {});
+    }
 }

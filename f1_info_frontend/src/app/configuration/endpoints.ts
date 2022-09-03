@@ -63,5 +63,6 @@ export class Endpoints {
 
     public static readonly MANAGER_DEVELOPMENT = {
         markAsComplete: `${Endpoints.MANAGER_DEVELOPMENT_BASE}complete-feedback-item/{itemId}`,
+        markAsWillNotDo: `${Endpoints.MANAGER_DEVELOPMENT_BASE}close-feedback-item/{itemId}`,
     };
 }

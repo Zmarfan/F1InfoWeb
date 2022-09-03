@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FeedbackService} from './feedback.service';
 import {FeedbackItemResponse} from '../../../generated/server-responses';
-import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateFeedbackComponent} from './create-feedback/create-feedback.component';
 import {DialogResult} from '../../../core/dialog/dialog';
@@ -60,6 +59,16 @@ export class FeedbackComponent implements OnInit {
             next: () => {
                 this.fetchFeedbackItems();
                 this.mMessageService.addSuccess(this.mTranslate.instant('feedback.successfullyCompleted'));
+            },
+            error: (e) => this.mMessageService.addHttpError(e),
+        });
+    };
+
+    public markAsWillNotDoCallback = (itemId: number) => {
+        this.mFeedbackService.markAsWillNotDo(itemId).subscribe({
+            next: () => {
+                this.fetchFeedbackItems();
+                this.mMessageService.addSuccess(this.mTranslate.instant('feedback.successfullyWillNotDo'));
             },
             error: (e) => this.mMessageService.addHttpError(e),
         });

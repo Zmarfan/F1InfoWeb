@@ -5,11 +5,21 @@
     <h3>{{item.text}}</h3>
     <div class="feedback-item__info">
         <h4>{{item.authorDisplayName}}</h4>
-        <div *ngIf="!item.completed" class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
-            <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
-            <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
-            <button *ngIf="session.user?.isAdmin" (click)="markItemAsComplete()" appPrimaryButton>{{'feedback.markAsComplete' | translate}}</button>
-        </div>
+        <ng-container *ngIf="!item.completed && item.open">
+            <div class="feedback-item__voting" [class.feedback-item__voting--voted]="hasLiked">
+                <span>{{item.amountOfUpVotesNotYou + (hasLiked ? 1 : 0)}}</span>
+                <fa-icon (click)="toggleOwnLike()" icon="thumbs-up"></fa-icon>
+            </div>
+            <div *ngIf="session.user?.isAdmin" class="manager-buttons">
+                <button (click)="markItemAsComplete()" appPrimaryButton>{{'feedback.markAsComplete' | translate}}</button>
+                <button (click)="markItemAsWillNotDo()" appButton>{{'feedback.markAsNotDo' | translate}}</button>
+            </div>
+        </ng-container>
+
+        <span *ngIf="!item.open" class="feedback-item__not-do">
+            <span>{{'feedback.willNotDo' | translate}}</span>
+            <fa-icon icon="triangle-exclamation"></fa-icon>
+        </span>
         <fa-icon *ngIf="item.completed" icon="check-circle" class="feedback-item__completed"></fa-icon>
     </div>
 </div>

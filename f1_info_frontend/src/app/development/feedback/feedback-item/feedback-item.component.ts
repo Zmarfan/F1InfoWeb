@@ -17,6 +17,7 @@ export class FeedbackItemComponent implements OnInit {
     @Input() public deleteCallback!: (itemId: number) => void;
     @Input() public toggleLikeCallback!: (itemId: number, liked: boolean) => Observable<void>;
     @Input() public markAsComplete!: (itemId: number) => void;
+    @Input() public markAsWillNotDo!: (itemId: number) => void;
 
     public hasLiked: boolean = false;
     private mCurrentlyChangingLikeStatus: boolean = false;
@@ -61,5 +62,9 @@ export class FeedbackItemComponent implements OnInit {
 
     public markItemAsComplete() {
         this.markAsComplete(this.item.feedbackId);
+    }
+
+    public markItemAsWillNotDo() {
+        this.markAsWillNotDo(this.item.feedbackId);
     }
 }

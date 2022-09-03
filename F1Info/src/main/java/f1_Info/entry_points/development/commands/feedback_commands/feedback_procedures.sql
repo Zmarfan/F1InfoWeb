@@ -6,6 +6,7 @@ begin
     feedback_items.text,
     feedback_items.date,
     feedback_items.completed,
+    feedback_items.open,
     user_info.display_name as authour_display_name,
     sum(if(likes.user_id = p_user_id or likes.user_id is null, 0, 1)) as likes_not_from_user,
     if(feedback_items.author_user_id = p_user_id, 'Y', 'N') as is_own,
@@ -15,9 +16,9 @@ begin
     inner join latest_user_information_v user_info on user_info.user_id = feedback_items.author_user_id
     left join feedback_item_likes likes on likes.feedback_item_id = feedback_items.id
   group by
-    feedback_items.id, feedback_items.text, feedback_items.date, feedback_items.completed
+    feedback_items.id, feedback_items.text, feedback_items.date, feedback_items.completed, feedback_items.open
   order by
-    feedback_items.completed, feedback_items.date desc;
+    feedback_items.open desc, feedback_items.completed, feedback_items.date desc;
 end;
 
 drop procedure if exists create_feedback_item;
