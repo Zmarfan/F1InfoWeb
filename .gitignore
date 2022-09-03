@@ -5,6 +5,9 @@
 *.log
 /logging/*.gz
 
+# Production Properties
+/F1Info/src/main/resources/application-prod.properties
+
 # BlueJ files
 *.ctxt
 
