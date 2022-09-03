@@ -4,12 +4,12 @@ import database.IQueryData;
 import lombok.Value;
 
 @Value
-public class IsUserOwnerOfFeedbackItemQueryData implements IQueryData<Boolean> {
+public class CanDeleteFeedbackItemQueryData implements IQueryData<Boolean> {
     long m0UserId;
     long m1ItemId;
 
     @Override
     public String getStoredProcedureName() {
-        return "is_user_owner_of_feedback_item";
+        return "can_user_delete_feedback_item";
     }
 }

@@ -5,7 +5,8 @@ import lombok.Value;
 
 @Value
 public class DeleteFeedbackQueryData implements IQueryData<Void> {
-    long mItemId;
+    long m0UserId;
+    long m1ItemId;
 
     @Override
     public String getStoredProcedureName() {

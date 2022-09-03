@@ -5,7 +5,7 @@ import common.logger.Logger;
 import f1_Info.background.TaskDatabase;
 import f1_Info.entry_points.development.commands.feedback_commands.create_feedback_item_command.CreateFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.DeleteFeedbackQueryData;
-import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.IsUserOwnerOfFeedbackItemQueryData;
+import f1_Info.entry_points.development.commands.feedback_commands.delete_feedback_item_command.CanDeleteFeedbackItemQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.FeedbackItemRecord;
 import f1_Info.entry_points.development.commands.feedback_commands.get_feedback_items_command.GetFeedbackItemsQueryData;
 import f1_Info.entry_points.development.commands.feedback_commands.like_feedback_item_command.CanLikeFeedbackItemQueryData;
@@ -37,12 +37,12 @@ public class Database extends TaskDatabase {
         executeVoidQuery(new CreateFeedbackItemQueryData(userId, text));
     }
 
-    public boolean isUserOwnerOfFeedbackItem(final long userId, final long itemId) throws SQLException {
-        return executeBasicQuery(new IsUserOwnerOfFeedbackItemQueryData(userId, itemId));
+    public boolean canDeleteFeedbackItem(final long userId, final long itemId) throws SQLException {
+        return executeBasicQuery(new CanDeleteFeedbackItemQueryData(userId, itemId));
     }
 
-    public void deleteFeedbackItem(final long itemId) throws SQLException {
-        executeVoidQuery(new DeleteFeedbackQueryData(itemId));
+    public void deleteFeedbackItem(final long userId, final long itemId) throws SQLException {
+        executeVoidQuery(new DeleteFeedbackQueryData(userId, itemId));
     }
 
     public boolean canLikeFeedbackItem(final long userId, final long itemId) throws SQLException {

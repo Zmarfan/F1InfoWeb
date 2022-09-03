@@ -17,10 +17,10 @@ public class DeleteFeedbackItemCommand implements Command {
 
     @Override
     public ResponseEntity<?> execute() throws SQLException {
-        if (!mDatabase.isUserOwnerOfFeedbackItem(mUserId, mItemId)) {
+        if (!mDatabase.canDeleteFeedbackItem(mUserId, mItemId)) {
             return forbidden();
         }
-        mDatabase.deleteFeedbackItem(mItemId);
+        mDatabase.deleteFeedbackItem(mUserId, mItemId);
 
         return ok();
     }
