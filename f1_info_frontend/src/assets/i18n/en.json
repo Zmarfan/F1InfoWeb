@@ -57,7 +57,7 @@
     }
   },
   "bellMessages": {
-    "completeFeedback": "Your feedback: \"{{feedback}}\" has been implemented!"
+    "completeFeedback": "Your feedback: <i>\"{{feedback}}\"</i> has been implemented!"
   },
   "signUpPage": {
     "signUp": "SIGN UP",
