@@ -3,11 +3,12 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RouteHolder} from '../../routing/route-holder';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {UserLoginResponse} from '../../../generated/server-responses';
+import {LoginResponse, UserLoginResponse} from '../../../generated/server-responses';
 import {LoginSignUpService} from '../login-sign-up.service';
 import {Session} from '../../configuration/session';
 import {SignUpComponentType} from '../sign-up/sign-up.component';
 import {finalize} from 'rxjs';
+import {CsrfTokenHolder} from '../../configuration/csrf-token-holder';
 
 interface LoginSignUpConfig {
     titleKey: string;
@@ -66,7 +67,8 @@ export class LoginSignUpComponent implements OnInit {
     public constructor(
         private mRouter: Router,
         private mSession: Session,
-        private mLoginSignUpService: LoginSignUpService
+        private mLoginSignUpService: LoginSignUpService,
+        private mCsrfTokenHolder: CsrfTokenHolder
     ) {
     }
 
@@ -97,7 +99,7 @@ export class LoginSignUpComponent implements OnInit {
                 this.loading = false;
             }))
             .subscribe({
-                next: (_) => this.loginClient(),
+                next: (loginResponse) => this.loginClient(loginResponse as LoginResponse),
                 error: (error: HttpErrorResponse) => this.handleFailedLogin(error.error),
             });
     }
@@ -136,7 +138,8 @@ export class LoginSignUpComponent implements OnInit {
         this.email.setErrors({ failedRegistration: true });
     }
 
-    private loginClient() {
+    private loginClient(loginResponse: LoginResponse) {
+        this.mCsrfTokenHolder.setToken(loginResponse.csrfToken);
         this.mSession.login();
         this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE).then();
     }

@@ -22,9 +22,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @RestController
@@ -35,6 +37,7 @@ public class AuthenticationEndpoint {
 
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
+    private final HttpServletResponse mHttpServletResponse;
     private final PasswordEncoder mPasswordEncoder;
     private final AuthenticationService mAuthenticationService;
     private final TokenService mTokenService;
@@ -94,8 +97,10 @@ public class AuthenticationEndpoint {
                 mEndpointHelper.convertEmail(loginBody.getEmail()),
                 loginBody.getPassword(),
                 mHttpServletRequest,
+                mHttpServletResponse,
                 mFailedLoginHandler,
-                mAuthenticationService
+                mAuthenticationService,
+                new HttpSessionCsrfTokenRepository()
             );
         });
     }

@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {StorageService} from './storage.service';
+import {StorageHandler} from './storage-handler';
 
 @Injectable({
     providedIn: 'root',
@@ -12,10 +12,8 @@ export class ThemeService {
     private mThemeStatus$ = this.mThemeStatus.asObservable();
     private mIsDarkMode: boolean = false;
 
-    public constructor(
-        private mStorageService: StorageService
-    ) {
-        if (this.mIsDarkMode !== mStorageService.getSavedIsDarkMode()) {
+    public constructor() {
+        if (this.mIsDarkMode !== StorageHandler.getConfig().isDarkMode) {
             this.toggleDarkMode();
         }
     }
@@ -24,7 +22,10 @@ export class ThemeService {
         this.mIsDarkMode = !this.mIsDarkMode;
         document.body.classList.toggle(ThemeService.DARK_THEME_CLASS);
         this.mThemeStatus.next(this.mIsDarkMode);
-        this.mStorageService.storeSavedIsDarkMode(this.mIsDarkMode);
+        StorageHandler.modifyConfig((config) => {
+            config.isDarkMode = this.mIsDarkMode;
+            return config;
+        });
     }
 
     public onChange(): Observable<boolean> {

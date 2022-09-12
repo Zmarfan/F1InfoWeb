@@ -18,7 +18,7 @@ import {WebsiteInfoComponent} from './website-info/website-info.component';
 import {ProfileHeaderService} from './profile-header.service';
 import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
 import {BellNotificationResponse} from '../../../generated/server-responses';
-import {StorageService} from '../../../app/storage.service';
+import {StorageHandler} from '../../../app/storage-handler';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -56,7 +56,6 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         private mTranslateService: TranslateService,
         private mProfileService: ProfileHeaderService,
         private mMessageService: GlobalMessageService,
-        private mStorageService: StorageService,
         private mThemeService: ThemeService
     ) {
         this.mSubscription = this.mSession.isLoggedIn.subscribe((loggedIn) => {
@@ -133,7 +132,10 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
             if (!result?.wasApplied) {
                 this.mTranslateService.use(openedSelectedLanguage);
             } else {
-                this.mStorageService.storeSavedLanguage(this.mTranslateService.currentLang as Language);
+                StorageHandler.modifyConfig((config) => {
+                    config.language = this.mTranslateService.currentLang as Language;
+                    return config;
+                });
             }
         });
     }

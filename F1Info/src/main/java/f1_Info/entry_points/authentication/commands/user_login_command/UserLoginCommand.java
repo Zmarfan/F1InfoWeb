@@ -9,8 +9,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static f1_Info.configuration.web.ResponseUtil.notAcceptable;
 import static f1_Info.configuration.web.ResponseUtil.ok;
@@ -20,8 +23,10 @@ public class UserLoginCommand implements Command {
     private final Email mEmail;
     private final String mPassword;
     private final HttpServletRequest mRequest;
+    private final HttpServletResponse mResponse;
     private final FailedLoginHandler mFailedLoginHandler;
     private final AuthenticationService mAuthenticationService;
+    private final HttpSessionCsrfTokenRepository mCsrfTokenRepository;
 
     @Override
     public ResponseEntity<?> execute() {
@@ -40,6 +45,9 @@ public class UserLoginCommand implements Command {
         }
 
         mFailedLoginHandler.resetFailedAttempts(ip);
-        return ok();
+
+        final CsrfToken csrfToken = mCsrfTokenRepository.generateToken(mRequest);
+        mCsrfTokenRepository.saveToken(csrfToken, mRequest, mResponse);
+        return ok(new LoginResponse(csrfToken.getToken()));
     }
 }

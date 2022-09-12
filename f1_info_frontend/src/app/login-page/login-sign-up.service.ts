@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {UserDetails} from './login-sign-up/login-sign-up.component';
 import {Endpoints} from '../configuration/endpoints';
 import {Observable} from 'rxjs';
-import {UserLoginResponse} from '../../generated/server-responses';
+import {LoginResponse, UserLoginResponse} from '../../generated/server-responses';
 import {parseTemplate} from 'url-template';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class LoginSignUpService {
     ) {
     }
 
-    public login(formData: UserDetails): Observable<UserLoginResponse> {
+    public login(formData: UserDetails): Observable<UserLoginResponse | LoginResponse> {
         return this.mHttpClient.post<UserLoginResponse>(Endpoints.AUTHENTICATION.login, formData);
     }
 
