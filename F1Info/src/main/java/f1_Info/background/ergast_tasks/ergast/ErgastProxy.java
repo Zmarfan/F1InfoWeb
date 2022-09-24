@@ -262,6 +262,6 @@ public class ErgastProxy {
     }
 
     private boolean isProduction() {
-        return mConfiguration.getRules().getIsMock();
+        return !mConfiguration.getRules().getIsMock();
     }
 }
