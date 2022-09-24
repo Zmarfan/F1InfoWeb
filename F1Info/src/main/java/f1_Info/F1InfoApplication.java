@@ -102,7 +102,7 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		mFetchSprintResultsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 */1 * * * *")
 	public void runFetchRaceResultsTask() {
 		mFetchRaceResultsTask.run();
 	}
