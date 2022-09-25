@@ -24,6 +24,7 @@ import { GlobalMessageDisplayComponent } from './information/global-message-disp
 import { WebsiteInfoComponent } from './navigation/profile-header/website-info/website-info.component';
 import { FriendsComponent } from './navigation/friends/friends.component';
 import { CopyButtonComponent } from './input/buttons/copy-button/copy-button.component';
+import { AddFriendsComponent } from './navigation/friends/add-friends/add-friends.component';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { CopyButtonComponent } from './input/buttons/copy-button/copy-button.com
         WebsiteInfoComponent,
         FriendsComponent,
         CopyButtonComponent,
+        AddFriendsComponent,
     ],
     imports: [
         CommonModule,

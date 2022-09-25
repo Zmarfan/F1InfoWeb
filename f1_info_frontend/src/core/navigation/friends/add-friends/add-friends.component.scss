@@ -1,0 +1,79 @@
+@import "src/styles/responsiveness.scss";
+
+.friends-add-friend {
+  &__header {
+    padding: 0.5rem;
+    color: var(--text-color-light);
+    background: var(--light-primary-color);
+    border-radius: 10px 5px 0 0;
+    margin: 0;
+  }
+
+  &__body {
+    padding: 1rem;
+    background: var(--bkg-color-shade);
+    border-radius: 0 0 10px 5px;
+
+    h3 {
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  &__my-detail-holder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+  }
+
+  &__friend-code {
+    font-size: 1.75rem;
+    font-weight: 500;
+    @media(max-width: $mobile-max-width) {
+      font-size: 1.4rem;
+    }
+  }
+
+  &__search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__search-field {
+    flex-grow: 1;
+  }
+
+  &__to-add-holder {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bkg-color);
+    display: flex;
+    border-radius: 15px 5px 15px 5px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__to-add {
+    img {
+      border-radius: 100%;
+      @media(max-width: $mobile-max-width) {
+        width: 50px;
+      }
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+}
