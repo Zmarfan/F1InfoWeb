@@ -128,9 +128,11 @@
     "yourFriendCode": "Din Vänkod",
     "friendCodeLabel": "Kod",
     "friendCodeHint": "Ange en vänkod att söka efter!",
-    "addFriendButton": "Skick vänförfrågan!",
+    "addFriendButton": "Skicka vänförfrågan!",
     "friendsInCommon": "Ni har {{amount}} vänner gemensamt",
-    "noResult": "Det finns ingen användare med denna vänkod"
+    "noResult": "Det finns ingen användare med denna vänkod",
+    "youAreFriends": "Ni är redan vänner",
+    "friendRequestSent": "Redan skickat vänförfrågan"
   },
   "userSettings": {
     "header": "Ändra Användarinställningar",

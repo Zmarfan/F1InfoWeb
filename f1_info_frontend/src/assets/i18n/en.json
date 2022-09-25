@@ -130,7 +130,9 @@
     "friendCodeHint": "Enter a friend code to search for!",
     "addFriendButton": "Send Friend Request",
     "friendsInCommon": "You have {{amount}} friends in common",
-    "noResult": "There exist no user with this friend code"
+    "noResult": "There exist no user with this friend code",
+    "youAreFriends": "You are already friends",
+    "friendRequestSent": "Already sent a friend request"
   },
   "userSettings": {
     "header": "Change User Settings",
