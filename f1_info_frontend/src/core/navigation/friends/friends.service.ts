@@ -2,16 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, delay} from 'rxjs';
 import {Endpoints} from '../../../app/configuration/endpoints';
-import {FriendsInfoResponse} from '../../../generated/server-responses';
-
-export type FriendStatus = 'FRIENDS' | 'PENDING' | 'NOT_FRIENDS';
-
-export interface SearchFriendResponse {
-    displayName: string;
-    friendsInCommon: number;
-    friendStatus: FriendStatus;
-    friendCode: string;
-}
+import {FriendsInfoResponse, SearchFriendResponse} from '../../../generated/server-responses';
+import {parseTemplate} from 'url-template';
 
 @Injectable({
     providedIn: 'root',
@@ -26,17 +18,8 @@ export class FriendsService {
         return this.mHttpClient.get<FriendsInfoResponse>(Endpoints.FRIENDS.getInfo);
     }
 
-    public searchFriendByCode(code: string): Observable<SearchFriendResponse> {
-        if (code !== 'asd') {
-            return of({} as any).pipe(delay(1000));
-        }
-
-        return of({
-            displayName: 'Henry',
-            friendsInCommon: 3,
-            friendStatus: 'FRIENDS',
-            friendCode: 'asd',
-        } as any).pipe(delay(1000));
+    public searchFriendByCode(friendCode: string): Observable<SearchFriendResponse> {
+        return this.mHttpClient.get<SearchFriendResponse>(parseTemplate(Endpoints.FRIENDS.searchFriend).expand({ friendCode }));
     }
 
     public addFriend(code: string): Observable<null> {

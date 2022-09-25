@@ -229,3 +229,14 @@ begin
   update user_friend_status_history set to_date = p_from where user_id = p_user_id and friend_user_id = p_friend_user_id and (to_date is null or to_date > p_from);
   insert into user_friend_status_history (user_id, friend_user_id, friend_status, from_date, to_date, event_id) values (p_user_id, p_friend_user_id, p_friend_status, p_from, null, p_event_id);
 end;
+
+create or replace view latest_user_friends_v as
+select
+  user_id,
+  friend_user_id,
+  from_date,
+  event_id
+from
+  latest_user_friend_status_v
+where
+  latest_user_friend_status_v.friend_status = 'friend';

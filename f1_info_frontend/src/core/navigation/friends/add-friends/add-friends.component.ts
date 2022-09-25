@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {FriendsService, SearchFriendResponse} from '../friends.service';
+import {FriendsService} from '../friends.service';
 import {GlobalMessageService} from '../../../information/global-message-display/global-message.service';
 import {ValidatorFactory} from '../../../utils/validator-factory';
+import {SearchFriendResponse} from '../../../../generated/server-responses';
 
 @Component({
     selector: 'app-add-friends',
