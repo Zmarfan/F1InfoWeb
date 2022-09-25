@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
+import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faPeopleGroup, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
 import {Router} from '@angular/router';
@@ -19,6 +19,7 @@ import {ProfileHeaderService} from './profile-header.service';
 import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
 import {BellNotificationResponse} from '../../../generated/server-responses';
 import {StorageHandler} from '../../../app/storage-handler';
+import {FriendsComponent} from '../friends/friends.component';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -73,6 +74,12 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         pushIfTrue(
             items,
             this.loggedIn,
+            { icon: faPeopleGroup, translationKey: 'navigation.profile.friends', clickCallback: () => this.mDialog.open(FriendsComponent) }
+        );
+
+        pushIfTrue(
+            items,
+            this.loggedIn,
             { icon: faUserGear, translationKey: 'navigation.profile.userSettings', clickCallback: () => this.openUserSettingsDialog() }
         );
 
@@ -101,6 +108,8 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.fetchBellNotificationsIfNeeded();
+
+        this.mDialog.open(FriendsComponent);
     }
 
     public ngOnDestroy() {

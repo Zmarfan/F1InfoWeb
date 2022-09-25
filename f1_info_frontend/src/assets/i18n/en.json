@@ -8,7 +8,10 @@
     "cancel": "Cancel",
     "no": "No",
     "yes": "Yes",
-    "apply": "Apply"
+    "apply": "Apply",
+    "search": "Search",
+    "copy": "Copy",
+    "copied": "Copied!"
   },
   "input": {
     "email": "Email",
@@ -51,6 +54,7 @@
       "loginOrSignUp": "Log in/Sign up",
       "darkMode": "Toggle dark mode",
       "userSettings": "Profile Settings",
+      "friends": "Friends",
       "language": "Select language",
       "logout": "Log out",
       "noNewBellNotifications": "There are no new notifications!"
@@ -117,6 +121,16 @@
       "title": "A password reset email has been sent to {{email}}.",
       "paragraph1": "Please open this email as to be create a new password for your account."
     }
+  },
+  "friends": {
+    "header": "Friends",
+    "addFriend": "Add Friend",
+    "yourFriendCode": "Your Friend Code",
+    "friendCodeLabel": "Code",
+    "friendCodeHint": "Enter a friend code to search for!",
+    "addFriendButton": "Send Friend Request",
+    "friendsInCommon": "You have {{amount}} friends in common",
+    "noResult": "There exist no user with this friend code"
   },
   "userSettings": {
     "header": "Change User Settings",

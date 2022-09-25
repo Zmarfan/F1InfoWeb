@@ -8,7 +8,10 @@
     "cancel": "Avbryt",
     "no": "Nej",
     "yes": "Ja",
-    "apply": "Välj"
+    "apply": "Välj",
+    "search": "Sök",
+    "copy": "Kopiera",
+    "copied": "Kopierad!"
   },
   "input": {
     "email": "E-post",
@@ -51,6 +54,7 @@
       "loginOrSignUp": "Logga in/Bli medlem",
       "darkMode": "Växla mörkt tema",
       "userSettings": "Profilinställningar",
+      "friends": "Vänner",
       "language": "Välj språk",
       "logout": "Logga ut",
       "noNewBellNotifications": "Det finns inga nya notifikationer!"
@@ -117,6 +121,16 @@
       "title": "Ett e-postmeddelande om lösenordsåterställning har skickats till {{email}}.",
       "paragraph1": "Vänligen öppna detta e-postmeddelande för att skapa ett nytt lösenord för ditt konto."
     }
+  },
+  "friends": {
+    "header": "Vänner",
+    "addFriend": "Lägg till Vän",
+    "yourFriendCode": "Din Vänkod",
+    "friendCodeLabel": "Kod",
+    "friendCodeHint": "Ange en vänkod att söka efter!",
+    "addFriendButton": "Skick vänförfrågan!",
+    "friendsInCommon": "Ni har {{amount}} vänner gemensamt",
+    "noResult": "Det finns ingen användare med denna vänkod"
   },
   "userSettings": {
     "header": "Ändra Användarinställningar",

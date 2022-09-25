@@ -22,6 +22,8 @@ import { MobileProfileHeaderComponent } from './navigation/profile-header/mobile
 import { UserSettingsComponent } from './navigation/user-settings/user-settings.component';
 import { GlobalMessageDisplayComponent } from './information/global-message-display/global-message-display.component';
 import { WebsiteInfoComponent } from './navigation/profile-header/website-info/website-info.component';
+import { FriendsComponent } from './navigation/friends/friends.component';
+import { CopyButtonComponent } from './input/buttons/copy-button/copy-button.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +43,8 @@ import { WebsiteInfoComponent } from './navigation/profile-header/website-info/w
         UserSettingsComponent,
         GlobalMessageDisplayComponent,
         WebsiteInfoComponent,
+        FriendsComponent,
+        CopyButtonComponent,
     ],
     imports: [
         CommonModule,
