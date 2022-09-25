@@ -69,5 +69,6 @@ export class Endpoints {
     public static readonly FRIENDS = {
         getInfo: `${Endpoints.FRIENDS_BASE}info`,
         searchFriend: `${Endpoints.FRIENDS_BASE}search/{friendCode}`,
+        sendFriendRequest: `${Endpoints.FRIENDS_BASE}friend-request`,
     };
 }

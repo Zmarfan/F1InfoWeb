@@ -10,15 +10,15 @@
 
         <form class="friends-add-friend__search" [formGroup]="formData" (ngSubmit)="search()">
             <app-text-input
-                    class="friends-add-friend__search-field"
-                    [inputConfig]="{
-                            formControl: friendCode,
-                            labelKey: 'friends.friendCodeLabel',
-                            hintKey: 'friends.friendCodeHint',
-                            inputType: 'text',
-                            idAttribute: 'friendCodeId'
-                        }"
-                    formControlName="friendCode"
+                class="friends-add-friend__search-field"
+                [inputConfig]="{
+                    formControl: friendCode,
+                    labelKey: 'friends.friendCodeLabel',
+                    hintKey: 'friends.friendCodeHint',
+                    inputType: 'text',
+                    idAttribute: 'friendCodeId'
+                }"
+                formControlName="friendCode"
             ></app-text-input>
 
             <button appPrimaryButton [disabled]="!formData.valid">{{'buttons.search' | translate}}</button>
@@ -40,9 +40,9 @@
                         </div>
                         <app-loading-element [loading]="addingFriendLoading">
                             <button
-                                    appPrimaryButton
-                                    (click)="addFriend(searchFriendResponse!)"
-                                    [disabled]="searchIsFriend || searchIsPending"
+                                appPrimaryButton
+                                (click)="sendFriendRequest(searchFriendResponse!)"
+                                [disabled]="searchIsFriend || searchIsPending"
                             >{{'friends.addFriendButton' | translate}}</button>
                         </app-loading-element>
                     </ng-container>

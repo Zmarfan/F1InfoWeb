@@ -53,9 +53,9 @@ export class AddFriendsComponent {
             });
     }
 
-    public addFriend(searchFriendResponse: SearchFriendResponse) {
+    public sendFriendRequest(searchFriendResponse: SearchFriendResponse) {
         this.addingFriendLoading = true;
-        this.mFriendsService.addFriend(searchFriendResponse.friendCode)
+        this.mFriendsService.sendFriendRequest(searchFriendResponse.friendCode)
             .subscribe({
                 next: () => {
                     searchFriendResponse.friendStatus = 'PENDING';

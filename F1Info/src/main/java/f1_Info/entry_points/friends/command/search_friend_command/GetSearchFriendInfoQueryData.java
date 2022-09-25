@@ -5,8 +5,8 @@ import lombok.Value;
 
 @Value
 public class GetSearchFriendInfoQueryData implements IQueryData<SearchFriendRecord> {
-    long mUserId;
-    long mSearchUserId;
+    long m0UserId;
+    long m1SearchUserId;
 
     @Override
     public String getStoredProcedureName() {

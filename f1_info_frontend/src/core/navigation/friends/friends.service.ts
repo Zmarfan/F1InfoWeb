@@ -22,7 +22,7 @@ export class FriendsService {
         return this.mHttpClient.get<SearchFriendResponse>(parseTemplate(Endpoints.FRIENDS.searchFriend).expand({ friendCode }));
     }
 
-    public addFriend(code: string): Observable<null> {
-        return of(null).pipe(delay(2000));
+    public sendFriendRequest(friendCode: string) {
+        return this.mHttpClient.post(Endpoints.FRIENDS.sendFriendRequest, { friendCode });
     }
 }
