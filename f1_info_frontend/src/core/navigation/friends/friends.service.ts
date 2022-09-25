@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of, delay} from 'rxjs';
+import {Endpoints} from '../../../app/configuration/endpoints';
+import {FriendsInfoResponse} from '../../../generated/server-responses';
 
 export type FriendStatus = 'FRIENDS' | 'PENDING' | 'NOT_FRIENDS';
 
@@ -9,10 +11,6 @@ export interface SearchFriendResponse {
     friendsInCommon: number;
     friendStatus: FriendStatus;
     friendCode: string;
-}
-
-export interface FriendsResponse {
-    myCode: string;
 }
 
 @Injectable({
@@ -24,8 +22,8 @@ export class FriendsService {
     ) {
     }
 
-    public getFriendsData(): Observable<FriendsResponse> {
-        return of({ myCode: '12359123' }).pipe(delay(1000));
+    public getFriendsData(): Observable<FriendsInfoResponse> {
+        return this.mHttpClient.get<FriendsInfoResponse>(Endpoints.FRIENDS.getInfo);
     }
 
     public searchFriendByCode(code: string): Observable<SearchFriendResponse> {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FriendsResponse, FriendsService} from './friends.service';
+import {FriendsService} from './friends.service';
 import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
+import {FriendsInfoResponse} from '../../../generated/server-responses';
 
 @Component({
     selector: 'app-friends',
@@ -9,7 +10,7 @@ import {GlobalMessageService} from '../../information/global-message-display/glo
 })
 export class FriendsComponent implements OnInit {
     public friendsLoading: boolean = false;
-    public friendResponse: FriendsResponse | undefined;
+    public friendResponse: FriendsInfoResponse | undefined;
 
     public constructor(
         private mFriendsService: FriendsService,

@@ -40,6 +40,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.5.0'
     implementation 'org.jsoup:jsoup:1.15.3'
+    implementation 'org.hashids:hashids:1.0.3'
 }
 
 generateTypeScript {

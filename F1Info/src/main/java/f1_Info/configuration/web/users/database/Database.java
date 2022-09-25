@@ -33,4 +33,8 @@ public class Database extends DatabaseBase {
     public void setNewPasswordForUser(final long userId, final String newPassword) throws SQLException {
         executeVoidQuery(new SetNewPasswordForUserQueryData(userId, newPassword));
     }
+
+    public boolean userExist(final long userId) throws SQLException {
+        return executeBasicQuery(new GetUserExistQueryData(userId));
+    }
 }

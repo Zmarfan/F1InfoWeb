@@ -178,3 +178,54 @@ begin
   update feedback_item_status_history set to_date = p_from where feedback_item_id = p_feedback_item_id and (to_date is null or to_date > p_from);
   insert into feedback_item_status_history (feedback_item_id, type, from_date, to_date, event_id) values (p_feedback_item_id, p_type, p_from, null, p_event_id);
 end;
+
+create table user_friend_status_history(
+  user_id int not null,
+  friend_user_id int not null,
+  friend_status varchar(10) not null,
+  from_date timestamp not null,
+  to_date timestamp,
+  event_id int not null,
+
+  constraint user_friend_status_history_pk primary key (user_id, friend_user_id, event_id),
+  constraint user_friend_status_history_user_id_fk foreign key (user_id) references users (id),
+  constraint user_friend_status_history_friend_user_id_fk foreign key (friend_user_id) references users (id),
+  constraint user_friend_status_history_friend_friend_status_fk foreign key (friend_status) references friend_status (type),
+  constraint user_friend_status_history_event_id_fk foreign key (event_id) references events (id)
+);
+
+create table user_friend_status_changes(
+  user_id int not null,
+  friend_user_id int not null,
+  friend_status varchar(10) not null,
+  from_date timestamp not null,
+  event_id int not null,
+
+  constraint user_friend_status_changes_pk primary key (user_id, friend_user_id, event_id),
+  constraint user_friend_status_changes_user_id_fk foreign key (user_id) references users (id),
+  constraint user_friend_status_changes_friend_user_id_fk foreign key (friend_user_id) references users (id),
+  constraint user_friend_status_changes_friend_friend_status_fk foreign key (friend_status) references friend_status (type),
+  constraint user_friend_status_changes_event_id_fk foreign key (event_id) references events (id)
+);
+
+create or replace view latest_user_friend_status_v as
+select
+  user_id,
+  friend_user_id,
+  friend_status,
+  from_date,
+  event_id
+from
+  user_friend_status_history
+where
+  from_date <= current_timestamp and (to_date is null or to_date > current_timestamp);
+
+drop procedure if exists insert_user_friend_status;
+create procedure insert_user_friend_status(in p_user_id int, in p_friend_user_id int, in p_friend_status varchar(10), in p_event_id int, in p_from timestamp)
+begin
+  insert into user_friend_status_changes (user_id, friend_user_id, friend_status, from_date, event_id) values (p_user_id, p_friend_user_id, p_friend_status, p_from, p_event_id);
+
+  delete from user_friend_status_history where user_id = p_user_id and friend_user_id = p_friend_user_id and from_date >= p_from;
+  update user_friend_status_history set to_date = p_from where user_id = p_user_id and friend_user_id = p_friend_user_id and (to_date is null or to_date > p_from);
+  insert into user_friend_status_history (user_id, friend_user_id, friend_status, from_date, to_date, event_id) values (p_user_id, p_friend_user_id, p_friend_status, p_from, null, p_event_id);
+end;

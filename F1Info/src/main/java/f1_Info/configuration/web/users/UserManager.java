@@ -74,6 +74,10 @@ public class UserManager implements UserDetailsService {
         }
     }
 
+    public boolean userExist(final long userId) throws SQLException {
+        return mDatabase.userExist(userId);
+    }
+
     private F1UserDetails createUserDetailsFromRecord(final UserDetailsRecord userDetailsRecord) {
         return new F1UserDetails(
             userDetailsRecord.getUserId(),

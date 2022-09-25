@@ -39,3 +39,9 @@ create procedure user_details_set_new_password_for_user(in p_user_id int, in p_n
 begin
   update users set password = p_new_password where id = p_user_id;
 end;
+
+drop procedure if exists user_details_user_exist;
+create procedure user_details_user_exist(in p_user_id int)
+begin
+  select if(count(*) > 0, 'Y', 'N') from users where users.id = p_user_id;
+end;
