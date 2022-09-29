@@ -1,15 +1,32 @@
 .information-container {
-  &__header {
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
     padding: 0.5rem;
     color: var(--text-color-light);
     background: var(--light-primary-color);
     border-radius: 10px 5px 0 0;
+    transition: 0.2s ease-in-out background-color;
+
+    &:hover {
+      background: var(--primary-color);
+    }
+  }
+
+  &__header {
     margin: 0;
   }
 
   &__body {
-    padding: 1rem;
     background: var(--bkg-color-shade);
     border-radius: 0 0 10px 5px;
+    overflow: hidden;
+  }
+
+  &__body-padding {
+    padding: 1rem;
   }
 }

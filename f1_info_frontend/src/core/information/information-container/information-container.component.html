@@ -1,6 +1,11 @@
 <section class="information-container">
-    <h3 class="information-container__header">{{headerKey | translate}}</h3>
-    <div class="information-container__body">
-        <ng-content></ng-content>
+    <header (click)="toggleOpenState()" class="information-container__header-container">
+        <h3 class="information-container__header">{{headerKey | translate}}</h3>
+        <fa-icon [icon]="headerIcon"></fa-icon>
+    </header>
+    <div *ngIf="open" @inOutAnimation class="information-container__body">
+        <section class="information-container__body-padding">
+            <ng-content></ng-content>
+        </section>
     </div>
 </section>

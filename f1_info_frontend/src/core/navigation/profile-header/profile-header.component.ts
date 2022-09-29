@@ -108,6 +108,8 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.fetchBellNotificationsIfNeeded();
+
+        this.mDialog.open(FriendsComponent);
     }
 
     public ngOnDestroy() {
