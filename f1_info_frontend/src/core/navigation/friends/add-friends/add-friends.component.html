@@ -1,56 +1,52 @@
-<section class="friends-add-friend">
-    <h3 class="friends-add-friend__header">{{'friends.addFriend' | translate}}</h3>
+<app-information-container headerKey="friends.addFriend">
+    <h3 class="friends-add-friend__sub-header">{{'friends.yourFriendCode' | translate}}</h3>
+    <div class="friends-add-friend__my-detail-holder">
+        <span class="friends-add-friend__friend-code">{{myFriendCode}}</span>
+        <app-copy-button [copyText]="myFriendCode"></app-copy-button>
+    </div>
 
-    <div class="friends-add-friend__body">
-        <h3>{{'friends.yourFriendCode' | translate}}</h3>
-        <div class="friends-add-friend__my-detail-holder">
-            <span class="friends-add-friend__friend-code">{{myFriendCode}}</span>
-            <app-copy-button [copyText]="myFriendCode"></app-copy-button>
-        </div>
+    <form class="friends-add-friend__search" [formGroup]="formData" (ngSubmit)="search()">
+        <app-text-input
+            class="friends-add-friend__search-field"
+            [inputConfig]="{
+                formControl: friendCode,
+                labelKey: 'friends.friendCodeLabel',
+                hintKey: 'friends.friendCodeHint',
+                inputType: 'text',
+                idAttribute: 'friendCodeId'
+            }"
+            formControlName="friendCode"
+        ></app-text-input>
 
-        <form class="friends-add-friend__search" [formGroup]="formData" (ngSubmit)="search()">
-            <app-text-input
-                class="friends-add-friend__search-field"
-                [inputConfig]="{
-                    formControl: friendCode,
-                    labelKey: 'friends.friendCodeLabel',
-                    hintKey: 'friends.friendCodeHint',
-                    inputType: 'text',
-                    idAttribute: 'friendCodeId'
-                }"
-                formControlName="friendCode"
-            ></app-text-input>
+        <button appPrimaryButton [disabled]="!formData.valid">{{'buttons.search' | translate}}</button>
+    </form>
 
-            <button appPrimaryButton [disabled]="!formData.valid">{{'buttons.search' | translate}}</button>
-        </form>
+    <div *ngIf="hasSearched">
+        <app-loading-element [loading]="searching">
+            <section class="friends-add-friend__to-add-holder">
+                <ng-container *ngIf="searchFriendResponse?.friendCode; else noResult">
+                    <div class="friends-add-friend__to-add">
+                        <img src="https://picsum.photos/100/100">
 
-        <div *ngIf="hasSearched">
-            <app-loading-element [loading]="searching">
-                <section class="friends-add-friend__to-add-holder">
-                    <ng-container *ngIf="searchFriendResponse?.friendCode; else noResult">
-                        <div class="friends-add-friend__to-add">
-                            <img src="https://picsum.photos/100/100">
-
-                            <div>
-                                <h3>{{searchFriendResponse?.displayName}}</h3>
-                                <div>{{'friends.friendsInCommon' | translate:{ amount: searchFriendResponse?.friendsInCommon } }}</div>
-                                <div *ngIf="searchIsFriend">{{'friends.youAreFriends' | translate }}</div>
-                                <div *ngIf="searchIsPending">{{'friends.friendRequestSent' | translate }}</div>
-                            </div>
+                        <div>
+                            <h3>{{searchFriendResponse?.displayName}}</h3>
+                            <div>{{'friends.friendsInCommon' | translate:{ amount: searchFriendResponse?.friendsInCommon } }}</div>
+                            <div *ngIf="searchIsFriend">{{'friends.youAreFriends' | translate }}</div>
+                            <div *ngIf="searchIsPending">{{'friends.friendRequestSent' | translate }}</div>
                         </div>
-                        <app-loading-element [loading]="addingFriendLoading">
-                            <button
+                    </div>
+                    <app-loading-element [loading]="addingFriendLoading">
+                        <button
                                 appPrimaryButton
                                 (click)="sendFriendRequest(searchFriendResponse!)"
                                 [disabled]="searchIsFriend || searchIsPending"
-                            >{{'friends.addFriendButton' | translate}}</button>
-                        </app-loading-element>
-                    </ng-container>
-                    <ng-template #noResult>
-                        <span>{{'friends.noResult' | translate}}</span>
-                    </ng-template>
-                </section>
-            </app-loading-element>
-        </div>
+                        >{{'friends.addFriendButton' | translate}}</button>
+                    </app-loading-element>
+                </ng-container>
+                <ng-template #noResult>
+                    <span>{{'friends.noResult' | translate}}</span>
+                </ng-template>
+            </section>
+        </app-loading-element>
     </div>
-</section>
+</app-information-container>

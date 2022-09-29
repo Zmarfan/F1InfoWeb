@@ -1,0 +1,15 @@
+.information-container {
+  &__header {
+    padding: 0.5rem;
+    color: var(--text-color-light);
+    background: var(--light-primary-color);
+    border-radius: 10px 5px 0 0;
+    margin: 0;
+  }
+
+  &__body {
+    padding: 1rem;
+    background: var(--bkg-color-shade);
+    border-radius: 0 0 10px 5px;
+  }
+}

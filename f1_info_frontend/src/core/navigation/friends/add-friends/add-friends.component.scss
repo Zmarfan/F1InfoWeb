@@ -1,23 +1,9 @@
 @import "src/styles/responsiveness.scss";
 
 .friends-add-friend {
-  &__header {
-    padding: 0.5rem;
-    color: var(--text-color-light);
-    background: var(--light-primary-color);
-    border-radius: 10px 5px 0 0;
+  &__sub-header {
+    font-weight: 500;
     margin: 0;
-  }
-
-  &__body {
-    padding: 1rem;
-    background: var(--bkg-color-shade);
-    border-radius: 0 0 10px 5px;
-
-    h3 {
-      font-weight: 500;
-      margin: 0;
-    }
   }
 
   &__my-detail-holder {
