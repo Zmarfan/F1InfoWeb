@@ -19,7 +19,6 @@ export class Session {
     private mLastUser: User | null = null;
 
     public constructor(
-        private mRouter: Router,
         private mHttpClient: HttpClient
     ) {
         this.mUser$ = this.mUser.asObservable();

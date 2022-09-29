@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSessionListener;
 
 @EnableWebSecurity
 public class SessionListener implements HttpSessionListener {
-    private static final int MAX_SESSION_TIME_IN_SECONDS = 1800;
+    private static final int MAX_SESSION_TIME_IN_SECONDS = 86400; // 1 day
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {

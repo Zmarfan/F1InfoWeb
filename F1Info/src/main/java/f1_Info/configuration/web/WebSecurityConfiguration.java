@@ -44,6 +44,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/User/**", "/Development/**", "/Friends/**").authenticated()
             .antMatchers("/ManagerDevelopment/**").hasAuthority(Authority.ADMIN.getAuthority())
             .and()
+            .exceptionHandling().authenticationEntryPoint(new AppAuthenticationEntryPoint())
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.NEVER);
     }
