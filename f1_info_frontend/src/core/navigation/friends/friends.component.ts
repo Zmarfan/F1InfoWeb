@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FriendsService} from './friends.service';
 import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
 import {FriendsInfoResponse} from '../../../generated/server-responses';
+import {MatDialogRef} from '@angular/material/dialog';
+import {closeDialog} from '../../dialog/dialog';
 
 @Component({
     selector: 'app-friends',
@@ -14,7 +16,8 @@ export class FriendsComponent implements OnInit {
 
     public constructor(
         private mFriendsService: FriendsService,
-        private mMessageService: GlobalMessageService
+        private mMessageService: GlobalMessageService,
+        private mDialogRef: MatDialogRef<FriendsComponent>
     ) {
     }
 
@@ -30,5 +33,9 @@ export class FriendsComponent implements OnInit {
                 this.friendsLoading = false;
             },
         });
+    }
+
+    public closeFriends() {
+        closeDialog(this.mDialogRef);
     }
 }
