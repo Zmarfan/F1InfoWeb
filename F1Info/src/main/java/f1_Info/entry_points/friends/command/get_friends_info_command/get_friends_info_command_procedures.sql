@@ -20,5 +20,4 @@ begin
     ) blocked_friends on blocked_friends.user_id = users.id
   where
     users.id = p_user_id and friend_status.friend_status = 'pending' and blocked_friends.friend_user_id is null;
-
 end;

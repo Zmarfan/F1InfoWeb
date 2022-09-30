@@ -15,6 +15,7 @@ public class ConfigurationRules {
     Email mEmail;
     String mEmailPassword;
     Email mLoggingEmail;
+    String mFriendCodeSalt;
 
     public ConfigurationRules(
         @JsonProperty("clientDomain") final String clientDomain,
@@ -24,7 +25,8 @@ public class ConfigurationRules {
         @JsonProperty("isMock") final boolean isMock,
         @JsonProperty("email") final String email,
         @JsonProperty("emailPassword") final String emailPassword,
-        @JsonProperty("loggingEmail") final String loggingEmail
+        @JsonProperty("loggingEmail") final String loggingEmail,
+        @JsonProperty("friendCodeSalt") final String friendCodeSalt
     ) throws MalformedEmailException {
         mClientDomain = clientDomain;
         mDatabaseUrl = databaseUrl;
@@ -34,5 +36,6 @@ public class ConfigurationRules {
         mEmail = new Email(email);
         mEmailPassword = emailPassword;
         mLoggingEmail = new Email(loggingEmail);
+        mFriendCodeSalt = friendCodeSalt;
     }
 }

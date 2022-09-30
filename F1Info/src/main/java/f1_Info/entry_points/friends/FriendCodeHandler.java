@@ -24,7 +24,7 @@ public class FriendCodeHandler {
         final UserManager userManager,
         final Logger logger
     ) {
-        mConverter = new Hashids("salt", MIN_FRIEND_CODE_LENGTH);
+        mConverter = new Hashids(configuration.getRules().getFriendCodeSalt(), MIN_FRIEND_CODE_LENGTH);
         mUserManager = userManager;
         mLogger = logger;
     }

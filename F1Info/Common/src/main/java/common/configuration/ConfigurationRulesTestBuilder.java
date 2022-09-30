@@ -11,6 +11,7 @@ public class ConfigurationRulesTestBuilder {
     String mEmail = "test@test.com";
     String mEmailPassword = null;
     String mLoggingEmail = "test@test.com";
+    String mFriendCodeSalt = "salt";
 
     public ConfigurationRulesTestBuilder(boolean isMock) {
         mIsMock = isMock;
@@ -21,6 +22,6 @@ public class ConfigurationRulesTestBuilder {
     }
 
     public ConfigurationRules build() throws MalformedEmailException {
-        return new ConfigurationRules(mClientDomain, mDatabaseUrl, mDatabaseName, mDatabasePassword, mIsMock, mEmail, mEmailPassword, mLoggingEmail);
+        return new ConfigurationRules(mClientDomain, mDatabaseUrl, mDatabaseName, mDatabasePassword, mIsMock, mEmail, mEmailPassword, mLoggingEmail, mFriendCodeSalt);
     }
 }

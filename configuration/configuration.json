@@ -6,5 +6,6 @@
   "isMock": true,
   "email": "noreplyF1info@gmail.com",
   "emailPassword": "nwingyleliyquest",
-  "loggingEmail": "theCreepReader@gmail.com"
+  "loggingEmail": "theCreepReader@gmail.com",
+  "friendCodeSalt": "salt"
 }
