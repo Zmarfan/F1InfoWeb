@@ -35,7 +35,6 @@ begin
   call insert_user_friend_status(1, 5, 'not_friend', create_event(1, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(1, 6, 'friend', create_event(1, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(1, 7, 'friend', create_event(1, 1, 1004, 'init'), current_timestamp);
-  call insert_user_friend_status(1, 8, 'friend', create_event(1, 1, 1004, 'init'), current_timestamp);
 
   call insert_user_friend_status(2, 3, 'friend', create_event(2, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(2, 5, 'friend', create_event(2, 1, 1004, 'init'), current_timestamp);
@@ -58,6 +57,6 @@ begin
   call insert_user_friend_status(7, 1, 'friend', create_event(5, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(7, 2, 'friend', create_event(5, 1, 1004, 'init'), current_timestamp);
 
-  call insert_user_friend_status(8, 1, 'friend', create_event(5, 1, 1004, 'init'), current_timestamp);
+  call insert_user_friend_status(8, 1, 'blocked', create_event(5, 1, 1004, 'init'), current_timestamp);
 
 end;

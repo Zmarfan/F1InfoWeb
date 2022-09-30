@@ -19,11 +19,11 @@ public class Database extends TaskDatabase {
         super(configuration, logger);
     }
 
-    public boolean canSendFriendRequest(final long userId, final long sendRequestUserId) throws SQLException {
-        return executeBasicQuery(new CanSendFriendRequestQueryData(userId, sendRequestUserId));
-    }
-
     public void sendFriendRequest(final long userId, final long sendRequestUserId) throws SQLException {
         executeVoidQuery(new SendFriendRequestQueryData(userId, sendRequestUserId));
+    }
+
+    public SendFriendRequestRecord getSendFriendRequestInfo(final long userId, final long sendRequestUserId) throws SQLException {
+        return executeQuery(new SendFriendRequestInfoQueryData(userId, sendRequestUserId));
     }
 }

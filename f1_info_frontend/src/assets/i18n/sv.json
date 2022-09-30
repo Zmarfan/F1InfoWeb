@@ -61,7 +61,8 @@
     }
   },
   "bellMessages": {
-    "completeFeedback": "Din återkoppling: <i>\"{{feedback}}\"</i> har blivit implementerad!"
+    "completeFeedback": "Din återkoppling: <i>\"{{feedback}}\"</i> har blivit implementerad!",
+    "receivedFriendRequest": "Du har fått en ny vänförfrågan från {{user}}!"
   },
   "signUpPage": {
     "signUp": "BLI MEDLEM",

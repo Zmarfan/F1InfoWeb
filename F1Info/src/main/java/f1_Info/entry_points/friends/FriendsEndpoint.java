@@ -7,6 +7,7 @@ import f1_Info.entry_points.friends.command.send_friend_request_command.FriendRe
 import f1_Info.entry_points.friends.command.send_friend_request_command.SendFriendRequestCommand;
 import f1_Info.entry_points.helper.BadRequestException;
 import f1_Info.entry_points.helper.EndpointHelper;
+import f1_Info.services.bell_notification_send_out_service.BellNotificationSendOutService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class FriendsEndpoint {
     private final Database mSearchDatabase;
     private final f1_Info.entry_points.friends.command.send_friend_request_command.Database mRequestDatabase;
     private final f1_Info.entry_points.friends.command.get_friends_info_command.Database mFriendInfoDatabase;
+    private final BellNotificationSendOutService mBellNotificationSendOutService;
 
     @GetMapping("/info")
     public ResponseEntity<?> getFriendsInfo() {
@@ -52,7 +54,7 @@ public class FriendsEndpoint {
                 throw new BadRequestException();
             }
 
-            return new SendFriendRequestCommand(body.getFriendCode(), userId, mFriendCodeHandler, mRequestDatabase);
+            return new SendFriendRequestCommand(body.getFriendCode(), userId, mFriendCodeHandler, mRequestDatabase, mBellNotificationSendOutService);
         });
     }
 }

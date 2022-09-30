@@ -61,7 +61,8 @@
     }
   },
   "bellMessages": {
-    "completeFeedback": "Your feedback: <i>\"{{feedback}}\"</i> has been implemented!"
+    "completeFeedback": "Your feedback: <i>\"{{feedback}}\"</i> has been implemented!",
+    "receivedFriendRequest": "You have received a new friend request from {{user}}!"
   },
   "signUpPage": {
     "signUp": "SIGN UP",

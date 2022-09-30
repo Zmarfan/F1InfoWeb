@@ -4,12 +4,12 @@ import database.IQueryData;
 import lombok.Value;
 
 @Value
-public class CanSendFriendRequestQueryData implements IQueryData<Boolean> {
+public class SendFriendRequestInfoQueryData implements IQueryData<SendFriendRequestRecord> {
     long m0UserId;
     long m1SendRequestUserId;
 
     @Override
     public String getStoredProcedureName() {
-        return "can_send_friend_request";
+        return "send_friend_request_info";
     }
 }
