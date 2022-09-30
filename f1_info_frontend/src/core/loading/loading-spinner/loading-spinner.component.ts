@@ -10,6 +10,6 @@ export class LoadingSpinnerComponent {
     @Input() public size!: LoadingSpinnerSize;
 
     public get modifierCss(): string {
-        return this.size === LoadingSpinnerSize.SMALL ? 'loader--small' : '';
+        return this.size === 'small' ? 'loader--small' : '';
     }
 }

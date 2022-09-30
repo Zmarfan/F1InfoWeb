@@ -20,7 +20,6 @@ export class DropDownFilterComponent implements OnChanges {
     @Input() public selectedValue: string | number | null = null;
     @Input() public valueChanged!: (value: any) => void;
 
-    public loadingSpinnerSize: LoadingSpinnerSize = LoadingSpinnerSize.SMALL;
     public selectedOption!: string | number | null;
     public uniqueLabel: string = `dropDownFilter${Math.random()}`;
 

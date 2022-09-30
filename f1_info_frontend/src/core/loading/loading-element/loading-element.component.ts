@@ -1,14 +1,7 @@
 import {Component, Input} from '@angular/core';
 
-export enum LoadingSpinnerSize {
-    SMALL = 1,
-    NORMAL = 2,
-}
-
-export enum LoadingElementOffset {
-    CENTER = 1,
-    TOP = 2,
-}
+export type LoadingSpinnerSize = 'small' | 'normal';
+export type LoadingElementOffset = 'center' | 'top';
 
 @Component({
     selector: 'app-loading-element',
@@ -17,10 +10,10 @@ export enum LoadingElementOffset {
 })
 export class LoadingElementComponent {
     @Input() public loading: any = false;
-    @Input() public size: LoadingSpinnerSize = LoadingSpinnerSize.NORMAL;
-    @Input() public offset: LoadingElementOffset = LoadingElementOffset.CENTER;
+    @Input() public size: LoadingSpinnerSize = 'normal';
+    @Input() public offset: LoadingElementOffset = 'center';
 
     public get offsetModifier(): string {
-        return this.offset === LoadingElementOffset.CENTER ? 'loading--center' : '';
+        return this.offset === 'center' ? 'loading--center' : '';
     }
 }

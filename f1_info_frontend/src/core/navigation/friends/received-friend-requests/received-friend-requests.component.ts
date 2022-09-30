@@ -20,8 +20,6 @@ export class ReceivedFriendRequestsComponent implements OnChanges {
     @Input() public responseFriendRequests: FriendRequestRecord[] = [];
     public requests: FriendRequest[] = [];
 
-    public loadingSpinnerSize: LoadingSpinnerSize = LoadingSpinnerSize.SMALL;
-
     public constructor(
         private mFriendService: FriendsService,
         private mMessageService: GlobalMessageService
@@ -29,7 +27,7 @@ export class ReceivedFriendRequestsComponent implements OnChanges {
     }
 
     public ngOnChanges() {
-        this.requests = this.responseFriendRequests.map((request) => ({
+        this.requests = (this.responseFriendRequests ?? []).map((request) => ({
             loading: false,
             userId: request.userId,
             displayName: request.displayName,

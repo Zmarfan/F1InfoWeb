@@ -1,4 +1,4 @@
-<app-loading-element [loading]="loading" [offset]="loadingOffset">
+<app-loading-element [loading]="loading" offset="top">
     <table *ngIf="rows.length > 0; else noData" class="main-table">
         <tr>
             <ng-container *ngFor="let column of table.columns">

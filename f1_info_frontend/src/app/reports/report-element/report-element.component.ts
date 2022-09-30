@@ -41,7 +41,6 @@ export class ReportElementComponent<T> implements OnInit, OnChanges {
     @Input() public sortConfig?: ReportSortConfig<T>;
 
     public table!: ReportElementConfig<any>;
-    public loadingOffset: LoadingElementOffset = LoadingElementOffset.TOP;
     private mSortingColumn!: keyof T;
     private mSortingDirection: SortDirection = SortDirection.ASCENDING;
 
