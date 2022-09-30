@@ -27,8 +27,7 @@ export class FriendsService {
     }
 
     public acceptFriendRequest(userId: number) {
-        return of(null).pipe(delay(2500));
-        // return this.mHttpClient.post(Endpoints.FRIENDS.acceptFriendRequest, { userId });
+        return this.mHttpClient.post(Endpoints.FRIENDS.acceptFriendRequest, { userId });
     }
 
     public declineFriendRequest(userId: number) {

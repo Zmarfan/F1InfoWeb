@@ -2,7 +2,7 @@ drop procedure if exists get_friend_requests;
 create procedure get_friend_requests(in p_user_id int)
 begin
   select
-    users.id,
+    user_info.user_id,
     user_info.display_name,
     friend_status.user_id
   from

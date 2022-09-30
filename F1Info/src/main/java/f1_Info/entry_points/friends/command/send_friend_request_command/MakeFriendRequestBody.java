@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
 
 @Value
-public class FriendRequestBody {
+public class MakeFriendRequestBody {
     String mFriendCode;
 
     @JsonCreator
-    public FriendRequestBody(
+    public MakeFriendRequestBody(
         @JsonProperty("friendCode") final String friendCode
     ) {
         mFriendCode = friendCode;
