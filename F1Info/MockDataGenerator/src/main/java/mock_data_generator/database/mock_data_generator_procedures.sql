@@ -41,11 +41,10 @@ begin
   call insert_user_friend_status(2, 5, 'friend', create_event(2, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(2, 7, 'friend', create_event(2, 1, 1004, 'init'), current_timestamp);
 
-  call insert_user_friend_status(3, 1, 'pending', create_event(3, 1, 1004, 'init'), current_timestamp);
+  call insert_user_friend_status(3, 1, 'blocked', create_event(3, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(3, 2, 'friend', create_event(3, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(3, 4, 'friend', create_event(3, 1, 1004, 'init'), current_timestamp);
 
-  call insert_user_friend_status(4, 1, 'pending', create_event(4, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(4, 3, 'friend', create_event(4, 1, 1004, 'init'), current_timestamp);
   call insert_user_friend_status(4, 5, 'friend', create_event(4, 1, 1004, 'init'), current_timestamp);
 

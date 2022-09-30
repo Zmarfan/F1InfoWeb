@@ -1,6 +1,9 @@
 <article class="friends-main">
     <h2>{{'friends.header' | translate}}</h2>
     <app-loading-element [loading]="friendsLoading">
-        <app-add-friends [myFriendCode]="friendResponse?.myFriendCode!"></app-add-friends>
+        <div class="friends-main__body">
+            <app-add-friends [myFriendCode]="friendResponse?.myFriendCode!"></app-add-friends>
+            <app-received-friend-requests [responseFriendRequests]="friendResponse?.friendRequests!"></app-received-friend-requests>
+        </div>
     </app-loading-element>
 </article>

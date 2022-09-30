@@ -132,7 +132,10 @@
     "friendsInCommon": "Ni har {{amount}} vänner gemensamt",
     "noResult": "Det finns ingen användare med denna vänkod",
     "youAreFriends": "Ni är redan vänner",
-    "friendRequestSent": "Redan skickat vänförfrågan"
+    "friendRequestSent": "Redan skickat vänförfrågan",
+    "friendRequests": "Vänförfrågningar ({{amount}})",
+    "noFriendRequests": "Du har inga nya vänförfrågningar!",
+    "friendIsBlocked": "Denna användare har blivit blockad av dig."
   },
   "userSettings": {
     "header": "Ändra Användarinställningar",

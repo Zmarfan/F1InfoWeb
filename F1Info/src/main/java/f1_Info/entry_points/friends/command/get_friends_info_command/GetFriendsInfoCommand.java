@@ -12,10 +12,14 @@ import static f1_Info.configuration.web.ResponseUtil.ok;
 @AllArgsConstructor
 public class GetFriendsInfoCommand implements Command {
     private final long mUserId;
+    private final Database mDatabase;
     private final FriendCodeHandler mFriendCodeHandler;
 
     @Override
     public ResponseEntity<?> execute() throws SQLException {
-        return ok(new FriendsInfoResponse(mFriendCodeHandler.friendCodeFromUserId(mUserId)));
+        return ok(new FriendsInfoResponse(
+            mFriendCodeHandler.friendCodeFromUserId(mUserId),
+            mDatabase.getFriendRequests(mUserId)
+        ));
     }
 }

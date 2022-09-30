@@ -23,10 +23,11 @@ public class FriendsEndpoint {
     private final FriendCodeHandler mFriendCodeHandler;
     private final Database mSearchDatabase;
     private final f1_Info.entry_points.friends.command.send_friend_request_command.Database mRequestDatabase;
+    private final f1_Info.entry_points.friends.command.get_friends_info_command.Database mFriendInfoDatabase;
 
     @GetMapping("/info")
     public ResponseEntity<?> getFriendsInfo() {
-        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetFriendsInfoCommand(userId, mFriendCodeHandler));
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetFriendsInfoCommand(userId, mFriendInfoDatabase, mFriendCodeHandler));
     }
 
     @GetMapping("/search/{friendCode}")

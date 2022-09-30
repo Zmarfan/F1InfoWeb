@@ -25,4 +25,17 @@ export class FriendsService {
     public sendFriendRequest(friendCode: string) {
         return this.mHttpClient.post(Endpoints.FRIENDS.sendFriendRequest, { friendCode });
     }
+
+    public acceptFriendRequest(userId: number) {
+        return of(null).pipe(delay(2500));
+        // return this.mHttpClient.post(Endpoints.FRIENDS.acceptFriendRequest, { userId });
+    }
+
+    public declineFriendRequest(userId: number) {
+        return this.mHttpClient.post(Endpoints.FRIENDS.declineFriendRequest, { userId });
+    }
+
+    public blockUser(userId: number) {
+        return this.mHttpClient.post(Endpoints.FRIENDS.blockUser, { userId });
+    }
 }

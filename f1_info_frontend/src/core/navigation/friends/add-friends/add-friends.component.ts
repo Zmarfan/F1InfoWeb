@@ -37,6 +37,10 @@ export class AddFriendsComponent {
         return this.searchFriendResponse !== undefined && this.searchFriendResponse.friendStatus === 'PENDING';
     }
 
+    public get searchIsBlocked(): boolean {
+        return this.searchFriendResponse !== undefined && this.searchFriendResponse.friendStatus === 'BLOCKED';
+    }
+
     public search() {
         this.hasSearched = true;
         this.searching = true;

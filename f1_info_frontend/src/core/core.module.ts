@@ -26,6 +26,7 @@ import { FriendsComponent } from './navigation/friends/friends.component';
 import { CopyButtonComponent } from './input/buttons/copy-button/copy-button.component';
 import { AddFriendsComponent } from './navigation/friends/add-friends/add-friends.component';
 import { InformationContainerComponent } from './information/information-container/information-container.component';
+import { ReceivedFriendRequestsComponent } from './navigation/friends/received-friend-requests/received-friend-requests.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { InformationContainerComponent } from './information/information-contain
         CopyButtonComponent,
         AddFriendsComponent,
         InformationContainerComponent,
+        ReceivedFriendRequestsComponent,
     ],
     imports: [
         CommonModule,

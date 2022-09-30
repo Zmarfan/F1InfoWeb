@@ -1,0 +1,19 @@
+<app-information-container headerKey="friends.friendRequests" [headerKeyParam]="{ amount: requests.length }">
+    <section class="friend-request-holder">
+        <div *ngFor="let request of requests" class="friend-request">
+            <div class="friend-request__user-info">
+                <img src="https://picsum.photos/50/50">
+                <h3>{{request.displayName}}</h3>
+            </div>
+            <app-loading-element [loading]="request.loading" [size]="loadingSpinnerSize">
+                <div class="friend-request__buttons">
+                    <fa-icon (click)="acceptFriendRequest(request)" icon="check"></fa-icon>
+                    <fa-icon (click)="declineFriendRequest(request)" icon="times"></fa-icon>
+                    <fa-icon (click)="blockUser(request)" class="friend-request__ban" icon="ban"></fa-icon>
+                </div>
+            </app-loading-element>
+        </div>
+
+        <span *ngIf="requests.length === 0">{{'friends.noFriendRequests' | translate}}</span>
+    </section>
+</app-information-container>

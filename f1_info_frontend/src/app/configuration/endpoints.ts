@@ -70,5 +70,8 @@ export class Endpoints {
         getInfo: `${Endpoints.FRIENDS_BASE}info`,
         searchFriend: `${Endpoints.FRIENDS_BASE}search/{friendCode}`,
         sendFriendRequest: `${Endpoints.FRIENDS_BASE}friend-request`,
+        acceptFriendRequest: `${Endpoints.FRIENDS_BASE}accept-friend-request`,
+        declineFriendRequest: `${Endpoints.FRIENDS_BASE}decline-friend-request`,
+        blockUser: `${Endpoints.FRIENDS_BASE}block-user`,
     };
 }

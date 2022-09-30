@@ -10,7 +10,8 @@ import java.util.Arrays;
 public enum FriendStatus {
     FRIENDS("friend"),
     PENDING("pending"),
-    NOT_FRIENDS("not_friend");
+    NOT_FRIENDS("not_friend"),
+    BLOCKED("blocked");
 
     private final String mType;
 

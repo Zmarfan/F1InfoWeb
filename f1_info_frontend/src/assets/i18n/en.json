@@ -132,7 +132,10 @@
     "friendsInCommon": "You have {{amount}} friends in common",
     "noResult": "There exist no user with this friend code",
     "youAreFriends": "You are already friends",
-    "friendRequestSent": "Already sent a friend request"
+    "friendRequestSent": "Already sent a friend request",
+    "friendRequests": "Friend Requests ({{amount}})",
+    "noFriendRequests": "You have no new friend requests!",
+    "friendIsBlocked": "This user has been blocked by you."
   },
   "userSettings": {
     "header": "Change User Settings",

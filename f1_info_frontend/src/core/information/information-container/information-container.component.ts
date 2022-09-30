@@ -26,6 +26,7 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
 })
 export class InformationContainerComponent {
     @Input() public headerKey!: string;
+    @Input() public headerKeyParam: object = {};
     @Input() public open: boolean = true;
 
     public get headerIcon(): IconDefinition {

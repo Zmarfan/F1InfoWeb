@@ -33,13 +33,14 @@
                             <div>{{'friends.friendsInCommon' | translate:{ amount: searchFriendResponse?.friendsInCommon } }}</div>
                             <div *ngIf="searchIsFriend">{{'friends.youAreFriends' | translate }}</div>
                             <div *ngIf="searchIsPending">{{'friends.friendRequestSent' | translate }}</div>
+                            <div *ngIf="searchIsBlocked">{{'friends.friendIsBlocked' | translate }}</div>
                         </div>
                     </div>
                     <app-loading-element [loading]="addingFriendLoading">
                         <button
-                                appPrimaryButton
-                                (click)="sendFriendRequest(searchFriendResponse!)"
-                                [disabled]="searchIsFriend || searchIsPending"
+                            appPrimaryButton
+                            (click)="sendFriendRequest(searchFriendResponse!)"
+                            [disabled]="searchIsFriend || searchIsPending"
                         >{{'friends.addFriendButton' | translate}}</button>
                     </app-loading-element>
                 </ng-container>
