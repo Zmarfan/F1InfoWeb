@@ -3,6 +3,8 @@ package f1_Info.entry_points.friends;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.AnswerFriendRequestRequestBody;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.accept.AcceptFriendRequestCommand;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.decline.DeclineFriendRequestCommand;
+import f1_Info.entry_points.friends.command.block_user_command.BlockUserCommand;
+import f1_Info.entry_points.friends.command.block_user_command.BlockUserRequestBody;
 import f1_Info.entry_points.friends.command.get_friends_info_command.GetFriendsInfoCommand;
 import f1_Info.entry_points.friends.command.search_friend_command.Database;
 import f1_Info.entry_points.friends.command.search_friend_command.SearchFriendCommand;
@@ -29,6 +31,7 @@ public class FriendsEndpoint {
     private final f1_Info.entry_points.friends.command.send_friend_request_command.Database mRequestDatabase;
     private final f1_Info.entry_points.friends.command.get_friends_info_command.Database mFriendInfoDatabase;
     private final f1_Info.entry_points.friends.command.answer_friend_request_commands.Database mAnswerRequestDatabase;
+    private final f1_Info.entry_points.friends.command.block_user_command.Database mBlockUserDatabase;
     private final BellNotificationSendOutService mBellNotificationSendOutService;
 
     @GetMapping("/info")
@@ -85,6 +88,19 @@ public class FriendsEndpoint {
             }
 
             return new DeclineFriendRequestCommand(userId, body.getUserId(), mAnswerRequestDatabase);
+        });
+    }
+
+    @PostMapping("/block-user")
+    public ResponseEntity<?> blockUser(
+        @RequestBody final BlockUserRequestBody body
+    ) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> {
+            if (body == null) {
+                throw new BadRequestException();
+            }
+
+            return new BlockUserCommand(userId, body.getUserId(), mBlockUserDatabase);
         });
     }
 }
