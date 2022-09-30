@@ -38,7 +38,7 @@ public class SendFriendRequestCommand implements Command {
         if (!requestRecord.getReceiverHasBlockedUser()) {
             mNotificationSendOutService.sendBellNotification(new CreateNotificationParameters(
                 friendUserId.get(),
-                BellNotificationIcon.HAPPY_SMILEY,
+                BellNotificationIcon.PERSON_CIRCLE_QUESTION,
                 "bellMessages.receivedFriendRequest",
                 Map.of("user", requestRecord.getDisplayName())
             ));

@@ -6,7 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum BellNotificationIcon {
-    HAPPY_SMILEY("happy-smiley");
+    HAPPY_SMILEY("happy-smiley"),
+    PERSON_CIRCLE_QUESTION("person-circle-question");
 
     private final String mCode;
 }

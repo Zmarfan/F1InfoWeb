@@ -43,7 +43,7 @@ export class ReceivedFriendRequestsComponent implements OnChanges {
     }
 
     public blockUser(request: FriendRequest) {
-        this.mFriendService.acceptFriendRequest(request.userId).subscribe(this.createRequestHandler(request));
+        this.mFriendService.blockUser(request.userId).subscribe(this.createRequestHandler(request));
     }
 
     private createRequestHandler<T>(request: FriendRequest): Partial<Observer<T>> {

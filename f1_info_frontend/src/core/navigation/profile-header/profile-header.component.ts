@@ -1,6 +1,14 @@
 import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/free-regular-svg-icons';
-import {faCircleHalfStroke, faEarthAfrica, faFaceLaughBeam, faPeopleGroup, faRightToBracket, faUserGear} from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleHalfStroke,
+    faEarthAfrica,
+    faFaceLaughBeam,
+    faPeopleGroup,
+    faPersonCircleQuestion,
+    faRightToBracket,
+    faUserGear,
+} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog} from '@angular/material/dialog';
 import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
 import {Router} from '@angular/router';
@@ -42,6 +50,7 @@ export interface BellItem {
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
     private static BELL_NOTIFICATION_ICON_MAP: Map<string, IconDefinition> = new Map<string, IconDefinition>([
         ['happy-smiley', faFaceLaughBeam],
+        ['person-circle-question', faPersonCircleQuestion],
     ]);
 
     public bellItems: BellItem[] = [];

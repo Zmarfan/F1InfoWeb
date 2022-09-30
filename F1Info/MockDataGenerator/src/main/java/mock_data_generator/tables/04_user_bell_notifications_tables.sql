@@ -1,5 +1,5 @@
 create table bell_notification_icon_types(
-  type varchar(20) not null,
+  type varchar(30) not null,
 
   constraint bell_notification_icon_types_pk primary key (type)
 );
@@ -7,7 +7,7 @@ create table bell_notification_icon_types(
 create table bell_notifications(
   id int not null auto_increment,
   receiver_user_id int not null,
-  icon_type varchar(20) not null,
+  icon_type varchar(30) not null,
   translation_key varchar(100) not null,
   creation_date timestamp not null,
 
