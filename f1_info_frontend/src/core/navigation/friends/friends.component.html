@@ -1,6 +1,6 @@
 <article class="friends-main">
     <fa-icon (click)="closeFriends()" icon="times" class="friends-main__close-button"></fa-icon>
-    <h2>{{'friends.header' | translate}}</h2>
+    <h1>{{'friends.header' | translate}}</h1>
     <app-loading-element [loading]="friendsLoading">
         <div class="friends-main__body">
             <app-add-friends [myFriendCode]="friendResponse?.myFriendCode!"></app-add-friends>
