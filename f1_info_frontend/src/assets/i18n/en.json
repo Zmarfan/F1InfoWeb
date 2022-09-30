@@ -135,7 +135,7 @@
     "friendRequestSent": "Already sent a friend request",
     "friendRequests": "Friend Requests ({{amount}})",
     "noFriendRequests": "You have no new friend requests!",
-    "friendIsBlocked": "This user has been blocked by you."
+    "friendIsBlocked": "<strong>This user has been blocked by you.</strong> Sending them a friend request will unblock them!"
   },
   "userSettings": {
     "header": "Change User Settings",
