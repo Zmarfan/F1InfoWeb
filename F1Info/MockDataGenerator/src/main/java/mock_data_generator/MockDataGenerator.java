@@ -24,25 +24,45 @@ import static mock_data_generator.ConsoleLogger.*;
 @AllArgsConstructor
 public class MockDataGenerator {
     private static final String RESET_DATABASE_FILE_PATH = "MockDataGenerator/src/main/java/mock_data_generator/setup/reset_database.sql";
-    private static final String DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/data";
+    private static final String SYSTEM_DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/data";
+    private static final String F1_DATA_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/f1_data";
     private static final String HELPER_FUNCTIONS_DIRECTORY = "MockDataGenerator/src/main/java/mock_data_generator/helper";
 
     private final ConfigurationRules mConfigRules;
 
-    public void run() {
+    public void runExtensive() {
         try {
             final Connection connection = getConnection();
 
-            logInfo("Starting Mock Data Generator");
+            logInfo("Starting Extensive Mock Data Generator");
             resetDatabase(connection);
             createTables(connection);
             createHelperFunctions(connection);
-            createData(connection);
+            createSystemData(connection);
+            createF1Data(connection);
             createProcedures(connection);
             createMockData(connection);
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
-            logError("Unable to finish the mock data generation!");
+            logError("Unable to finish the extensive mock data generation!");
+            logError(e.toString());
+        }
+    }
+
+    public void runMinimalistic() {
+        try {
+            final Connection connection = getConnection();
+
+            logInfo("Starting Minimalistic Mock Data Generator");
+            resetDatabase(connection);
+            createTables(connection);
+            createHelperFunctions(connection);
+            createSystemData(connection);
+            createProcedures(connection);
+            createMockData(connection);
+            logSuccess("Successfully reset local database!");
+        } catch (final Exception e) {
+            logError("Unable to finish the minimalistic mock data generation!");
             logError(e.toString());
         }
     }
@@ -57,9 +77,14 @@ public class MockDataGenerator {
         runSqlFilesEndingWith(connection, "_tables.sql");
     }
 
-    private void createData(final Connection connection) throws SQLException, IOException {
-        logInfo("Setting up Data...");
-        executeSqlFilesInDirectory(connection, DATA_DIRECTORY);
+    private void createSystemData(final Connection connection) throws SQLException, IOException {
+        logInfo("Setting up System Data...");
+        executeSqlFilesInDirectory(connection, SYSTEM_DATA_DIRECTORY);
+    }
+
+    private void createF1Data(final Connection connection) throws SQLException, IOException {
+        logInfo("Setting up F1 Data...");
+        executeSqlFilesInDirectory(connection, F1_DATA_DIRECTORY);
     }
 
     private void createHelperFunctions(final Connection connection) throws SQLException, IOException {

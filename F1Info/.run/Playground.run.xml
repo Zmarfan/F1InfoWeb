@@ -1,7 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Playground" type="Application" factoryName="Application">
+  <configuration default="false" name="Playground - Extensive" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="mock_data_generator.Main" />
     <module name="F1Info.MockDataGenerator.main" />
+    <option name="PROGRAM_PARAMETERS" value="Y" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="mock_data_generator.*" />
