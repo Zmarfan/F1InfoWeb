@@ -137,7 +137,11 @@
     "friendRequestSent": "Redan skickat vänförfrågan",
     "friendRequests": "Vänförfrågningar ({{amount}})",
     "noFriendRequests": "Du har inga nya vänförfrågningar!",
-    "friendIsBlocked": "<strong>Denna användare har blivit blockad av dig.</strong> Genom att skicka en vänförfrågan blir de avblockerade!"
+    "friendIsBlocked": "<strong>Denna användare har blivit blockad av dig.</strong> Genom att skicka en vänförfrågan blir de avblockerade!",
+    "friends": "Vänner ({{amount}})",
+    "noFriends": "För närvarande har du inga vänner",
+    "unfriend": "Ta bort vän",
+    "block": "Blockera"
   },
   "userSettings": {
     "header": "Ändra Användarinställningar",

@@ -23,4 +23,8 @@ public class Database extends TaskDatabase {
     public List<FriendRequestRecord> getFriendRequests(final long userId) throws SQLException {
         return executeListQuery(new GetFriendRequestsQueryData(userId));
     }
+
+    public List<FriendRecord> getFriends(final long userId) throws SQLException {
+        return executeListQuery(new GetFriendsQueryData(userId));
+    }
 }

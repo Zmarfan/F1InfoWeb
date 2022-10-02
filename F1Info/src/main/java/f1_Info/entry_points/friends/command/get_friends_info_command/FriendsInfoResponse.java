@@ -8,4 +8,5 @@ import java.util.List;
 public class FriendsInfoResponse {
     String mMyFriendCode;
     List<FriendRequestRecord> mFriendRequests;
+    List<FriendRecord> mFriends;
 }

@@ -5,6 +5,7 @@
         <div class="friends-main__body">
             <app-add-friends [myFriendCode]="friendResponse?.myFriendCode!"></app-add-friends>
             <app-received-friend-requests [responseFriendRequests]="friendResponse?.friendRequests!"></app-received-friend-requests>
+            <app-user-friends [friendResponses]="friendResponse?.friends!"></app-user-friends>
         </div>
     </app-loading-element>
 </article>

@@ -103,6 +103,11 @@ button {
     transform: scale(1.035);
   }
 
+  &--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
   &__primary {
     color: white;
     background: var(--light-primary-color);
@@ -111,6 +116,18 @@ button {
     &:not([disabled]) {
       &:hover {
         background: var(--primary-color);
+      }
+    }
+  }
+
+  &__error {
+    color: white;
+    background: var(--error-button-bkg);
+    box-shadow: var(--error-button-shadow) 0 2px;
+
+    &:not([disabled]) {
+      &:hover {
+        background: var(--error-button-hover);
       }
     }
   }

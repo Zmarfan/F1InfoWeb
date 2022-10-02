@@ -27,6 +27,9 @@ import { CopyButtonComponent } from './input/buttons/copy-button/copy-button.com
 import { AddFriendsComponent } from './navigation/friends/add-friends/add-friends.component';
 import { InformationContainerComponent } from './information/information-container/information-container.component';
 import { ReceivedFriendRequestsComponent } from './navigation/friends/received-friend-requests/received-friend-requests.component';
+import { UserFriendsComponent } from './navigation/friends/user-friends/user-friends.component';
+import {ErrorButtonDirective} from './input/buttons/error-button.directive';
+import {SmallButtonDirective} from './input/buttons/small-button.directive';
 
 @NgModule({
     declarations: [
@@ -36,6 +39,8 @@ import { ReceivedFriendRequestsComponent } from './navigation/friends/received-f
         LanguageSelectorComponent,
         LoginSignUpComponent,
         PrimaryButtonDirective,
+        ErrorButtonDirective,
+        SmallButtonDirective,
         ButtonDirective,
         TextInputComponent,
         PageInformationComponent,
@@ -51,6 +56,7 @@ import { ReceivedFriendRequestsComponent } from './navigation/friends/received-f
         AddFriendsComponent,
         InformationContainerComponent,
         ReceivedFriendRequestsComponent,
+        UserFriendsComponent,
     ],
     imports: [
         CommonModule,
@@ -67,6 +73,8 @@ import { ReceivedFriendRequestsComponent } from './navigation/friends/received-f
         LoadingElementComponent,
         LoginSignUpComponent,
         PrimaryButtonDirective,
+        ErrorButtonDirective,
+        SmallButtonDirective,
         PageInformationComponent,
         NavigationHeaderComponent,
         ProfileHeaderComponent,

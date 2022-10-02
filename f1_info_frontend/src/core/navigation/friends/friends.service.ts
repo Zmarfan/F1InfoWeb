@@ -37,4 +37,8 @@ export class FriendsService {
     public blockUser(userId: number) {
         return this.mHttpClient.post(Endpoints.FRIENDS.blockUser, { userId });
     }
+
+    public removeFriend(userId: number) {
+        return this.mHttpClient.post(Endpoints.FRIENDS.removeFriend, { userId });
+    }
 }

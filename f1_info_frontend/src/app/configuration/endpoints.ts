@@ -73,5 +73,6 @@ export class Endpoints {
         acceptFriendRequest: `${Endpoints.FRIENDS_BASE}accept-friend-request`,
         declineFriendRequest: `${Endpoints.FRIENDS_BASE}decline-friend-request`,
         blockUser: `${Endpoints.FRIENDS_BASE}block-user`,
+        removeFriend: `${Endpoints.FRIENDS_BASE}remove-friend`,
     };
 }

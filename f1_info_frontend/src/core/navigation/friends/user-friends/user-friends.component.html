@@ -1,0 +1,18 @@
+<app-information-container headerKey="friends.friends" [open]="false" [headerKeyParam]="{ amount: friends.length }">
+    <section class="user-friends-holder">
+        <div *ngFor="let friend of friends" class="user-friend">
+            <div class="user-friend__user-info">
+                <img src="https://picsum.photos/50/50">
+                <h3>{{friend.displayName}}</h3>
+            </div>
+            <app-loading-element [loading]="friend.loading" size="small">
+                <div class="user-friend__options">
+                    <button appButton appSmallButton (click)="removeFriend(friend)">{{'friends.unfriend' | translate}}</button>
+                    <button appErrorButton appSmallButton (click)="blockFriend(friend)">{{'friends.block' | translate}}</button>
+                </div>
+            </app-loading-element>
+        </div>
+
+        <span *ngIf="friends.length === 0">{{'friends.noFriends' | translate}}</span>
+    </section>
+</app-information-container>

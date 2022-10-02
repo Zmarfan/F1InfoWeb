@@ -25,6 +25,10 @@ body {
 
   --selected-color: #b4aed0;
 
+  --error-button-bkg: #9d6464;
+  --error-button-shadow: #361818;
+  --error-button-hover: #7a3c3c;
+
   --global-message-bkg-info: #c8c5e0;
   --global-message-border-info: #7866b2;
   --global-message-text-info: #0d042f;
@@ -61,6 +65,10 @@ body.dark-theme {
   --button-shadow: #232225;
 
   --selected-color: #373642;
+
+  --error-button-bkg: #774e4e;
+  --error-button-shadow: #361818;
+  --error-button-hover: #693d3d;
 
   --global-message-bkg-info: #373642;
   --global-message-border-info: #8171bb;

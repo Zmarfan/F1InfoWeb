@@ -19,7 +19,8 @@ public class GetFriendsInfoCommand implements Command {
     public ResponseEntity<?> execute() throws SQLException {
         return ok(new FriendsInfoResponse(
             mFriendCodeHandler.friendCodeFromUserId(mUserId),
-            mDatabase.getFriendRequests(mUserId)
+            mDatabase.getFriendRequests(mUserId),
+            mDatabase.getFriends(mUserId)
         ));
     }
 }

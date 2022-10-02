@@ -1,0 +1,36 @@
+.user-friends-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user-friend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @media(max-width: 600px) {
+    flex-direction: column;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    h3 {
+      margin: 0;
+    }
+
+    img {
+      border-radius: 100%;
+    }
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
