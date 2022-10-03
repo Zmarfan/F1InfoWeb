@@ -157,7 +157,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     }
 
     private routeToLogin() {
-        this.mRouter.navigate([RouteHolder.SIGN_UP_PAGE], { queryParams: { type: SignUpComponentType.SIGN_UP } }).then();
+        this.mRouter.navigate([RouteHolder.LOGIN_PAGE]).then();
     }
 
     private logout() {
