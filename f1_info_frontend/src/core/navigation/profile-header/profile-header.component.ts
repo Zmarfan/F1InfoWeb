@@ -25,9 +25,10 @@ import {ThemeService} from '../../../app/theme.service';
 import {WebsiteInfoComponent} from './website-info/website-info.component';
 import {ProfileHeaderService} from './profile-header.service';
 import {GlobalMessageService} from '../../information/global-message-display/global-message.service';
-import {BellNotificationResponse} from '../../../generated/server-responses';
+import {BellNotificationIcon, BellNotificationResponse} from '../../../generated/server-responses';
 import {StorageHandler} from '../../../app/storage-handler';
 import {FriendsComponent} from '../friends/friends.component';
+import {BellNotificationData} from './bell-notification-data';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -40,6 +41,7 @@ export interface BellItem {
     icon: IconDefinition;
     key: string;
     opened: boolean;
+    onClick: () => void;
     keyParams?: any;
 }
 
@@ -48,11 +50,6 @@ export interface BellItem {
     templateUrl: './profile-header.component.html',
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
-    private static BELL_NOTIFICATION_ICON_MAP: Map<string, IconDefinition> = new Map<string, IconDefinition>([
-        ['happy-smiley', faFaceLaughBeam],
-        ['person-circle-question', faPersonCircleQuestion],
-    ]);
-
     public bellItems: BellItem[] = [];
 
     public loggedIn: boolean = false;
@@ -63,6 +60,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         private mSession: Session,
         private mDialog: MatDialog,
         private mElement: ElementRef,
+        private mBellNotificationData: BellNotificationData,
         private mTranslateService: TranslateService,
         private mProfileService: ProfileHeaderService,
         private mMessageService: GlobalMessageService,
@@ -106,15 +104,6 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         return items;
     }
 
-    private static createBellConfigFromResponse(response: BellNotificationResponse): BellItem {
-        return {
-            key: response.translationKey,
-            keyParams: response.parameters,
-            opened: response.opened,
-            icon: ProfileHeaderComponent.BELL_NOTIFICATION_ICON_MAP.get(response.iconType)!,
-        };
-    }
-
     public ngOnInit() {
         this.fetchBellNotificationsIfNeeded();
     }
@@ -137,6 +126,16 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
             error: (e) => this.mMessageService.addHttpError(e),
         });
     };
+
+    private createBellConfigFromResponse(response: BellNotificationResponse): BellItem {
+        return {
+            key: response.translationKey,
+            keyParams: response.parameters,
+            opened: response.opened,
+            icon: this.mBellNotificationData.getBellNotificationIcon(response),
+            onClick: this.mBellNotificationData.createBellNotificationClickCallBack(response),
+        };
+    }
 
     private openUserSettingsDialog() {
         this.mDialog.open(UserSettingsComponent, { disableClose: true });
@@ -173,7 +172,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
 
         this.mProfileService.getBellNotificationsToDisplay().subscribe({
             next: (bellItems) => {
-                this.bellItems = bellItems.map((response) => ProfileHeaderComponent.createBellConfigFromResponse(response));
+                this.bellItems = bellItems.map((response) => this.createBellConfigFromResponse(response));
             },
             error: (e) => this.mMessageService.addHttpError(e),
         });

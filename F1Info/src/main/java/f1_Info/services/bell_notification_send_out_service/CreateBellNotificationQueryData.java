@@ -7,7 +7,8 @@ import lombok.Value;
 public class CreateBellNotificationQueryData implements IQueryData<Long> {
     long m0UserId;
     String m1IconCode;
-    String m2Key;
+    String m2ClickCode;
+    String m3Key;
 
     @Override
     public String getStoredProcedureName() {

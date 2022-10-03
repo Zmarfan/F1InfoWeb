@@ -4,6 +4,7 @@ begin
   select
     notifications.id as notification_id,
     notifications.icon_type,
+    notifications.click_type,
     notifications.translation_key,
     ifnull(open_status.opened, 'N') as opened,
     group_concat(params.parameter_key, ':', params.parameter_value) as parameters

@@ -31,7 +31,7 @@ class BellNotificationSendOutServiceTest {
 
     @Test
     void should_log_severe_if_unable_to_create_notification() throws SQLException {
-        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, "key", emptyMap());
+        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, BellNotificationClickType.DO_NOTHING, "key", emptyMap());
         when(mDatabase.createBellNotification(parameters)).thenThrow(new SQLException());
 
         mService.sendBellNotification(parameters);
@@ -41,7 +41,7 @@ class BellNotificationSendOutServiceTest {
 
     @Test
     void should_log_severe_if_unable_to_create_notification_parameters() throws SQLException {
-        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, "key", PARAMETERS);
+        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, BellNotificationClickType.DO_NOTHING, "key", PARAMETERS);
         when(mDatabase.createBellNotification(parameters)).thenReturn(NOTIFICATION_ID);
         doThrow(new SQLException()).when(mDatabase).createBellNotificationParameters(anyList());
 
@@ -52,7 +52,7 @@ class BellNotificationSendOutServiceTest {
 
     @Test
     void should_not_create_any_notification_parameters_if_none_are_provided() throws SQLException {
-        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, "key", emptyMap());
+        final CreateNotificationParameters parameters = new CreateNotificationParameters(USER_ID, BellNotificationIcon.HAPPY_SMILEY, BellNotificationClickType.DO_NOTHING, "key", emptyMap());
 
         mService.sendBellNotification(parameters);
 

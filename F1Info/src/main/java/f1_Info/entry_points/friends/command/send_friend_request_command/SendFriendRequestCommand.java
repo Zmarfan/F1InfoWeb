@@ -2,6 +2,7 @@ package f1_Info.entry_points.friends.command.send_friend_request_command;
 
 import f1_Info.entry_points.friends.FriendCodeHandler;
 import f1_Info.entry_points.helper.Command;
+import f1_Info.services.bell_notification_send_out_service.BellNotificationClickType;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationIcon;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationSendOutService;
 import f1_Info.services.bell_notification_send_out_service.CreateNotificationParameters;
@@ -39,6 +40,7 @@ public class SendFriendRequestCommand implements Command {
             mNotificationSendOutService.sendBellNotification(new CreateNotificationParameters(
                 friendUserId.get(),
                 BellNotificationIcon.PERSON_CIRCLE_QUESTION,
+                BellNotificationClickType.FRIENDS,
                 "bellMessages.receivedFriendRequest",
                 Map.of("user", requestRecord.getDisplayName())
             ));

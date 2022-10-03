@@ -22,7 +22,12 @@ public class Database extends TaskDatabase {
     }
 
     public long createBellNotification(final CreateNotificationParameters parameters) throws SQLException {
-        return executeBasicQuery(new CreateBellNotificationQueryData(parameters.getUserId(), parameters.getIcon().getCode(), parameters.getKey()));
+        return executeBasicQuery(new CreateBellNotificationQueryData(
+            parameters.getUserId(),
+            parameters.getIcon().getCode(),
+            parameters.getClickType().getCode(),
+            parameters.getKey()
+        ));
     }
 
     public void createBellNotificationParameters(final List<CreateBellNotificationParameterQueryData> parameterQueryDataList) throws SQLException {

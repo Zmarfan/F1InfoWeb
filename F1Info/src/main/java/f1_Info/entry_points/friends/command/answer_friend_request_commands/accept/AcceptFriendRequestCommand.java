@@ -3,6 +3,7 @@ package f1_Info.entry_points.friends.command.answer_friend_request_commands.acce
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.AnswerFriendRequestForUserRecord;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.Database;
 import f1_Info.entry_points.helper.Command;
+import f1_Info.services.bell_notification_send_out_service.BellNotificationClickType;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationIcon;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationSendOutService;
 import f1_Info.services.bell_notification_send_out_service.CreateNotificationParameters;
@@ -33,6 +34,7 @@ public class AcceptFriendRequestCommand implements Command {
         mBellNotificationSendOutService.sendBellNotification(new CreateNotificationParameters(
             mAnswerUserId,
             BellNotificationIcon.HAPPY_SMILEY,
+            BellNotificationClickType.FRIENDS,
             "bellMessages.acceptFriendRequest",
             Map.of("user", answerRecord.getDisplayName())
         ));

@@ -90,6 +90,11 @@
     align-items: center;
     word-break: break-word;
     padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--bkg-color-light-accent);
+    }
 
     fa-icon {
       font-size: 2rem;

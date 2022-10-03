@@ -3,6 +3,7 @@ package f1_Info.entry_points.development.manager_commands.feedback_commands.mark
 
 import f1_Info.entry_points.development.manager_commands.feedback_commands.Database;
 import f1_Info.entry_points.helper.BadRequestException;
+import f1_Info.services.bell_notification_send_out_service.BellNotificationClickType;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationIcon;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationSendOutService;
 import f1_Info.services.bell_notification_send_out_service.CreateNotificationParameters;
@@ -35,6 +36,7 @@ public class MarkFeedbackItemAsCompleteLogic {
         mBellNotificationSendOutService.sendBellNotification(new CreateNotificationParameters(
             authorRecord.getUserId(),
             BellNotificationIcon.HAPPY_SMILEY,
+            BellNotificationClickType.FEEDBACK,
             "bellMessages.completeFeedback",
             Map.of("feedback", authorRecord.getFeedback())
         ));

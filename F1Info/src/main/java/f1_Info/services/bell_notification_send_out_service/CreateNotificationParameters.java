@@ -8,6 +8,7 @@ import java.util.Map;
 public class CreateNotificationParameters {
     long mUserId;
     BellNotificationIcon mIcon;
+    BellNotificationClickType mClickType;
     String mKey;
     Map<String, String> mParameters;
 }

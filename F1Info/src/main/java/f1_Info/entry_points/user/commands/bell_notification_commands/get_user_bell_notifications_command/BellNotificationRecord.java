@@ -6,6 +6,7 @@ import lombok.Value;
 public class BellNotificationRecord {
     long mNotificationId;
     String mIconType;
+    String mClickType;
     String mTranslationKey;
     boolean mOpened;
     String mParameters;

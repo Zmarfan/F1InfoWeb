@@ -13,6 +13,8 @@ begin
   call mock_data_generator_create_user('Angelo Gill', '10', p_email, p_password);
 
  call mock_data_generator_create_friends();
+
+ call mock_data_generator_create_bell_notifications();
 end;
 
 drop procedure if exists mock_data_generator_create_user;
@@ -59,4 +61,17 @@ begin
   call insert_user_friend_status(7, 2, 'friend', create_event(7, 1, 1004, 'init'), current_timestamp);
 
   call insert_user_friend_status(8, 1, 'blocked', create_event(8, 1, 1004, 'init'), current_timestamp);
+end;
+
+drop procedure if exists mock_data_generator_create_bell_notifications;
+create procedure mock_data_generator_create_bell_notifications()
+begin
+  insert into bell_notifications (id, receiver_user_id, icon_type, click_type, translation_key, creation_date) values (1, 1, 'happy-smiley', 'feedback', 'bellMessages.completeFeedback', current_timestamp);
+  insert into bell_notification_parameters (notification_id, parameter_key, parameter_value) values (1, 'feedback', 'Feedback text 1');
+
+  insert into bell_notifications (id, receiver_user_id, icon_type, click_type, translation_key, creation_date) values (2, 1, 'happy-smiley', 'feedback', 'bellMessages.completeFeedback', current_timestamp);
+  insert into bell_notification_parameters (notification_id, parameter_key, parameter_value) values (2, 'feedback', 'Feedback text 2');
+
+  insert into bell_notifications (id, receiver_user_id, icon_type, click_type, translation_key, creation_date) values (3, 1, 'person-circle-question', 'friends', 'bellMessages.receivedFriendRequest', current_timestamp);
+  insert into bell_notification_parameters (notification_id, parameter_key, parameter_value) values (3, 'user', 'Fredrik Larsson');
 end;
