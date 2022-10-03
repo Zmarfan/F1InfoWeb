@@ -84,6 +84,11 @@ export class MobileProfileHeaderComponent {
         this.bellOpen = !this.bellOpen;
     }
 
+    public bellNotificationClicked(item: BellItem) {
+        this.toggleOpen(false);
+        item.onClick();
+    }
+
     private toggleOpen(isOpen: boolean) {
         this.headerOpen = isOpen;
         this.sendBellOpenedCallbackIfNeeded();
