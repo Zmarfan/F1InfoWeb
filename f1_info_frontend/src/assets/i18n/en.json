@@ -149,7 +149,8 @@
     "displayNameHint": "This name is what other users see",
     "save": "Save Changes",
     "duplicateDisplayNameError": "New name can not be the same as current name",
-    "successUpdate": "User settings has been updated!"
+    "successUpdate": "User settings has been updated!",
+    "failedToUpdate": "Unable to save provided changes! The profile picture must be a picture smaller than 500kb!"
   },
   "reports": {
     "noData": "Currently no data available to display!",

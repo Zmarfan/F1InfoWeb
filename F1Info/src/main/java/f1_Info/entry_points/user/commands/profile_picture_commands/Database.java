@@ -8,6 +8,7 @@ import f1_Info.entry_points.user.commands.profile_picture_commands.update_user_p
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 
@@ -26,7 +27,11 @@ public class Database extends TaskDatabase {
         executeVoidQuery(new UploadUserProfilePictureQueryData(userId, imageInputStream));
     }
 
-    public byte[] getUserProfilePicture(final long userId) throws SQLException {
-        return executeBasicQuery(new GetUserProfilePictureQueryData(userId));
+    public byte[] getUserProfilePicture(final long userId) throws SQLException, IOException {
+        final byte[] imageData = executeBasicQuery(new GetUserProfilePictureQueryData(userId));
+        if (imageData == null) {
+            return getClass().getResourceAsStream("/default_profile_picture.jpg").readAllBytes();
+        }
+        return imageData;
     }
 }

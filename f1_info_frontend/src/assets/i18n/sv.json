@@ -149,7 +149,8 @@
     "displayNameHint": "Detta namn är vad andra användare ser",
     "save": "Spara Ändringar",
     "duplicateDisplayNameError": "Nytt namn kan inte vara samma som nuvarande namn",
-    "successUpdate": "Användarinställningar har uppdaterats!"
+    "successUpdate": "Användarinställningar har uppdaterats!",
+    "failedToUpdate": "Det gick inte att spara dina ändringar! Profilbilden måste vara en bild mindre än 500kb!"
   },
   "reports": {
     "noData": "För närvarande finns ingen tillgänglig data att visa!",

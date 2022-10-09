@@ -123,7 +123,7 @@ public class SqlParserFunctions {
         try {
             final Blob readBlob = instance.getResultSet().getBlob(instance.getColumnIndex());
             if (instance.getResultSet().wasNull()) {
-                return new byte[] {};
+                return null;
             }
             return readBlob.getBinaryStream().readAllBytes();
         } catch (final SQLException | IOException e) {

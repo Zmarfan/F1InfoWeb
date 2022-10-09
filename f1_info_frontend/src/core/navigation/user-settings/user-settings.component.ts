@@ -97,7 +97,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         })
             .subscribe({
                 next: () => this.successfullyUpdated(),
-                error: (error: HttpErrorResponse) => this.handleUpdateError(error),
+                error: () => this.handleUpdateError(),
             });
     }
 
@@ -105,9 +105,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         cancelDialog(this.mDialogRef);
     }
 
-    private handleUpdateError(error: HttpErrorResponse) {
+    private handleUpdateError() {
         this.loading = false;
-        this.mMessageService.addHttpError(error);
+        this.mMessageService.addError(this.mTranslate.instant('userSettings.failedToUpdate'));
     }
 
     private successfullyUpdated() {
