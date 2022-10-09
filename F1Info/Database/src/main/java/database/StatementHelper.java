@@ -2,6 +2,7 @@ package database;
 
 import lombok.experimental.UtilityClass;
 
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -42,6 +43,10 @@ public class StatementHelper {
         } else {
             preparedStatement.setNull(parameterIndex, Types.INTEGER);
         }
+    }
+
+    public static void setBlob(final PreparedStatement preparedStatement, final int parameterIndex, final InputStream inputStream) throws SQLException {
+        preparedStatement.setBlob(parameterIndex, inputStream);
     }
 
     public static void setBoolean(final PreparedStatement preparedStatement, final int parameterIndex, final Boolean value) throws SQLException {

@@ -1,16 +1,16 @@
 drop procedure if exists mock_data_generator_create_users;
-create procedure mock_data_generator_create_users(in p_email varchar(50), in p_password varchar(100))
+create procedure mock_data_generator_create_users(in p_email varchar(50), in p_password varchar(100), in p_user_icon longblob)
 begin
-  call mock_data_generator_create_user('Kellie Chandler', '1', p_email, p_password);
-  call mock_data_generator_create_user('Dana Mack', '2', p_email, p_password);
-  call mock_data_generator_create_user('Terry Hammond', '3', p_email, p_password);
-  call mock_data_generator_create_user('Lance Dixon', '4', p_email, p_password);
-  call mock_data_generator_create_user('Christian Casey', '5', p_email, p_password);
-  call mock_data_generator_create_user('Joey Peterson', '6', p_email, p_password);
-  call mock_data_generator_create_user('Jesse Paul', '7', p_email, p_password);
-  call mock_data_generator_create_user('Juanita Haynes', '8', p_email, p_password);
-  call mock_data_generator_create_user('Lewis Floyd', '9', p_email, p_password);
-  call mock_data_generator_create_user('Angelo Gill', '10', p_email, p_password);
+  call mock_data_generator_create_user('Kellie Chandler', '1', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Dana Mack', '2', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Terry Hammond', '3', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Lance Dixon', '4', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Christian Casey', '5', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Joey Peterson', '6', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Jesse Paul', '7', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Juanita Haynes', '8', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Lewis Floyd', '9', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Angelo Gill', '10', p_email, p_password, p_user_icon);
 
  call mock_data_generator_create_friends();
 
@@ -18,7 +18,7 @@ begin
 end;
 
 drop procedure if exists mock_data_generator_create_user;
-create procedure mock_data_generator_create_user(in p_display_name varchar(50), in p_no varchar(2), in p_email varchar(50), in p_password varchar(100))
+create procedure mock_data_generator_create_user(in p_display_name varchar(50), in p_no varchar(2), in p_email varchar(50), in p_password varchar(100), in p_user_icon longblob)
 begin
   declare v_user_id int;
   insert into users (email, password, enabled)  values (concat(p_no, p_email), p_password, 'Y');
@@ -27,6 +27,7 @@ begin
   insert into user_authorities (user_id, authority_name) values (v_user_id, 'admin');
 
   call insert_user_information(v_user_id, concat(p_display_name, ' ', p_no), create_event(v_user_id, 1, 1000, 'init'), current_timestamp);
+  insert into user_profile_pictures (user_id, image_data) values (v_user_id, p_user_icon);
 end;
 
 drop procedure if exists mock_data_generator_create_friends;

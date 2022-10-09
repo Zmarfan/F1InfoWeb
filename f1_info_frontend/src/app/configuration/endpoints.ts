@@ -24,6 +24,7 @@ export class Endpoints {
 
     public static readonly USER = {
         updateSettings: `${Endpoints.USER_BASE}settings`,
+        uploadUserProfileIcon: `${Endpoints.USER_BASE}profile-icon`,
         getBellNotificationsToDisplay: `${Endpoints.USER_BASE}bell-notifications`,
         markBellNotificationsAsOpened: `${Endpoints.USER_BASE}bell-notifications-opened-state`,
     };

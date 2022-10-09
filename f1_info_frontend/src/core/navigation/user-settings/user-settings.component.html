@@ -17,9 +17,20 @@
                 formControlName="displayName"
             ></app-text-input>
 
+            <div class="image-upload">
+                <div class="image-upload__input">
+                    <label appButton appSmallButton>
+                        <input (change)="selectProfilePicture($event)" type="file" accept="image/png, image/jpeg, image/jpg">
+                        Upload Profile Icon
+                    </label>
+                    <span *ngIf="profileIconData" class="image-upload__filename">{{profileIconData.name}}</span>
+                </div>
+                <img *ngIf="profileIconData" [src]="profileIconData.src">
+            </div>
+
             <div class="user-form__buttons">
                 <button appButton type="button" (click)="cancel()">{{'buttons.cancel' | translate}}</button>
-                <button appPrimaryButton type="submit" [disabled]="!formData.valid">{{'userSettings.save' | translate}}</button>
+                <button appPrimaryButton type="submit" [disabled]="!canSaveChanges">{{'userSettings.save' | translate}}</button>
             </div>
         </form>
     </app-loading-element>

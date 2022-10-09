@@ -6,8 +6,10 @@ import common.constants.email.Email;
 import common.constants.email.MalformedEmailException;
 import lombok.experimental.UtilityClass;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -113,6 +115,18 @@ public class SqlParserFunctions {
         try {
             return new Email(readString(instance));
         } catch (final MalformedEmailException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static byte[] readByteArray(final SqlParserInstance instance) {
+        try {
+            final Blob readBlob = instance.getResultSet().getBlob(instance.getColumnIndex());
+            if (instance.getResultSet().wasNull()) {
+                return new byte[] {};
+            }
+            return readBlob.getBinaryStream().readAllBytes();
+        } catch (final SQLException | IOException e) {
             throw new IllegalArgumentException(e);
         }
     }

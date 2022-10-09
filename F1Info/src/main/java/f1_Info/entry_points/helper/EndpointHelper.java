@@ -45,6 +45,11 @@ public class EndpointHelper {
         return !authentication.getAuthorities().contains(Authority.ROLE_ANONYMOUS) && authentication.isAuthenticated();
     }
 
+    public Long getUserIdFromSession(final HttpServletRequest request) {
+        final HttpSession session = request.getSession(false);
+        return session != null ? (Long) session.getAttribute(SessionAttributes.USER_ID) : null;
+    }
+
     public Email convertEmail(final String email) {
         try {
             return new Email(email);
@@ -69,10 +74,5 @@ public class EndpointHelper {
             );
             return internalServerError();
         }
-    }
-
-    private Long getUserIdFromSession(final HttpServletRequest request) {
-        final HttpSession session = request.getSession(false);
-        return session != null ? (Long) session.getAttribute(SessionAttributes.USER_ID) : null;
     }
 }

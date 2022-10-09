@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {AppRoutingModule} from '../routing/app-routing.module';
 import {HttpClient} from '@angular/common/http';
 import {Endpoints} from './endpoints';
-import {map, Observable, startWith, Subject, tap} from 'rxjs';
+import {forkJoin, map, Observable, startWith, Subject, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {RouteHolder} from '../routing/route-holder';
 import {GetUserResponse} from '../../generated/server-responses';
@@ -17,6 +17,7 @@ export class Session {
     private readonly mUser$: Observable<User | null>;
     private mClientLoggedInStatus: boolean = false;
     private mLastUser: User | null = null;
+    private mLastLogoSrc: string | null = null;
 
     public constructor(
         private mHttpClient: HttpClient
@@ -31,6 +32,10 @@ export class Session {
 
     public get user(): User | null {
         return this.mLastUser;
+    }
+
+    public get userLogoSrc(): string {
+        return this.mLastUser !== null ? 'http://localhost:8081/api/v1/User/profile-icon' : 'https://picsum.photos/100/100';
     }
 
     public login() {

@@ -15,6 +15,16 @@ import java.io.IOException;
 public class RequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        chain.doFilter(new MyRequestWrapper((HttpServletRequest) request), response);
+        // Since the MyRequestWrapper closes the input stream of the body before Spring has a chance to read for file sending we can't wrap it.
+        if (requestIsFileUpload((HttpServletRequest) request)) {
+            chain.doFilter(request, response);
+        } else {
+            chain.doFilter(new MyRequestWrapper((HttpServletRequest) request), response);
+        }
+    }
+
+    private boolean requestIsFileUpload(final HttpServletRequest request) {
+        final String contentType = request.getHeader("content-type");
+        return contentType != null && contentType.contains("multipart/form-data");
     }
 }

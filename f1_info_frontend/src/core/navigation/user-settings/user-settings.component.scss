@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 
   &__form {
     min-width: 20rem;
@@ -21,5 +22,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+}
+
+.image-upload {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+
+  &__filename {
+    font-size: 0.75rem;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 }

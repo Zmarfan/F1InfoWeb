@@ -8,6 +8,7 @@ import common.utils.ListUtils;
 import database.sql_parsing.SqlParser;
 import lombok.experimental.UtilityClass;
 
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -124,6 +125,7 @@ public class DatabaseUtil {
                 case LONG, NULLABLE_LONG -> StatementHelper.setLong(statement, columnIndex, (Long) value);
                 case STRING -> StatementHelper.setString(statement, columnIndex, (String) value);
                 case INT, NULLABLE_INT -> StatementHelper.setInt(statement, columnIndex, (Integer) value);
+                case INPUT_STREAM -> StatementHelper.setBlob(statement, columnIndex, (InputStream) value);
                 case DATE -> StatementHelper.setDate(statement, columnIndex, (LocalDate) value);
                 case TIME -> StatementHelper.setTime(statement, columnIndex, (LocalTime) value);
                 case DATE_TIME -> StatementHelper.setDateTime(statement, columnIndex, (LocalDateTime) value);

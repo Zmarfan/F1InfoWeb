@@ -41,7 +41,7 @@ public class MockDataGenerator {
             createSystemData(connection);
             createF1Data(connection);
             createProcedures(connection);
-            createMockData(connection);
+            createMockData();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
             logError("Unable to finish the extensive mock data generation!");
@@ -59,7 +59,7 @@ public class MockDataGenerator {
             createHelperFunctions(connection);
             createSystemData(connection);
             createProcedures(connection);
-            createMockData(connection);
+            createMockData();
             logSuccess("Successfully reset local database!");
         } catch (final Exception e) {
             logError("Unable to finish the minimalistic mock data generation!");
@@ -97,7 +97,7 @@ public class MockDataGenerator {
         runSqlFilesEndingWith(connection, "_procedures.sql");
     }
 
-    private void createMockData(final Connection connection) throws SQLException {
+    private void createMockData() throws SQLException {
         logInfo("Creating mock data...");
 
         DatabaseUtil.executeQuery(getConnection(), new CreateUsersQueryData(), null, null);

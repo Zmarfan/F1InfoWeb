@@ -39,7 +39,8 @@ public class SqlParser<T> {
         entry(NULLABLE_DOUBLE, SqlParserFunctions::readDouble),
         entry(COUNTRY, SqlParserFunctions::readCountry),
         entry(URL, SqlParserFunctions::readUrl),
-        entry(EMAIL, SqlParserFunctions::readEmail)
+        entry(EMAIL, SqlParserFunctions::readEmail),
+        entry(BYTE_ARRAY, SqlParserFunctions::readByteArray)
     );
 
     private final Class<T> mRecordClass;
@@ -96,7 +97,7 @@ public class SqlParser<T> {
     private Object extractParameter(final Parameter parameter, final int columnIndex) {
         try {
             return SQL_MAPPING.get(parameter.getType().getName()).apply(new SqlParserInstance(mResult, columnIndex));
-        } catch (final IllegalArgumentException e) {
+        } catch (final IllegalArgumentException | NullPointerException e) {
             throw new IllegalArgumentException(String.format(
                 "Unable to parse the parameter %s, to the type: %s at column index: %d",
                 parameter.getName(),

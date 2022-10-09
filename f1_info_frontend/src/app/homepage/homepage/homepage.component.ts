@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Session} from '../../configuration/session';
 
 @Component({
     selector: 'app-homepage',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent {
+    public constructor(
+        public session: Session
+    ) {
+    }
 }
