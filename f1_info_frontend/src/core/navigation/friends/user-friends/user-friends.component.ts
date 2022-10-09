@@ -2,12 +2,15 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {FriendsService} from '../friends.service';
 import {Observer} from 'rxjs';
 import {GlobalMessageService} from '../../../information/global-message-display/global-message.service';
-import {FriendRecord} from '../../../../generated/server-responses';
+import {FriendInfo} from '../../../../generated/server-responses';
+import {parseTemplate} from 'url-template';
+import {Endpoints} from '../../../../app/configuration/endpoints';
 
 export interface Friend {
     loading: boolean;
     userId: number;
     displayName: string;
+    friendCode: string;
 }
 
 @Component({
@@ -16,7 +19,7 @@ export interface Friend {
     styleUrls: ['./user-friends.component.scss'],
 })
 export class UserFriendsComponent implements OnChanges {
-    @Input() public friendResponses: FriendRecord[] = [];
+    @Input() public friendResponses: FriendInfo[] = [];
     public friends: Friend[] = [];
 
     public constructor(
@@ -30,6 +33,7 @@ export class UserFriendsComponent implements OnChanges {
             loading: false,
             userId: friend.userId,
             displayName: friend.displayName,
+            friendCode: friend.friendCode,
         }));
     }
 
@@ -39,6 +43,10 @@ export class UserFriendsComponent implements OnChanges {
 
     public blockFriend(friend: Friend) {
         this.mFriendService.blockUser(friend.userId).subscribe(this.createRequestHandler(friend));
+    }
+
+    public getFriendProfileIconSrc(friendCode: string): string {
+        return parseTemplate(Endpoints.FRIENDS.getProfileIcon).expand({ friendCode });
     }
 
     private createRequestHandler<T>(friend: Friend): Partial<Observer<T>> {

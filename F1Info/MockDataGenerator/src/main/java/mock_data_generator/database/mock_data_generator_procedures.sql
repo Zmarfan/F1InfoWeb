@@ -1,16 +1,29 @@
 drop procedure if exists mock_data_generator_create_users;
-create procedure mock_data_generator_create_users(in p_email varchar(50), in p_password varchar(100), in p_user_icon longblob)
+create procedure mock_data_generator_create_users(
+  in p_email varchar(50),
+  in p_password varchar(100),
+  in p_user_icon_1 longblob,
+  in p_user_icon_2 longblob,
+  in p_user_icon_3 longblob,
+  in p_user_icon_4 longblob,
+  in p_user_icon_5 longblob,
+  in p_user_icon_6 longblob,
+  in p_user_icon_7 longblob,
+  in p_user_icon_8 longblob,
+  in p_user_icon_9 longblob,
+  in p_user_icon_10 longblob
+)
 begin
-  call mock_data_generator_create_user('Kellie Chandler', '1', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Dana Mack', '2', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Terry Hammond', '3', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Lance Dixon', '4', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Christian Casey', '5', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Joey Peterson', '6', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Jesse Paul', '7', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Juanita Haynes', '8', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Lewis Floyd', '9', p_email, p_password, p_user_icon);
-  call mock_data_generator_create_user('Angelo Gill', '10', p_email, p_password, p_user_icon);
+  call mock_data_generator_create_user('Alexander Albon', '1', p_email, p_password, p_user_icon_1);
+  call mock_data_generator_create_user('Sebastian Vettel', '2', p_email, p_password, p_user_icon_2);
+  call mock_data_generator_create_user('Max Verstappen', '3', p_email, p_password, p_user_icon_3);
+  call mock_data_generator_create_user('Lewis Hamilton', '4', p_email, p_password, p_user_icon_4);
+  call mock_data_generator_create_user('Lance Stroll', '5', p_email, p_password, p_user_icon_5);
+  call mock_data_generator_create_user('Daniel Ricciardo', '6', p_email, p_password, p_user_icon_6);
+  call mock_data_generator_create_user('Charles Leclerc', '7', p_email, p_password, p_user_icon_7);
+  call mock_data_generator_create_user('Carlos Sainz', '8', p_email, p_password, p_user_icon_8);
+  call mock_data_generator_create_user('Zhou Guanyu', '9', p_email, p_password, p_user_icon_9);
+  call mock_data_generator_create_user('Kevin Magnussen', '10', p_email, p_password, p_user_icon_10);
 
  call mock_data_generator_create_friends();
 

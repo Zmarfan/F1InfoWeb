@@ -50,6 +50,9 @@
 
   &__to-add {
     img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
       border-radius: 100%;
       @media(max-width: $mobile-max-width) {
         width: 50px;

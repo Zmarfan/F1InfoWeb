@@ -4,6 +4,8 @@ import {FriendsService} from '../friends.service';
 import {GlobalMessageService} from '../../../information/global-message-display/global-message.service';
 import {ValidatorFactory} from '../../../utils/validator-factory';
 import {SearchFriendResponse} from '../../../../generated/server-responses';
+import {Endpoints} from '../../../../app/configuration/endpoints';
+import {parseTemplate} from 'url-template';
 
 @Component({
     selector: 'app-add-friends',
@@ -70,5 +72,9 @@ export class AddFriendsComponent {
                     this.addingFriendLoading = false;
                 },
             });
+    }
+
+    public getFriendProfileIconSrc(friendCode: string): string {
+        return parseTemplate(Endpoints.FRIENDS.getProfileIcon).expand({ friendCode });
     }
 }

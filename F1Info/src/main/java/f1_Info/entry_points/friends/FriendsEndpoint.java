@@ -1,10 +1,12 @@
 package f1_Info.entry_points.friends;
 
+import common.logger.Logger;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.AnswerFriendRequestRequestBody;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.accept.AcceptFriendRequestCommand;
 import f1_Info.entry_points.friends.command.answer_friend_request_commands.decline.DeclineFriendRequestCommand;
 import f1_Info.entry_points.friends.command.block_user_command.BlockUserCommand;
 import f1_Info.entry_points.friends.command.block_user_command.BlockUserRequestBody;
+import f1_Info.entry_points.friends.command.get_friend_profile_icon_command.GetFriendProfileIconCommand;
 import f1_Info.entry_points.friends.command.get_friends_info_command.GetFriendsInfoCommand;
 import f1_Info.entry_points.friends.command.remove_friend_command.RemoveFriendCommand;
 import f1_Info.entry_points.friends.command.remove_friend_command.RemoveFriendRequestBody;
@@ -17,6 +19,7 @@ import f1_Info.entry_points.helper.EndpointHelper;
 import f1_Info.services.bell_notification_send_out_service.BellNotificationSendOutService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +39,8 @@ public class FriendsEndpoint {
     private final f1_Info.entry_points.friends.command.block_user_command.Database mBlockUserDatabase;
     private final f1_Info.entry_points.friends.command.remove_friend_command.Database mRemoveFriendDatabase;
     private final BellNotificationSendOutService mBellNotificationSendOutService;
+    private final f1_Info.entry_points.friends.command.get_friend_profile_icon_command.Database mFriendProfileIconDatabase;
+    private final Logger mLogger;
 
     @GetMapping("/info")
     public ResponseEntity<?> getFriendsInfo() {
@@ -118,5 +123,13 @@ public class FriendsEndpoint {
 
             return new RemoveFriendCommand(userId, body.getUserId(), mRemoveFriendDatabase);
         });
+    }
+
+    @ResponseBody
+    @GetMapping(path = "/profile-icon/{friendCode}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getFriendProfileIcon(
+        @PathVariable("friendCode") final String friendCode
+    ) {
+        return new GetFriendProfileIconCommand(friendCode, mFriendCodeHandler, mFriendProfileIconDatabase, mLogger).execute();
     }
 }

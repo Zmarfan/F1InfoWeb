@@ -26,7 +26,7 @@
             <section class="friends-add-friend__to-add-holder">
                 <ng-container *ngIf="searchFriendResponse?.friendCode; else noResult">
                     <div class="friends-add-friend__to-add">
-                        <img src="https://picsum.photos/100/100">
+                        <img [src]="getFriendProfileIconSrc(searchFriendResponse!.friendCode)">
 
                         <div>
                             <h3>{{searchFriendResponse?.displayName}}</h3>

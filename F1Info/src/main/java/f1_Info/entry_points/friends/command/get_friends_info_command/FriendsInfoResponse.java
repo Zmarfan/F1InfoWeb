@@ -7,6 +7,6 @@ import java.util.List;
 @Value
 public class FriendsInfoResponse {
     String mMyFriendCode;
-    List<FriendRequestRecord> mFriendRequests;
-    List<FriendRecord> mFriends;
+    List<FriendInfo> mFriendRequests;
+    List<FriendInfo> mFriends;
 }

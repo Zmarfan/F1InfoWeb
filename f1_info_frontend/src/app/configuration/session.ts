@@ -35,7 +35,7 @@ export class Session {
     }
 
     public get userLogoSrc(): string {
-        return this.mLastUser !== null ? 'http://localhost:8081/api/v1/User/profile-icon' : 'https://picsum.photos/100/100';
+        return this.mLastUser !== null ? Endpoints.USER.getProfileIcon : 'https://picsum.photos/100/100';
     }
 
     public login() {

@@ -25,6 +25,7 @@ export class Endpoints {
     public static readonly USER = {
         updateSettings: `${Endpoints.USER_BASE}settings`,
         uploadUserProfileIcon: `${Endpoints.USER_BASE}profile-icon`,
+        getProfileIcon: `${Endpoints.USER_BASE}profile-icon`,
         getBellNotificationsToDisplay: `${Endpoints.USER_BASE}bell-notifications`,
         markBellNotificationsAsOpened: `${Endpoints.USER_BASE}bell-notifications-opened-state`,
     };
@@ -75,5 +76,6 @@ export class Endpoints {
         declineFriendRequest: `${Endpoints.FRIENDS_BASE}decline-friend-request`,
         blockUser: `${Endpoints.FRIENDS_BASE}block-user`,
         removeFriend: `${Endpoints.FRIENDS_BASE}remove-friend`,
+        getProfileIcon: `${Endpoints.FRIENDS_BASE}profile-icon/{friendCode}`,
     };
 }

@@ -2,13 +2,15 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {FriendsService} from '../friends.service';
 import {GlobalMessageService} from '../../../information/global-message-display/global-message.service';
 import {Observer} from 'rxjs';
-import {LoadingSpinnerSize} from '../../../loading/loading-element/loading-element.component';
-import {FriendRequestRecord} from '../../../../generated/server-responses';
+import {FriendInfo} from '../../../../generated/server-responses';
+import {parseTemplate} from 'url-template';
+import {Endpoints} from '../../../../app/configuration/endpoints';
 
 export interface FriendRequest {
     loading: boolean;
     userId: number;
     displayName: string;
+    friendCode: string;
 }
 
 @Component({
@@ -17,7 +19,7 @@ export interface FriendRequest {
     styleUrls: ['./received-friend-requests.component.scss'],
 })
 export class ReceivedFriendRequestsComponent implements OnChanges {
-    @Input() public responseFriendRequests: FriendRequestRecord[] = [];
+    @Input() public responseFriendRequests: FriendInfo[] = [];
     public requests: FriendRequest[] = [];
 
     public constructor(
@@ -31,6 +33,7 @@ export class ReceivedFriendRequestsComponent implements OnChanges {
             loading: false,
             userId: request.userId,
             displayName: request.displayName,
+            friendCode: request.friendCode,
         }));
     }
 
@@ -44,6 +47,10 @@ export class ReceivedFriendRequestsComponent implements OnChanges {
 
     public blockUser(request: FriendRequest) {
         this.mFriendService.blockUser(request.userId).subscribe(this.createRequestHandler(request));
+    }
+
+    public getFriendProfileIconSrc(friendCode: string): string {
+        return parseTemplate(Endpoints.FRIENDS.getProfileIcon).expand({ friendCode });
     }
 
     private createRequestHandler<T>(request: FriendRequest): Partial<Observer<T>> {

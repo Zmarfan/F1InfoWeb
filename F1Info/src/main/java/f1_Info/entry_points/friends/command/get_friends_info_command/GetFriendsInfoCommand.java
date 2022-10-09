@@ -19,8 +19,14 @@ public class GetFriendsInfoCommand implements Command {
     public ResponseEntity<?> execute() throws SQLException {
         return ok(new FriendsInfoResponse(
             mFriendCodeHandler.friendCodeFromUserId(mUserId),
-            mDatabase.getFriendRequests(mUserId),
+            mDatabase.getFriendRequests(mUserId)
+                .stream()
+                .map(request -> new FriendInfo(request.getUserId(), request.getDisplayName(), mFriendCodeHandler.friendCodeFromUserId(request.getUserId())))
+                .toList(),
             mDatabase.getFriends(mUserId)
+                .stream()
+                .map(friend -> new FriendInfo(friend.getUserId(), friend.getDisplayName(), mFriendCodeHandler.friendCodeFromUserId(friend.getUserId())))
+                .toList()
         ));
     }
 }

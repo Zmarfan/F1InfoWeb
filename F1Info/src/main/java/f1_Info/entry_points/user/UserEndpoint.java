@@ -76,7 +76,7 @@ public class UserEndpoint {
     private boolean isImageValid(final MultipartFile file) {
         try {
             final BufferedImage image = ImageIO.read(file.getInputStream());
-            return image == null || file.getSize() <= MAX_PROFILE_ICON_SIZE_IN_BYTES;
+            return image != null || file.getSize() <= MAX_PROFILE_ICON_SIZE_IN_BYTES;
         } catch (final IOException e) {
             return false;
         }

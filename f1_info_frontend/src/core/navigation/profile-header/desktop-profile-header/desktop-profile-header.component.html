@@ -18,7 +18,7 @@
 
     <div class="user-section">
         <div (click)="menuToggle($event)" class="user-section__menu">
-            <fa-icon icon="circle-user" class="user-section__icon"></fa-icon>
+            <img [src]="session.userLogoSrc" class="user-section__icon">
             <div class="user-section__names">
                 <span class="user-section__user-name">{{session.user?.displayName}}</span>
                 <span class="user-section__display-name">{{session.user?.email ?? 'navigation.profile.anonymousUser' | translate}}</span>

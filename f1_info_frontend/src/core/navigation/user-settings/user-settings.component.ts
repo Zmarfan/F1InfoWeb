@@ -61,6 +61,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
+        this.profileIconData = { src: this.mSession.userLogoSrc };
         this.mSubscription = this.mSession.isLoggedIn.subscribe(() => {
             this.profileIconData = { src: this.mSession.userLogoSrc };
         });

@@ -2,7 +2,7 @@
     <section class="user-friends-holder">
         <div *ngFor="let friend of friends" class="user-friend">
             <div class="user-friend__user-info">
-                <img src="https://picsum.photos/50/50">
+                <img [src]="getFriendProfileIconSrc(friend.friendCode)">
                 <h3>{{friend.displayName}}</h3>
             </div>
             <app-loading-element [loading]="friend.loading" size="small">

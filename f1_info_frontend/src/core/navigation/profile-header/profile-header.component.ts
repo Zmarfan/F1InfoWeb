@@ -105,8 +105,6 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.mDialog.open(UserSettingsComponent, { disableClose: true });
-
         this.fetchBellNotificationsIfNeeded();
     }
 
