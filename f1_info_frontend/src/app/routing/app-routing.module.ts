@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {NavigationEnd, Router, RouterModule, Routes} from '@angular/router';
 import {RouteHolder} from './route-holder';
 import {HomepageComponent} from '../homepage/homepage/homepage.component';
 import {LoginComponent} from '../login-page/login/login.component';
@@ -14,6 +14,7 @@ import {ConstructorReportComponent} from '../constructor-report/constructor-repo
 import {DriverProfileComponent} from '../driver-profile/driver-profile.component';
 import {ChangeLogComponent} from '../development/change-log/change-log.component';
 import {FeedbackComponent} from '../development/feedback/feedback.component';
+import {Session} from '../configuration/session';
 
 const routes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
@@ -35,4 +36,14 @@ const routes: Routes = [
     exports: [RouterModule],
 })
 export class AppRoutingModule {
+    public constructor(
+        router: Router,
+        session: Session
+    ) {
+        router.events.subscribe((value) => {
+            if (value instanceof NavigationEnd) {
+                session.fetchUser();
+            }
+        });
+    }
 }

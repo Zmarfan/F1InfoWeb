@@ -5,7 +5,6 @@ import {Injectable, Injector} from '@angular/core';
 import {RouteHolder} from '../routing/route-holder';
 import {CsrfTokenHolder} from './csrf-token-holder';
 import {Session} from './session';
-import {GlobalMessageService} from '../../core/information/global-message-display/global-message.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
