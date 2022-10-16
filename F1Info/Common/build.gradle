@@ -19,13 +19,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.4'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.4'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.4'
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
-    compileOnly 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 }
 
