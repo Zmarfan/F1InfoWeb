@@ -44,6 +44,8 @@ import { FeedbackItemComponent } from './development/feedback/feedback-item/feed
 import { FeedbackDeleteComponent } from './development/feedback/feedback-item/feedback-delete/feedback-delete.component';
 import { CreateFeedbackComponent } from './development/feedback/create-feedback/create-feedback.component';
 import {StorageHandler} from './storage-handler';
+import { NextRaceInfoComponent } from './homepage/next-race-info/next-race-info.component';
+import { NextRaceCountdownComponent } from './homepage/next-race-countdown/next-race-countdown.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -97,6 +99,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         FeedbackItemComponent,
         FeedbackDeleteComponent,
         CreateFeedbackComponent,
+        NextRaceInfoComponent,
+        NextRaceCountdownComponent,
     ],
     providers: [
         {

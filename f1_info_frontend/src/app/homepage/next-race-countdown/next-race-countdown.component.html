@@ -1,0 +1,25 @@
+<div class="next-race-countdown">
+    <span class="next-race-countdown__title">{{sessionKey | translate}}</span>
+
+    <div class="next-race-countdown__countdown">
+        <ng-container *ngIf="!nextRaceResponse.sessionInProgress; else sessionInProgress">
+            <ng-container *ngTemplateOutlet="timeEntry;context:{ time: days, unitKey: 'unit.days'}"></ng-container>
+            <span class="next-race-countdown__delimiter"></span>
+            <ng-container *ngTemplateOutlet="timeEntry;context:{ time: hours, unitKey: 'unit.hours'}"></ng-container>
+            <span class="next-race-countdown__delimiter"></span>
+            <ng-container *ngTemplateOutlet="timeEntry;context:{ time: minutes, unitKey: 'unit.minutes'}"></ng-container>
+            <span class="next-race-countdown__delimiter"></span>
+            <ng-container *ngTemplateOutlet="timeEntry;context:{ time: seconds, unitKey: 'units.seconds'}"></ng-container>
+        </ng-container>
+        <ng-template #sessionInProgress>
+            <span class="next-race-countdown__in-progress">Session in progress!</span>
+        </ng-template>
+    </div>
+</div>
+
+<ng-template #timeEntry let-time="time" let-unitKey=unitKey>
+    <div class="next-race-countdown__time-entry">
+        <span class="next-race-countdown__number">{{time}}</span>
+        <span>{{unitKey | translate}}</span>
+    </div>
+</ng-template>
