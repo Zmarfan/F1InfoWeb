@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {NextRaceInfoResponse} from '../../../generated/server-responses';
+import {NextRaceInfoResponse} from '../../../../generated/server-responses';
 
 @Component({
     selector: 'app-next-race-countdown',

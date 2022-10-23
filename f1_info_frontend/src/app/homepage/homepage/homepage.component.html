@@ -1,8 +1,3 @@
 <article class="homepage">
-    <app-loading-element [loading]="!nextRaceResponse" class="homepage__content">
-        <img src="assets/images/homepage/next-race-background.png">
-        <h1>Next Race</h1>
-        <app-next-race-info></app-next-race-info>
-        <app-next-race-countdown [nextRaceResponse]="nextRaceResponse"></app-next-race-countdown>
-    </app-loading-element>
+    <app-next-race class="homepage__fill"></app-next-race>
 </article>

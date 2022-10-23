@@ -337,6 +337,7 @@
   },
   "homepage": {
     "nextRace": {
+      "title": "Nästa Race",
       "sessionInProgress": "Session pågår!",
       "firstPractice": "Första Träning",
       "secondPractice": "Andra Träning",

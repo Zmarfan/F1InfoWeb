@@ -1,5 +1,5 @@
 <div class="next-race-countdown">
-    <span class="next-race-countdown__title">{{nextRaceResponse!.sessionKey | translate}}</span>
+    <span class="next-race-countdown__title">{{nextRaceResponse?.sessionKey ?? '' | translate}}</span>
 
     <div class="next-race-countdown__countdown">
         <ng-container *ngIf="!nextRaceResponse?.sessionInProgress; else sessionInProgress">

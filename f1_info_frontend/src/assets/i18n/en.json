@@ -337,6 +337,7 @@
   },
   "homepage": {
     "nextRace": {
+      "title": "Next Race",
       "sessionInProgress": "Session in progress!",
       "firstPractice": "First Practice",
       "secondPractice": "Second Practice",
