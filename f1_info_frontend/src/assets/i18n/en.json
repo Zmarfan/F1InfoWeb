@@ -13,6 +13,12 @@
     "copy": "Copy",
     "copied": "Copied!"
   },
+  "unit": {
+    "days": "DAYS",
+    "hours": "HRS",
+    "minutes": "MINS",
+    "seconds": "SEC"
+  },
   "input": {
     "email": "Email",
     "password": "Password",
@@ -327,6 +333,17 @@
     "create": {
       "label": "Text",
       "submitLabel": "Do you want to submit this feedback?"
+    }
+  },
+  "homepage": {
+    "nextRace": {
+      "sessionInProgress": "Session in progress!",
+      "firstPractice": "First Practice",
+      "secondPractice": "Second Practice",
+      "thirdPractice": "Third Practice",
+      "sprint": "Sprint",
+      "qualifying": "Qualifying",
+      "race": "Race"
     }
   }
 }

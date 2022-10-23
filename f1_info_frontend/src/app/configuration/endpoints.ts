@@ -11,6 +11,7 @@ export class Endpoints {
     private static readonly OPEN_DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'OpenDevelopment/';
     private static readonly MANAGER_DEVELOPMENT_BASE: string = Endpoints.BASE_URL + 'ManagerDevelopment/';
     private static readonly FRIENDS_BASE: string = Endpoints.BASE_URL + 'Friends/';
+    private static readonly HOMEPAGE_BASE: string = Endpoints.BASE_URL + 'Homepage/';
 
     public static readonly AUTHENTICATION = {
         getUser: `${Endpoints.AUTHENTICATION_BASE}user`,
@@ -77,5 +78,9 @@ export class Endpoints {
         blockUser: `${Endpoints.FRIENDS_BASE}block-user`,
         removeFriend: `${Endpoints.FRIENDS_BASE}remove-friend`,
         getProfileIcon: `${Endpoints.FRIENDS_BASE}profile-icon/{friendCode}`,
+    };
+
+    public static readonly HOMEPAGE = {
+        nextRaceInfo: `${Endpoints.HOMEPAGE_BASE}next-race`,
     };
 }

@@ -13,6 +13,12 @@
     "copy": "Kopiera",
     "copied": "Kopierad!"
   },
+  "unit": {
+    "days": "DAG",
+    "hours": "TIM",
+    "minutes": "MIN",
+    "seconds": "SEK"
+  },
   "input": {
     "email": "E-post",
     "password": "Lösenord",
@@ -327,6 +333,17 @@
     "create": {
       "label": "Text",
       "submitLabel": "Vill du skicka in denna återkoppling?"
+    }
+  },
+  "homepage": {
+    "nextRace": {
+      "sessionInProgress": "Session pågår!",
+      "firstPractice": "Första Träning",
+      "secondPractice": "Andra Träning",
+      "thirdPractice": "Tredje Träning",
+      "sprint": "Sprint",
+      "qualifying": "Kval",
+      "race": "Race"
     }
   }
 }

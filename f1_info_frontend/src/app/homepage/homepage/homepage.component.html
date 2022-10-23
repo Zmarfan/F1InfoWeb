@@ -1,8 +1,8 @@
 <article class="homepage">
-    <div class="homepage__content">
+    <app-loading-element [loading]="!nextRaceResponse" class="homepage__content">
         <img src="assets/images/homepage/next-race-background.png">
         <h1>Next Race</h1>
         <app-next-race-info></app-next-race-info>
-        <app-next-race-countdown></app-next-race-countdown>
-    </div>
+        <app-next-race-countdown [nextRaceResponse]="nextRaceResponse"></app-next-race-countdown>
+    </app-loading-element>
 </article>
