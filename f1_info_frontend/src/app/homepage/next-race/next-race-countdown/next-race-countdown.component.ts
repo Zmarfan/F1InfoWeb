@@ -7,7 +7,7 @@ import {NextRaceInfoResponse} from '../../../../generated/server-responses';
     styleUrls: ['./next-race-countdown.component.scss'],
 })
 export class NextRaceCountdownComponent implements OnChanges, OnDestroy {
-    @Input() public nextRaceResponse: NextRaceInfoResponse | undefined;
+    @Input() public nextRaceResponse!: NextRaceInfoResponse;
 
     public days: number | string = '0';
     public hours: number | string = '00';
@@ -27,9 +27,6 @@ export class NextRaceCountdownComponent implements OnChanges, OnDestroy {
     }
 
     private refreshCountdown() {
-        if (!this.nextRaceResponse) {
-            return;
-        }
         const difference = new Date(this.nextRaceResponse.nextSessionDate).getTime() - new Date().getTime();
         this.seconds = Math.floor(difference / 1000);
         this.minutes = Math.floor(this.seconds / 60);

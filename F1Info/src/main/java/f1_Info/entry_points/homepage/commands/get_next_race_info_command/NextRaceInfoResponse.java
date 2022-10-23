@@ -4,6 +4,11 @@ import lombok.Value;
 
 @Value
 public class NextRaceInfoResponse {
+    int mRound;
+    String mCountryCode;
+    String mGrandPrixName;
+    String mStartTime;
+    String mEndTime;
     String mSessionKey;
     String mNextSessionDate;
     boolean mSessionInProgress;

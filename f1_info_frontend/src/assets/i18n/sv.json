@@ -1,4 +1,41 @@
 {
+  "countries": {
+    "ae":  "Förenade Arabemiraten",
+    "ar":  "Argentina",
+    "at":  "Österrike",
+    "au":  "Australien",
+    "az":  "Azerbajdzjan",
+    "be":  "Belgien",
+    "bh":  "Bahrain",
+    "br":  "Brasilien",
+    "ca":  "Kanada",
+    "ch":  "Schweiz",
+    "cn":  "Kina",
+    "de":  "Tyskland",
+    "es":  "Spanien",
+    "fr":  "Frankrike",
+    "gb":  "Storbritannien",
+    "hu":  "Ungern",
+    "in":  "Indien",
+    "it":  "Italien",
+    "jp":  "Japan",
+    "kr":  "Sydkorea",
+    "ma":  "Marocko",
+    "mc":  "Monaco",
+    "mx":  "Mexiko",
+    "my":  "Malaysia",
+    "nl":  "Nederländerna",
+    "pt":  "Portugal",
+    "qa":  "Qatar",
+    "ru":  "Ryssland",
+    "sa":  "Saudiarabien",
+    "se":  "Sverige",
+    "sg":  "Singapore",
+    "tr":  "Turkiet",
+    "us":  "Amerikas Förenta Stater",
+    "vn":  "Vietnam",
+    "za":  "Sydafrika"
+  },
   "unexpectedError": "Ett oväntat fel har inträffades",
   "genericHttpError": "Ett oväntat fel med felkoden: {{code}} har inträffades",
   "errors": {
@@ -344,7 +381,8 @@
       "thirdPractice": "Tredje Träning",
       "sprint": "Sprint",
       "qualifying": "Kval",
-      "race": "Race"
+      "race": "Race",
+      "round": "Runda {{round}}"
     }
   }
 }

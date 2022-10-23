@@ -1,4 +1,41 @@
 {
+  "countries": {
+    "ae":  "United Arab Emirates",
+    "ar":  "Argentina",
+    "at":  "Austria",
+    "au":  "Australia",
+    "az":  "Azerbaijan",
+    "be":  "Belgium",
+    "bh":  "Bahrain",
+    "br":  "Brazil",
+    "ca":  "Canada",
+    "ch":  "Switzerland",
+    "cn":  "China",
+    "de":  "Germany",
+    "es":  "Spain",
+    "fr":  "France",
+    "gb":  "United Kingdom",
+    "hu":  "Hungary",
+    "in":  "India",
+    "it":  "Italy",
+    "jp":  "Japan",
+    "kr":  "South Korea",
+    "ma":  "Morocco",
+    "mc":  "Monaco",
+    "mx":  "Mexico",
+    "my":  "Malaysia",
+    "nl":  "Netherlands",
+    "pt":  "Portugal",
+    "qa":  "Qatar",
+    "ru":  "Russia",
+    "sa":  "Saudi Arabia",
+    "se":  "Sweden",
+    "sg":  "Singapore",
+    "tr":  "Turkey",
+    "us":  "United States Of America",
+    "vn":  "Vietnam",
+    "za":  "South Africa"
+  },
   "unexpectedError": "An unexpected error has occurred",
   "genericHttpError": "An unexpected error with error code: {{code}} occurred",
   "errors": {
@@ -344,7 +381,8 @@
       "thirdPractice": "Third Practice",
       "sprint": "Sprint",
       "qualifying": "Qualifying",
-      "race": "Race"
+      "race": "Race",
+      "round": "Round {{round}}"
     }
   }
 }
