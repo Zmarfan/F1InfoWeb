@@ -1,6 +1,9 @@
 <app-loading-element [loading]="!nextRaceResponse" class="next-race">
     <img src="assets/images/homepage/next-race-background.png">
     <h1>{{'homepage.nextRace.title' | translate}}</h1>
-    <app-next-race-info [nextRaceResponse]="nextRaceResponse!"></app-next-race-info>
-    <app-next-race-countdown [nextRaceResponse]="nextRaceResponse!"></app-next-race-countdown>
+    <ng-container *ngIf="nextRaceResponse">
+        <app-next-race-info [nextRaceResponse]="nextRaceResponse!"></app-next-race-info>
+        <app-next-race-countdown [nextRaceResponse]="nextRaceResponse!"></app-next-race-countdown>
+        <app-next-race-times></app-next-race-times>
+    </ng-container>
 </app-loading-element>

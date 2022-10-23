@@ -1,0 +1,133 @@
+@import "src/styles/responsiveness.scss";
+
+.timing-buttons {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
+
+  &__toggle {
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid var(--global-message-bkg-info);
+    border-radius: 8px;
+    padding: 0.2rem;
+    transition: background 0.15s linear;
+    background: var(--global-message-bkg-info);
+
+    &--selectable {
+      background: var(--bkg-color);
+      &:hover {
+        background: var(--bkg-color-light-accent);
+      }
+    }
+  }
+}
+
+.next-race-timing {
+  border: 0.8rem solid var(--global-message-bkg-info);
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: var(--dark-primary-color-text) 0 0 10px;
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media(min-width: $mobile-max-width) {
+      display: grid;
+      position: relative;
+      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-flow: column;
+      margin: 1rem 0.5rem;
+      column-gap: 4rem;
+
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        content: "";
+        background: var(--light-primary-color);
+        height: 100%;
+        width: 1px;
+        transition: width 0.2s ease-in-out;
+      }
+    }
+  }
+
+  &__icon {
+    position: relative;
+    border: 1px solid var(--text-color);
+    padding: 0.65rem;
+    border-radius: 100%;
+  }
+
+  &__icon-fill {
+    position: absolute;
+    color: var(--secondary-color);
+    font-size: 0.5rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &--check {
+      font-size: 1.5rem;
+      transform: translate(-35%, -60%);
+    }
+  }
+}
+
+.time-session {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+
+  @media(max-width: $mobile-max-width) {
+    gap: 2rem;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__date-month {
+    padding: 0.1rem 1rem;
+    border-radius: 20px;
+    background: var(--light-gray);
+    font-size: 0.65rem;
+  }
+
+  &__session {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--text-color);
+
+    h3 {
+      white-space: nowrap;
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0;
+
+      @media(max-width: $mobile-max-width) {
+        font-size: 1rem;
+      }
+    }
+
+    span {
+      font-size: 0.75rem;
+    }
+  }
+}

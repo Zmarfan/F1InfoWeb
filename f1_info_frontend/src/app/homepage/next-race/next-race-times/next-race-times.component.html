@@ -1,0 +1,24 @@
+<div class="timing-buttons">
+    <div class="timing-buttons__toggle timing-buttons__toggle--selectable">My Time</div>
+    <div class="timing-buttons__toggle">Track Time</div>
+</div>
+<div class="next-race-timing">
+    <div class="next-race-timing__grid">
+        <div *ngFor="let session of sessions" class="time-session">
+            <div class="time-session__info">
+                <div class="time-session__date">
+                    <span>30</span>
+                    <span class="time-session__date-month">OCT</span>
+                </div>
+                <div class="time-session__session">
+                    <h3>Practice 1</h3>
+                    <span>12:00 - 13:00</span>
+                </div>
+            </div>
+            <div class="next-race-timing__icon">
+                <fa-icon *ngIf="true" class="next-race-timing__icon-fill next-race-timing__icon-fill--check" icon="check"></fa-icon>
+                <fa-icon *ngIf="false" class="next-race-timing__icon-fill" icon="circle"></fa-icon>
+            </div>
+        </div>
+    </div>
+</div>

@@ -38,6 +38,8 @@ body {
   --global-message-bkg-error: #e3cccc;
   --global-message-border-error: #b26666;
   --global-message-text-error: #1f0202;
+
+  --light-gray: #b6b6b6;
 }
 body.dark-theme {
   --error: #de6a61;
@@ -79,4 +81,6 @@ body.dark-theme {
   --global-message-bkg-error: #423636;
   --global-message-border-error: #bb7171;
   --global-message-text-error: #d3bebe;
+
+  --light-gray: #696969;
 }
