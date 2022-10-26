@@ -47,32 +47,32 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchFinishStatusTask() {
 		mFetchFinishStatusTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchCircuitsTask() {
 		mFetchCircuitsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchDriversTask() {
 		mFetchDriversTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchSeasonsTask() {
 		mFetchSeasonsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchConstructorsTask() {
 		mFetchConstructorsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
 	}
@@ -82,32 +82,32 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		mFetchPitStopsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 2 * * *")
 	public void runFetchLapTimesTask() {
 		mFetchLapTimesTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchDriverStandingsTask() {
 		mFetchDriverStandingsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void runFetchConstructorStandingsTask() {
 		mFetchConstructorStandingsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 3 * * *")
 	public void runFetchSprintResultsTask() {
 		mFetchSprintResultsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 4 * * *")
 	public void runFetchRaceResultsTask() {
 		mFetchRaceResultsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 5 * * *")
 	public void runFetchQualifyingResultsTask() {
 		mFetchQualifyingResultsTask.run();
 	}
