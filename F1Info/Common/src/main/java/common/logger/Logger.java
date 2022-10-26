@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,7 +89,8 @@ public class Logger implements Runnable {
             methodName,
             classType.getName(),
             message,
-            exception.getMessage()
+            exception.getMessage(),
+            getStackTraceFromException(exception)
         );
     }
 
@@ -105,5 +108,12 @@ public class Logger implements Runnable {
             String.format(LoggerEmailTemplates.BASE, logContent.size(), String.join("", logContent)),
             EmailType.SEVERE_LOGGING
         ));
+    }
+
+    private String getStackTraceFromException(final Exception exception) {
+        final StringWriter stringWriter = new StringWriter();
+        final PrintWriter printWriter = new PrintWriter(stringWriter);
+        exception.printStackTrace(printWriter);
+        return stringWriter.toString();
     }
 }

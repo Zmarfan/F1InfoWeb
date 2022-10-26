@@ -27,6 +27,11 @@ public class LoggerEmailTemplates {
             <span><strong>Message: </strong>%s</span>
             <br>
             <span><strong>Exception: </strong>%s</span>
+            <br>
+            <details style="cursor: pointer">
+                <summary><strong>StackTrace:</strong></summary>
+                <span>%s</span>
+            </details>
         </article>
         <br>
     """;
