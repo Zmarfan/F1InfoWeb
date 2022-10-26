@@ -245,6 +245,7 @@ public class ErgastProxy {
 
     private <T> List<T> readErgastData(final String uri, final int offset, final Function<String, ErgastResponse<T>> parserFunction) throws IOException {
         try {
+            mLogger.info("readErgastData", this.getClass(), String.format("Making ergast request with uri: %s, offset: %s", uri, offset));
             final String url = String.format(REQUEST_FORMAT, uri, MAX_LIMIT, offset);
             final ErgastResponse<T> ergastResponse = parserFunction.apply(mFetcher.readDataAsJsonStringFromUri(url));
             final List<T> responseData = new ArrayList<>(ergastResponse.getData());
