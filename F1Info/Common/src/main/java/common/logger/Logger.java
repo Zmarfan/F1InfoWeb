@@ -114,6 +114,6 @@ public class Logger implements Runnable {
         final StringWriter stringWriter = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(stringWriter);
         exception.printStackTrace(printWriter);
-        return stringWriter.toString();
+        return stringWriter.toString().replace("\r\n", "<br>").replace("\t", "&#9;");
     }
 }
