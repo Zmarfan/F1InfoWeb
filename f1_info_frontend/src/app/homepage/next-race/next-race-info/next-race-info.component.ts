@@ -14,6 +14,12 @@ export class NextRaceInfoComponent {
         return 'countries.' + this.nextRaceResponse.countryCode;
     }
 
+    public get timePeriod(): string {
+        const start: string = this.nextRaceResponse.sessionInfo[0].sessionStartTimeMyTime;
+        const end: string = this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1].sessionEndTimeMyTime;
+        return `${this.formatDate(start)} - ${this.formatDate(end)}`;
+    }
+
     public formatDate(date: string): string {
         return moment(date).format('Do MMM YYYY');
     }

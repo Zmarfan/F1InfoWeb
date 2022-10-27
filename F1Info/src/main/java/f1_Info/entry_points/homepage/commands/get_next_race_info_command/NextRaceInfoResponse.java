@@ -9,7 +9,5 @@ public class NextRaceInfoResponse {
     int mRound;
     String mCountryCode;
     String mGrandPrixName;
-    String mStartTime;
-    String mEndTime;
     List<SessionInfo> mSessionInfo;
 }

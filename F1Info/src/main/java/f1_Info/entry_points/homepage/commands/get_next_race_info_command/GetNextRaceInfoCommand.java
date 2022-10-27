@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static f1_Info.configuration.web.ResponseUtil.ok;
@@ -19,8 +18,6 @@ public class GetNextRaceInfoCommand implements Command {
             15,
             Country.UNITED_STATES.getCode(),
             "United States Grand Prix",
-            LocalDateTime.now().minusDays(2).toLocalDate().atStartOfDay().toString(),
-            LocalDateTime.now().plusDays(2).toLocalDate().atStartOfDay().toString(),
             List.of(
                 new SessionInfo(SessionType.FIRST_PRACTICE, "2022-10-26T13:00", "2022-10-26T14:00", "2022-10-26T15:00", "2022-10-26T16:00"),
                 new SessionInfo(SessionType.SECOND_PRACTICE, "2022-10-26T16:30", "2022-10-26T17:30", "2022-10-26T18:30", "2022-10-26T19:30"),
