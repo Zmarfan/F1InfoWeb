@@ -9,9 +9,7 @@ import lombok.experimental.UtilityClass;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,8 +45,8 @@ public class SqlParserFunctions {
 
     public static LocalDate readDate(final SqlParserInstance instance) {
         try {
-            final LocalDate readDate = instance.getResultSet().getDate(instance.getColumnIndex()).toLocalDate();
-            return instance.getResultSet().wasNull() ? null : readDate;
+            final Date readDate = instance.getResultSet().getDate(instance.getColumnIndex());
+            return instance.getResultSet().wasNull() ? null : readDate.toLocalDate();
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e);
         }
@@ -56,8 +54,8 @@ public class SqlParserFunctions {
 
     public static LocalTime readTime(final SqlParserInstance instance) {
         try {
-            final LocalTime readTime = instance.getResultSet().getTime(instance.getColumnIndex()).toLocalTime();
-            return instance.getResultSet().wasNull() ? null : readTime;
+            final Time readTime = instance.getResultSet().getTime(instance.getColumnIndex());
+            return instance.getResultSet().wasNull() ? null : readTime.toLocalTime();
         } catch (final SQLException e) {
             throw new IllegalArgumentException(e);
         }

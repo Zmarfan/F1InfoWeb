@@ -18,11 +18,10 @@ interface Session {
 })
 export class NextRaceTimesComponent {
     @Input() public nextRaceResponse!: NextRaceInfoResponse;
-    public showMyTime: boolean = true;
 
     public get sessions(): Session[] {
         return this.nextRaceResponse.sessionInfo.map((session) => {
-            const start: Date = new Date(this.showMyTime ? session.sessionStartTimeMyTime : session.sessionStartTimeTrack);
+            const start: Date = new Date(session.sessionStartTimeMyTime);
             return {
                 sessionType: session.sessionType,
                 sessionTime: `${moment(start).format('HH:mm')}`,
@@ -36,10 +35,6 @@ export class NextRaceTimesComponent {
 
     private get now(): Date {
         return new Date();
-    }
-
-    public setMyTime(state: boolean) {
-        this.showMyTime = state;
     }
 
     private isNextOrCurrentSession(session: SessionInfo): boolean {

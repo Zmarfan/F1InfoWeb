@@ -1,29 +1,5 @@
 @import "src/styles/responsiveness.scss";
 
-.timing-buttons {
-  display: flex;
-  gap: 0.25rem;
-  margin-left: 1rem;
-  margin-bottom: 0.4rem;
-
-  &__toggle {
-    cursor: pointer;
-    user-select: none;
-    border: 2px solid var(--global-message-bkg-info);
-    border-radius: 8px;
-    padding: 0.2rem;
-    transition: background 0.15s linear;
-    background: var(--global-message-bkg-info);
-
-    &--selectable {
-      background: var(--bkg-color);
-      &:hover {
-        background: var(--bkg-color-light-accent);
-      }
-    }
-  }
-}
-
 .next-race-timing {
   border: 0.8rem solid var(--global-message-bkg-info);
   border-radius: 20px;

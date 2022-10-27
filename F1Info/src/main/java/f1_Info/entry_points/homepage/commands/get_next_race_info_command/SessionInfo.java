@@ -7,5 +7,4 @@ public class SessionInfo {
     SessionType mSessionType;
     String mSessionStartTimeMyTime;
     String mSessionApproxEndTime;
-    String mSessionStartTimeTrack;
 }

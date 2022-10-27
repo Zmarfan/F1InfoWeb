@@ -1,6 +1,7 @@
 package f1_Info.entry_points.homepage;
 
 import f1_Info.entry_points.helper.EndpointHelper;
+import f1_Info.entry_points.homepage.commands.get_next_race_info_command.Database;
 import f1_Info.entry_points.homepage.commands.get_next_race_info_command.GetNextRaceInfoCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class HomepageEndpoint {
     private final EndpointHelper mEndpointHelper;
     private final HttpServletRequest mHttpServletRequest;
+    private final Database mDatabase;
 
     @GetMapping("/next-race")
     public ResponseEntity<?> getNextRaceInfo() {
-        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetNextRaceInfoCommand());
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetNextRaceInfoCommand(mDatabase));
     }
 }
