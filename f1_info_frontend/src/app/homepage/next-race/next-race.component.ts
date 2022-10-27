@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NextRaceInfoResponse} from '../../../generated/server-responses';
-import {Subscription} from 'rxjs';
+import {mergeMap, Subscription, timer} from 'rxjs';
 import {HomepageService} from '../homepage.service';
 import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
 
@@ -10,6 +10,8 @@ import {GlobalMessageService} from '../../../core/information/global-message-dis
     styleUrls: ['./next-race.component.scss'],
 })
 export class NextRaceComponent implements OnInit, OnDestroy {
+    private static readonly REFRESH_INFO_MS: number = 600000; // 10 min
+
     public nextRaceResponse: NextRaceInfoResponse | undefined = undefined;
 
     private mSubscription!: Subscription;
@@ -21,7 +23,7 @@ export class NextRaceComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
-        this.mSubscription = this.mHomepageService.getNextRaceInfo().subscribe({
+        this.mSubscription = timer(0, NextRaceComponent.REFRESH_INFO_MS).pipe(mergeMap(() => this.mHomepageService.getNextRaceInfo())).subscribe({
             next: (response) => {
                 this.nextRaceResponse = response;
             },

@@ -4,13 +4,13 @@
 </div>
 <div class="next-race-timing">
     <div class="next-race-timing__grid">
-        <div *ngFor="let session of sessions" class="time-session">
+        <div *ngFor="let session of sessions" class="time-session {{false ? 'time-session--selected' : ''}}">
             <div class="time-session__info">
                 <div class="time-session__date">
                     <span>30</span>
                     <span class="time-session__date-month">OCT</span>
                 </div>
-                <div class="time-session__session">
+                <div class="time-session__session {{false ? 'time-session__session--selected' : ''}}">
                     <h3>Practice 1</h3>
                     <span>12:00 - 13:00</span>
                 </div>

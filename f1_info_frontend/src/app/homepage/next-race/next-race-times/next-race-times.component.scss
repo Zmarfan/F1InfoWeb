@@ -33,7 +33,7 @@
   &__grid {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 
     @media(min-width: $mobile-max-width) {
       display: grid;
@@ -83,7 +83,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+  border-radius: 15px 5px 15px 5px;
   gap: 4rem;
+
+  &--selected {
+    background: var(--bkg-color-shade);
+  }
 
   @media(max-width: $mobile-max-width) {
     gap: 2rem;
@@ -123,6 +129,12 @@
 
       @media(max-width: $mobile-max-width) {
         font-size: 1rem;
+      }
+    }
+
+    &--selected {
+      h3 {
+        color: var(--primary-color-text);
       }
     }
 

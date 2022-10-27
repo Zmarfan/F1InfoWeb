@@ -48,6 +48,7 @@ import { NextRaceInfoComponent } from './homepage/next-race/next-race-info/next-
 import { NextRaceCountdownComponent } from './homepage/next-race/next-race-countdown/next-race-countdown.component';
 import { NextRaceComponent } from './homepage/next-race/next-race.component';
 import { NextRaceTimesComponent } from './homepage/next-race/next-race-times/next-race-times.component';
+import { SessionKeyPipe } from './homepage/next-race/session-key.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -105,6 +106,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NextRaceCountdownComponent,
         NextRaceComponent,
         NextRaceTimesComponent,
+        SessionKeyPipe,
     ],
     providers: [
         {

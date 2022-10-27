@@ -1,8 +1,8 @@
 <div class="next-race-countdown">
-    <span class="next-race-countdown__title">{{nextRaceResponse.sessionKey | translate}}</span>
+    <span class="next-race-countdown__title">{{nextOrCurrentSession?.sessionType | sessionKey | translate}}</span>
 
     <div class="next-race-countdown__countdown">
-        <ng-container *ngIf="!nextRaceResponse.sessionInProgress; else sessionInProgress">
+        <ng-container *ngIf="showTimer; else sessionInProgress">
             <ng-container *ngTemplateOutlet="timeEntry;context:{ time: days, unitKey: 'unit.days'}"></ng-container>
             <span class="next-race-countdown__delimiter"></span>
             <ng-container *ngTemplateOutlet="timeEntry;context:{ time: hours, unitKey: 'unit.hours'}"></ng-container>

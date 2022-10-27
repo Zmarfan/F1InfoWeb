@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static f1_Info.configuration.web.ResponseUtil.ok;
 
@@ -20,9 +21,13 @@ public class GetNextRaceInfoCommand implements Command {
             "United States Grand Prix",
             LocalDateTime.now().minusDays(2).toLocalDate().atStartOfDay().toString(),
             LocalDateTime.now().plusDays(2).toLocalDate().atStartOfDay().toString(),
-            SessionType.QUALIFYING.getKey(),
-            LocalDateTime.now().plusDays(2).toLocalDate().atStartOfDay().toString(),
-            false
+            List.of(
+                new SessionInfo(SessionType.FIRST_PRACTICE, "2022-10-25T13:00", "2022-10-25T14:00", "2022-10-25T15:00", "2022-10-25T16:00"),
+                new SessionInfo(SessionType.SECOND_PRACTICE, "2022-10-25T16:30", "2022-10-25T17:30", "2022-10-25T18:30", "2022-10-25T19:30"),
+                new SessionInfo(SessionType.THIRD_PRACTICE, "2022-10-26T13:00", "2022-10-26T14:00", "2022-10-26T15:00", "2022-10-26T16:00"),
+                new SessionInfo(SessionType.QUALIFYING, "2022-10-26T17:00", "2022-10-26T19:00", "2022-10-26T19:00", "2022-10-26T21:00"),
+                new SessionInfo(SessionType.RACE, "2022-10-27T15:00", "2022-10-27T18:00", "2022-10-27T17:00", "2022-10-27T20:00")
+            )
         ));
     }
 }
