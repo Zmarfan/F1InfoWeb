@@ -45,6 +45,14 @@ create table circuits(
   constraint circuits_country_code foreign key (country_code) references countries(country_code)
 );
 
+create table circuit_time_zones(
+  circuit_id int not null,
+  time_zone_identifier varchar(100) not null,
+
+  constraint circuit_time_zones_pk primary key (circuit_id),
+  constraint circuit_time_zones_circuit_id_fk foreign key (circuit_id) references circuits (id)
+);
+
 create table time_and_dates(
   id int not null auto_increment,
   date date,

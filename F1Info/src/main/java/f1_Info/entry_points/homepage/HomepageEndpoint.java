@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/Homepage")
@@ -21,7 +22,7 @@ public class HomepageEndpoint {
     private final Database mDatabase;
 
     @GetMapping("/next-race")
-    public ResponseEntity<?> getNextRaceInfo() {
-        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetNextRaceInfoCommand(mDatabase));
+    public ResponseEntity<?> getNextRaceInfo(final TimeZone timeZone) {
+        return mEndpointHelper.runCommand(mHttpServletRequest, userId -> new GetNextRaceInfoCommand(timeZone, mDatabase));
     }
 }

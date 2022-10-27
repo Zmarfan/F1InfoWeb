@@ -1,3 +1,13 @@
+<div class="timing-buttons">
+    <div
+        (click)="setMyTime(true)"
+        class="timing-buttons__toggle {{!showMyTime ? 'timing-buttons__toggle--selectable' : ''}}"
+    >{{'homepage.nextRace.myTime' | translate}}</div>
+    <div
+        (click)="setMyTime(false)"
+        class="timing-buttons__toggle {{showMyTime ? 'timing-buttons__toggle--selectable' : ''}}"
+    >{{'homepage.nextRace.trackTime' | translate}}</div>
+</div>
 <div class="next-race-timing">
     <div class="next-race-timing__grid">
         <div *ngFor="let session of sessions" class="time-session {{session.selected ? 'time-session--selected' : ''}}">

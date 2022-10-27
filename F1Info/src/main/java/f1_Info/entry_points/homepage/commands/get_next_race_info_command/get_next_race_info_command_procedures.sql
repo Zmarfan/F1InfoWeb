@@ -5,6 +5,7 @@ begin
     races.round,
     circuits.country_code as country,
     races.name,
+    time_zone.time_zone_identifier,
     fp1.date as fp1_date,
     fp1.time as fp1_time,
     fp2.date as fp2_date,
@@ -20,6 +21,7 @@ begin
   from
     races
     inner join circuits on circuits.id = races.circuit_id
+    inner join circuit_time_zones time_zone on time_zone.circuit_id = circuits.id
     inner join time_and_dates race on race.id = races.race_time_and_date_id
     left join time_and_dates fp1 on fp1.id = races.first_practice_time_and_date_id
     left join time_and_dates fp2 on fp2.id = races.second_practice_time_and_date_id

@@ -11,6 +11,7 @@ public class NextRaceInfoRecord {
     int mRound;
     Country mCountry;
     String mName;
+    String mTimeZoneIdentifier;
     LocalDate mFp1Date;
     LocalTime mFp1Time;
     LocalDate mFp2Date;
