@@ -4,6 +4,6 @@
     <ng-container *ngIf="nextRaceResponse">
         <app-next-race-info [nextRaceResponse]="nextRaceResponse!"></app-next-race-info>
         <app-next-race-countdown [nextRaceResponse]="nextRaceResponse!"></app-next-race-countdown>
-        <app-next-race-times></app-next-race-times>
+        <app-next-race-times [nextRaceResponse]="nextRaceResponse"></app-next-race-times>
     </ng-container>
 </app-loading-element>

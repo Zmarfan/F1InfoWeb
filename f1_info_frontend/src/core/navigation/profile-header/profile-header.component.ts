@@ -29,6 +29,7 @@ import {BellNotificationIcon, BellNotificationResponse} from '../../../generated
 import {StorageHandler} from '../../../app/storage-handler';
 import {FriendsComponent} from '../friends/friends.component';
 import {BellNotificationData} from './bell-notification-data';
+import * as moment from 'moment';
 
 export interface MenuItem {
     icon: IconDefinition;
@@ -146,6 +147,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         this.mDialog.open(LanguageSelectorComponent).afterClosed().subscribe((result: DialogResult) => {
             if (!result?.wasApplied) {
                 this.mTranslateService.use(openedSelectedLanguage);
+                moment.locale(openedSelectedLanguage);
             } else {
                 StorageHandler.modifyConfig((config) => {
                     config.language = this.mTranslateService.currentLang as Language;

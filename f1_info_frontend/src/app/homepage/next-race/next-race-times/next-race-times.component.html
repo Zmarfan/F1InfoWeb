@@ -1,23 +1,29 @@
 <div class="timing-buttons">
-    <div class="timing-buttons__toggle timing-buttons__toggle--selectable">My Time</div>
-    <div class="timing-buttons__toggle">Track Time</div>
+    <div
+        (click)="setMyTime(true)"
+        class="timing-buttons__toggle {{!showMyTime ? 'timing-buttons__toggle--selectable' : ''}}"
+    >{{'homepage.nextRace.myTime' | translate}}</div>
+    <div
+        (click)="setMyTime(false)"
+        class="timing-buttons__toggle {{showMyTime ? 'timing-buttons__toggle--selectable' : ''}}"
+    >{{'homepage.nextRace.trackTime' | translate}}</div>
 </div>
 <div class="next-race-timing">
     <div class="next-race-timing__grid">
-        <div *ngFor="let session of sessions" class="time-session {{false ? 'time-session--selected' : ''}}">
+        <div *ngFor="let session of sessions" class="time-session {{session.selected ? 'time-session--selected' : ''}}">
             <div class="time-session__info">
                 <div class="time-session__date">
-                    <span>30</span>
-                    <span class="time-session__date-month">OCT</span>
+                    <span>{{session.sessionDate}}</span>
+                    <span class="time-session__date-month">{{session.sessionMonth}}</span>
                 </div>
-                <div class="time-session__session {{false ? 'time-session__session--selected' : ''}}">
-                    <h3>Practice 1</h3>
-                    <span>12:00 - 13:00</span>
+                <div class="time-session__session {{session.selected ? 'time-session__session--selected' : ''}}">
+                    <h3>{{session.sessionType | sessionKey | translate}}</h3>
+                    <span>{{session.sessionTime}}</span>
                 </div>
             </div>
             <div class="next-race-timing__icon">
-                <fa-icon *ngIf="true" class="next-race-timing__icon-fill next-race-timing__icon-fill--check" icon="check"></fa-icon>
-                <fa-icon *ngIf="false" class="next-race-timing__icon-fill" icon="circle"></fa-icon>
+                <fa-icon *ngIf="session.completed" class="next-race-timing__icon-fill next-race-timing__icon-fill--check" icon="check"></fa-icon>
+                <fa-icon *ngIf="session.selected" class="next-race-timing__icon-fill" icon="circle"></fa-icon>
             </div>
         </div>
     </div>

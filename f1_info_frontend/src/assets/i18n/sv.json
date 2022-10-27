@@ -382,7 +382,9 @@
       "sprint": "Sprint",
       "qualifying": "Kval",
       "race": "Race",
-      "round": "Runda {{round}}"
+      "round": "Runda {{round}}",
+      "myTime": "Min Tid",
+      "trackTime": "Banans Tid"
     }
   }
 }

@@ -49,6 +49,7 @@ import { NextRaceCountdownComponent } from './homepage/next-race/next-race-count
 import { NextRaceComponent } from './homepage/next-race/next-race.component';
 import { NextRaceTimesComponent } from './homepage/next-race/next-race-times/next-race-times.component';
 import { SessionKeyPipe } from './homepage/next-race/session-key.pipe';
+import * as moment from 'moment';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -132,6 +133,7 @@ export class AppModule {
     ) {
         translateService.setDefaultLang(Language.ENGLISH);
         translateService.use(StorageHandler.getConfig().language);
+        moment.locale(StorageHandler.getConfig().language);
 
         fontAwesomeLibrary.addIconPacks(fas, far);
         fontAwesomeConfig.defaultPrefix = 'fas';

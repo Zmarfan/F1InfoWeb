@@ -382,7 +382,9 @@
       "sprint": "Sprint",
       "qualifying": "Qualifying",
       "race": "Race",
-      "round": "Round {{round}}"
+      "round": "Round {{round}}",
+      "myTime": "My Time",
+      "trackTime": "Track Time"
     }
   }
 }

@@ -3,6 +3,7 @@ import {Language, LanguageUtil} from '../../../common/constants/language';
 import {TranslateService} from '@ngx-translate/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {cancelDialog, closeDialog, DialogResult} from '../../dialog/dialog';
+import * as moment from 'moment';
 
 interface LanguageOption {
     language: Language;
@@ -37,6 +38,7 @@ export class LanguageSelectorComponent {
 
     public selectLanguage(language: Language) {
         this.mTranslateService.use(language);
+        moment.locale(language);
     }
 
     public cancel() {
