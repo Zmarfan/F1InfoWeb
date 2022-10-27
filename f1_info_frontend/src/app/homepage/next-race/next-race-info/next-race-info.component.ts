@@ -16,7 +16,7 @@ export class NextRaceInfoComponent {
 
     public get timePeriod(): string {
         const start: string = this.nextRaceResponse.sessionInfo[0].sessionStartTimeMyTime;
-        const end: string = this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1].sessionEndTimeMyTime;
+        const end: string = this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1].sessionStartTimeMyTime;
         return `${this.formatDate(start)} - ${this.formatDate(end)}`;
     }
 

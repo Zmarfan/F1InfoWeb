@@ -6,7 +6,6 @@ import lombok.Value;
 public class SessionInfo {
     SessionType mSessionType;
     String mSessionStartTimeMyTime;
-    String mSessionEndTimeMyTime;
+    String mSessionApproxEndTime;
     String mSessionStartTimeTrack;
-    String mSessionEndTimeTrack;
 }

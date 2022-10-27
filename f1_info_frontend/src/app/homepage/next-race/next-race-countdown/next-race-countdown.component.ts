@@ -25,7 +25,7 @@ export class NextRaceCountdownComponent implements OnChanges, OnDestroy {
 
     public get nextOrCurrentSession(): SessionInfo | undefined {
         const nextOrCurrent: SessionInfo | undefined = this.nextRaceResponse.sessionInfo
-            .filter((session) => this.now < new Date(session.sessionEndTimeMyTime))[0];
+            .filter((session) => this.now < new Date(session.sessionApproxEndTime))[0];
         return nextOrCurrent ?? this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1];
     }
 

@@ -23,14 +23,13 @@ export class NextRaceTimesComponent {
     public get sessions(): Session[] {
         return this.nextRaceResponse.sessionInfo.map((session) => {
             const start: Date = new Date(this.showMyTime ? session.sessionStartTimeMyTime : session.sessionStartTimeTrack);
-            const end: Date = new Date(this.showMyTime ? session.sessionEndTimeMyTime : session.sessionEndTimeTrack);
             return {
                 sessionType: session.sessionType,
-                sessionTime: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
+                sessionTime: `${moment(start).format('HH:mm')}`,
                 sessionDate: start.getDate(),
                 sessionMonth: moment(start).format('MMM').toUpperCase(),
-                selected: this.isCurrentSession(session),
-                completed: this.now > new Date(session.sessionEndTimeMyTime),
+                selected: this.isNextOrCurrentSession(session),
+                completed: this.now > new Date(session.sessionApproxEndTime),
             };
         });
     }
@@ -43,9 +42,9 @@ export class NextRaceTimesComponent {
         this.showMyTime = state;
     }
 
-    private isCurrentSession(session: SessionInfo): boolean {
+    private isNextOrCurrentSession(session: SessionInfo): boolean {
         const nextOrCurrent: SessionInfo | undefined = this.nextRaceResponse.sessionInfo
-            .filter((session) => this.now < new Date(session.sessionEndTimeMyTime))[0];
+            .filter((session) => this.now < new Date(session.sessionApproxEndTime))[0];
         return session === nextOrCurrent;
     }
 }
