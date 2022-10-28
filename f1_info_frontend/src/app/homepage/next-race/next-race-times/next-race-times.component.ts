@@ -42,6 +42,10 @@ export class NextRaceTimesComponent {
         this.showMyTime = state;
     }
 
+    public sessionTrackBy(index: number, session: Session) {
+        return session.sessionType;
+    }
+
     private isNextOrCurrentSession(session: SessionInfo): boolean {
         const nextOrCurrent: SessionInfo | undefined = this.nextRaceResponse.sessionInfo
             .filter((session) => this.now < new Date(session.sessionApproxEndTime))[0];

@@ -10,7 +10,7 @@
 </div>
 <div class="next-race-timing">
     <div class="next-race-timing__grid">
-        <div *ngFor="let session of sessions" class="time-session {{session.selected ? 'time-session--selected' : ''}}">
+        <div *ngFor="let session of sessions; trackBy: sessionTrackBy" class="time-session {{session.selected ? 'time-session--selected' : ''}}">
             <div class="time-session__info">
                 <div class="time-session__date">
                     <span>{{session.sessionDate}}</span>
@@ -23,7 +23,7 @@
             </div>
             <div class="next-race-timing__icon">
                 <fa-icon *ngIf="session.completed" class="next-race-timing__icon-fill next-race-timing__icon-fill--check" icon="check"></fa-icon>
-                <fa-icon *ngIf="session.selected" class="next-race-timing__icon-fill" icon="circle"></fa-icon>
+                <span *ngIf="session.selected" class="next-race-timing__icon-fill next-race-timing__icon-fill--in-progress"></span>
             </div>
         </div>
     </div>
