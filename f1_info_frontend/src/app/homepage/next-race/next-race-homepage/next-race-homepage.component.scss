@@ -4,10 +4,11 @@
   position: relative;
   background: var(--bkg-color);
   box-shadow: var(--bkg-shadow-color) 0 0 10px;
-  padding: 2rem;
   box-sizing: border-box;
   overflow: hidden;
   z-index: 0;
+  padding: 3rem;
+  border-radius: 40px 10px 40px 10px;
 
   &__background {
     display: none;
@@ -20,11 +21,6 @@
       z-index: -1;
       opacity: 8%;
     }
-  }
-
-  @media(min-width: $mobile-max-width) {
-    padding: 3rem;
-    border-radius: 40px 10px 40px 10px;
   }
 }
 
