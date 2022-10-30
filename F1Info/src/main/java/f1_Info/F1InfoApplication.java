@@ -47,67 +47,67 @@ public class F1InfoApplication extends SpringBootServletInitializer {
 		return application.sources(F1InfoApplication.class);
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchFinishStatusTask() {
 		mFetchFinishStatusTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchCircuitsTask() {
 		mFetchCircuitsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchDriversTask() {
 		mFetchDriversTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchSeasonsTask() {
 		mFetchSeasonsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchConstructorsTask() {
 		mFetchConstructorsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchRacesTask() {
 		mFetchRacesTask.run();
 	}
 
-	@Scheduled(cron = "0 0 1 * * *")
+	@Scheduled(cron = "0 0 1 * * *", zone = "UTC")
 	public void runFetchPitStopsTask() {
 		mFetchPitStopsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "0 0 2 * * *", zone = "UTC")
 	public void runFetchLapTimesTask() {
 		mFetchLapTimesTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchDriverStandingsTask() {
 		mFetchDriverStandingsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "0 0 0 * * *", zone = "UTC")
 	public void runFetchConstructorStandingsTask() {
 		mFetchConstructorStandingsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 3 * * *")
+	@Scheduled(cron = "0 0 3 * * *", zone = "UTC")
 	public void runFetchSprintResultsTask() {
 		mFetchSprintResultsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 4 * * *")
+	@Scheduled(cron = "0 0 4 * * *", zone = "UTC")
 	public void runFetchRaceResultsTask() {
 		mFetchRaceResultsTask.run();
 	}
 
-	@Scheduled(cron = "0 0 5 * * *")
+	@Scheduled(cron = "0 0 5 * * *", zone = "UTC")
 	public void runFetchQualifyingResultsTask() {
 		mFetchQualifyingResultsTask.run();
 	}
