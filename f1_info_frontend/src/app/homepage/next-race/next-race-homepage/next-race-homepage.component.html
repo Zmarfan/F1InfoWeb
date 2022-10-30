@@ -12,7 +12,7 @@
                 </div>
                 <div class="next-race-homepage-info__race">
                     <h3>{{nextRaceResponse.grandPrixName}}</h3>
-                    <span>{{'homepage.nextRace.round' | translate:{ round: nextRaceResponse.round } }}</span>
+                    <span>{{(currentOrNextSession.sessionType | sessionKey | translate) + ' ' + currentOrNextSessionTime}}</span>
                 </div>
                 <button appPrimaryButton (click)="open()" class="next-race-homepage-info__more-info">{{'homepage.nextRace.nextRaceInfo' | translate}}</button>
             </div>

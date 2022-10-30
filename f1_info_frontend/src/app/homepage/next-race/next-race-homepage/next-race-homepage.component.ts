@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NextRaceInfoResponse} from '../../../../generated/server-responses';
+import {NextRaceInfoResponse, SessionInfo, SessionType} from '../../../../generated/server-responses';
 import {mergeMap, Subscription, timer} from 'rxjs';
 import {HomepageService} from '../../homepage.service';
 import {GlobalMessageService} from '../../../../core/information/global-message-display/global-message.service';
 import {Router} from '@angular/router';
 import {RouteHolder} from '../../../routing/route-holder';
 import * as moment from 'moment';
+import {Session} from '../../../configuration/session';
 
 @Component({
     selector: 'app-next-race-homepage',
@@ -34,6 +35,15 @@ export class NextRaceHomepageComponent implements OnInit, OnDestroy {
         const start: string = this.nextRaceResponse.sessionInfo[0].sessionStartTimeMyTime;
         const end: string = this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1].sessionStartTimeMyTime;
         return `${this.formatDate(start)} - ${this.formatDate(end)}`;
+    }
+
+    public get currentOrNextSession(): SessionInfo {
+        return this.nextRaceResponse!.sessionInfo.filter((session) => new Date() < new Date(session.sessionApproxEndTime))[0]
+            ?? this.nextRaceResponse!.sessionInfo[this.nextRaceResponse!.sessionInfo.length - 1];
+    }
+
+    public get currentOrNextSessionTime(): string {
+        return `${moment(this.currentOrNextSession.sessionStartTimeMyTime).format('HH:mm')}`;
     }
 
     public ngOnInit() {
