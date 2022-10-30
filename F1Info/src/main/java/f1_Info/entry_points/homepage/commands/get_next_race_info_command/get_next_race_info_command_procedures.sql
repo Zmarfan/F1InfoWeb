@@ -29,6 +29,6 @@ begin
     left join time_and_dates sprint on sprint.id = races.sprint_time_and_date_id
     left join time_and_dates qualifying on qualifying.id = races.qualifying_time_and_date_id
   where
-    race.date > current_date
+    race.date >= current_date
   order by year, round limit 1;
 end;
