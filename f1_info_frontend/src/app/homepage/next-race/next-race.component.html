@@ -1,5 +1,10 @@
 <app-loading-element [loading]="!nextRaceResponse" class="next-race">
+    <a (click)="back()" class="next-race__back">
+        <fa-icon icon="caret-left"></fa-icon>
+        <span>{{'homepage.nextRace.back' | translate}}</span>
+    </a>
     <img src="assets/images/homepage/next-race-background.png">
+
     <h1>{{'homepage.nextRace.title' | translate}}</h1>
     <ng-container *ngIf="nextRaceResponse">
         <app-next-race-info [nextRaceResponse]="nextRaceResponse!"></app-next-race-info>

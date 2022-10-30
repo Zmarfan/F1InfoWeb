@@ -50,6 +50,9 @@ import { NextRaceComponent } from './homepage/next-race/next-race.component';
 import { NextRaceTimesComponent } from './homepage/next-race/next-race-times/next-race-times.component';
 import { SessionKeyPipe } from './homepage/next-race/session-key.pipe';
 import * as moment from 'moment';
+import { NextRaceHomepageComponent } from './homepage/next-race/next-race-homepage/next-race-homepage.component';
+import { CountryKeyPipe } from './pipes/country-name.pipe';
+import { CountryFlagPipe } from './pipes/country-flag.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -108,6 +111,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         NextRaceComponent,
         NextRaceTimesComponent,
         SessionKeyPipe,
+        NextRaceHomepageComponent,
+        CountryKeyPipe,
+        CountryFlagPipe,
     ],
     providers: [
         {

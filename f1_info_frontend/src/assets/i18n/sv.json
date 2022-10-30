@@ -374,6 +374,8 @@
   },
   "homepage": {
     "nextRace": {
+      "nextRaceInfo": "Nästa Race Info",
+      "back": "Tillbaka till Hem",
       "title": "Nästa Race",
       "sessionInProgress": "Session pågår!",
       "firstPractice": "Första Träning",

@@ -1,7 +1,7 @@
 <div class="next-race-info">
     <span class="next-race-info__round">{{'homepage.nextRace.round' | translate:{ round: nextRaceResponse.round } }}</span>
-    <img src="../../../../assets/images/flags/{{nextRaceResponse.countryCode}}.svg">
-    <span class="next-race-info__info">{{countryKey | translate}}</span>
+    <img src="{{nextRaceResponse.countryCode | countryFlag}}">
+    <span class="next-race-info__info">{{nextRaceResponse.countryCode | countryKey | translate}}</span>
     <h2>{{nextRaceResponse.grandPrixName}}</h2>
     <span class="next-race-info__info">{{timePeriod}}</span>
 </div>

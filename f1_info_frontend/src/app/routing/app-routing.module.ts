@@ -15,9 +15,11 @@ import {DriverProfileComponent} from '../driver-profile/driver-profile.component
 import {ChangeLogComponent} from '../development/change-log/change-log.component';
 import {FeedbackComponent} from '../development/feedback/feedback.component';
 import {Session} from '../configuration/session';
+import {NextRaceComponent} from '../homepage/next-race/next-race.component';
 
 const routes: Routes = [
     { path: RouteHolder.HOMEPAGE, component: HomepageComponent },
+    { path: RouteHolder.NEXT_RACE, component: NextRaceComponent },
     { path: RouteHolder.SIGN_UP_PAGE, component: SignUpComponent, canActivate: [AnonymousGuard] },
     { path: RouteHolder.FORGOT_PASSWORD_PAGE, component: ForgotPasswordComponent, canActivate: [AnonymousGuard] },
     { path: RouteHolder.LOGIN_PAGE, component: LoginComponent },

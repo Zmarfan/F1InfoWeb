@@ -10,10 +10,6 @@ import * as moment from 'moment';
 export class NextRaceInfoComponent {
     @Input() public nextRaceResponse!: NextRaceInfoResponse;
 
-    public get countryKey(): string {
-        return 'countries.' + this.nextRaceResponse.countryCode;
-    }
-
     public get timePeriod(): string {
         const start: string = this.nextRaceResponse.sessionInfo[0].sessionStartTimeMyTime;
         const end: string = this.nextRaceResponse.sessionInfo[this.nextRaceResponse.sessionInfo.length - 1].sessionStartTimeMyTime;

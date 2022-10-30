@@ -3,6 +3,8 @@ import {NextRaceInfoResponse} from '../../../generated/server-responses';
 import {mergeMap, Subscription, timer} from 'rxjs';
 import {HomepageService} from '../homepage.service';
 import {GlobalMessageService} from '../../../core/information/global-message-display/global-message.service';
+import {Router} from '@angular/router';
+import {RouteHolder} from '../../routing/route-holder';
 
 @Component({
     selector: 'app-next-race',
@@ -17,6 +19,7 @@ export class NextRaceComponent implements OnInit, OnDestroy {
     private mSubscription!: Subscription;
 
     public constructor(
+        private mRouter: Router,
         private mHomepageService: HomepageService,
         private mMessageService: GlobalMessageService
     ) {
@@ -33,5 +36,9 @@ export class NextRaceComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy() {
         this.mSubscription.unsubscribe();
+    }
+
+    public back() {
+        this.mRouter.navigateByUrl(RouteHolder.HOMEPAGE);
     }
 }
