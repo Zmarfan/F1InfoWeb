@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import java.sql.SQLException;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -33,7 +34,7 @@ public class GetNextRaceInfoCommand implements Command {
         infos.addAll(formatSession(SessionType.THIRD_PRACTICE, info.getFp3Date(), info.getFp3Time(), zoneId, 60));
         infos.addAll(formatSession(SessionType.QUALIFYING, info.getQualifyingDate(), info.getQualifyingTime(), zoneId, 120));
         infos.addAll(formatSession(SessionType.RACE, info.getRaceDate(), info.getRaceTime(), zoneId, 180));
-        return infos;
+        return sortSessions(infos);
     }
 
     private List<SessionInfo> formatSession(final SessionType sessionType, final LocalDate date, final LocalTime time, ZoneId trackTimeZoneId, final int endMinuteOffset) {
@@ -44,5 +45,9 @@ public class GetNextRaceInfoCommand implements Command {
         final LocalDateTime myDateTime = zonedDateTime.withZoneSameInstant(mTimeZone.toZoneId()).toLocalDateTime();
         final LocalDateTime trackDateTime = zonedDateTime.withZoneSameInstant(trackTimeZoneId).toLocalDateTime();
         return List.of(new SessionInfo(sessionType, myDateTime.toString(), myDateTime.plusMinutes(endMinuteOffset).toString(), trackDateTime.toString()));
+    }
+
+    private List<SessionInfo> sortSessions(final List<SessionInfo> infos) {
+        return infos.stream().sorted(Comparator.comparing(s -> LocalDateTime.parse(s.getSessionStartTimeMyTime()))).toList();
     }
 }
