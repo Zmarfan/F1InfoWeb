@@ -36,7 +36,7 @@ export class NextRaceCountdownComponent implements OnChanges, OnDestroy {
     public ngOnChanges() {
         clearInterval(this.mIntervalId);
         this.refreshCountdown();
-        this.mIntervalId = setInterval(() => this.refreshCountdown(), 1000);
+        this.mIntervalId = window.setInterval(() => this.refreshCountdown(), 1000);
     }
 
     public ngOnDestroy() {

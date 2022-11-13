@@ -17,7 +17,7 @@ export class CopyButtonComponent {
     public async copy() {
         await this.copyTextToClipboard();
         clearTimeout(this.mTimeoutId);
-        this.mTimeoutId = setTimeout(() => this.resetButton(), CopyButtonComponent.RESET_TIME_IN_MS);
+        this.mTimeoutId = window.setTimeout(() => this.resetButton(), CopyButtonComponent.RESET_TIME_IN_MS);
     }
 
     private async copyTextToClipboard() {
