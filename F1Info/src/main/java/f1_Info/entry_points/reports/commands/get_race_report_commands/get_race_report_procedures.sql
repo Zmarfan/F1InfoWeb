@@ -84,7 +84,7 @@ begin
        ifnull(
          results.finish_time_or_gap,
          case
-           when results.finish_status_type like '+% Lap%' then results.finish_status_type
+           when results.position_type = 'finished' then results.finish_position_order
            when results.position_type = 'retired' then 'DNF'
            when results.position_type = 'not classified' then 'DNF'
            when results.position_type = 'disqualified' then 'DSQ'
