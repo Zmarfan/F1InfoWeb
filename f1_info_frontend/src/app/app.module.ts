@@ -53,6 +53,8 @@ import * as moment from 'moment';
 import { NextRaceHomepageComponent } from './homepage/next-race/next-race-homepage/next-race-homepage.component';
 import { CountryKeyPipe } from './pipes/country-name.pipe';
 import { CountryFlagPipe } from './pipes/country-flag.pipe';
+import { PredictionsHomepageComponent } from './homepage/predictions/predictions-homepage/predictions-homepage.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -77,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveFormsModule,
         FormsModule,
         NgChartsModule,
+        MatTooltipModule,
     ],
     declarations: [
         AppComponent,
@@ -114,6 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NextRaceHomepageComponent,
         CountryKeyPipe,
         CountryFlagPipe,
+        PredictionsHomepageComponent,
     ],
     providers: [
         {

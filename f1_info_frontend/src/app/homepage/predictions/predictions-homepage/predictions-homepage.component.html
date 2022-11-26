@@ -1,0 +1,34 @@
+<section class="predictions-homepage">
+    <img class="predictions-homepage__background" src="assets/images/homepage/next-race-background.png">
+    <div class="previous-predictions">
+        <div *ngFor="let race of previousRaces" class="previous-predictions__entry">
+            <div>
+                test
+            </div>
+            <div class="previous-predictions__race-name">
+                <img width="50px" src="assets/images/flags/au.svg">
+                <span>Abu Dhabi Grand Prix</span>
+            </div>
+            <div>
+                <div class="previous-predictions__top-3">
+                    <span class="previous-predictions__top-3--gold" matTooltip="Friend name" matTooltipPosition="above">
+                        <img width="35px" [src]="testFriendIcon('7nVmw2kNpb')">
+                    </span>
+                    <span class="previous-predictions__top-3--silver" matTooltip="Friend name" matTooltipPosition="above">
+                        <img width="35px" [src]="testFriendIcon('odWmnO3Mq1')">
+                    </span>
+                    <span class="previous-predictions__top-3--bronze" matTooltip="Friend name" matTooltipPosition="above">
+                        <img width="35px" [src]="testFriendIcon('1RV8Lg3xKv')">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="predictions-homepage__buttons">
+        <button appPrimaryButton (click)="goToAllPredictions()">All Predictions</button>
+        <button appPrimaryButton (click)="goToNextRacePredictions()" class="predictions-homepage__next-race-button">
+            <span>Next Race Predictions</span>
+            <fa-icon [icon]="nextRacePredictionsIcon"></fa-icon>
+        </button>
+    </div>
+</section>

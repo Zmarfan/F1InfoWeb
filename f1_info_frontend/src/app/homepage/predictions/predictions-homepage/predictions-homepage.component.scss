@@ -1,0 +1,101 @@
+@import "src/styles/responsiveness.scss";
+
+.predictions-homepage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background: var(--bkg-color);
+  box-shadow: var(--bkg-shadow-color) 0 0 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 0;
+  padding: 2rem;
+  border-radius: 40px 10px 40px 10px;
+
+  &__background {
+    display: none;
+    @media(min-width: $mobile-max-width) {
+      display: initial;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(30%, -50%);
+      z-index: -1;
+      opacity: 8%;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  &__next-race-button {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.previous-predictions {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &__entry {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__race-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+    border-right: 1px solid black;
+
+    span {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  &__top-3 {
+    display: flex;
+    gap: 0.75rem;
+
+    span {
+      cursor: pointer;
+      border-radius: 100%;
+      display: flex;
+      border: 2px solid #bbbbbb;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    img {
+      border-radius: 100%;
+      object-fit: contain;
+      opacity: 75%;
+    }
+
+    &--gold {
+      background-color: darkgoldenrod;
+    }
+
+    &--silver {
+      background-color: silver;
+    }
+
+    &--bronze {
+      background-color: #c27c34;
+    }
+  }
+}
