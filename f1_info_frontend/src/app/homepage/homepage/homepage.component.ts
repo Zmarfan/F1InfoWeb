@@ -15,6 +15,6 @@ export class HomepageComponent {
     }
 
     public get showPredictions(): boolean {
-        return exists(this.mSession.user);
+        return exists(this.mSession.user) && false;
     }
 }
